@@ -4,7 +4,7 @@ source "https://rubygems.org"
 
 ruby RUBY_VERSION
 
-gem 'decidim',:git => 'https://github.com/decidim/decidim.git', :branch => "develop"
+gem 'decidim',:github => 'decidim/decidim', :branch => "develop"
 # gem "decidim", "0.21"
 # gem "decidim-consultations", "0.23.0.dev"
 # gem "decidim-initiatives", "0.23.0.dev"
@@ -21,7 +21,7 @@ gem "wicked_pdf", "~> 1.4"
 group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
 
-  gem 'decidim',:git => 'https://github.com/decidim/decidim.git', :branch => "develop"
+  gem 'decidim-dev',:git => 'decidim/decidim', :branch => "develop"
 end
 
 group :development do
