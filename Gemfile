@@ -21,7 +21,7 @@ gem "wicked_pdf", "~> 1.4"
 group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
 
-  gem "decidim-dev", "0.23.0.dev"
+  gem "decidim-dev", "0.22.0.dev"
 end
 
 group :development do
