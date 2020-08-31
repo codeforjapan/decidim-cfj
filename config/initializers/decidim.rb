@@ -12,7 +12,7 @@ Decidim.configure do |config|
   # When an organization is created through the System area, system admins will
   # be able to choose the available languages for that organization. That list
   # of languages will be equal or a subset of the list in this file.
-  config.available_locales = [:en, :ca, :es]
+  config.available_locales = [:en, :ja]
 
   # Enable machine translations
   config.enable_machine_translations = false
@@ -25,7 +25,7 @@ Decidim.configure do |config|
   # Sets the default locale for new organizations. When creating a new
   # organization from the System area, system admins will be able to overwrite
   # this value for that specific organization.
-  config.default_locale = :en
+  config.default_locale = :ja
 
   # Defines a list of custom content processors. They are used to parse and
   # render specific tags inside some user-provided content. Check the docs for
@@ -48,7 +48,7 @@ Decidim.configure do |config|
   # end
 
   # Currency unit
-  # config.currency_unit = "€"
+  config.currency_unit = "¥"
 
   # Defines the quality of image uploads after processing. Image uploads are
   # processed by Decidim, this value helps reduce the size of the files.
