@@ -34,4 +34,5 @@ end
 
 group :production do
   gem "sidekiq", "5.2.7"
+  gem "fog-aws"
 end
