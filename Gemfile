@@ -21,6 +21,7 @@ gem "faker", "~> 1.9"
 gem "wicked_pdf", "~> 1.4"
 
 group :development, :test do
+  gem "figaro"
   gem "byebug", "~> 11.0", platform: :mri
 
   gem 'decidim-dev',:git => 'https://github.com/decidim/decidim.git', :branch => "develop"
