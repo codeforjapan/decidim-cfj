@@ -24,6 +24,7 @@ group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
 
   gem 'decidim-dev',:git => 'https://github.com/decidim/decidim.git', :branch => "develop"
+  gem 'dotenv-rails'
 end
 
 group :development do
