@@ -200,12 +200,6 @@ GIT
     decidim-verifications (0.23.0.dev)
       decidim-core (= 0.23.0.dev)
 
-PATH
-  remote: decidim-dataviz
-  specs:
-    decidim-dataviz (0.0.1)
-      decidim-core
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -804,7 +798,6 @@ DEPENDENCIES
   bootsnap (~> 1.3)
   byebug (~> 11.0)
   decidim!
-  decidim-dataviz!
   decidim-dev!
   dotenv-rails
   faker (~> 1.9)
