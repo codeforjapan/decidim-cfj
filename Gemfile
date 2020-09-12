@@ -5,6 +5,8 @@ source "https://rubygems.org"
 ruby RUBY_VERSION
 
 gem 'decidim',:git => 'https://github.com/decidim/decidim.git', :branch => "develop"
+gem "decidim-dataviz", path: "decidim-dataviz"
+
 # gem "decidim", "0.21"
 # gem "decidim-consultations", "0.23.0.dev"
 # gem "decidim-initiatives", "0.23.0.dev"
