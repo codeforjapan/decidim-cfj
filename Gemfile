@@ -4,7 +4,7 @@ source "https://rubygems.org"
 
 ruby RUBY_VERSION
 
-gem 'decidim',:git => 'https://github.com/decidim/decidim.git', :branch => "develop"
+gem 'decidim',:git => 'https://github.com/decidim/decidim.git', :branch => "release/0.23-stable"
 
 # gem "decidim", "0.21"
 # gem "decidim-consultations", "0.23.0.dev"
