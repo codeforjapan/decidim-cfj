@@ -1,8 +1,29 @@
 GIT
   remote: https://github.com/decidim/decidim.git
-  revision: a076fc35dd1491a6acc4b2a9be62043a7496c1af
-  branch: develop
+  revision: 45691285f22ec860553b1c08d977afb571737d57
+  branch: release/0.23-stable
   specs:
+    decidim (0.23.0.dev)
+      decidim-accountability (= 0.23.0.dev)
+      decidim-admin (= 0.23.0.dev)
+      decidim-api (= 0.23.0.dev)
+      decidim-assemblies (= 0.23.0.dev)
+      decidim-blogs (= 0.23.0.dev)
+      decidim-budgets (= 0.23.0.dev)
+      decidim-comments (= 0.23.0.dev)
+      decidim-core (= 0.23.0.dev)
+      decidim-debates (= 0.23.0.dev)
+      decidim-forms (= 0.23.0.dev)
+      decidim-generators (= 0.23.0.dev)
+      decidim-meetings (= 0.23.0.dev)
+      decidim-pages (= 0.23.0.dev)
+      decidim-participatory_processes (= 0.23.0.dev)
+      decidim-proposals (= 0.23.0.dev)
+      decidim-sortitions (= 0.23.0.dev)
+      decidim-surveys (= 0.23.0.dev)
+      decidim-system (= 0.23.0.dev)
+      decidim-templates (= 0.23.0.dev)
+      decidim-verifications (= 0.23.0.dev)
     decidim-accountability (0.23.0.dev)
       decidim-comments (= 0.23.0.dev)
       decidim-core (= 0.23.0.dev)
@@ -184,33 +205,6 @@ GIT
     decidim-verifications (0.23.0.dev)
       decidim-core (= 0.23.0.dev)
 
-GIT
-  remote: https://github.com/decidim/decidim.git
-  revision: 45691285f22ec860553b1c08d977afb571737d57
-  branch: release/0.23-stable
-  specs:
-    decidim (0.23.0.dev)
-      decidim-accountability (= 0.23.0.dev)
-      decidim-admin (= 0.23.0.dev)
-      decidim-api (= 0.23.0.dev)
-      decidim-assemblies (= 0.23.0.dev)
-      decidim-blogs (= 0.23.0.dev)
-      decidim-budgets (= 0.23.0.dev)
-      decidim-comments (= 0.23.0.dev)
-      decidim-core (= 0.23.0.dev)
-      decidim-debates (= 0.23.0.dev)
-      decidim-forms (= 0.23.0.dev)
-      decidim-generators (= 0.23.0.dev)
-      decidim-meetings (= 0.23.0.dev)
-      decidim-pages (= 0.23.0.dev)
-      decidim-participatory_processes (= 0.23.0.dev)
-      decidim-proposals (= 0.23.0.dev)
-      decidim-sortitions (= 0.23.0.dev)
-      decidim-surveys (= 0.23.0.dev)
-      decidim-system (= 0.23.0.dev)
-      decidim-templates (= 0.23.0.dev)
-      decidim-verifications (= 0.23.0.dev)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -391,8 +385,9 @@ GEM
       railties (>= 3.0.0)
     faker (1.9.6)
       i18n (>= 0.7)
-    faraday (1.0.1)
+    faraday (1.1.0)
       multipart-post (>= 1.2, < 3)
+      ruby2_keywords
     ffi (1.13.1)
     figaro (1.2.0)
       thor (>= 0.14.0, < 2)
@@ -699,6 +694,7 @@ GEM
       rubocop (>= 0.68.1)
     ruby-ole (1.2.12.2)
     ruby-progressbar (1.10.1)
+    ruby2_keywords (0.0.2)
     rubyzip (2.0.0)
     sass (3.7.4)
       sass-listen (~> 4.0.0)
