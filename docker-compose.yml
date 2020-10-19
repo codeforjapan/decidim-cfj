@@ -18,11 +18,12 @@ services:
       DATABASE_USERNAME: *postgres_user
       DATABASE_PASSWORD: *postgres_password
       RAILS_ENV: development
+    entrypoint: bundle exec rails s -b 0.0.0.0
+    working_dir: /app
     ports:
       - 3000:3000
     links:
       - pg
-    command: bundle exec puma
   pg:
     image: postgres
     volumes:
