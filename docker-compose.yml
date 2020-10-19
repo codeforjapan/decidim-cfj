@@ -1,4 +1,10 @@
 version: '3'
+
+x-custom:
+  postgres:
+    - &postgres_user "${DATABASE_USERNAME:-postgres}"
+    - &postgres_password "${DATABASE_PASSWORD:-password}"
+
 services:
   app:
     image: decidim/decidim:latest
@@ -7,10 +13,11 @@ services:
       - bundle:/usr/local/bundle
       - node_modules:/app/node_modules
     environment:
-      - PORT=3000
-      - DATABASE_HOST=pg
-      - DATABASE_USERNAME=postgres
-      - RAILS_ENV=development
+      PORT: 3000
+      DATABASE_HOST: pg
+      DATABASE_USERNAME: *postgres_user
+      DATABASE_PASSWORD: *postgres_password
+      RAILS_ENV: development
     ports:
       - 3000:3000
     links:
@@ -20,6 +27,10 @@ services:
     image: postgres
     volumes:
       - pg-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: *postgres_user
+      POSTGRES_PASSWORD: *postgres_password
+
 volumes:
   node_modules: {}
   bundle: {}
