@@ -1,7 +1,8 @@
 # 開発者向け情報
 
 ## 1. 環境構築
-
+Dockerで環境を構築する際は、1.環境構築と2. 実行（ローカルバージョン）は不要です。
+直接、3. 実行（Dockerバージョン）から開始してください。
 
 | アプリケーション名 | バージョン |
 | ------- | ------- |
@@ -14,7 +15,7 @@
 - PostgreSQLのインストール
 - ImageMagickのインストール（macOSならhomebrew経由）
 
-## 2. 実行
+## 2. 実行（ローカルバージョン）
 ### 2.1 Rubyのインストール
 ```
 rbenv install 2.6.6
@@ -64,4 +65,48 @@ bin/rails db:seed
 bin/rails s 
 
 ### 2.10 お疲れさまでした
+http://localhost:3000 にアクセス
+
+## 3. 実行（Dockerバージョン）
+事前準備、rubyのインストールは不要です。
+
+### 3.1 レポジトリをクローン
+```
+git clone git@github.com:codeforjapan/decidim-cfj.git
+
+```
+### 3.2 masterブランチへチェックアウト
+```
+cd decidim-cfj
+# masterブランチが最新
+git checkout -b master origin/master
+```
+
+### 3.3 bundle install
+```
+docker-compose run --rm --entrypoint="gem install bundler" app
+docker-compose run --rm --entrypoint="bundle install" app
+```
+
+### 3.4 言語の設定
+```
+# default_localeを`:en`にセットする
+vim config/initializers/decidim.rb
+# before
+config.default_locale = :ja
+# after
+config.default_locale = :en
+```
+
+### 3.5 DB作成からシードまで
+```
+docker-compose run --rm --entrypoint="rails db:create db:migrate" app
+docker-compose run --rm --entrypoint="rails db:seed" app
+```
+
+### 3.6 サーバー起動
+```
+docker-compose up -d
+```
+### 3.7 お疲れさまでした
 http://localhost:3000 にアクセス
