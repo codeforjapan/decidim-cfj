@@ -45,7 +45,7 @@ export DATABASE_PASSWORD=<yourpassword>
 ```
 bundle install
 ```
-### 2.6 言語の設定
+### 2.7 言語の設定
 ```bash
 # default_localeを`:en`にセットする
 vim config/initializers/decidim.rb
@@ -55,13 +55,13 @@ config.default_locale = :ja
 # after
 config.default_locale = :en
 ```
-### 2.7 DB作成からシードまで
+### 2.8 DB作成からシードまで
 ```
 bin/rails db:create db:migrate
 bin/rails db:seed
 ```
-### 2.8 サーバー起動
+### 2.9 サーバー起動
 bin/rails s 
 
-### 2.9 お疲れさまでした
+### 2.10 お疲れさまでした
 http://localhost:3000 にアクセス
