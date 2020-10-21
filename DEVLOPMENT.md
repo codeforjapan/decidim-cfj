@@ -110,3 +110,14 @@ docker-compose up -d
 ```
 ### 3.7 お疲れさまでした
 http://localhost:3000 にアクセス
+
+## 4. テスト用アカウント情報
+
+テストデータとして用意されているアカウントです。  
+※ いずれもパスワードは`decidim123456`です
+
+* 管理画面 (http://localhost:3000/system)
+  * system@example.org
+* サービス画面 (http://localhost:3000/users/sign_in?locale=ja)
+  * admin@example.org （組織管理者）
+  * user@example.org （通常ユーザ）
