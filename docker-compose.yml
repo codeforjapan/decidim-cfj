@@ -12,6 +12,11 @@ services:
       - .:/app
       - bundle:/usr/local/bundle
       - node_modules:/app/node_modules
+      # exclude volumes
+      - /app/vendor
+      - /app/tmp
+      - /app/log
+      - /app/.git
     environment:
       PORT: 3000
       DATABASE_HOST: pg
