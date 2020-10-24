@@ -38,3 +38,5 @@ public/uploads
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
 .ebextensions/04_options.config
+
+pgadmin
