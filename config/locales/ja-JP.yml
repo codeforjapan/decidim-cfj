@@ -1,0 +1,20 @@
+ja:
+  activemodel:
+    attributes:
+      user_extension:
+        address: 住所
+        birth_year: 生年
+        gender: 性別
+        occupation: 職業
+  forms:
+    length_validator:
+      minimum:
+        one: 少なくとも %{count} 文字
+        other: 少なくとも %{count} 文字
+  enums:
+    user_extension:
+      gender:
+        not_known: 無回答
+        male: 男性
+        female: 女性
+        not_applicable: その他
