@@ -805,12 +805,14 @@ DEPENDENCIES
   decidim!
   decidim-dev!
   dotenv-rails
+  factory_bot_rails
   faker (~> 1.9)
   figaro
   fog-aws
   letter_opener_web (~> 1.3)
   listen (~> 3.1)
   puma (>= 4.3.5)
+  rspec-rails
   sidekiq (= 5.2.7)
   spring (~> 2.0)
   spring-watcher-listen (~> 2.0)
