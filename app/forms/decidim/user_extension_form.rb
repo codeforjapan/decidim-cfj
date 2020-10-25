@@ -11,7 +11,7 @@ module Decidim
     attribute :occupation, String
 
     validates :address, presence: true, length: { maximum: Decidim::UserExtension.address_length }
-    validates :birth_year, presence: true
+    validates :birth_year, numericality: true, presence: true
     validates :gender, inclusion: { in: Decidim::UserExtension::genders }
     validates :occupation, presence: true, length: { maximum: Decidim::UserExtension.occupation_length }
   end
