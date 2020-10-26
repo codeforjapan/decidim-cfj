@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_24_105523) do
+ActiveRecord::Schema.define(version: 2020_10_19_071972) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "ltree"
@@ -1253,17 +1253,6 @@ ActiveRecord::Schema.define(version: 2020_10_24_105523) do
     t.index ["reset_password_token"], name: "index_decidim_system_admins_on_reset_password_token", unique: true
   end
 
-  create_table "decidim_user_extensions", force: :cascade do |t|
-    t.string "address"
-    t.integer "birth_year"
-    t.integer "gender"
-    t.string "occupation"
-    t.bigint "decidim_user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["decidim_user_id"], name: "index_decidim_user_extensions_on_decidim_user_id"
-  end
-
   create_table "decidim_user_group_memberships", id: :serial, force: :cascade do |t|
     t.integer "decidim_user_id", null: false
     t.integer "decidim_user_group_id", null: false
@@ -1434,7 +1423,6 @@ ActiveRecord::Schema.define(version: 2020_10_24_105523) do
   add_foreign_key "decidim_scopes", "decidim_scope_types", column: "scope_type_id"
   add_foreign_key "decidim_scopes", "decidim_scopes", column: "parent_id"
   add_foreign_key "decidim_static_pages", "decidim_organizations"
-  add_foreign_key "decidim_user_extensions", "decidim_users"
   add_foreign_key "decidim_users", "decidim_organizations"
   add_foreign_key "decidim_verifications_csv_data", "decidim_organizations"
   add_foreign_key "oauth_access_grants", "decidim_users", column: "resource_owner_id"
