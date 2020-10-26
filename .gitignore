@@ -40,3 +40,6 @@ public/uploads
 .ebextensions/04_options.config
 
 pgadmin
+
+# Igonre idea
+.idea
