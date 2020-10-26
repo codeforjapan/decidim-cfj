@@ -25,7 +25,7 @@ Decidim.configure do |config|
   # Sets the default locale for new organizations. When creating a new
   # organization from the System area, system admins will be able to overwrite
   # this value for that specific organization.
-  config.default_locale = :ja
+  config.default_locale = :en
 
   # Defines a list of custom content processors. They are used to parse and
   # render specific tags inside some user-provided content. Check the docs for
