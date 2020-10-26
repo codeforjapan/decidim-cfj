@@ -7,6 +7,12 @@ module Decidim
 
     validate :user_extension_form_is_valid
 
+    def map_model(model)
+      authorization = Authorization.find_or_initialize_by(decidim_user_id: model.id)
+      metadata = authorization.metadata || {}
+      self.user_extension = Decidim::UserExtensionForm.from_params(metadata)
+    end
+
     private
 
     def user_extension_form_is_valid

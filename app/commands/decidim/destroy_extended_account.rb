@@ -66,11 +66,15 @@ module Decidim
     end
 
     def destroy_user_extension
-      user_extension = @user.user_extension
-      user_extension.address = ""
-      user_extension.gender = nil
-      user_extension.birth_year = nil
-      user_extension.occupation = ""
+      authorization = Decidim::Authorization.find_by(
+        user: @user,
+        name: "user_extension"
+      )
+      authorization.attributes = {
+        unique_id: nil,
+        metadata: {}
+      }
+      authorization.save!
     end
   end
 end

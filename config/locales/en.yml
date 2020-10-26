@@ -2,6 +2,7 @@ en:
   activemodel:
     attributes:
       user_extension:
+        real_name: Real Name
         address: Address
         birth_year: Birth year
         gender: Gender

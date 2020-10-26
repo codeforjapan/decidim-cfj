@@ -2,6 +2,7 @@ ja:
   activemodel:
     attributes:
       user_extension:
+        real_name: 本名
         address: 住所
         birth_year: 生年
         gender: 性別

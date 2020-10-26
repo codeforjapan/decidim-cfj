@@ -54,12 +54,24 @@ module Decidim
     end
 
     def create_user_extension
-      @user_extension = UserExtension.create!(
+      user_extension = form.user_extension
+      authorization.attributes = {
+        unique_id: user_extension.unique_id,
+        metadata: {
+          "real_name" => user_extension.real_name,
+          "address" => user_extension.address,
+          "birth_year" => user_extension.birth_year,
+          "gender" => user_extension.gender,
+          "occupation" => user_extension.occupation,
+        }
+      }
+      authorization.save!
+    end
+
+    def authorization
+      @authorization ||= Decidim::Authorization.find_or_initialize_by(
         user: @user,
-        address: form.user_extension.address,
-        gender: form.user_extension.gender,
-        birth_year: form.user_extension.birth_year,
-        occupation: form.user_extension.occupation
+        name: "user_extension"
       )
     end
   end

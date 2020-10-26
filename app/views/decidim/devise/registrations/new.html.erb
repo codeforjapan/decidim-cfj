@@ -59,6 +59,10 @@
             <!-- extension begin -->
             <%= f.fields_for :user_extension, f.object.user_extension do |f_ext| %>
               <div class="field">
+                <%= f_ext.text_field :real_name %>
+              </div>
+
+              <div class="field">
                 <%= f_ext.text_field :address %>
               </div>
 
@@ -68,7 +72,7 @@
 
               <div class="field">
                 <%= f_ext.label :gender %>
-                <%= f_ext.collection_radio_buttons :gender, Decidim::UserExtension.genders, :first, :first do |elem| %>
+                <%= f_ext.collection_radio_buttons :gender, Decidim::UserExtensionForm::GENDERS, :first, :last do |elem| %>
                 <%= elem.label(class: "radio_button") { elem.radio_button(class: "radio_button") + I18n.t(".#{elem.text}", scope: "enums.user_extension.gender") } %>
                 <% end %>
               </div>
