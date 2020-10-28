@@ -1,10 +1,19 @@
 ja:
   activemodel:
     attributes:
+      debate:
+        instructions: 参加方法
+      decidim/user:
+        name: アカウントID
+      group:
+        nickname: アカウントID
+      user:
+        name: 表示名
+        nickname: アカウントID
       user_extension:
         real_name: 本名
         address: 住所
-        birth_year: 生年
+        birth_year: 生年(西暦)
         gender: 性別
         occupation: 職業
   forms:
@@ -12,6 +21,10 @@ ja:
       minimum:
         one: 少なくとも %{count} 文字
         other: 少なくとも %{count} 文字
+    questionnaires:
+      show:
+        answer_questionnaire:
+          anonymous_user_message: <a href="%{sign_in_link}">アカウント</a> でログインするか、 <a href="%{sign_up_link}">ユーザ登録</a> してフォームに回答してください。
   enums:
     user_extension:
       gender:
@@ -19,3 +32,118 @@ ja:
         male: 男性
         female: 女性
         not_applicable: その他
+  errors:
+    messages:
+      already_confirmed: が確認されました。ログインしてみてください
+  decidim:
+    admin:
+      admin_terms_of_use:
+        actions:
+          refuse: 同意しない
+      filters:
+        officializations:
+          index:
+            nickname: アカウントID
+        search_placeholder:
+          name_or_nickname_or_email_cont: "%{collection} をメール、表示名、アカウントIDで検索します。"
+    components:
+      comment:
+        report:
+          reasons:
+            spam: 本来の内容に関係が無い広告、詐欺や悪意のある処理などが含まれています。
+            offensive: 差別的な内容、誹謗中傷などの不適切な内容が含まれています。
+            does_not_belong: 違法行為、個人情報、または %{organization_name} に属していないと思われる内容が含まれています。
+    devise:
+      registrations:
+        new:
+          newsletter: 関連するお知らせを受け取る
+          newsletter_title: ニュースレターを受け取る
+          subtitle: 参加するにはユーザ登録をしてください。
+          see_username: アカウントIDを見る
+          terms: 利用規約
+          password_help: "半角英数字%{minimun_characters}文字以上で入力してください。単純すぎてはいけません（例：123456）。アカウントIDやメールアドレスと異なる必要があります。"
+    doorkeeper:
+      authorizations:
+        new:
+          connect_your_account_html: <strong>%{organization}</strong> にログインしてアカウントに接続します
+    fingerprint:
+      check: フィンガープリントを確認
+    initiatives:
+      initiatives:
+        vote_cabin:
+          votes_blocked: ログインが無効になっています
+    notifications_settings:
+      show:
+        send_notifications_by_email: 電子メールで通知を受け取る
+        email_on_notification: 通知を毎回メールで受け取る
+    pages:
+      terms_and_conditions:
+        refuse:
+          modal_button: 同意しない
+    proposals:
+      models:
+        proposal:
+          fields:
+            official_proposal: 事務局の提案
+    shared:
+      flag_modal:
+        spam: 本来の内容に関係が無い広告、詐欺や悪意のある処理などが含まれています。
+        offensive: 差別的な内容、誹謗中傷などの不適切な内容が含まれています。
+        does_not_belong: 違法行為、個人情報、または %{organization_name} に属していないと思われる内容が含まれています。
+      follow_button:
+        sign_in_before_follow: このアクションを実行する前にログインしてください
+      login_modal:
+        please_sign_in: ログインしてください
+    verifications:
+      postal_letter:
+        admin:
+          pending_authorizations:
+            index:
+              username: アカウントID
+    welcome_notification:
+      default_body: <p>こんにちは {{name}} さん, {{organization}} へご参加いただきありがとうございます。</p><ul><li>もし、このサイトの使い方は、 <a href="{{help_url}}">ヘルプ</a> セクションをご参照ください。</li><li>目を通していただけると、最初のバッジを獲得できます。<a href="{{badges_url}}">全てのバッジの一覧</a> から、この {{organization}} への参加で獲得できるバッジを見ることができます。</li><li>他の人と一緒に参加し、この {{organization}} へ参加した経験をシェアしましょう。 提案を作り、コメントし、議論し、共通善への貢献の仕方について考え、議論に説得力をもたせ、主張を聞いたり読んだりしながら納得し、具体的かつ直接的な方法であなたの考えを表明し、忍耐と決断を持って対応し、 自らの考えを守り、他人の考えを取り入れて協力し合いましょう。</li></ul>
+  devise:
+    failure:
+      already_authenticated: 既にログイン済です。
+      unauthenticated: 続行する前にログインまたはユーザ登録する必要があります。
+    mailer:
+      confirmation_instructions:
+        instruction: 下記のリンクにアクセスすると、メールアドレスの確認が完了します。
+        subject: 登録のご案内（メールアドレスの確認）
+      email_changed:
+        greeting: "こんにちは、 %{recipient} さん!"
+      invitation_instructions:
+        ignore: |-
+          招待を受け入れたくない場合は、このメールを無視してください。<br />
+          上記のリンクにアクセスし、アカウントIDとパスワードを設定するまで、あなたのアカウントは作成されません。
+      password_change:
+        greeting: "こんにちは、 %{recipient} さん!"
+      reset_password_instructions:
+        greeting: "こんにちは、 %{recipient} さん!"
+      unlock_instructions:
+        greeting: "こんにちは、 %{recipient} さん!"
+        message: あなたのアカウントはログインに規定回数以上失敗したため、ロックされています。
+    invitations:
+      edit:
+        nickname_help: "%{organization} のニックネーム。"
+        subtitle: |-
+          招待を受け入れたくない場合は、このメールを無視してください。<br />
+          上記のリンクにアクセスし、アカウントIDとパスワードを設定するまで、あなたのアカウントは作成されません。
+      updated: パスワードは正常に設定され、ログイン完了しました。
+    passwords:
+      edit:
+        password_help: "%{minimun_characters} 半角英数字10文字以上で入力してください。単純すぎてはいけません（例：123456）。アカウントIDやメールアドレスと異なる必要があります。"
+    registrations:
+      signed_up_but_inactive: 登録が完了しました。ただし、アカウントが有効化されていないため、ログインできませんでした。
+      signed_up_but_locked: 登録完了しましたが、アカウントがロックされているため、ログインできませんでした。
+    sessions:
+      signed_in: 正常にログインしました。
+    shared:
+      links:
+        didn_t_receive_confirmation_instructions: ユーザ登録確認メールが届かない方はこちら
+        didn_t_receive_unlock_instructions: ロック解除の手順を送信したい方はこちら
+        sign_in_with_provider: "%{provider} でログイン"
+  layouts:
+    decidim:
+      header:
+        sign_in: ログイン
