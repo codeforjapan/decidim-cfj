@@ -66,6 +66,8 @@ ja:
       authorizations:
         new:
           connect_your_account_html: <strong>%{organization}</strong> にログインしてアカウントに接続します
+    endorsement_buttons_cell:
+      already_endorsed: 支持済み
     fingerprint:
       check: フィンガープリントを確認
     initiatives:
