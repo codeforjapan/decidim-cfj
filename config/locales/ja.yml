@@ -77,6 +77,10 @@ ja:
           see_username: アカウントIDを見る
           terms: 利用規約
           password_help: "半角英数字%{minimun_characters}文字以上で入力してください。単純すぎてはいけません（例：123456）。アカウントIDやメールアドレスと異なる必要があります。"
+          nickname_help: "本人を識別するための任意のアルファベットを入力してください。"
+          username_placeholder: "共創 歩"
+          nickname_placeholder: "ayumi"
+          nickname_notice: "※ 表示名とアカウントIDが投稿に表示されます。例）共創 歩@ayumi"
     doorkeeper:
       authorizations:
         new:
