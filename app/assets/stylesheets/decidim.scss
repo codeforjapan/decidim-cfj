@@ -124,3 +124,11 @@ $paragraph: #5f6c7b;
 .main-footer a, .mini-footer a {
   color: $bgcolor ;
 }
+.button--social{
+  padding: 0;
+}
+.button--social__icon,
+.button--social__text{
+  text-align: center;
+  margin: 0;
+}
