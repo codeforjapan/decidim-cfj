@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_19_071972) do
+ActiveRecord::Schema.define(version: 2020_10_29_125846) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "ltree"
@@ -1316,7 +1316,7 @@ ActiveRecord::Schema.define(version: 2020_10_19_071972) do
     t.string "unlock_token"
     t.datetime "locked_at"
     t.string "session_token"
-    t.string "direct_message_types", default: "all", null: false
+    t.string "direct_message_types", default: "followed-only", null: false
     t.datetime "officialized_at"
     t.jsonb "officialized_as"
     t.datetime "admin_terms_accepted_at"
