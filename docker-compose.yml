@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 x-custom:
   postgres:
@@ -36,6 +36,8 @@ services:
     environment:
       POSTGRES_USER: *postgres_user
       POSTGRES_PASSWORD: *postgres_password
+    ports:
+      - 5433:5432
 
 volumes:
   node_modules: {}
