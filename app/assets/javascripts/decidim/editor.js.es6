@@ -290,7 +290,8 @@
                     syntax: false // Show the HTML with syntax highlighting. Requires highlightjs on window.hljs (similar to Quill itself), default: false
                 }
             },
-            formats: quillFormats,
+            // Disabled to allow for more HTML tags!
+            //formats: quillFormats,
             theme: "snow"
         });
 
