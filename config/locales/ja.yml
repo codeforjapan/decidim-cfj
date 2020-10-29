@@ -16,6 +16,9 @@ ja:
         birth_year: 生年(西暦)
         gender: 性別
         occupation: 職業
+      question:
+        origin_title: 起案者
+        origin_url: 元のURL
   forms:
     length_validator:
       minimum:
@@ -53,6 +56,15 @@ ja:
             spam: 本来の内容に関係が無い広告、詐欺や悪意のある処理などが含まれています。
             offensive: 差別的な内容、誹謗中傷などの不適切な内容が含まれています。
             does_not_belong: 違法行為、個人情報、または %{organization_name} に属していないと思われる内容が含まれています。
+      down_vote_button:
+        text: このコメントに同意しません
+    debates:
+      debates:
+        filters:
+          activity: 参加したもの
+          citizens: 一般参加者
+          official: 事務局
+          origin: 起案者
     devise:
       registrations:
         new:
@@ -74,8 +86,17 @@ ja:
       initiatives:
         vote_cabin:
           votes_blocked: ログインが無効になっています
+    meetings:
+      meetings:
+        filters:
+          origin: 起案者
+          origin_values:
+            citizens: 一般参加者
+            official: 事務局
     notifications_settings:
       show:
+        allow_public_contact: フォローしていない人からもダイレクトメッセージを受信する
+        direct_messages: ダイレクトメッセージを受信する
         send_notifications_by_email: 電子メールで通知を受け取る
         email_on_notification: 通知を毎回メールで受け取る
     pages:
@@ -83,10 +104,19 @@ ja:
         refuse:
           modal_button: 同意しない
     proposals:
+      application_helper:
+        filter_origin_values:
+          citizens: 一般参加者
+          official: 事務局
       models:
         proposal:
           fields:
             official_proposal: 事務局の提案
+      proposals:
+        filters:
+          activity: 参加したもの
+          origin: 起案者
+
     shared:
       flag_modal:
         spam: 本来の内容に関係が無い広告、詐欺や悪意のある処理などが含まれています。
