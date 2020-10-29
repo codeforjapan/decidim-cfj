@@ -28,3 +28,4 @@ module DecidimApp
     # the framework and any gems in your application.
   end
 end
+NOBSPW.configuration.min_password_length = 6
