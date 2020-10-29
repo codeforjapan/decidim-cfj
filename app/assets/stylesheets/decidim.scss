@@ -67,3 +67,60 @@
     display: inline-block;
   }
 }
+
+$bgcolor: #fffffe;
+$headline: #28abb9;
+$menu: #2d6187;
+$point-color: #ef4565;
+$paragraph: #5f6c7b;
+
+// overide existing styles
+.navbar{
+  background: $menu;
+
+  a,
+  .button{
+    &:focus{
+      outline-color: var(--highlight-alternative);
+    }
+  }
+}
+
+.title-bar{
+  a.logo{
+    color: $point-color;
+  }
+  background: $headline;
+
+  @include breakpoint(smallmedium down){
+    border-top: 2.125rem solid darken($point-color, 15%);
+  }
+}
+
+.tool-bar{
+    .is-dropdown-submenu-parent a{
+      color: $headline;
+
+      &::after{
+        border-color: $headline transparent transparent !important;
+      }
+    }
+
+    .is-dropdown-submenu li > a{
+      color: $headline;
+
+      &:hover{
+        background-color: lighten($medium-gray, 30%);
+      }
+    }
+}
+
+.hero::after {
+  background-color: rgba(26, 24, 29, 0.0) !important;
+}
+.main-footer {
+  background-color: $menu;
+}
+.main-footer a, .mini-footer a {
+  color: $bgcolor ;
+}
