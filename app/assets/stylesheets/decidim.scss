@@ -132,3 +132,6 @@ $paragraph: #5f6c7b;
   text-align: center;
   margin: 0;
 }
+.menu li, .menu.horizontal li {
+  white-space: nowrap;
+}
