@@ -50,6 +50,9 @@ ja:
         search_placeholder:
           name_or_nickname_or_email_cont: "%{collection} をメール、表示名、アカウントIDで検索します。"
     components:
+      components:
+        comment:
+          deleted_user: 退会者
       comment:
         report:
           reasons:
@@ -126,6 +129,12 @@ ja:
         sign_in_before_follow: このアクションを実行する前にログインしてください
       login_modal:
         please_sign_in: ログインしてください
+    sortitions:
+      sortitions:
+        sortition_author:
+          deleted: 退会者
+        sortition_cancel_author:
+          deleted: 退会者
     verifications:
       postal_letter:
         admin:
