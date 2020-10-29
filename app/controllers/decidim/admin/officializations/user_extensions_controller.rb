@@ -13,7 +13,7 @@ module Decidim
 
           Decidim.traceability.perform_action! :show_user_extension, user, current_user
 
-          read_authorization
+          @user_extension = user_extension
 
           render :show, layout: false
         end
@@ -27,12 +27,12 @@ module Decidim
           )
         end
 
-        def read_authorization
+        def user_extension
           @authorization = Authorization.find_by(
             decidim_user_id: user.id,
             name: "user_extension"
           )
-          @user_extension = @authorization.metadata
+          @authorization&.metadata || {}
         end
       end
     end

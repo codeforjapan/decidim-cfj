@@ -1,2 +1,6 @@
-<span>dummydummydummy</span>
-<script>$("#show-user-extension-modal button[data-open=user_extension]").hide()</script>
+<p><%= t(".real_name") %>: <%= @user_extension["real_name"] %></p>
+<p><%= t(".address") %>: <%= @user_extension["address"] %></p>
+<p><%= t(".birth_year") %>: <%= @user_extension["birth_year"] %></p>
+<p><%= t(".gender") %>: <%= t("enums.user_extension.gender.#{Decidim::UserExtensionForm::GENDERS[@user_extension["gender"]]}") %></p>
+<p><%= t(".occupation") %>: <%= @user_extension["occupation"] %></p>
+<script>$("#show-user-modal button[data-open=user_extension]").hide()</script>

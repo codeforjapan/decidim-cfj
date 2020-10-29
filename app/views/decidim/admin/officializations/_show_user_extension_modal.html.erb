@@ -14,13 +14,11 @@
       <div class="show_email">
         <h4><%= t(".full_name") %></h4>
         <div><p id="user_full_name2"></p></div>
-        <% %w(real_name address birth_year gender occupation).each do |key| %>
-        <h4><%= t(".#{key}") %></h4>
+        <h4><%= t(".user_extension") %></h4>
         <div>
-          <p id="user_extension_<%= key %>"></p>
+          <p id="user_extension"></p>
           <p><%= t(".hidden") %></p>
         </div>
-        <% end %>
       </div>
 
       <div class="button--double form-general-submit">
@@ -31,3 +29,14 @@
     </div>
   </div>
 </div>
+<script type="text/javascript">
+  var text = '.show_email #user_extension + p{display:none;color:#999;font-style: italic;}' +
+             '.show_email #user_extension:empty + p{display:block;}';
+  var rule = document.createTextNode(text);
+  var style = document.createElement('style');
+  style.media = 'screen';
+  style.type = 'text/css';
+  style.appendChild(rule);
+  var head = document.getElementsByTagName('head').item(0);
+  head.appendChild(style);
+</script>
