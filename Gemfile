@@ -26,6 +26,8 @@ group :development, :test do
 
   gem 'decidim-dev',:git => 'https://github.com/decidim/decidim.git', :branch => "release/0.23-stable"
   gem 'dotenv-rails'
+  gem 'factory_bot_rails'
+  gem 'rspec-rails'
 end
 
 group :development do
