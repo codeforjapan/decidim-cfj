@@ -76,7 +76,7 @@ Decidim.configure do |config|
   # that an organization's administrator injects malicious scripts to spy on or
   # take over user accounts.
   #
-  config.enable_html_header_snippets = false
+  config.enable_html_header_snippets = true
 
   # Allow organizations admins to track newsletter links.
   # config.track_newsletter_links = true
