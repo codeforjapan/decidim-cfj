@@ -124,3 +124,6 @@ $paragraph: #5f6c7b;
 .main-footer a, .mini-footer a {
   color: $bgcolor ;
 }
+.menu li, .menu.horizontal li {
+  white-space: nowrap;
+}
