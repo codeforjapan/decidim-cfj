@@ -1,0 +1,33 @@
+<div class="reveal" id="show-user-modal" data-reveal>
+  <div class="reveal__header">
+    <h3 class="reveal__title"><%= t(".title") %></h3>
+    <button class="close-button" data-close aria-label="<%= t(".close_modal") %>"
+      type="button">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="row">
+    <div class="columns medium-4 medium-centered">
+      <p><%= t(".description") %></p>
+
+      <div class="show_email">
+        <h4><%= t(".full_name") %></h4>
+        <div><p id="user_full_name2"></p></div>
+        <% %w(real_name address birth_year gender occupation).each do |key| %>
+        <h4><%= t(".#{key}") %></h4>
+        <div>
+          <p id="user_extension_<%= key %>"></p>
+          <p><%= t(".hidden") %></p>
+        </div>
+        <% end %>
+      </div>
+
+      <div class="button--double form-general-submit">
+        <button class="button" data-open="user_extension" data-open-url="">
+          <%= t(".show") %>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
