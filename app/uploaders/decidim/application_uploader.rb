@@ -29,6 +29,8 @@ module Decidim
       # If this is fixed by decidim, this file (application_uploader.rb)
       # should be deleted to keep in sync with upstream!
       return if model.class.to_s == 'decidim/hero_homepage_content_block'
+      #      Fix for https://github.com/codeforjapan/decidim-cfj/issues/101
+      return if model == nil
 
       raise CarrierWave::IntegrityError, I18n.t("carrierwave.errors.not_inside_organization")
     end

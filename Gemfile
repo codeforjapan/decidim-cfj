@@ -41,3 +41,6 @@ group :production do
   gem "sidekiq", "5.2.7"
   gem "fog-aws"
 end
+
+gem 'rubyzip', '>= 1.0.0'
+gem 'zip-zip'
