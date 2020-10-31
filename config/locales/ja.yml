@@ -104,6 +104,8 @@ ja:
         email_on_notification: 通知を毎回メールで受け取る
     pages:
       terms_and_conditions:
+        accept:
+          success: 利用規約に同意しました。
         refuse:
           modal_button: 同意しない
     proposals:
