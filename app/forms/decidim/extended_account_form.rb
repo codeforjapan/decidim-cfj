@@ -16,9 +16,7 @@ module Decidim
     private
 
     def user_extension_form_is_valid
-      if user_extension.invalid?
-        merge_errors_for("user_extension")
-      end
+      merge_errors_for("user_extension") if user_extension.invalid?
     end
 
     # from https://github.com/andypike/rectify/issues/32

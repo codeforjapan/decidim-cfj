@@ -14,8 +14,8 @@ module Decidim
       validates :title, :body, presence: true, etiquette: true
       validates :title, length: { in: 8..150 }
       validates :body, proposal_length: {
-          minimum: 15,
-          maximum: ->(record) { record.component.settings.proposal_length }
+        minimum: 15,
+        maximum: ->(record) { record.component.settings.proposal_length }
       }
 
       validate :proposal_length
