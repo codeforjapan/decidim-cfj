@@ -5,6 +5,7 @@
 .gitignore
 .rspec
 
+.cloudformation
 .github
 .git
 
