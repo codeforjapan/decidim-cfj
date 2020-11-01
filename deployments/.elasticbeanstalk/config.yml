@@ -1,0 +1,14 @@
+branch-defaults:
+  default:
+    environment: staging
+global:
+  application_name: decidim-app
+  default_ec2_keyname: null
+  default_platform: Docker running on 64bit Amazon Linux 2
+  default_region: ap-northeast-1
+  include_git_submodules: true
+  instance_profile: null
+  platform_name: null
+  platform_version: null
+  sc: git
+  workspace_type: Application

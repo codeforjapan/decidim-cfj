@@ -9,6 +9,7 @@
 .github
 .git
 
+deployments
 log
 node_modules
 spec
