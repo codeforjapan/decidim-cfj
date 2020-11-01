@@ -1,0 +1,11 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Create decidim-fcj ECR
+
+Resources:
+  TestEcrPoc:
+    Type: AWS::ECR::Repository
+    Properties:
+      RepositoryName: decidim-cfj
+      ImageScanningConfiguration:
+        scanOnPush: "true"
+      ImageTagMutability: "MUTABLE"
