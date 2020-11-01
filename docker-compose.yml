@@ -1,16 +1,21 @@
 version: "3.8"
 
 x-custom:
+  app:
+    - &rails_env "development"
   postgres:
     - &postgres_user "${DATABASE_USERNAME:-postgres}"
     - &postgres_password "${DATABASE_PASSWORD:-password}"
 
 services:
   app:
-    image: decidim/decidim:latest
+    image: decidim-cfj
+    build:
+      context: ./
+      args:
+        RAILS_ENV: *rails_env
     volumes:
       - .:/app
-      - bundle:/usr/local/bundle
       - node_modules:/app/node_modules
       # exclude volumes
       - /app/vendor
@@ -22,9 +27,7 @@ services:
       DATABASE_HOST: pg
       DATABASE_USERNAME: *postgres_user
       DATABASE_PASSWORD: *postgres_password
-      RAILS_ENV: development
-    entrypoint: bundle exec rails s -b 0.0.0.0
-    working_dir: /app
+      RAILS_ENV: *rails_env
     ports:
       - 3000:3000
     links:
@@ -41,5 +44,4 @@ services:
 
 volumes:
   node_modules: {}
-  bundle: {}
   pg-data: {}
