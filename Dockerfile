@@ -33,7 +33,8 @@ ENV LANG=C.UTF-8 \
     BUNDLER_VERSION=1.17.3 \
     APP_HOME=/app \
     RAILS_ENV=${RAILS_ENV} \
-    SECRET_KEY_BASE=placeholder
+    SECRET_KEY_BASE=placeholder \
+    RAILS_SERVE_STATIC_FILES=true
 
 WORKDIR $APP_HOME
 
