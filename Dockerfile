@@ -32,7 +32,8 @@ ENV LANG=C.UTF-8 \
     BUNDLER_JOBS=4 \
     BUNDLER_VERSION=1.17.3 \
     APP_HOME=/app \
-    RAILS_ENV=${RAILS_ENV}
+    RAILS_ENV=${RAILS_ENV} \
+    SECRET_KEY_BASE=placeholder
 
 WORKDIR $APP_HOME
 
@@ -49,11 +50,12 @@ RUN gem install bundler:${BUNDLER_VERSION} \
         ;fi
 
 COPY . $APP_HOME
-COPY entrypoint /usr/bin/entrypoint
-RUN chmod +x /usr/bin/entrypoint \
+RUN cp ./entrypoint /usr/bin/entrypoint \
+    && chmod +x /usr/bin/entrypoint \
     && chmod -R +x ./bin/
 
-RUN ./bin/rails assets:precompile
+RUN ./bin/rails assets:precompile \
+    && yarn cache clean
 
 ENTRYPOINT ["entrypoint"]
 
