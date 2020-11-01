@@ -86,4 +86,12 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 =end
+
+  config.before(:each) do
+    I18n.available_locales = %i(en es ja)
+    I18n.locale = :en
+    I18n.default_locale = :ja
+    Decidim.available_locales = %i(en es ja)
+    Decidim.default_locale = :ja
+  end
 end
