@@ -61,7 +61,7 @@ module Decidim
           "address" => user_extension.address,
           "birth_year" => user_extension.birth_year,
           "gender" => user_extension.gender,
-          "occupation" => user_extension.occupation,
+          "occupation" => user_extension.occupation
         }
       }
       authorization.save!

@@ -13,6 +13,7 @@ module Decidim
       default_path = "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
 
       return File.join(Decidim.base_uploads_path, default_path) if Decidim.base_uploads_path.present?
+
       default_path
     end
 
@@ -28,9 +29,9 @@ module Decidim
       # HACK: Temporary fix for https://github.com/decidim/decidim/issues/6720
       # If this is fixed by decidim, this file (application_uploader.rb)
       # should be deleted to keep in sync with upstream!
-      return if model.class.to_s == 'decidim/hero_homepage_content_block'
+      return if model.class.to_s == "decidim/hero_homepage_content_block"
       #      Fix for https://github.com/codeforjapan/decidim-cfj/issues/101
-      return if model == nil
+      return if model.nil?
 
       raise CarrierWave::IntegrityError, I18n.t("carrierwave.errors.not_inside_organization")
     end

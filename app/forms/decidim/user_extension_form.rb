@@ -11,7 +11,7 @@ module Decidim
       1 => :male,
       2 => :female,
       9 => :not_applicable
-    }
+    }.freeze
 
     def self.real_name_length
       REAL_NAME_LENGTH
@@ -48,6 +48,7 @@ module Decidim
 
     def duplicates
       return [] if user.blank?
+
       super
     end
   end
