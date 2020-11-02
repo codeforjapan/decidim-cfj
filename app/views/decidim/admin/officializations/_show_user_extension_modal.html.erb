@@ -30,13 +30,17 @@
   </div>
 </div>
 <script type="text/javascript">
-  var text = '.show_email #user_extension + p{display:none;color:#999;font-style: italic;}' +
-             '.show_email #user_extension:empty + p{display:block;}';
-  var rule = document.createTextNode(text);
-  var style = document.createElement('style');
-  style.media = 'screen';
-  style.type = 'text/css';
-  style.appendChild(rule);
-  var head = document.getElementsByTagName('head').item(0);
-  head.appendChild(style);
+$(() => {
+  function appendStyleElement(text) {
+    var style = document.createElement('style');
+    style.media = 'screen';
+    style.type = 'text/css';
+    var rule = document.createTextNode(text);
+    style.appendChild(rule);
+    var head = document.getElementsByTagName('head').item(0);
+    head.appendChild(style);
+  }
+  appendStyleElement('.show_email #user_extension + p{display:none;color:#999;font-style: italic;}' +
+                     '.show_email #user_extension:empty + p{display:block;}');
+});
 </script>
