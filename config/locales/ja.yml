@@ -49,6 +49,25 @@ ja:
             nickname: アカウントID
         search_placeholder:
           name_or_nickname_or_email_cont: "%{collection} をメール、表示名、アカウントIDで検索します。"
+      officializations:
+        index:
+          show_user_extension: ユーザー属性を表示
+        show_user_extension_modal:
+          user_extension: ユーザー属性
+          close_modal: モーダルを閉じる
+          description: 直接参加者に連絡する必要がある場合は，表示ボタンをクリックしてメールアドレスを見ることができます．このアクションは記録されます．
+          email_address: メールアドレス
+          full_name: フルネーム
+          hidden: hidden
+          show: 表示
+          title: 参加者の属性情報を表示
+        user_extensions:
+          show:
+            real_name: 本名
+            address: 住所
+            birth_year: 生年
+            gender: 性別
+            occupation: 職業
     components:
       components:
         comment:

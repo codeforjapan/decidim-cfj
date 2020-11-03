@@ -19,6 +19,8 @@ gem "faker", "~> 1.9"
 
 gem "wicked_pdf", "~> 1.4"
 
+gem "deface"
+
 group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
   gem "figaro"
