@@ -11,7 +11,7 @@ describe "Admin manages officializations", type: :system do
   let!(:admin) { create(:user, :admin, :confirmed, organization: organization) }
   let!(:user) { create(:user, :confirmed, organization: organization) }
 
-  context "not login" do
+  context "when signed in as user, not admin" do
     before do
       Capybara.raise_server_errors = false
       switch_to_host(organization.host)
@@ -29,7 +29,7 @@ describe "Admin manages officializations", type: :system do
     end
   end
 
-  context "login as admin" do
+  context "when signed in as admin" do
     before do
       switch_to_host(organization.host)
       login_as admin, scope: :user
@@ -68,7 +68,7 @@ describe "Admin manages officializations", type: :system do
           user_extension = {
             real_name: "#{user.nickname}_real",
             address: "Faker::Lorem.characters(number: 4)",
-            gender: [0,1,2].shuffle,
+            gender: [0, 1, 2].shuffle,
             birth_year: (1990..2010).to_a.shuffle,
             occupation: "会社員"
           }
