@@ -18,8 +18,6 @@ if !Rails.env.production? || ENV["SEED"]
 
   require "decidim/faker/localized"
 
-  seeds_root = File.join(__dir__, "seeds")
-
   Decidim::User.find_each do |user|
     user_extension = {
       real_name: "#{user.name}_実名",
