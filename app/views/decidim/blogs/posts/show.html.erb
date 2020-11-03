@@ -1,0 +1,57 @@
+<% provide(:title, translated_attribute(post.title)) %>
+
+<% add_decidim_meta_tags({
+  title: translated_attribute(post.title),
+  description: translated_attribute(post.body),
+  url: post_url(post.id)
+}) %>
+
+<%
+  edit_link(
+    resource_locator(post).edit,
+    :update,
+    :blogpost,
+    blogpost: post
+  )
+%>
+
+<div class="row column view-header">
+  <%= link_to :posts, class: "small hollow" do %>
+    <%= icon "chevron-left", class: "icon--small", role: "img", "aria-hidden": true %>
+    <%= t(".back") %>
+  <% end %>
+  <h2 class="heading2"><%= translated_attribute post.title %></h2>
+  <%= cell "decidim/author", present(post.author), from: post %>
+</div>
+<div class="row">
+  <div class="columns section view-side mediumlarge-4 mediumlarge-push-8 large-3 large-push-9">
+    <% if show_endorsements_card? %>
+      <div class="card">
+        <div class="card__content">
+          <div class="row collapse buttons__row">
+            <% if endorsements_enabled? %>
+              <div class="column small-9 collapse">
+                <%= endorsement_buttons_cell(post) %>
+              </div>
+            <% end %>
+            <div class="column collapse <%= endorsements_enabled? ? "small-3" : "" %>">
+              <%= link_to "#comments", class: "button small compact hollow button--nomargin expanded" do %>
+                  <%= icon "comment-square", class: "icon--small", aria_label: t(".comments"), role: "img" %> <%= post.comments_count %>
+              <% end %>
+            </div>
+          </div>
+          <br>
+          <%= follow_button_for(post) %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="columns mediumlarge-8 mediumlarge-pull-4">
+    <div class="section">
+      <%= decidim_sanitize translated_attribute post.body %>
+    </div>
+    <%= cell "decidim/endorsers_list", post %>
+  </div>
+</div>
+<%= attachments_for post %>
+<%= comments_for post %>
