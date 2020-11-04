@@ -1,0 +1,35 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Parameters": {
+        "CacheSubnetGroupName": {
+            "Type": "String"
+        },
+        "VpcSecurityGroupId": {
+            "Type": "String"
+        }
+    },
+    "Resources": {
+        "ElasticCacheRedis": {
+            "Type": "AWS::ElastiCache::CacheCluster",
+            "Properties": {
+                "AutoMinorVersionUpgrade": "true",
+                "AZMode": "single-az",
+                "CacheNodeType": "cache.t2.micro",
+                "Engine": "redis",
+                "EngineVersion": "5.0.6",
+                "NumCacheNodes": "1",
+                "PreferredAvailabilityZone": "ap-northeast-1a",
+                "PreferredMaintenanceWindow": "thu:13:00-thu:14:00",
+                "ClusterName": "staging-decidim-redis",
+                "CacheSubnetGroupName": {
+                    "Ref": "CacheSubnetGroupName"
+                },
+                "VpcSecurityGroupIds": [
+                    {
+                        "Ref": "VpcSecurityGroupId"
+                    }
+                ]
+            }
+        }
+    }
+}
