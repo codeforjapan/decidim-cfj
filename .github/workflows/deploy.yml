@@ -1,4 +1,4 @@
-name: Docker image build & ECR push
+name: Deploy to Elastic Beanstalk
 
 on:
   schedule:
@@ -6,13 +6,13 @@ on:
     - cron: '0 9 * * *'
 
 jobs:
-  build-and-push:
+  deploy:
 
     runs-on: ubuntu-latest
-    timeout-minutes: 900
+    timeout-minutes: 1200
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
 
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
@@ -33,3 +33,23 @@ jobs:
       run: |
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+    - uses: actions/setup-python@master
+      with:
+        python-version: '3.7'
+
+    - name: Install awsebcli
+      run: pip install -U awsebcli
+
+    - name: Deploy to Elastic Beanstalk
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: ${{ secrets.AWS_ECR_REPO_NAME }}
+        IMAGE_TAG: staging
+        EB_ENVIRONMENT_NAME: staging
+      run: |
+        cp -r .ebextensions/ deployments/.ebextensions
+        cd deployments
+        sed -i -e "s|t2.small|t2.micro|g" .ebextensions/00_options.config
+        sed -i -e "s|{RepositoryName}|$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG|g" Dockerrun.aws.json
+        eb deploy ${EB_ENVIRONMENT_NAME}
