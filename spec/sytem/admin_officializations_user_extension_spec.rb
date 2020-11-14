@@ -12,7 +12,7 @@ describe "Admin manages officializations", type: :system do
   let!(:user) { create(:user, :confirmed, organization: organization) }
 
   let!(:admin_authorization) do
-    admin_metadata = {real_name: "admin", address: "admin address", gender: 1, birth_year: 2000, occupation: "administrator"}
+    admin_metadata = { real_name: "admin", address: "admin address", gender: 1, birth_year: 2000, occupation: "administrator" }
     create(:authorization, user: admin, name: "user_extension", metadata: admin_metadata)
   end
 

@@ -7,7 +7,7 @@ module Decidim
   module NeedsUserExtension
     extend ActiveSupport::Concern
 
-    ALLOWS_WITHOUT_USER_EXTENSION = %w(account homepage pages tos)
+    ALLOWS_WITHOUT_USER_EXTENSION = %w(account homepage pages tos).freeze
 
     included do
       before_action :needs_user_extension
@@ -19,6 +19,7 @@ module Decidim
       logger.info("controller_name: #{controller_name}")
       return true unless current_user
       return true if ALLOWS_WITHOUT_USER_EXTENSION.include?(controller_name)
+
       metadata = authorization.attributes["metadata"] || {}
 
       ## TODO: validate all metadata; only exsistance now
