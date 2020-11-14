@@ -11,6 +11,11 @@ describe "Admin manages officializations", type: :system do
   let!(:admin) { create(:user, :admin, :confirmed, organization: organization) }
   let!(:user) { create(:user, :confirmed, organization: organization) }
 
+  let!(:admin_authorization) do
+    admin_metadata = {real_name: "admin", address: "admin address", gender: 1, birth_year: 2000, occupation: "administrator"}
+    create(:authorization, user: admin, name: "user_extension", metadata: admin_metadata)
+  end
+
   context "when signed in as user, not admin" do
     before do
       Capybara.raise_server_errors = false
