@@ -31,6 +31,26 @@
 </div>
 <script type="text/javascript">
 $(() => {
+  const $modal = $("#show-user-modal");
+
+  if ($modal.length === 0) {
+    return
+  }
+
+  const $button = $("[data-open=user_extension]", $modal);
+  const $userExtension = $("#user_extension", $modal);
+  const $fullName = $("#user_full_name2", $modal);
+
+  $("[data-toggle=show-user-modal]").on("click", (event) => {
+    event.preventDefault()
+
+    $button.show()
+    $button.attr("data-open-url", event.currentTarget.href)
+    $fullName.text($(event.currentTarget).data("full-name"))
+    $userExtension.html("")
+  })
+})
+$(() => {
   function appendStyleElement(text) {
     var style = document.createElement('style');
     style.media = 'screen';
