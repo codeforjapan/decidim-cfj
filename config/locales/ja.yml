@@ -38,6 +38,7 @@ ja:
   errors:
     messages:
       already_confirmed: が確認されました。ログインしてみてください
+      needs_user_extension: "登録されていないユーザー属性情報が見つかりました。"
   decidim:
     admin:
       admin_terms_of_use:
