@@ -118,6 +118,14 @@ ja:
           email_outro: '"%{resource_title}" 、またはその参加者をフォローしているためこの通知を受け取りました。前のリンクからフォローを解除することができます。'
           email_subject: "%{author_name} から %{resource_title} に対して新しいコメントがあります"
           notification_title: '<a href="%{author_path}">%{author_name} %{author_nickname}</a> から <a href="%{resource_path}">%{resource_title} に対して新しいコメントがあります</a>'
+      gamification:
+        badge_earned:
+          email_outro: サイトでの活動によって、この通知を受け取りました。
+        level_up:
+          email_intro: 'おめでとうございます！ あなたは <a href="%{resource_url}">%{badge_name} バッジ</a> のレベル %{current_level} に到達しました！'
+          email_outro: サイトでの活動によって、この通知を受け取りました。
+          email_subject: "%{badge_name} のバッジがレベル %{current_level} に達しました！"
+          notification_title: 'おめでとうございます！ あなたは <a href="%{resource_path}">%{badge_name} バッジ</a> のレベル %{current_level} に到達しました！'
     fingerprint:
       check: フィンガープリントを確認
     initiatives:
