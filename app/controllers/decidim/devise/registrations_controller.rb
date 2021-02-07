@@ -15,7 +15,7 @@ module Decidim
       invisible_captcha
 
       def new
-        @form = if need_user_extension?
+        @form = if need_user_extension_by_organization?
                   form(ExtendedRegistrationForm).from_params(
                     user: { sign_up_as: "user" },
                     user_extension: UserExtensionForm.new
@@ -28,7 +28,7 @@ module Decidim
       end
 
       def create
-        if need_user_extension?
+        if need_user_extension_by_organization?
           registration_command = CreateExtendedRegistration
           @form = form(ExtendedRegistrationForm).from_params(params[:user].merge(current_locale: current_locale))
         else
@@ -63,7 +63,7 @@ module Decidim
       end
 
       def configure_permitted_parameters
-        if need_user_extension?
+        if need_user_extension_by_organization?
           devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :tos_agreement, user_extension: [:address, :birth_year, :occupation, :gender]])
         else
           devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :tos_agreement])
@@ -76,7 +76,7 @@ module Decidim
         resource.organization = current_organization
       end
 
-      def need_user_extension?
+      def need_user_extension_by_organization?
         current_organization.available_authorization_handlers&.include?("user_extension")
       end
     end
