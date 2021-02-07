@@ -190,7 +190,7 @@ Decidim.configure do |config|
   # }
 
   # Sets Decidim::Exporters::CSV's default column separator
-  # config.default_csv_col_sep = ";"
+  config.default_csv_col_sep = ","
 
   # The list of roles a user can have, not considering the space-specific roles.
   # config.user_roles = %w(admin user_manager)
