@@ -27,7 +27,7 @@ ja:
     questionnaires:
       show:
         answer_questionnaire:
-          anonymous_user_message: <a href="%{sign_in_link}">アカウント</a> でログインするか、 <a href="%{sign_up_link}">ユーザ登録</a> してフォームに回答してください。
+          anonymous_user_message: <a href="%{sign_in_link}">あなたのアカウントでログインする</a> か、 <a href="%{sign_up_link}">ユーザー登録</a> してフォームに回答してください。
   enums:
     user_extension:
       gender:
