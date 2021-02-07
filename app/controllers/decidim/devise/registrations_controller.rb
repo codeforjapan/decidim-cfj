@@ -15,16 +15,28 @@ module Decidim
       invisible_captcha
 
       def new
-        @form = form(ExtendedRegistrationForm).from_params(
-          user: { sign_up_as: "user" },
-          user_extension: UserExtensionForm.new
-        )
+        @form = if need_user_extension?
+                  form(ExtendedRegistrationForm).from_params(
+                    user: { sign_up_as: "user" },
+                    user_extension: UserExtensionForm.new
+                  )
+                else
+                  form(RegistrationForm).from_params(
+                    user: { sign_up_as: "user" }
+                  )
+                end
       end
 
       def create
-        @form = form(ExtendedRegistrationForm).from_params(params[:user].merge(current_locale: current_locale))
+        if need_user_extension?
+          registration_command = CreateExtendedRegistration
+          @form = form(ExtendedRegistrationForm).from_params(params[:user].merge(current_locale: current_locale))
+        else
+          registration_command = CreateRegistration
+          @form = form(RegistrationForm).from_params(params[:user].merge(current_locale: current_locale))
+        end
 
-        CreateExtendedRegistration.call(@form) do
+        registration_command.call(@form) do
           on(:ok) do |user|
             if user.active_for_authentication?
               set_flash_message! :notice, :signed_up
@@ -51,13 +63,21 @@ module Decidim
       end
 
       def configure_permitted_parameters
-        devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :tos_agreement, user_extension: [:address, :birth_year, :occupation, :gender]])
+        if need_user_extension?
+          devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :tos_agreement, user_extension: [:address, :birth_year, :occupation, :gender]])
+        else
+          devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :tos_agreement])
+        end
       end
 
       # Called before resource.save
       def build_resource(hash = nil)
         super(hash)
         resource.organization = current_organization
+      end
+
+      def need_user_extension?
+        current_organization.available_authorization_handlers&.include?("user_extension")
       end
     end
   end

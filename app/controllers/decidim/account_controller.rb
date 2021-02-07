@@ -7,14 +7,23 @@ module Decidim
 
     def show
       enforce_permission_to :show, :user, current_user: current_user
-      @account = form(ExtendedAccountForm).from_model(current_user)
+      if need_user_extension?
+        @account = form(ExtendedAccountForm).from_model(current_user)
+      else
+        @account = form(AccountForm).from_model(current_user)
+      end
     end
 
     def update
       enforce_permission_to :update, :user, current_user: current_user
-      @account = form(ExtendedAccountForm).from_params(account_params)
+      if need_user_extension?
+        @account = form(ExtendedAccountForm).from_params(account_params)
+      else
+        @account = form(AccountForm).from_params(account_params)
+      end
 
-      UpdateExtendedAccount.call(current_user, @account) do
+      account_klass = need_user_extension? ? UpdateExtendedAccount : UpdateAccount
+      account_klass.call(current_user, @account) do
         on(:ok) do |email_is_unconfirmed|
           flash[:notice] = if email_is_unconfirmed
                              t("account.update.success_with_email_confirmation", scope: "decidim")
@@ -42,7 +51,8 @@ module Decidim
       enforce_permission_to :delete, :user, current_user: current_user
       @form = form(DeleteAccountForm).from_params(params)
 
-      DestroyExtendedAccount.call(current_user, @form) do
+      account_klass = need_user_extension? ? DestroyExtendedAccount : DestroyAccount
+      account_klass.call(current_user, @form) do
         on(:ok) do
           sign_out(current_user)
           flash[:notice] = t("account.destroy.success", scope: "decidim")
@@ -59,7 +69,15 @@ module Decidim
     private
 
     def account_params
-      { avatar: current_user.avatar }.merge(params[:extended_account].to_unsafe_h)
+      if need_user_extension?
+        { avatar: current_user.avatar }.merge(params[:extended_account].to_unsafe_h)
+      else
+        { avatar: current_user.avatar }.merge(params[:user].to_unsafe_h)
+      end
+    end
+
+    def need_user_extension?
+      current_user.organization&.available_authorization_handlers&.include?("user_extension")
     end
   end
 end

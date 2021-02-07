@@ -17,7 +17,9 @@
       <%= f.url_field :personal_url %>
       <%= f.text_area :about, rows: 5 %>
 
+      <% if current_organization.available_authorization_handlers&.include?("user_extension") %>
       <%= render partial: "user_extension", locals: {f: f} %>
+      <% end %>
 
       <% if @account.errors[:password].any? || @account.errors[:password_confirmation].any? %>
         <%= render partial: "password_fields", locals: { form: f } %>
