@@ -1,2 +1,2 @@
 <!-- insert_after "div#user-groups" -->
-<%= render "show_user_extension_modal" %>
+<%= render "decidim/user_extension/admin/officializations/show_user_extension_modal" %>

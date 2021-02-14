@@ -9,10 +9,11 @@ module Decidim
       paths["lib/tasks"] = nil
 
       routes do
-        # Add admin engine routes here
-        #namespace :user_extension do
-        #  get :foo
-        #end
+        namespace :officializations do
+          get "user_extensions/:user_id" => "user_extensions#show",
+              constraints: (->(request) { Decidim::Admin::OrganizationDashboardConstraint.new(request).matches? }),
+              as: "show_user_extension"
+        end
       end
 
       initializer "decidim_user_extension.admin_mount_routes" do
