@@ -15,14 +15,14 @@ module Decidim
       invisible_captcha
 
       def new
-        @form = form(ExtendedRegistrationForm).from_params(
+        @form = form(RegistrationForm).from_params(
           user: { sign_up_as: "user" },
           user_extension: UserExtensionForm.new
         )
       end
 
       def create
-        @form = form(ExtendedRegistrationForm).from_params(params[:user].merge(current_locale: current_locale))
+        @form = form(RegistrationForm).from_params(params[:user].merge(current_locale: current_locale))
 
         CreateExtendedRegistration.call(@form) do
           on(:ok) do |user|

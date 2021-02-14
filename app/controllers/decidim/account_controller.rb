@@ -7,12 +7,12 @@ module Decidim
 
     def show
       enforce_permission_to :show, :user, current_user: current_user
-      @account = form(ExtendedAccountForm).from_model(current_user)
+      @account = form(AccountForm).from_model(current_user)
     end
 
     def update
       enforce_permission_to :update, :user, current_user: current_user
-      @account = form(ExtendedAccountForm).from_params(account_params)
+      @account = form(AccountForm).from_params(account_params)
 
       UpdateExtendedAccount.call(current_user, @account) do
         on(:ok) do |email_is_unconfirmed|
@@ -59,7 +59,7 @@ module Decidim
     private
 
     def account_params
-      { avatar: current_user.avatar }.merge(params[:extended_account].to_unsafe_h)
+      { avatar: current_user.avatar }.merge(params[:user].to_unsafe_h)
     end
   end
 end
