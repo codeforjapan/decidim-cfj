@@ -3,6 +3,7 @@
 require "rails"
 require "decidim/core"
 require "deface"
+require "decidim/user_extension/concerns/controllers/needs_user_extension"
 
 module Decidim
   module UserExtension
@@ -42,6 +43,10 @@ module Decidim
 
         Decidim::DestroyAccount.class_eval do
           prepend UserExtension::DestroyCommandsOverrides
+        end
+
+        DecidimController.class_eval do
+          include Decidim::UserExtension::Concerns::Controllers::NeedsUserExtension
         end
       end
     end
