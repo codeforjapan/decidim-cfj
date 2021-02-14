@@ -31,6 +31,18 @@ module Decidim
         Decidim::AccountForm.class_eval do
           include UserExtension::FormsDefinitions
         end
+
+        Decidim::CreateRegistration.class_eval do
+          prepend UserExtension::CreateCommandsOverrides
+        end
+
+        Decidim::UpdateAccount.class_eval do
+          prepend UserExtension::UpdateCommandsOverrides
+        end
+
+        Decidim::DestroyAccount.class_eval do
+          prepend UserExtension::DestroyCommandsOverrides
+        end
       end
     end
   end
