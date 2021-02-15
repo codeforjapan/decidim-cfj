@@ -29,7 +29,7 @@ describe "Admin manages officializations", type: :system do
     end
 
     it "cannot see user_extension fragment" do
-      visit main_app.user_extension_admin_officialization_path(user.id)
+      visit Decidim::UserExtension::AdminEngine.routes.url_helpers.officializations_show_user_extension_path(user.id)
       expect(page).to have_no_content("参加者")
     end
   end
