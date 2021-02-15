@@ -73,8 +73,8 @@ describe "Admin manages officializations", type: :system do
           user_extension = {
             real_name: "#{user.nickname}_real",
             address: "Faker::Lorem.characters(number: 4)",
-            gender: [0, 1, 2].shuffle,
-            birth_year: (1990..2010).to_a.shuffle,
+            gender: [0, 1, 2].sample,
+            birth_year: (1990..2010).to_a.sample,
             occupation: "会社員"
           }
           create(:authorization, user: user, name: "user_extension", metadata: user_extension)
