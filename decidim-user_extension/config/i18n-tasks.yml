@@ -1,0 +1,43 @@
+---
+
+base_locale: en
+locales: [ja, en]
+
+ignore_unused:
+  - enums.user_extension.gender.female
+  - enums.user_extension.gender.male
+  - enums.user_extension.gender.not_applicable
+  - enums.user_extension.gender.not_known
+  - decidim.admin.officializations.index.show_user_extension
+
+ignore_missing:
+  - decidim.account.show.change_password
+  - decidim.account.show.update_account
+  - "decidim.devise.registrations.new.already_have_an_account?"
+  - decidim.devise.registrations.new.newsletter
+  - decidim.devise.registrations.new.newsletter_title
+  - decidim.devise.registrations.new.nickname_help
+  - decidim.devise.registrations.new.nickname_notice
+  - decidim.devise.registrations.new.nickname_placeholder
+  - decidim.devise.registrations.new.password_help
+  - decidim.devise.registrations.new.sign_in
+  - decidim.devise.registrations.new.sign_up
+  - decidim.devise.registrations.new.subtitle
+  - decidim.devise.registrations.new.terms
+  - decidim.devise.registrations.new.tos_agreement
+  - decidim.devise.registrations.new.tos_title
+  - decidim.devise.registrations.new.username_help
+  - decidim.devise.registrations.new.username_placeholder
+  - devise.registrations.new.sign_up
+  - layouts.decidim.user_menu.profile
+  - show_user_extension
+
+search:
+  relative_roots:
+    - app/controllers
+    - app/helpers
+    - app/mailers
+    - app/presenters
+    - app/views
+    - app/overrides
+

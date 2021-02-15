@@ -1,0 +1,39 @@
+en:
+  activemodel:
+    attributes:
+      user_extension:
+        real_name: Real name
+        address: Address
+        birth_year: Birth year
+        gender: Gender
+        occupation: Occupation
+  enums:
+    user_extension:
+      gender:
+        not_known: Not known
+        male: Male
+        female: Female
+        not_applicable: Not applicable
+  decidim:
+    admin:
+      officializations:
+        index:
+          show_user_extension: Show user extension
+    user_extension:
+      admin:
+        officializations:
+          user_extensions:
+            show:
+              real_name: Real name
+              address: Address
+              birth_year: Birth year
+              gender: Gender
+              occupation: Occupation
+          show_user_extension_modal:
+            user_extension: User extension
+            close_modal: Close modal
+            description: Show participant's personal information. This action will be logged.
+            full_name: Full name
+            hidden: Hidden
+            show: Show
+            title: Title
