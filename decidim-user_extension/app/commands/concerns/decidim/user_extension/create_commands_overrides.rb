@@ -34,6 +34,9 @@ module Decidim
       private
 
       def create_user_extension
+        # ignore if user_extension is disable
+        return unless current_organization.available_authorization_handlers&.include?("user_extension")
+
         user_extension = form.user_extension
         authorization.attributes = {
           unique_id: user_extension.unique_id,
