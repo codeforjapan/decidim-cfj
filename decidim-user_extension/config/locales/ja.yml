@@ -1,19 +1,13 @@
+---
 ja:
   activemodel:
     attributes:
       user_extension:
-        real_name: 本名
         address: 住所
         birth_year: 生年(西暦)
         gender: 性別
         occupation: 職業
-  enums:
-    user_extension:
-      gender:
-        not_known: 無回答
-        male: 男性
-        female: 女性
-        not_applicable: その他
+        real_name: 本名
   decidim:
     admin:
       officializations:
@@ -22,18 +16,25 @@ ja:
     user_extension:
       admin:
         officializations:
-          user_extensions:
-            show:
-              real_name: 本名
-              address: 住所
-              birth_year: 生年
-              gender: 性別
-              occupation: 職業
           show_user_extension_modal:
-            user_extension: ユーザー属性
             close_modal: モーダルを閉じる
             description: 直接参加者に連絡する必要がある場合は，表示ボタンをクリックしてメールアドレスを見ることができます．このアクションは記録されます．
             full_name: フルネーム
             hidden: hidden
             show: 表示
             title: 参加者の属性情報を表示
+            user_extension: ユーザー属性
+          user_extensions:
+            show:
+              address: 住所
+              birth_year: 生年
+              gender: 性別
+              occupation: 職業
+              real_name: 本名
+  enums:
+    user_extension:
+      gender:
+        female: 女性
+        male: 男性
+        not_applicable: その他
+        not_known: 無回答
