@@ -23,7 +23,7 @@ module Decidim
             return true unless current_user
             return true if ALLOWS_WITHOUT_USER_EXTENSION.include?(controller_name)
 
-            metadata = authorization.attributes["metadata"] || {}
+            metadata = authorization_metadata
 
             ## TODO: validate all metadata; only exsistance now
             if !metadata["real_name"] || !metadata["address"] || !metadata["birth_year"] || !metadata["gender"]
@@ -32,11 +32,12 @@ module Decidim
             end
           end
 
-          def authorization
-            @authorization ||= Decidim::Authorization.find_or_initialize_by(
+          def authorization_metadata
+            auth = Decidim::Authorization.find_or_initialize_by(
               user: current_user,
               name: "user_extension"
             )
+            auth.attributes["metadata"] || {}
           end
         end
       end
