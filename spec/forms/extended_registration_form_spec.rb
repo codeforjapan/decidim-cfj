@@ -4,7 +4,7 @@ require "rails_helper"
 require "decidim/faker/localized"
 
 module Decidim
-  describe ExtendedRegistrationForm do
+  describe RegistrationForm do
     subject do
       described_class.from_params(
         attributes
