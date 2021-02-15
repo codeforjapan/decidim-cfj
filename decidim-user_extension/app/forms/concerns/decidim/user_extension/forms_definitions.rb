@@ -25,7 +25,12 @@ module Decidim
       private
 
       def user_extension_form_is_valid
+        return true unless enable_user_extension?
         merge_errors_for("user_extension") if user_extension.invalid?
+      end
+
+      def enable_user_extension?
+        current_organization.available_authorization_handlers&.include?("user_extension")
       end
 
       # from https://github.com/andypike/rectify/issues/32
