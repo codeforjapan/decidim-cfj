@@ -21,6 +21,8 @@ gem "wicked_pdf", "~> 1.4"
 
 gem "deface"
 
+gem "decidim-user_extension", path: "decidim-user_extension"
+
 group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
   gem "figaro"
