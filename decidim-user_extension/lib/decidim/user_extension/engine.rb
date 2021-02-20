@@ -20,7 +20,7 @@ module Decidim
         app.config.assets.precompile += %w(decidim_user_extension_manifest.js)
       end
 
-      initializer "decidim_user_extension.registration_additions" do
+      initializer "decidim_user_extension.engine_additions" do
         Decidim::RegistrationForm.class_eval do
           include UserExtension::FormsDefinitions
         end
