@@ -22,6 +22,12 @@ module Decidim
         end
       end
 
+      initializer "decidim_user_extension.admin_engine_additions" do
+        Decidim::Admin::ApplicationController.class_eval do
+          include Decidim::UserExtension::Concerns::Controllers::NeedsUserExtension
+        end
+      end
+
       def load_seed
         nil
       end
