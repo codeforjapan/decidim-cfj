@@ -46,10 +46,8 @@ ja:
     components:
       add_comment_form:
         account_message: <a href="%{sign_in_url}">ログイン</a> または <a href="%{sign_up_url}">新規登録</a> することでコメントできます。
-      components:
-        comment:
-          deleted_user: 退会者
       comment:
+        deleted_user: 退会者
         report:
           reasons:
             spam: 本来の内容に関係が無い広告、詐欺や悪意のある処理などが含まれています。
