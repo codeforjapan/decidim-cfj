@@ -1,2 +1,0 @@
-<!-- insert_after "div#user-groups" -->
-<%= render "show_user_extension_modal" %>

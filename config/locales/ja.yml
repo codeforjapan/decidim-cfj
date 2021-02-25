@@ -27,14 +27,7 @@ ja:
     questionnaires:
       show:
         answer_questionnaire:
-          anonymous_user_message: <a href="%{sign_in_link}">アカウント</a> でログインするか、 <a href="%{sign_up_link}">ユーザ登録</a> してフォームに回答してください。
-  enums:
-    user_extension:
-      gender:
-        not_known: 無回答
-        male: 男性
-        female: 女性
-        not_applicable: その他
+          anonymous_user_message: <a href="%{sign_in_link}">あなたのアカウントでログインする</a> か、 <a href="%{sign_up_link}">ユーザー登録</a> してフォームに回答してください。
   errors:
     messages:
       already_confirmed: が確認されました。ログインしてみてください
@@ -50,30 +43,11 @@ ja:
             nickname: アカウントID
         search_placeholder:
           name_or_nickname_or_email_cont: "%{collection} をメール、表示名、アカウントIDで検索します。"
-      officializations:
-        index:
-          show_user_extension: ユーザー属性を表示
-        show_user_extension_modal:
-          user_extension: ユーザー属性
-          close_modal: モーダルを閉じる
-          description: 直接参加者に連絡する必要がある場合は，表示ボタンをクリックしてメールアドレスを見ることができます．このアクションは記録されます．
-          email_address: メールアドレス
-          full_name: フルネーム
-          hidden: hidden
-          show: 表示
-          title: 参加者の属性情報を表示
-        user_extensions:
-          show:
-            real_name: 本名
-            address: 住所
-            birth_year: 生年
-            gender: 性別
-            occupation: 職業
     components:
-      components:
-        comment:
-          deleted_user: 退会者
+      add_comment_form:
+        account_message: <a href="%{sign_in_url}">ログイン</a> または <a href="%{sign_up_url}">新規登録</a> することでコメントできます。
       comment:
+        deleted_user: 退会者
         report:
           reasons:
             spam: 本来の内容に関係が無い広告、詐欺や悪意のある処理などが含まれています。

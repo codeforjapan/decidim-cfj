@@ -92,6 +92,7 @@ Decidim.configure do |config|
 
   # Time window were users can access the website even if their email is not confirmed.
   # config.unconfirmed_access_for = 2.days
+  config.unconfirmed_access_for = 0.days
 
   # Etherpad configuration. Check the docs for more info.
   # config.etherpad = {
@@ -190,7 +191,7 @@ Decidim.configure do |config|
   # }
 
   # Sets Decidim::Exporters::CSV's default column separator
-  # config.default_csv_col_sep = ";"
+  config.default_csv_col_sep = ","
 
   # The list of roles a user can have, not considering the space-specific roles.
   # config.user_roles = %w(admin user_manager)
@@ -230,3 +231,6 @@ end
 
 Rails.application.config.i18n.available_locales = Decidim.available_locales
 Rails.application.config.i18n.default_locale = Decidim.default_locale
+
+# Overwrite Devise.allow_unconfirmed_access_for
+Devise.allow_unconfirmed_access_for = Decidim.unconfirmed_access_for
