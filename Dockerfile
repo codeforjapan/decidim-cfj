@@ -40,6 +40,8 @@ WORKDIR $APP_HOME
 
 COPY Gemfile Gemfile.lock ./
 
+COPY . $APP_HOME
+
 # bundle install
 RUN gem install bundler:${BUNDLER_VERSION} \
     && bundle config --global jobs ${BUNDLER_JOBS} \
@@ -50,7 +52,6 @@ RUN gem install bundler:${BUNDLER_VERSION} \
             bundle install \
         ;fi
 
-COPY . $APP_HOME
 RUN cp ./entrypoint /usr/bin/entrypoint \
     && chmod +x /usr/bin/entrypoint \
     && chmod -R +x ./bin/
