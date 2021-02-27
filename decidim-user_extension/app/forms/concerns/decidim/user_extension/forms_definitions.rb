@@ -31,7 +31,7 @@ module Decidim
       end
 
       def enable_user_extension?
-        current_organization.available_authorization_handlers&.include?("user_extension")
+        current_organization.available_authorization_handlers&.include?("available_authorization_handlers")
       end
 
       # from https://github.com/andypike/rectify/issues/32
