@@ -30,7 +30,7 @@ module Decidim
 
       def update_user_extension
         # ignore if user_extension is disable
-        return unless current_organization.available_authorization_handlers&.include?("user_extension")
+        return unless current_organization.available_authorization_handlers&.include?("user_extension_authorization_handler")
 
         user_extension = @form.user_extension
         authorization.attributes = {
