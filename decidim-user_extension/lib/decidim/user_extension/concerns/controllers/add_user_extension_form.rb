@@ -11,7 +11,7 @@ module Decidim
             @form = form(RegistrationForm).from_params(
               user: { sign_up_as: "user" },
               user_extension: UserExtensionForm.new
-              )
+            )
           end
 
           ### Should we overwrite this as well?　It appears to work without it.
