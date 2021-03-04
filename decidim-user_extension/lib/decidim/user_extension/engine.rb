@@ -4,6 +4,7 @@ require "rails"
 require "decidim/core"
 require "deface"
 require "decidim/user_extension/concerns/controllers/needs_user_extension"
+require "decidim/user_extension/concerns/controllers/add_user_extension_form"
 
 module Decidim
   module UserExtension
@@ -47,6 +48,10 @@ module Decidim
 
         DecidimController.class_eval do
           include Decidim::UserExtension::Concerns::Controllers::NeedsUserExtension
+        end
+
+        Decidim::Devise::RegistrationsController.class_eval do
+          prepend Decidim::UserExtension::Concerns::Controllers::AddUserExtensionForm
         end
       end
     end
