@@ -5,6 +5,7 @@ require "decidim/core"
 require "deface"
 require "decidim/user_extension/concerns/controllers/needs_user_extension"
 require "decidim/user_extension/concerns/controllers/add_user_extension_form"
+require "decidim/user_extension/concerns/controllers/omniauth_add_user_extension_form"
 
 module Decidim
   module UserExtension
@@ -46,12 +47,20 @@ module Decidim
           prepend UserExtension::DestroyCommandsOverrides
         end
 
+        Decidim::CreateOmniauthRegistration.class_eval do
+          prepend UserExtension::CreateOmniauthCommandsOverrides
+        end
+
         DecidimController.class_eval do
           include Decidim::UserExtension::Concerns::Controllers::NeedsUserExtension
         end
 
         Decidim::Devise::RegistrationsController.class_eval do
           prepend Decidim::UserExtension::Concerns::Controllers::AddUserExtensionForm
+        end
+
+        Decidim::Devise::OmniauthRegistrationsController.class_eval do
+          prepend Decidim::UserExtension::Concerns::Controllers::OmniauthAddUserExtensionForm
         end
       end
     end
