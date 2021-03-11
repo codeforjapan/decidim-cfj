@@ -20,6 +20,7 @@ gem "faker", "~> 1.9"
 gem "wicked_pdf", "~> 1.4"
 
 gem "deface"
+gem 'newrelic_rpm'
 
 gem "decidim-user_extension", path: "decidim-user_extension"
 
