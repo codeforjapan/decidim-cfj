@@ -1,16 +1,17 @@
+---
 en:
   activemodel:
     attributes:
       user_extension:
-        real_name: Real Name
         address: Address
         birth_year: Birth year
         gender: Gender
         occupation: Occupation
+        real_name: Real Name
   enums:
     user_extension:
       gender:
-        not_known: Not Known
-        male: Male
         female: Female
+        male: Male
         not_applicable: Not Applicable
+        not_known: Not Known
