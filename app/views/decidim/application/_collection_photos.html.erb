@@ -1,14 +1,19 @@
 <% unless attachment_collection.unused? %>
   <div class="docs__container">
-    <span data-toggle="docs-collection-<%= attachment_collection.id %>"><%= icon "caret-right", class: "icon--small", role: "img", "aria-hidden": true %>&nbsp;
+    <span data-toggle="photos-collection-<%= attachment_collection.id %>"><%= icon "caret-right", class: "icon--small", role: "img", "aria-hidden": true %>&nbsp;
       <strong><%= translated_attribute(attachment_collection.name) %></strong>
-      <small>(<%= attachment_collection.attachments.count %> <%= t(".documents", count: attachment_collection.attachments.count) %>)</small>
     </span>
-    <div id="docs-collection-<%= attachment_collection.id %>" class="docs__content hide" data-toggler=".hide">
-      <p><%= translated_attribute(attachment_collection.description) %></p>
-      <div class="card card--list">
-        <%= render partial: "document", collection: documents %>
-      </div>
+
+    <div id="photos-collection-<%= attachment_collection.id %>" class="gallery row hide" data-toggler=".hide">
+      <% photos.in_groups_of(3, false).each do |group| %>
+        <% group.each_with_index do |photo, index| %>
+          <div class="columns small-6 medium-4 <%= (index == 2 || photo == group.last ? "end" : "") %>">
+            <%= link_to photo.big_url, target: "_blank", rel: "noopener" do %>
+              <%= image_tag photo.thumbnail_url, class:"thumbnail", alt: strip_tags(translated_attribute(photo.title)) %>
+            <% end %>
+          </div>
+        <% end %>
+      <% end %>
     </div>
   </div>
 <% end %>
