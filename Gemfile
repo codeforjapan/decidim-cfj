@@ -24,6 +24,9 @@ gem "newrelic_rpm"
 
 gem "decidim-user_extension", path: "decidim-user_extension"
 
+# When rails >= 5.2.5 or 6.0.3.6, you can remove this gem.
+gem "mimemagic", "~> 0.3.10"
+
 group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
   gem "figaro"
