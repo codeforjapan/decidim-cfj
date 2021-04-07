@@ -22,6 +22,7 @@ module Decidim
             logger.info("controller_name: #{controller_name}")
             return true unless current_user
             return true if ALLOWS_WITHOUT_USER_EXTENSION.include?(controller_name)
+            return true unless enable_user_extension?
 
             metadata = authorization_metadata
 
@@ -30,6 +31,10 @@ module Decidim
               flash[:error] = t("errors.messages.needs_user_extension")
               redirect_to decidim.account_path
             end
+          end
+
+          def enable_user_extension?
+            current_organization.available_authorization_handlers&.include?("user_extension_authorization_handler")
           end
 
           def authorization_metadata
