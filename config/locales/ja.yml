@@ -175,6 +175,8 @@ ja:
         ignore: |-
           招待を受け入れたくない場合は、このメールを無視してください。<br />
           上記のリンクにアクセスし、アカウントIDとパスワードを設定するまで、あなたのアカウントは作成されません。
+        someone_invited_you: "%{application}にあなたを招待しました。以下のリンクから受け入れることができます。"
+        someone_invited_you_as_admin: "%{application}の管理者としてあなたを招待しました。以下のリンクから承認できます。"
       password_change:
         greeting: こんにちは、 %{recipient} さん!
       reset_password_instructions:
