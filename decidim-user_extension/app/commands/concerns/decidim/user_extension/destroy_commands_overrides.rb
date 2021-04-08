@@ -31,11 +31,14 @@ module Decidim
           user: @user,
           name: "user_extension"
         )
-        authorization.attributes = {
-          unique_id: nil,
-          metadata: {}
-        }
-        authorization.save!
+        # should be removed privacy data even if current_organization.available_authorization_handlers is empty
+        if authorization
+          authorization.attributes = {
+            unique_id: nil,
+            metadata: {}
+          }
+          authorization.save!
+        end
       end
     end
   end
