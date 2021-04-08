@@ -6,9 +6,9 @@ ruby RUBY_VERSION
 
 gem "decidim", git: "https://github.com/decidim/decidim.git", branch: "release/0.24-stable"
 
-# gem "decidim", "0.21"
-# gem "decidim-consultations", "0.23.0.dev"
-# gem "decidim-initiatives", "0.23.0.dev"
+# gem "decidim", "0.24"
+# gem "decidim-consultations", "0.24.0.dev"
+# gem "decidim-initiatives", "0.24.0.dev"
 
 gem "bootsnap", "~> 1.3"
 
