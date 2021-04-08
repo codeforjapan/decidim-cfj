@@ -1,0 +1,132 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Static contents distribution using CloudFront for eelastic Beanstalk.
+
+Parameters:
+  AppEnvironment:
+    Description: Type of app environment.
+    Type: String
+    Default: staging
+    AllowedValues:
+      - staging
+      - production
+  ErrorCacheTTL:
+    Description: The error cache time in seconds.
+    Type: String
+    Default: 1
+  EbAlbDnsName:
+    Description: Type of this AlB domain name like "staging-alb-origin.diycities.jp"
+    Type: String
+  DomainAliases:
+    Description: Type of this CNAME domain name like "staging.diycities.jp,stagingtest.diycities.jp"
+    Type: CommaDelimitedList
+  CFSSLCertificateId:
+    Description: Type of this SSL id
+    Type: String
+
+Metadata:
+  "AWS::CloudFormation::Interface":
+    ParameterGroups:
+      - Label:
+          default: "CloudFront"
+        Parameters:
+          - AlbDnsName
+          - ErrorCacheTTL
+
+Resources:
+  # ------------------------------------------------------------#
+  #  S3 Bucket
+  # ------------------------------------------------------------#
+  CloudFrontLogBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub ${AppEnvironment}-cfj-decidim-cloudfront-log
+      AccessControl: LogDeliveryWrite
+
+  # ------------------------------------------------------------#
+  #  CloudFront
+  # ------------------------------------------------------------#
+  StaticCachePolicy:
+    Type: AWS::CloudFront::CachePolicy
+    Properties:
+      CachePolicyConfig:
+        DefaultTTL: 600
+        MinTTL: 60
+        MaxTTL: 3600
+        Name: Decidim-Static-Cache-Policy
+        ParametersInCacheKeyAndForwardedToOrigin:
+          CookiesConfig:
+            CookieBehavior: none
+          EnableAcceptEncodingBrotli: true
+          EnableAcceptEncodingGzip: true
+          HeadersConfig:
+            HeaderBehavior: none
+          QueryStringsConfig:
+            QueryStringBehavior: all
+
+  CloudFront:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Aliases: !Ref DomainAliases
+        Comment: !Sub ${AppEnvironment} cfj-decidim app
+        Enabled: true
+        Logging:
+          IncludeCookies: false
+          Bucket: !GetAtt CloudFrontLogBucket.DomainName
+          Prefix: logs/
+        Origins:
+        - Id: appEbOrigin
+          DomainName: !Ref EbAlbDnsName
+          CustomOriginConfig:
+            HTTPPort: 80
+            HTTPSPort: 443
+            OriginProtocolPolicy: https-only
+        DefaultCacheBehavior:
+          AllowedMethods:
+            - GET
+            - HEAD
+            - DELETE
+            - OPTIONS
+            - PATCH
+            - POST
+            - PUT
+          Compress: false
+          CachePolicyId: 4135ea2d-6df8-44a3-9df3-4b5a84be39ad
+          OriginRequestPolicyId: 216adef6-5c7f-47e4-b989-5492eafa07d3
+          TargetOriginId: appEbOrigin
+          ViewerProtocolPolicy: redirect-to-https
+        CacheBehaviors:
+        - AllowedMethods:
+          - GET
+          - HEAD
+          - OPTIONS
+          Compress: true
+          CachePolicyId: !GetAtt StaticCachePolicy.Id
+          OriginRequestPolicyId: 216adef6-5c7f-47e4-b989-5492eafa07d3
+          PathPattern: assets/*
+          TargetOriginId: appEbOrigin
+          ViewerProtocolPolicy: redirect-to-https
+        HttpVersion: http2
+        PriceClass: PriceClass_All
+        ViewerCertificate:
+          SslSupportMethod: sni-only
+          MinimumProtocolVersion: TLSv1.2_2019
+          AcmCertificateArn: !Sub "arn:aws:acm:us-east-1:${AWS::AccountId}:certificate/${CFSSLCertificateId}"
+        CustomErrorResponses:
+          - ErrorCode: 400
+            ErrorCachingMinTTL: !Ref ErrorCacheTTL
+          - ErrorCode: 403
+            ErrorCachingMinTTL: !Ref ErrorCacheTTL
+          - ErrorCode: 404
+            ErrorCachingMinTTL: !Ref ErrorCacheTTL
+          - ErrorCode: 500
+            ErrorCachingMinTTL: !Ref ErrorCacheTTL
+          - ErrorCode: 502
+            ErrorCachingMinTTL: !Ref ErrorCacheTTL
+          - ErrorCode: 503
+            ErrorCachingMinTTL: !Ref ErrorCacheTTL
+          - ErrorCode: 504
+            ErrorCachingMinTTL: !Ref ErrorCacheTTL
+      Tags:
+        - Key: Name
+          Value: !Sub ${AppEnvironment}-decidim-cfj-cloud-front
