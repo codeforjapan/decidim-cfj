@@ -33,8 +33,8 @@ ja:
           name_or_nickname_or_email_cont: "%{collection} をメール、表示名、アカウントIDで検索します。"
     authorization_handlers:
       user_extension_authorization_handler:
-        explanation: 'ユーザー拡張属性保持用'
-        name: 'ユーザー拡張属性'
+        explanation: ユーザー拡張属性保持用
+        name: ユーザー拡張属性
     components:
       add_comment_form:
         account_message: <a href="%{sign_in_url}">ログイン</a> または <a href="%{sign_up_url}">新規登録</a> することでコメントできます。
@@ -122,6 +122,9 @@ ja:
         filters:
           explanations:
             no_active_nor_upcoming_callout: アクティブな参加型プロセスも今後の参加型プロセスもありません。ここでは過去の参加型プロセスのリストを示します。
+    profiles:
+      show:
+        send_private_message: プライベートメッセージを送信
     proposals:
       application_helper:
         filter_origin_values:
