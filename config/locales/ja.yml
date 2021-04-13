@@ -151,6 +151,10 @@ ja:
         sortition_cancel_author:
           deleted: 退会者
     verifications:
+      authorizations:
+        first_login:
+          actions:
+            user_extension_authorization_handler: ユーザー拡張属性対応用
       postal_letter:
         admin:
           pending_authorizations:
