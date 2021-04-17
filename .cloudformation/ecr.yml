@@ -1,8 +1,8 @@
 AWSTemplateFormatVersion: "2010-09-09"
-Description: Create decidim-fcj ECR
+Description: Create decidim-cfj ECR
 
 Resources:
-  TestEcrPoc:
+  EcrRepo:
     Type: AWS::ECR::Repository
     Properties:
       RepositoryName: decidim-cfj
