@@ -4,11 +4,11 @@ source "https://rubygems.org"
 
 ruby RUBY_VERSION
 
-gem "decidim", git: "https://github.com/decidim/decidim.git", branch: "release/0.23-stable"
+gem "decidim", "0.23.5"
 
-# gem "decidim", "0.21"
-# gem "decidim-consultations", "0.23.0.dev"
-# gem "decidim-initiatives", "0.23.0.dev"
+# gem "decidim", "0.23.5"
+# gem "decidim-consultations", "0.23.5"
+# gem "decidim-initiatives", "0.23.5"
 
 gem "bootsnap", "~> 1.3"
 
@@ -31,7 +31,7 @@ group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
   gem "figaro"
 
-  gem "decidim-dev", git: "https://github.com/decidim/decidim.git", branch: "release/0.23-stable"
+  gem "decidim-dev", "0.23.5"
   gem "dotenv-rails"
   gem "factory_bot_rails"
   gem "rspec-rails"
