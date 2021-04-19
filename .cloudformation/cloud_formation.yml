@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: Static contents distribution using CloudFront for eelastic Beanstalk.
+Description: Static contents distribution using CloudFront for elastic Beanstalk.
 
 Parameters:
   AppEnvironment:
