@@ -12,7 +12,7 @@ gem "decidim", "0.23.5"
 
 gem "bootsnap", "~> 1.3"
 
-gem "puma", ">= 5.2.1"
+gem "puma", ">= 4.3.5"
 gem "uglifier", "~> 4.1"
 
 gem "faker", "~> 1.9"
