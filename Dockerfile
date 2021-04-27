@@ -1,6 +1,6 @@
 FROM node:10.23.0-alpine as node
 
-FROM ruby:2.7.3-alpine
+FROM ruby:2.6.6-alpine
 
 RUN apk update \
     && apk add --no-cache --virtual build-dependencies \
@@ -30,7 +30,7 @@ ARG RAILS_ENV="production"
 ENV LANG=C.UTF-8 \
     LC_ALL=C.UTF-8 \
     BUNDLER_JOBS=4 \
-    BUNDLER_VERSION=2.1.4 \
+    BUNDLER_VERSION=1.17.3 \
     APP_HOME=/app \
     RAILS_ENV=${RAILS_ENV} \
     SECRET_KEY_BASE=placeholder \
