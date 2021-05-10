@@ -11,7 +11,7 @@ module Decidim
       included do
         include ApplicationHelper
 
-        attribute :user_extension, Decidim::UserExtensionForm
+        attribute :user_extension, Decidim::UserExtensionAuthorizationHandler
 
         validate :user_extension_form_is_valid
       end
@@ -19,7 +19,7 @@ module Decidim
       def map_model(model)
         authorization = Authorization.find_or_initialize_by(decidim_user_id: model.id)
         metadata = authorization.metadata || {}
-        self.user_extension = Decidim::UserExtensionForm.from_params(metadata)
+        self.user_extension = Decidim::UserExtensionAuthorizationHandler.from_params(metadata)
       end
 
       private

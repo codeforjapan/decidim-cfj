@@ -25,7 +25,7 @@ module Decidim
         real_name: "test real name",
         address: "test address",
         birth_year: (1931..2020).to_a.sample,
-        gender: Decidim::UserExtensionForm::GENDERS.keys.sample,
+        gender: Decidim::UserExtensionAuthorizationHandler::GENDERS.keys.sample,
         occupation: "spec builder"
       }
     end

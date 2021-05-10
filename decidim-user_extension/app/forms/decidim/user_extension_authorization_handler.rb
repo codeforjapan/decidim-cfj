@@ -2,7 +2,7 @@
 
 module Decidim
   # A form object used to handle user registrations
-  class UserExtensionForm < AuthorizationHandler
+  class UserExtensionAuthorizationHandler < AuthorizationHandler
     REAL_NAME_LENGTH = 100
     ADDRESS_LENGTH = 255
     OCCUPATION_LENGTH = 100
@@ -31,11 +31,11 @@ module Decidim
     attribute :gender, Integer
     attribute :occupation, String
 
-    validates :real_name, presence: true, length: { maximum: Decidim::UserExtensionForm.real_name_length }
-    validates :address, presence: true, length: { maximum: Decidim::UserExtensionForm.address_length }
+    validates :real_name, presence: true, length: { maximum: Decidim::UserExtensionAuthorizationHandler.real_name_length }
+    validates :address, presence: true, length: { maximum: Decidim::UserExtensionAuthorizationHandler.address_length }
     validates :birth_year, presence: true, format: /\A[12][0-9]{3}\z/
     validates :gender, inclusion: { in: GENDERS.keys }
-    validates :occupation, length: { maximum: Decidim::UserExtensionForm.occupation_length }
+    validates :occupation, length: { maximum: Decidim::UserExtensionAuthorizationHandler.occupation_length }
 
     # real_name && address && birth_year should be unique??
     def unique_id
