@@ -13,6 +13,10 @@ ja:
       officializations:
         index:
           show_user_extension: ユーザー属性を表示
+    authorization_handlers:
+      user_extension:
+        explanation: 'ユーザー拡張属性保持用'
+        name: 'ユーザー拡張属性'
     user_extension:
       admin:
         officializations:
