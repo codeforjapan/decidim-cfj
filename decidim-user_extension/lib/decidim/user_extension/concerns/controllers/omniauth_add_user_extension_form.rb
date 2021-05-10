@@ -9,7 +9,7 @@ module Decidim
         module OmniauthAddUserExtensionForm
           def new
             user_params = params[:user]
-            user_params[:user_extension] ||= UserExtensionForm.new
+            user_params[:user_extension] ||= UserExtensionAuthorizationHandler.new
             @form = form(OmniauthRegistrationForm).from_params(user_params)
           end
         end

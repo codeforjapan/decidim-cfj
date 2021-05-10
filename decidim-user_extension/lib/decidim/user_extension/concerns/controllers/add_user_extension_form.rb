@@ -10,7 +10,7 @@ module Decidim
           def new
             @form = form(RegistrationForm).from_params(
               user: { sign_up_as: "user" },
-              user_extension: UserExtensionForm.new
+              user_extension: UserExtensionAuthorizationHandler.new
             )
           end
 
