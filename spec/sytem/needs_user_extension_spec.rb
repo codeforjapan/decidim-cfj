@@ -7,7 +7,7 @@ describe "Need user extension", type: :system do
   let(:user) { create(:user, :confirmed, organization: organization) }
 
   context "when user_extension is enable" do
-    let(:organization) { create(:organization, available_authorizations: ["user_extension_authorization_handler"]) }
+    let(:organization) { create(:organization, available_authorizations: ["user_extension"]) }
 
     context "when signed in as user" do
       before do
