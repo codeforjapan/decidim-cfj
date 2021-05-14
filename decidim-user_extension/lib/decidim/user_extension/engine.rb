@@ -12,10 +12,19 @@ module Decidim
     class Engine < ::Rails::Engine
       isolate_namespace Decidim::UserExtension
 
+      paths["db/migrate"] = nil
+      paths["lib/tasks"] = nil
+
       routes do
         # Add engine routes here
         # resources :user_extension
         # root to: "user_extension#index"
+
+        resource :authorizations, only: [:new, :create, :edit, :update], as: :authorization do
+          get :renew, on: :collection
+        end
+
+        root to: "authorizations#new"
       end
 
       initializer "decidim_user_extension.assets" do |app|

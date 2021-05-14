@@ -14,6 +14,12 @@ module Decidim
               constraints: (->(request) { Decidim::Admin::OrganizationDashboardConstraint.new(request).matches? }),
               as: "show_user_extension"
         end
+
+        resources :pending_authorizations, only: :index do
+          resource :postages, only: :create, as: :postage
+        end
+
+        root to: "pending_authorizations#index"
       end
 
       initializer "decidim_user_extension.admin_mount_routes" do
