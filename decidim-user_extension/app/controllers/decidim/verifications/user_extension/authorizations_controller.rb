@@ -2,7 +2,7 @@
 
 module Decidim
   module Verifications
-    module PostalLetter
+    module UserExtension
       class AuthorizationsController < ApplicationController
         include Decidim::Verifications::Renewable
 
@@ -23,12 +23,12 @@ module Decidim
 
           PerformAuthorizationStep.call(@authorization, @form) do
             on(:ok) do
-              flash[:notice] = t("authorizations.create.success", scope: "decidim.verifications.postal_letter")
+              flash[:notice] = t("authorizations.create.success", scope: "decidim.verifications.user_extension")
               redirect_to decidim_verifications.authorizations_path
             end
 
             on(:invalid) do
-              flash.now[:alert] = t("authorizations.create.error", scope: "decidim.verifications.postal_letter")
+              flash.now[:alert] = t("authorizations.create.error", scope: "decidim.verifications.user_extension")
               render :new
             end
           end
@@ -47,12 +47,12 @@ module Decidim
 
           ConfirmUserAuthorization.call(@authorization, @form, session) do
             on(:ok) do
-              flash[:notice] = t("authorizations.update.success", scope: "decidim.verifications.postal_letter")
+              flash[:notice] = t("authorizations.update.success", scope: "decidim.verifications.user_extension")
               redirect_to decidim_verifications.authorizations_path
             end
 
             on(:invalid) do
-              flash.now[:alert] = t("authorizations.update.error", scope: "decidim.verifications.postal_letter")
+              flash.now[:alert] = t("authorizations.update.error", scope: "decidim.verifications.user_extension")
               render :edit
             end
           end
@@ -69,7 +69,7 @@ module Decidim
         def load_authorization
           @authorization = Decidim::Authorization.find_or_initialize_by(
             user: current_user,
-            name: "postal_letter"
+            name: "user_extension"
           )
         end
       end

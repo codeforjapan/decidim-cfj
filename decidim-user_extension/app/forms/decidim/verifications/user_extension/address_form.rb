@@ -4,7 +4,7 @@ require "securerandom"
 
 module Decidim
   module Verifications
-    module PostalLetter
+    module UserExtension
       # A form object to be used when public users want to get verified by
       # uploading their identity documents.
       class AddressForm < AuthorizationHandler
@@ -13,7 +13,7 @@ module Decidim
         validates :full_address, presence: true
 
         def handler_name
-          "postal_letter"
+          "user_extension"
         end
 
         def verification_metadata

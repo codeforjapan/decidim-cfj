@@ -2,7 +2,7 @@
 
 module Decidim
   module Verifications
-    module PostalLetter
+    module UserExtension
       # A form object that just holds a verification code that the user will
       # have received by postal letter.
       class ConfirmationForm < AuthorizationHandler

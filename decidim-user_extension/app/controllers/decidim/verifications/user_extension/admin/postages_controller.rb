@@ -2,7 +2,7 @@
 
 module Decidim
   module Verifications
-    module PostalLetter
+    module UserExtension
       module Admin
         #
         # Handles postages for verification letters.
@@ -19,12 +19,12 @@ module Decidim
 
             PerformAuthorizationStep.call(@pending_authorization, @form) do
               on(:ok) do
-                flash[:notice] = t("postages.create.success", scope: "decidim.verifications.postal_letter.admin")
+                flash[:notice] = t("postages.create.success", scope: "decidim.verifications.user_extension.admin")
                 redirect_to pending_authorizations_path
               end
 
               on(:invalid) do
-                render json: { error: I18n.t("postages.create.error", scope: "decidim.verifications.postal_letter.admin") }, status: :unprocessable_entity
+                render json: { error: I18n.t("postages.create.error", scope: "decidim.verifications.user_extension.admin") }, status: :unprocessable_entity
               end
             end
           end

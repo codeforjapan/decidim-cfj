@@ -2,7 +2,7 @@
 
 module Decidim
   module Verifications
-    module PostalLetter
+    module UserExtension
       # A form object to be used when admins want to mark a verification letter
       # as sent.
       class PostageForm < AuthorizationHandler
@@ -13,7 +13,7 @@ module Decidim
         validates :verification_code, presence: true
 
         def handler_name
-          "postal_letter"
+          "user_extension"
         end
 
         def map_model(model)

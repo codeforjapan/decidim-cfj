@@ -2,7 +2,7 @@
 
 module Decidim
   module Verifications
-    module PostalLetter
+    module UserExtension
       module Admin
         class PendingAuthorizationsController < Decidim::Admin::ApplicationController
           layout "decidim/admin/users"
@@ -18,7 +18,7 @@ module Decidim
           private
 
           def pending_authorizations
-            Authorizations.new(organization: current_organization, name: "postal_letter", granted: false)
+            Authorizations.new(organization: current_organization, name: "user_extension", granted: false)
           end
         end
       end

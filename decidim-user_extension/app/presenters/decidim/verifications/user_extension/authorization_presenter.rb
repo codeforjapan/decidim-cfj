@@ -2,7 +2,7 @@
 
 module Decidim
   module Verifications
-    module PostalLetter
+    module UserExtension
       #
       # Decorator for postal letter authorizations.
       #
@@ -45,7 +45,7 @@ module Decidim
         def letter_sent_at
           unless letter_sent?
             return I18n.t("pending_authorizations.index.not_yet_sent",
-                          scope: "decidim.verifications.postal_letter.admin")
+                          scope: "decidim.verifications.user_extension.admin")
           end
 
           I18n.l(
