@@ -19,12 +19,6 @@ module Decidim
         # Add engine routes here
         # resources :user_extension
         # root to: "user_extension#index"
-
-        resource :authorizations, only: [:new, :create, :edit, :update], as: :authorization do
-          get :renew, on: :collection
-        end
-
-        root to: "authorizations#new"
       end
 
       initializer "decidim_user_extension.assets" do |app|
