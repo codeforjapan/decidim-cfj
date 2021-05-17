@@ -18,7 +18,7 @@ module Decidim
 
       initializer "decidim_user_extension.admin_mount_routes" do
         Decidim::Core::Engine.routes do
-          mount Decidim::UserExtension::AdminEngine, at: "/admin/user_extension", as: "decidim_user_extension"
+          mount Decidim::UserExtension::AdminEngine, at: "/admin/user_extension", as: "decidim_admin_user_extension"
         end
       end
 
