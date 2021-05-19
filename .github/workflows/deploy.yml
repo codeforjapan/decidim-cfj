@@ -70,7 +70,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 1200
+    timeout-minutes: 1800
     if: endsWith(github.ref, 'heads/develop') || contains(github.ref, 'tags/v')
     needs:
       - create-app-env
@@ -121,4 +121,4 @@ jobs:
           cd deployments
           cp ${EB_ENVIRONMENT_NAME}/00_options.config .ebextensions/00_options.config
           sed -i -e "s|{RepositoryName}|$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG|g" Dockerrun.aws.json
-          eb deploy ${EB_ENVIRONMENT_NAME}
+          eb deploy ${EB_ENVIRONMENT_NAME} --timeout=20
