@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
 class UpdateOrganizationsAvailableAuthorizations < ActiveRecord::Migration[5.2]
+
+  class MigrationOrganization < ActiveRecord::Base
+    self.table_name = :decidim_organizations
+  end
+
   def up
     rename_available_authorizations("user_extension_authorization_handler", "user_extension")
   end
@@ -10,8 +15,10 @@ class UpdateOrganizationsAvailableAuthorizations < ActiveRecord::Migration[5.2]
   end
 
   def rename_available_authorizations(old_data, new_data)
-    Decidim::Organization.transaction do
-      Decidim::Organization.find_each do |organization|
+    MigrationOrganization.reset_column_information
+
+    MigrationOrganization.transaction do
+      MigrationOrganization.find_each do |organization|
         organization.update!(
           available_authorizations: rename_user_extension(organization.available_authorizations, old_data, new_data)
         )
