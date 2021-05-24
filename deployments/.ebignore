@@ -1,1 +1,3 @@
 ./elasticbeanstalk
+/staging
+/production
