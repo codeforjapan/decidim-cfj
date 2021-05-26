@@ -28,8 +28,6 @@ services:
       DATABASE_USERNAME: *postgres_user
       DATABASE_PASSWORD: *postgres_password
       RAILS_ENV: *rails_env
-    ports:
-      - 3000:3000
     links:
       - pg
   pg:

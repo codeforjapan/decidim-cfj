@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  app:
+    image: "{RepositoryName}"
+    environment:
+      NEW_RELIC_APP_NAME: decidem-app({EBEnvironment})
+    env_file:
+      - .env
+    ports:
+      - 80:3000
+
+  sidekiq:
+    image: "{RepositoryName}"
+    command: bash -c "bundle exec sidekiq -e production -C /app/config/sidekiq.yml"
+    environment:
+      NEW_RELIC_APP_NAME: decidem-sidekiq({EBEnvironment})
+    env_file:
+      - .env
