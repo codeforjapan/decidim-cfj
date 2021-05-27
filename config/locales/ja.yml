@@ -132,6 +132,17 @@ ja:
           fields:
             official_proposal: 事務局の提案
       proposals:
+        edit:
+          add_documents: 添付ファイル
+          add_images: 画像
+          attachment_legend: "(オプション) 添付ファイルを追加"
+          back: 戻る
+          delete_document: 添付ファイルの削除
+          delete_image: 画像の削除
+          gallery_legend: "(オプション) 提案カードに画像を追加"
+          select_a_category: カテゴリーを選択
+          send: 送信
+          title: 提案の編集
         filters:
           activity: 参加したもの
           origin: 起案者
