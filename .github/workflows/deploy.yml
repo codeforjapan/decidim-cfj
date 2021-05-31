@@ -4,11 +4,45 @@ on:
   push:
     branches:
       - develop
+      - master
+    tags:
+      - 'v*'
 
 jobs:
-  deploy:
+  create-app-env:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    outputs:
+      image-tag: ${{ steps.output-app-env.outputs.image-tag }}
+      eb-environment-name: ${{ steps.output-app-env.outputs.eb-environment-name }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set env to staging
+        id: set-env-staging
+        if: endsWith(github.ref, 'heads/develop')
+        run: |
+          echo "IMAGE_TAG_PREFIX=staging" >> $GITHUB_ENV
+          echo "EB_ENVIRONMENT_NAME=staging" >> $GITHUB_ENV
+
+      - name: Set env to production
+        id: set-env-production
+        if: endsWith(github.ref, 'heads/master') || contains(github.ref, 'tags/v')
+        run: |
+          echo "IMAGE_TAG_PREFIX=production" >> $GITHUB_ENV
+          echo "EB_ENVIRONMENT_NAME=production" >> $GITHUB_ENV
+
+      - name: Output App Env
+        id: output-app-env
+        run: |
+          echo "::set-output name=image-tag::${IMAGE_TAG_PREFIX}-${GITHUB_SHA::8}"
+          echo "::set-output name=eb-environment-name::${EB_ENVIRONMENT_NAME}"
+
+  build:
     runs-on: ubuntu-latest
     timeout-minutes: 1200
+    needs: create-app-env
 
     steps:
       - uses: actions/checkout@v2
@@ -25,13 +59,50 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
 
       - name: Build, tag, and push image to Amazon ECR
+        if: endsWith(github.ref, 'heads/master') || endsWith(github.ref, 'heads/develop')
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{ secrets.AWS_ECR_REPO_NAME }}
-          IMAGE_TAG: staging
+          IMAGE_TAG: ${{ needs.create-app-env.outputs.image-tag }}
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 1800
+    if: endsWith(github.ref, 'heads/develop') || contains(github.ref, 'tags/v')
+    needs:
+      - create-app-env
+      - build
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-1
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Check if ECR Image exists with tag
+        if: contains(github.ref, 'tags/v')
+        env:
+          IMAGE_TAG: ${{ needs.create-app-env.outputs.image-tag }}
+          ECR_REPOSITORY: ${{ secrets.AWS_ECR_REPO_NAME }}
+        run: |
+          EXIT_CODE=0
+          aws ecr describe-images --repository-name=$ECR_REPOSITORY --image-ids=imageTag=$IMAGE_TAG 2> /dev/null || EXIT_CODE=$?
+
+          if [[ $EXIT_CODE != 0 ]]; then
+              echo "${IMAGE_TAG} image tag not found"
+              exit 1
+          fi
 
       - uses: actions/setup-python@master
         with:
@@ -42,13 +113,12 @@ jobs:
 
       - name: Deploy to Elastic Beanstalk
         env:
+          EB_ENVIRONMENT_NAME: ${{ needs.create-app-env.outputs.eb-environment-name }}
+          IMAGE_TAG: ${{ needs.create-app-env.outputs.image-tag }}
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{ secrets.AWS_ECR_REPO_NAME }}
-          IMAGE_TAG: staging
-          EB_ENVIRONMENT_NAME: staging
         run: |
-          cp -r .ebextensions/ deployments/.ebextensions
           cd deployments
-          sed -i -e "s|t2.small|t2.micro|g" .ebextensions/00_options.config
+          cp ${EB_ENVIRONMENT_NAME}/00_options.config .ebextensions/00_options.config
           sed -i -e "s|{RepositoryName}|$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG|g" Dockerrun.aws.json
-          eb deploy ${EB_ENVIRONMENT_NAME}
+          eb deploy ${EB_ENVIRONMENT_NAME} --timeout=20

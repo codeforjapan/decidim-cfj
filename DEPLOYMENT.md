@@ -1,3 +1,72 @@
+# ※GUIでElastic Beanstalkの設定をいじらないでください。デプロイで戻ります。
+
+Elastic Beanstalkの設定はコードで管理されています。
+
+インスタンスタイプやオートスケールの設定が違うため、stagingとproductionで一部ファイルが別です。それ以外の共通の設定は同じファイルを使っているので気を付けて下さい。
+
+共通: [deployments/.ebextensions](deployments/.ebextensions)
+
+staging: [deployments/staging](deployments/staging)
+production: [deployments/production](deployments/production)
+
+デプロイの際に上記の設定ファイルを元にデプロイが実行されます。コードでの設定がある場合、インフラも含め反映されます。
+
+急ぎで、GUIで変更することはあると思います。しかし、GUIだけ変更してソースコードを変更しないと、デプロイの際に戻って事故の原因になります。なので、ソースコードに反映してください。
+
+現状、認証情報等の非公開情報の設定方法が検討中なので、環境変数だけはGUIから設定してください。
+
+GUIの設定とコードの書き方は、[公式](https://docs.aws.amazon.com/ja_jp/elasticbeanstalk/latest/dg/command-options-general.html#command-options-general-elasticbeanstalkapplicationenvironment)を参考にしてください。
+
+# GitHubからデプロイ
+
+ワークフローの設定：[.github/workflows/deploy.yml](.github/workflows/deploy.yml)
+デプロイの基本設定: [./deployments/](./deployments/)
+
+1. ECRにログイン
+1. Dockerコンテナをbuild
+1. short commit hashを含む環境ごとのタグで、ECRにDockerイメージをpush
+1. elastic beanstalkに該当のイメージを指定してデプロイ
+
+Dockerイメージのタグ例: staging-dfasfste
+
+```
+[デプロイされる環境名]-[commit-hash]
+```
+
+## GitHubに必要な環境変数
+
+- AWS_ACCESS_KEY_ID
+- AWS_SECRET_ACCESS_KEY
+- AWS_ECR_REPO_NAME
+
+## デプロイ手順
+
+### production
+
+切り戻しを早くするため、masterマージの際、Dockerイメージは毎回buildします。
+
+パイプラインが通ったのを確認後、git上でデプロイしたいコミットに、v○○とタグを打ちます。
+タグはvから始まる必要があります。すぐにeb deployが実行されます。
+
+例: v1.0.0
+
+### staging
+
+developブランチにpushすると自動でデプロイされます。
+
+## 切り戻し
+
+### production
+
+普通にデプロイするのと同様に戻したい先commitに対してタグを打ちます。
+バグの場合、バグが発生したcommitの1つ前のcommitにたいしてタグを打ちます。
+
+コンテナイメージはbuild済みなので、すぐにeb deployが実行されます。
+
+### staging
+
+revetしてdevelopブランチにpushしてください。
+
 # CfJ Decidim AWS への Install（Beanstalk 編）
 
 ## 1. Install AWS tools and setup user
@@ -21,11 +90,22 @@ bundle install
 
 ## 4. Elastic Beanstalk に 環境をセットアップする
 
-[https://platoniq.github.io/decidim-install/decidim-aws/] 手順書の手順3に従って環境を作る
+手順書の[手順3](https://platoniq.github.io/decidim-install/decidim-aws/#3-initialize-elasticbeanstalk)に従って環境を作る
 
-eb create を実施
+
+[Dockerrun.aws.json](./deployment/Dockerrun.aws.json)の`{RepositoryName}`をECRのデプロイしたいイメージパスに修正。作成したい環境の設定をコピー。
+
+[deployments/.elasticbeanstalk/config.yml](deployments/.elasticbeanstalk/config.yml)に設定があるので、基本的に何も聞かれないはずです。
+
 
 ```bash
+cd deployments
+
+// production
+cp deployments/production/00_options.config .ebextensions/00_options.config
+// staging(台数とかインスタンスタイプが小さい)
+cp deployments/staging/00_options.config .ebextensions/00_options.config
+
 eb create production
 ```
 
@@ -39,40 +119,33 @@ eb setenv SECRET_KEY_BASE=$(bin/rails secret)
 
 ## 5. Postgres データベースを作成する
 
-EB コンソールの該当環境から、Configuration を選択、Database を選択し、Edit をする
-
 必要な設定を行い、DBを立ち上げる
 
 その後`eb deploy`を実行
 
-## 6. Healthcheck の条件を変更
-
-`/` が301を返すので、一旦 301 でもOKにする
-
-Elastic Beanstalk の Configuration 画面で、Health Check を選び、Process の条件を 80 から 301 にする
-
-![img](https://i.imgur.com/VNZDQxA.png)
-![img2](https://i.imgur.com/j595JQF.png)
-
-## 7. CNAME 設定とSSL設定
+## 6. CNAME 設定とSSL設定
 
 Elastic Beanstalk のインスタンスをAレコードとして割り当てる
 
 ロードバランサの設定をする（手順[6.2 Configure SSL](https://platoniq.github.io/decidim-install/decidim-aws/#62-configure-ssl)）
 
-## 8. 最初のユーザを作る
+## 7. 最初のユーザを作る
 
 [6.3 Create the first admin user](https://platoniq.github.io/decidim-install/decidim-aws/#63-create-the-first-admin-user)
 に従う(root で)
 
-## 9. SES の設定をする
+## 8. SES の設定をする
 
 [6.4 Setup email](https://platoniq.github.io/decidim-install/decidim-aws/#64-setup-email)
 
-## 10. REDIS の設定をする
+## 9. REDIS の設定をする
 
 [6.5 Configure the job system with Sidekiq and Redis](https://platoniq.github.io/decidim-install/decidim-aws/#65-configure-the-job-system-with-sidekiq-and-redis)
 
-## 11. S3 の設定をする
+stagingはcloud formationで作成しています。
+
+[.cloudformation/elastic_cache.yml](.cloudformation/elastic_cache.yml)
+
+## 10. S3 の設定をする
 
 [6.6 File storage](https://platoniq.github.io/decidim-install/decidim-aws/#66-file-storage)
