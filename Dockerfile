@@ -8,7 +8,6 @@ RUN apk update \
         curl-dev \
         git \
     && apk add --no-cache \
-        bash \
         imagemagick \
         postgresql-dev \
         tzdata \

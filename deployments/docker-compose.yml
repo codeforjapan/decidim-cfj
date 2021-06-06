@@ -28,7 +28,7 @@ services:
 
   sidekiq:
     image: "{RepositoryName}"
-    command: bash -c "bundle exec sidekiq -e production -C /app/config/sidekiq.yml"
+    command: bundle exec sidekiq -C /app/config/sidekiq.yml
     environment:
       NEW_RELIC_APP_NAME: decidem-sidekiq({EBEnvironment})
     env_file:
