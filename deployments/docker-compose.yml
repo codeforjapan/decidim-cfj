@@ -18,19 +18,19 @@ services:
       - app
 
   app:
-    image: "{RepositoryName}"
+    image: $APP_REPOSITORY_NAME
     volumes:
       - static-public:/app/public
     environment:
-      NEW_RELIC_APP_NAME: decidem-app({EBEnvironment})
+      NEW_RELIC_APP_NAME: decidem-app($EB_ENVIRONMENT_NAME)
     env_file:
       - .env
 
   sidekiq:
-    image: "{RepositoryName}"
+    image: $APP_REPOSITORY_NAME
     command: bundle exec sidekiq -C /app/config/sidekiq.yml
     environment:
-      NEW_RELIC_APP_NAME: decidem-sidekiq({EBEnvironment})
+      NEW_RELIC_APP_NAME: decidem-sidekiq($EB_ENVIRONMENT_NAME)
     env_file:
       - .env
 

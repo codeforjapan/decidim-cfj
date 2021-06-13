@@ -120,6 +120,7 @@ jobs:
         run: |
           cd deployments
           cp ${EB_ENVIRONMENT_NAME}/00_options.config .ebextensions/00_options.config
-          sed -i -e "s|{RepositoryName}|$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG|g" docker-compose.yml
-          sed -i -e "s|{EBEnvironment}|$EB_ENVIRONMENT_NAME|g" docker-compose.yml
+          export APP_REPOSITORY_NAME=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          sed -i -e "s|\$APP_REPOSITORY_NAME|$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG|g" docker-compose.yml
+          sed -i -e "s|\$EB_ENVIRONMENT_NAME|$EB_ENVIRONMENT_NAME|g" docker-compose.yml
           eb deploy ${EB_ENVIRONMENT_NAME} --timeout=20 --process
