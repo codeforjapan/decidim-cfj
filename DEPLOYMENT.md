@@ -90,22 +90,21 @@ bundle install
 
 ## 4. Elastic Beanstalk に 環境をセットアップする
 
-1. [docker-compose.yml](deployments/docker-compose.yml)で`{RepositoryName}`をデプロイしたいECRのイメージパスに修正。
-1. [docker-compose.yml](deployments/docker-compose.yml)で`{EBEnvironment}}`をデプロイする環境名に修正。
-1. 作成したい環境の設定をコピー。
-
 [deployments/.elasticbeanstalk/config.yml](deployments/.elasticbeanstalk/config.yml)に設定があるので、基本的に何も聞かれないはずです。
 
+下記の環境変数を使用します。
+- EB_ENVIRONMENT_NAME デプロイしたいElastic Beanstalkの環境名
+- APP_REPOSITORY_NAME デプロイしたいECRのイメージパス
 
 ```bash
 cd deployments
 
-// production
-cp deployments/production/00_options.config .ebextensions/00_options.config
-// staging(台数とかログの保持期間が小さい)
-cp deployments/staging/00_options.config .ebextensions/00_options.config
+export EB_ENVIRONMENT_NAME=production # or staging(台数とかログの保持期間が小さい)
+export APP_REPOSITORY_NAME=
 
-eb create production
+cp $EB_ENVIRONMENT_NAME/00_options.config .ebextensions/00_options.config
+
+eb create $EB_ENVIRONMENT_NAME --process
 ```
 
 最後エラーで終わるがOK
