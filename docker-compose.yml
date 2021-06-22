@@ -8,6 +8,21 @@ x-custom:
     - &postgres_password "${DATABASE_PASSWORD:-password}"
 
 services:
+  nginx-proxy:
+    image: nginx:1.21
+    volumes:
+      - ./deployments/etc/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./deployments/etc/nginx/conf.d:/etc/nginx/conf.d
+      - ./public:/app/public
+    environment:
+      TZ: Asia/Tokyo
+    ports:
+      - 3000:80
+    links:
+      - app
+    depends_on:
+      - app
+
   app:
     image: decidim-cfj
     build:
@@ -28,8 +43,6 @@ services:
       DATABASE_USERNAME: *postgres_user
       DATABASE_PASSWORD: *postgres_password
       RAILS_ENV: *rails_env
-    ports:
-      - 3000:3000
     links:
       - pg
   pg:
