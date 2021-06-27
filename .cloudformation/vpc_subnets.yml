@@ -1,0 +1,116 @@
+Parameters:
+  AppEnvironment:
+    Description: Type of app environment.
+    Type: String
+    Default: staging
+    AllowedValues:
+      - staging
+      - production
+
+Resources:
+  PublicVPC:
+    Type: 'AWS::EC2::VPC'
+    Properties:
+      CidrBlock: 172.31.0.0/16
+      EnableDnsHostnames: true
+      EnableDnsSupport: true
+      Tags:
+        - Key: Name
+          Value: !Sub ${AppEnvironment}-decidim-vpc
+  PublicSubnet1:
+    Type: 'AWS::EC2::Subnet'
+    Properties:
+      VpcId: !Ref PublicVPC
+      AvailabilityZone:
+        Fn::Select:
+         - 0
+         - Fn::GetAZs: ""
+      CidrBlock: 172.31.0.0/24
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: !Sub ${AppEnvironment}-decidim-subnet1
+  PublicSubnet2:
+    Type: 'AWS::EC2::Subnet'
+    Properties:
+      AvailabilityZone:
+        Fn::Select:
+         - 1
+         - Fn::GetAZs: ""
+      VpcId: !Ref PublicVPC
+      CidrBlock: 172.31.1.0/24
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: !Sub ${AppEnvironment}-decidim-subnet2
+  PublicSubnet3:
+    Type: 'AWS::EC2::Subnet'
+    Properties:
+      AvailabilityZone:
+        Fn::Select:
+         - 2
+         - Fn::GetAZs: ""
+      VpcId: !Ref PublicVPC
+      CidrBlock: 172.31.2.0/24
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: !Sub ${AppEnvironment}-decidim-subnet3
+  InternetGateway:
+    Type: 'AWS::EC2::InternetGateway'
+    Properties:
+      Tags:
+        - Key: Name
+          Value: !Sub ${AppEnvironment}-decidim-internet-gateway
+  GatewayToInternet:
+    Type: 'AWS::EC2::VPCGatewayAttachment'
+    Properties:
+      VpcId: !Ref PublicVPC
+      InternetGatewayId: !Ref InternetGateway
+  PublicRouteTable:
+    Type: 'AWS::EC2::RouteTable'
+    Properties:
+      VpcId: !Ref PublicVPC
+  PublicRoute:
+    Type: 'AWS::EC2::Route'
+    DependsOn: GatewayToInternet
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref InternetGateway
+  PublicSubnet1RouteTableAssociation:
+    Type: 'AWS::EC2::SubnetRouteTableAssociation'
+    Properties:
+      SubnetId: !Ref PublicSubnet1
+      RouteTableId: !Ref PublicRouteTable
+  PublicSubnet2RouteTableAssociation:
+    Type: 'AWS::EC2::SubnetRouteTableAssociation'
+    Properties:
+      SubnetId: !Ref PublicSubnet2
+      RouteTableId: !Ref PublicRouteTable
+  PublicSubnet3RouteTableAssociation:
+    Type: 'AWS::EC2::SubnetRouteTableAssociation'
+    Properties:
+      SubnetId: !Ref PublicSubnet3
+      RouteTableId: !Ref PublicRouteTable
+Outputs:
+  PublicVPCID:
+    Description: VPC ID
+    Value: !Ref "PublicVPC"
+    Export:
+      Name: BeanstalkPublicVPCID
+  PublicSubnet1ID:
+    Description: Public Subnet A ID
+    Value: !Ref "PublicSubnet1"
+    Export:
+      Name: BeanstalkPublicVPCSubnet1ID
+  PublicSubnet2ID:
+    Description: Public Subnet B ID
+    Value: !Ref "PublicSubnet2"
+    Export:
+      Name: BeanstalkPublicVPCSubnet2ID
+  PublicSubnet3ID:
+    Description: Public Subnet C ID
+    Value: !Ref "PublicSubnet3"
+    Export:
+      Name: BeanstalkPublicVPCSubnet3ID
