@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  nginx-proxy:
+    image: nginx:1.21
+    volumes:
+      - ./etc/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./etc/nginx/conf.d:/etc/nginx/conf.d
+      - /var/log/nginx:/var/log/nginx
+      - static-public:/app/public
+    environment:
+      TZ: Asia/Tokyo
+    ports:
+      - 80:80
+    links:
+      - app
+    depends_on:
+      - app
+
+  app:
+    image: "{RepositoryName}"
+    volumes:
+      - static-public:/app/public
+    environment:
+      NEW_RELIC_APP_NAME: decidim-app({EBEnvironment})
+    env_file:
+      - .env
+
+  sidekiq:
+    image: "{RepositoryName}"
+    command: bundle exec sidekiq -C /app/config/sidekiq.yml
+    environment:
+      NEW_RELIC_APP_NAME: decidim-sidekiq({EBEnvironment})
+    env_file:
+      - .env
+
+volumes:
+  static-public:

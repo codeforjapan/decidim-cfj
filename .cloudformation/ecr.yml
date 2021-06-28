@@ -25,6 +25,36 @@ Resources:
                 "action": {
                   "type": "expire"
                 }
+              },
+              {
+                "action": {
+                  "type": "expire"
+                },
+                "selection": {
+                  "countType": "imageCountMoreThan",
+                  "countNumber": 7,
+                  "tagStatus": "tagged",
+                  "tagPrefixList": [
+                    "staging-"
+                  ]
+                },
+                "description": "stagingイメージの削除",
+                "rulePriority": 2
+              },
+              {
+                "action": {
+                  "type": "expire"
+                },
+                "selection": {
+                  "countType": "imageCountMoreThan",
+                  "countNumber": 7,
+                  "tagStatus": "tagged",
+                  "tagPrefixList": [
+                    "production-"
+                  ]
+                },
+                "description": "productionイメージの削除",
+                "rulePriority": 3
               }
             ]
           }
