@@ -22,7 +22,7 @@ services:
     volumes:
       - static-public:/app/public
     environment:
-      NEW_RELIC_APP_NAME: decidem-app({EBEnvironment})
+      NEW_RELIC_APP_NAME: decidim-app({EBEnvironment})
     env_file:
       - .env
 
@@ -30,7 +30,7 @@ services:
     image: "{RepositoryName}"
     command: bundle exec sidekiq -C /app/config/sidekiq.yml
     environment:
-      NEW_RELIC_APP_NAME: decidem-sidekiq({EBEnvironment})
+      NEW_RELIC_APP_NAME: decidim-sidekiq({EBEnvironment})
     env_file:
       - .env
 
