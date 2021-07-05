@@ -143,9 +143,7 @@ Elastic Beanstalk のインスタンスをAレコードとして割り当てる
 
 sidekiqの設定をする必要はありません。dockerでデプロイされています。
 
-stagingはcloud formationで作成しています。
-
-[.cloudformation/elastic_cache.yml](.cloudformation/elastic_cache.yml)
+stagingはcloud formationで作成しています。 [./INFRA.md###redis](./INFRA.md###redis)
 
 ## 10. S3 の設定をする
 
