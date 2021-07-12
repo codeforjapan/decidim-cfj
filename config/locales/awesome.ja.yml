@@ -33,9 +33,9 @@ ja:
       menu:
         position: 位置
         raw_label: ラベル
-        target: ターゲット
+        target: リンク先
         url: URL
-        visibility: 可視性
+        visibility: 表示・非表示
   decidim:
     admin:
       menu:
@@ -83,17 +83,17 @@ ja:
       admin:
         checks:
           index:
-            admin_head_tags: Awesome tags included in the admin application header
-            decidim-admin: From Admin module
-            decidim-core: From Core module
-            decidim-proposals: From Proposals module
-            decidim_version: Decidim version %{version}
+            admin_head_tags: 管理者向けアプリケーションヘッダーに含まれる Awesome tags
+            decidim-admin: Admin モジュールより
+            decidim-core: Core モジュールより
+            decidim-proposals: 提案モジュールより
+            decidim_version: Decidim バージョン %{version}
             errors:
               CSS: Head does not contain the required <link> stylesheet entries. To
                 solve it, you can manually add it to your custom _head.html.erb
               JavaScript: Head does not contain the required <script> Javascript entries.
                 To solve it, you can manually add it to your custom admin/_header.html.erb
-            head_tags: Awesome tags included in the application header
+            head_tags: アプリケーションヘッダーに含まれる Awesome tags
             title: システム互換性チェック
         config:
           constraints:
@@ -119,23 +119,23 @@ ja:
             errors:
               incorrect_css: 'box #%{key} のCSSに問題があります'
             help:
-              allow_images_in_full_editor: This will add an image uploader icon in
-                all the editors WYSIWYG with the full toolbar enabled.
-              allow_images_in_markdown_editor: This will allow markdown editor to
-                upload images by copy & paste or drag & drop.
-              allow_images_in_proposals: This will allow to upload images in the proposals
-                editor, available to any user
-              allow_images_in_small_editor: This will add an image uploader icon in
-                all the editors WYSIWYG with minimal options in the toolbar enabled.
-              auto_save_forms: This will use LocalStorage to automatically save data
-                introduced by users in surveys and other forms while they are filling
-                it. Data will be restored in a future visit with the same browser
-                in case the form is not submitted. If the form is submitted, data
-                will be removed. If users remove their LocalStorage data, data won't
-                be restored either.
-              drag_and_drop_supported: When uploading images, Drag & Drop is supported.
-                Images will be uploaded to the server and inserted as external resources
-                (it doesn't use base64 inline encoding).
+              allow_images_in_full_editor: これは全ツールバーを有効にしたWYSIWYGエディターに
+                画像アップロードアイコンを追加します。
+              allow_images_in_markdown_editor: これはMarkdownエディターでコピー&ペーストとドラッグ&ドロップによる
+                画像アップロードを許可します。
+              allow_images_in_proposals: これは提案エディターでの画像アップロードを
+                すべてのユーザーができるようにします。
+              allow_images_in_small_editor: これは最小オプションのWYSIWYGエディターに
+                画像アップロードアイコンを追加します。
+              auto_save_forms: これは調査などのフォームにユーザーが入力したデータを、
+                LocalStorageを使って自動的に保存するものです。フォームから送信しなかった
+                場合、同じブラウザーで次回アクセスした時に復元されます。
+                フォームから送信した場合には、データは削除されます。
+                ユーザーがLocalStrorageのデータを削除した場合にも、データは
+                復元されなくなります。
+              drag_and_drop_supported: 画像アップロード時にドラッグ&ドロップが利用できます。
+                画像はサーバーにアップロードされ、外部リソースとして挿入されます
+                (base64インラインエンコーディングは使用しません).
               intergram_about: Intergram uses Telegram messenger to handle a live
                 support chat widget embedded in the bottom of the page.
               intergram_config: Invite the <a href="https://web.telegram.org/#/im?p=@IntergramBot">@Intergram
@@ -149,39 +149,38 @@ ja:
                 of the public web (use the restrictions editor for that)
               scoped_styles_variables: 'You can use the following CSS variables for
                 organization customized colors:'
-              use_markdown_editor: This will substitute the Quill WYSIWYG editor,
-                to use a Markdown editor instead. Text will be converted and saved
-                as HTML in the database.
+              use_markdown_editor: これはQuill WYSIWYGエディターを置き換えて、
+                代わりにMarkdownエディターを使えるようにします. テキストはDB内ではHTML形式に変換・保存されます。
           form_admins:
             new: Add a new "Scoped Admins" group
             remove: Remove this "Scoped Admins" group
             sure_to_remove: Are you sure you want to destroy this "Scoped Admins"
               group?
           form_styles:
-            new: Add a new CSS box
-            remove: Remove this CSS box
-            sure_to_remove: Are you sure you want to destroy this CSS box?
+            new: 新しいCSS boxを追加
+            remove: このCSS boxを削除
+            sure_to_remove: このCSS boxを本当に削除しますか?
           none: "⛔ Never! - Deactivate any other constraint"
-          process_groups: Process groups
+          process_groups: プロセスグループ
           rich_text_editor_in_public_views: 'NOTE: "Rich text editor for participants"
             is enabled, this option won''t apply. Use the editors hacks instead to
             enable images in proposals.'
           show:
             title: '%{setting} の詳細設定'
-            update: 設定の更新
+            update: 設定を更新する
           system: 参加スペース以外のすべて
           update:
             error: '設定更新エラー: %{error}'
             success: 設定は正常に更新されました
         constraints:
           create:
-            error: Error creating condition case
-            success: Condition case created successfully
+            error: 条件設定作成エラー
+            success: 条件設定は正常に設定されました
           destroy:
-            error: Error removing condition case
-            success: Condition case removed successfully
+            error: 条件設定削除エラー
+            success: 条件設定は正常に削除されました
           errors:
-            not_unique: Same condition already exists
+            not_unique: 同一の条件がすでに存在しています
           new:
             cancel: キャンセル
             constraint: 新規条件設定
@@ -213,31 +212,29 @@ ja:
             save: 保存
             title: メニューアイテムの変更
           form:
-            label_help: Translations aren't automatically detected, be sure to fill
-              in all the fields!
+            label_help: 翻訳は自動的に検出されません。すべての項目を入力してください
             target:
-              blank: New window
-              self: Same window
+              blank: 新規ウィンドウ
+              self: 同一ウィンドウ
             visibility:
-              default: Visible
-              hidden: Always hidden
-              logged: Only visible for logged users
-              non_logged: Only visible for non-logged users
+              default: 表示する
+              hidden: 常に隠す
+              logged: ログインしたユーザーにのみ表示する
+              non_logged: ログインしていないユーザーにのみ表示する
           index:
-            confirm_destroy: Are you sure to remove this customization?
-            edit: Edit
-            new: New item
-            remove: Remove addition
-            remove_hack: Remove customization
-            title: Main menu
+            confirm_destroy: この設定を削除しますか?
+            edit: 変更
+            new: 新しいアイテム
+            remove: 追加の削除
+            remove_hack: カスタマイズの削除
+            title: メインメニュー
           new:
-            save: Save
-            title: New menu item
+            save: 保存
+            title: 新規メニューアイテム
           update:
-            error: Error updating menu item! %{error}
-            success: Menu item updated successfully
-          url_exists: The same URL is already configured, please edit that instead
-            of creating it again.
+            error: 'メニューアイテム更新エラー: %{error}'
+            success: メニューアイテムは正常に更新されました
+          url_exists: 同じURLがすでに設定されています。もう一度作成し直す前に、内容を修正してください。
       config:
         intergram:
           auto_no_response: It seems that no one is available to answer right now.
@@ -277,7 +274,6 @@ ja:
         map:
           error:
             unavailable: このマップは利用できません。このコンポーネントを利用にするにはジオコーディングを設定してください。
-              this component.
           show:
             view_meeting: ミーティングを表示
             view_proposal: 提案を表示
@@ -288,7 +284,7 @@ ja:
           title: Decidim 設定
       decidim_awesome:
         awesome_config:
-          amendments: Amendments
+          amendments: 修正
           autosaved_error: お使いのブラウザーではLocalStorageをサポートしていないため、フォームは自動保存されません.
           autosaved_retrieved: このフォームのデータは前回のセッションから復元しました
           autosaved_success: ローカルストレージにデータを保存しました
