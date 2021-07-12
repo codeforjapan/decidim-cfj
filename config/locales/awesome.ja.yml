@@ -1,0 +1,301 @@
+---
+ja:
+  activemodel:
+    attributes:
+      config:
+        allow_images_in_full_editor: フルHTMLエディターでの画像を許可する
+        allow_images_in_markdown_editor: Markdownエディターでの画像を許可する
+        allow_images_in_proposals: 提案エディターでの画像を許可する
+        allow_images_in_small_editor: ミニマルHTMLエディターでの画像を許可する
+        auto_save_forms: ローカルストレージにフォームを自動保存する
+        intergram_auto_no_response: A message that is sent one minute after the user
+          sends its first message and no response was received
+        intergram_auto_response: A message that is sent immediately after the user
+          sends its first message
+        intergram_chat_id: Chat ID
+        intergram_color: Color of the widget
+        intergram_for_admins: Enable Intergram Chat in the admin backend
+        intergram_intro_message: First message when the user opens the chat for the
+          first time
+        intergram_require_login: Only for logged users
+        intergram_title_closed: Closed chat title
+        intergram_title_open: Opened chat title
+        intergram_use_floating_button: If checked, the closed chat is always a button
+          instead of a text
+        scoped_admins: 'スコープつき管理グループ #%{id}'
+        scoped_styles: 'カスタムスタイル #%{id}'
+        use_markdown_editor: HTMLエディターの代わりにMarkdownエディターを使う
+      constraint:
+        component_id: 以下のみに適用
+        component_manifest: このタイプのコンポーネントのみ有効
+        participatory_space_manifest: 以下のタイプの参加スペースに適用
+        participatory_space_slug: あるいは、以下の参加スペースに適用
+      menu:
+        position: 位置
+        raw_label: ラベル
+        target: ターゲット
+        url: URL
+        visibility: 可視性
+  decidim:
+    admin:
+      menu:
+        decidim_awesome: Decidim awesome
+    components:
+      awesome_iframe:
+        name: 全画面 Iframe
+        settings:
+          global:
+            announcement: アナウンス
+            iframe: Iframe コード
+            iframe_help: 'Put your code as html: <iframe width="100%" height="700"
+              frameBorder="0" allowFullscreen src="..."></iframe>. Content will be
+              sanitized from other HTML tags. Ensure to use 100% as width to fill
+              the screen.'
+            no_margins: No margins between the iframe and the rest of the page
+            viewport_width: Limit maximum width to the application viewport
+          step:
+            announcement: アナウンス
+            iframe: Iframe コード
+      awesome_map:
+        name: Awesome マップ
+        settings:
+          global:
+            announcement: アナウンス
+            collapse: Start with collapsed menu
+            map_center: Map center (Latitude, Longitude)
+            map_center_help: 'Use decimal points (ie: 41.38879, 2.15899). Leave it
+              empty to automatically fit all the markers'
+            map_height: Map height (px)
+            map_zoom: Zoom (any number betwen 0 and 18)
+            map_zoom_help: Only applies if a map center is defined
+            menu_amendments: Show amendments
+            menu_hashtags: Show Hasthag search menu
+            menu_meetings: Show meetings
+            truncate: Maximum characters for popup descriptions
+          step:
+            announcement: Announcement
+            show_accepted: Show accepted proposals
+            show_evaluating: Show evaluating proposals
+            show_not_answered: Show not answered proposals
+            show_rejected: Show rejected proposals
+            show_withdrawn: Show withdrawn proposals
+    decidim_awesome:
+      admin:
+        checks:
+          index:
+            admin_head_tags: Awesome tags included in the admin application header
+            decidim-admin: From Admin module
+            decidim-core: From Core module
+            decidim-proposals: From Proposals module
+            decidim_version: Decidim version %{version}
+            errors:
+              CSS: Head does not contain the required <link> stylesheet entries. To
+                solve it, you can manually add it to your custom _head.html.erb
+              JavaScript: Head does not contain the required <script> Javascript entries.
+                To solve it, you can manually add it to your custom admin/_header.html.erb
+            head_tags: Awesome tags included in the application header
+            title: システム互換性チェック
+        config:
+          constraints:
+            add_condition: 条件を追加
+            always: すべて
+            delete: 削除
+            edit: 変更
+            title: '一部のケースのみ適用する:'
+          create_scoped_admin:
+            error: '管理グループ作成エラー: %{error}'
+            success: 管理グループ %{key} は正常に更新されました
+          create_scoped_style:
+            error: '新規CSS box作成エラー: %{error}'
+            success: 'CSS box %{key} は正常に作成されました'
+          destroy_scoped_admin:
+            error: '管理グループ削除エラー: %{error}'
+            success: '管理グループ %{key} は正常に削除されました'
+          destroy_scoped_style:
+            error: 'CSS box削除エラー: %{error}'
+            success: 'CSS box %{key} は正常に削除されました'
+          experimental: 試験的オプション
+          form:
+            errors:
+              incorrect_css: 'box #%{key} のCSSに問題があります'
+            help:
+              allow_images_in_full_editor: This will add an image uploader icon in
+                all the editors WYSIWYG with the full toolbar enabled.
+              allow_images_in_markdown_editor: This will allow markdown editor to
+                upload images by copy & paste or drag & drop.
+              allow_images_in_proposals: This will allow to upload images in the proposals
+                editor, available to any user
+              allow_images_in_small_editor: This will add an image uploader icon in
+                all the editors WYSIWYG with minimal options in the toolbar enabled.
+              auto_save_forms: This will use LocalStorage to automatically save data
+                introduced by users in surveys and other forms while they are filling
+                it. Data will be restored in a future visit with the same browser
+                in case the form is not submitted. If the form is submitted, data
+                will be removed. If users remove their LocalStorage data, data won't
+                be restored either.
+              drag_and_drop_supported: When uploading images, Drag & Drop is supported.
+                Images will be uploaded to the server and inserted as external resources
+                (it doesn't use base64 inline encoding).
+              intergram_about: Intergram uses Telegram messenger to handle a live
+                support chat widget embedded in the bottom of the page.
+              intergram_config: Invite the <a href="https://web.telegram.org/#/im?p=@IntergramBot">@Intergram
+                bot</a> to your group or start a chat with it directly. <a href="https://github.com/idoco/intergram#embed-intergram-in-your-website-with-these-2-simple-steps">+
+                info</a>
+              scoped_admins: Promote regular user to admins that can only administrate
+                certain parts of the public web (use the restrictions editor for that).
+                Note that users who already have regular admin permissions will be
+                ignored.
+              scoped_styles: Create custom CSS that applies only in certain parts
+                of the public web (use the restrictions editor for that)
+              scoped_styles_variables: 'You can use the following CSS variables for
+                organization customized colors:'
+              use_markdown_editor: This will substitute the Quill WYSIWYG editor,
+                to use a Markdown editor instead. Text will be converted and saved
+                as HTML in the database.
+          form_admins:
+            new: Add a new "Scoped Admins" group
+            remove: Remove this "Scoped Admins" group
+            sure_to_remove: Are you sure you want to destroy this "Scoped Admins"
+              group?
+          form_styles:
+            new: Add a new CSS box
+            remove: Remove this CSS box
+            sure_to_remove: Are you sure you want to destroy this CSS box?
+          none: "⛔ Never! - Deactivate any other constraint"
+          process_groups: Process groups
+          rich_text_editor_in_public_views: 'NOTE: "Rich text editor for participants"
+            is enabled, this option won''t apply. Use the editors hacks instead to
+            enable images in proposals.'
+          show:
+            title: '%{setting} の詳細設定'
+            update: 設定の更新
+          system: 参加スペース以外のすべて
+          update:
+            error: '設定更新エラー: %{error}'
+            success: 設定は正常に更新されました
+        constraints:
+          create:
+            error: Error creating condition case
+            success: Condition case created successfully
+          destroy:
+            error: Error removing condition case
+            success: Condition case removed successfully
+          errors:
+            not_unique: Same condition already exists
+          new:
+            cancel: キャンセル
+            constraint: 新規条件設定
+            save: 保存
+          show:
+            cancel: キャンセル
+            constraint: 条件設定の変更
+            save: 保存
+          update:
+            error: 条件設定更新エラー
+            success: 条件設定は正常に更新しました
+        menu:
+          admins: Scoped Admins
+          checks: システム互換性
+          editors: エディターの設定
+          livechat: ライブチャット
+          menu_hacks: メニューの設定
+          proposals: 提案の設定
+          styles: 独自スタイル
+          surveys: 調査とフォーム
+        menu_hacks:
+          create:
+            error: 'メニューアイテム作成エラー: %{error}'
+            success: メニューアイテムは正常に作成されました
+          destroy:
+            error: 'メニューアイテム削除エラー: %{error}'
+            success: メニューアイテムは正常に削除されました
+          edit:
+            save: 保存
+            title: メニューアイテムの変更
+          form:
+            label_help: Translations aren't automatically detected, be sure to fill
+              in all the fields!
+            target:
+              blank: New window
+              self: Same window
+            visibility:
+              default: Visible
+              hidden: Always hidden
+              logged: Only visible for logged users
+              non_logged: Only visible for non-logged users
+          index:
+            confirm_destroy: Are you sure to remove this customization?
+            edit: Edit
+            new: New item
+            remove: Remove addition
+            remove_hack: Remove customization
+            title: Main menu
+          new:
+            save: Save
+            title: New menu item
+          update:
+            error: Error updating menu item! %{error}
+            success: Menu item updated successfully
+          url_exists: The same URL is already configured, please edit that instead
+            of creating it again.
+      config:
+        intergram:
+          auto_no_response: It seems that no one is available to answer right now.
+            Please tell us how we can contact you, and we will get back to you as
+            soon as we can.
+          auto_response: Looking for the first available admin (It might take a minute)
+          intro_message: Hello! How can we help you?
+          title_closed: Click to chat!
+          title_open: Let's chat!
+      content_blocks:
+        map:
+          collapse: Start with collapsed menu
+          map_center: Map center (Latitude, Longitude)
+          map_center_help: 'Use decimal points (ie: 41.38879, 2.15899). Leave it empty
+            to automatically fit all the markers'
+          map_height: Map height (px)
+          map_settings: Map settings
+          map_zoom: Zoom (any number betwen 0 and 18)
+          map_zoom_help: Only applies if a map center is defined
+          menu_amendments: Show amendments
+          menu_meetings: Show meetings
+          name: Awesome Map
+          show_accepted: Show accepted proposals
+          show_evaluating: Show evaluating proposals
+          show_not_answered: Show not answered proposals
+          show_rejected: Show rejected proposals
+          show_withdrawn: Show withdrawn proposals
+          text_settings: Text settings
+          title: Title
+          truncate: Maximum characters for popup descriptions
+      credits: Decidim Awesome %{version} · Made with ♥ by Platoniq
+      editor_images:
+        create:
+          error: 画像アップロードエラー
+          success: 画像は正常に更新されました
+      map_component:
+        map:
+          error:
+            unavailable: このマップは利用できません。このコンポーネントを利用にするにはジオコーディングを設定してください。
+              this component.
+          show:
+            view_meeting: ミーティングを表示
+            view_proposal: 提案を表示
+  layouts:
+    decidim:
+      admin:
+        decidim_awesome:
+          title: Decidim 設定
+      decidim_awesome:
+        awesome_config:
+          amendments: Amendments
+          autosaved_error: お使いのブラウザーではLocalStorageをサポートしていないため、フォームは自動保存されません.
+          autosaved_retrieved: このフォームのデータは前回のセッションから復元しました
+          autosaved_success: ローカルストレージにデータを保存しました
+          categories: カテゴリー
+          drag_and_drop_image: ドラッグ＆ドロップで画像を追加できます
+          hashtags: ハッシュタグ
+          items: アイテム
+          meetings: ミーティング
+          proposals: 提案
+          select_deselect_all: まとめて選択・選択解除する
