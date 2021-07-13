@@ -13,9 +13,9 @@ production: [deployments/production](deployments/production)
 
 急ぎで、GUIで変更することはあると思います。しかし、GUIだけ変更してソースコードを変更しないと、デプロイの際に戻って事故の原因になります。なので、ソースコードに反映してください。
 
-GUIの設定とコードの書き方は、[公式](https://docs.aws.amazon.com/ja_jp/elasticbeanstalk/latest/dg/command-options-general.html#command-options-general-elasticbeanstalkapplicationenvironment)を参考にしてください。
+GUIの設定とコードの書き方は、[公式](https://docs.aws.amazon.com/ja_jp/elasticbeanstalk/latest/dg/command-options-general.html#command-options-general-elasticbeanstalkapplicationenvironment)　を参考にしてください。
 
-環境変数は環境別に設定する値だけ、[deployments/production/00_env_options.config](deployments/production/00_env_options.config) or [deployments/staging/00_env_options.config](deployments/staging/00_env_options.config)に記載して下さい。
+環境変数は環境別に設定する値だけ、[deployments/production/00_env_options.config](deployments/production/00_env_options.config) or [deployments/staging/00_env_options.config](deployments/staging/00_env_options.config) に記載して下さい。
 
 秘密鍵などのSSM経由で参照される値は、デプロイ時に動的に展開されます。
 
@@ -79,7 +79,7 @@ revetしてdevelopブランチにpushしてください。
 
 ## 1. Install AWS tools and setup user
 
-[こちらの手順書](https://platoniq.github.io/decidim-install/decidim-aws/)の手順2を実施
+[こちらの手順書](https://platoniq.github.io/decidim-install/decidim-aws/) の手順2を実施
 
 ## 2. Get Decidim source code
 
@@ -134,7 +134,7 @@ eb setenv SECRET_KEY_BASE=$(bin/rails secret)
 
 Elastic Beanstalk のインスタンスをAレコードとして割り当てる
 
-ロードバランサの設定をする（手順[6.2 Configure SSL](https://platoniq.github.io/decidim-install/decidim-aws/#62-configure-ssl)）
+ロードバランサの設定をする（手順[6.2 Configure SSL](https://platoniq.github.io/decidim-install/decidim-aws/#62-configure-ssl) ）
 
 ## 7. 最初のユーザを作る
 
