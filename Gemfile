@@ -10,6 +10,8 @@ gem "decidim", "0.23.5"
 # gem "decidim-consultations", "0.23.5"
 # gem "decidim-initiatives", "0.23.5"
 
+gem "decidim-decidim_awesome", "~> 0.7.0"
+
 gem "bootsnap", "~> 1.3"
 
 gem "puma", ">= 4.3.5"
