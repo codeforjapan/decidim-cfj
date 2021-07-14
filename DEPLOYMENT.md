@@ -89,7 +89,7 @@ git clone https://github.com/codeforjapan/decidim-cfj.git
 
 ## 3. Bundle install
 
-Ruby 環境はインストール済とする(ruby 2.6.6p146)
+Ruby 環境はインストール済とする(ruby 2.7.4p191)
 
 ```bash
 cd decidim-cfj

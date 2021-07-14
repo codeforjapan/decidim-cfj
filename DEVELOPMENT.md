@@ -7,7 +7,7 @@ Dockerで環境を構築する際は、1.環境構築と2. 実行（ローカル
 
 | アプリケーション名 | バージョン |
 | ------- | ------- |
-|[Ruby](https://www.ruby-lang.org/ja/)|2.6.6|
+|[Ruby](https://www.ruby-lang.org/ja/)|2.7.4|
 |[Bundler](https://bundler.io/)|1.17.3 |
 |[PostgreSQL](https://www.postgresql.org/)|13 |
 
@@ -19,7 +19,7 @@ Dockerで環境を構築する際は、1.環境構築と2. 実行（ローカル
 ## 2. 実行（ローカルバージョン）
 ### 2.1 Rubyのインストール
 ```
-rbenv install 2.6.6
+rbenv install 2.7.4
 ```
 ### 2.2 レポジトリをクローン
 ```
