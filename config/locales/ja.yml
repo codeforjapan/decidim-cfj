@@ -73,6 +73,9 @@ ja:
           connect_your_account_html: "<strong>%{organization}</strong> にログインしてアカウントに接続します"
     endorsement_buttons_cell:
       already_endorsed: 支持済み
+    errors:
+      not_found:
+        content_doesnt_exist: このアドレスは正しくないか削除されています。
     events:
       comments:
         comment_by_followed_user:
