@@ -73,6 +73,9 @@ ja:
           connect_your_account_html: "<strong>%{organization}</strong> にログインしてアカウントに接続します"
     endorsement_buttons_cell:
       already_endorsed: 支持済み
+    errors:
+      not_found:
+        content_doesnt_exist: このアドレスは正しくないか削除されています。
     events:
       comments:
         comment_by_followed_user:
@@ -84,6 +87,13 @@ ja:
           email_outro: '"%{resource_title}" 、またはその参加者をフォローしているためこの通知を受け取りました。前のリンクからフォローを解除することができます。'
           email_subject: "%{author_name} から %{resource_title} に対して新しいコメントがあります"
           notification_title: <a href="%{author_path}">%{author_name} %{author_nickname}</a> から <a href="%{resource_path}">%{resource_title} に対して新しいコメントがあります</a>
+      debates:
+        debate_closed:
+          follower:
+            email_intro: '「%{resource_title}」のディベートは終了しました。そのページから結論を読むことができます。'
+            email_outro: '%{resource_title} をフォローしているため、この通知を受け取りました。前のリンクから通知の受信を停止することができます。'
+            email_subject: '「%{resource_title}」のディベートは終了しました'
+            notification_title: <a href="%{resource_path}">%{resource_title}</a> のディベートは終了しました。
       gamification:
         badge_earned:
           email_outro: サイトでの活動によって、この通知を受け取りました。

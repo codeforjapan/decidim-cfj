@@ -13,9 +13,17 @@ production: [deployments/production](deployments/production)
 
 急ぎで、GUIで変更することはあると思います。しかし、GUIだけ変更してソースコードを変更しないと、デプロイの際に戻って事故の原因になります。なので、ソースコードに反映してください。
 
-現状、認証情報等の非公開情報の設定方法が検討中なので、環境変数だけはGUIから設定してください。
-
 GUIの設定とコードの書き方は、[公式](https://docs.aws.amazon.com/ja_jp/elasticbeanstalk/latest/dg/command-options-general.html#command-options-general-elasticbeanstalkapplicationenvironment)を参考にしてください。
+
+環境変数は環境別に設定する値だけ、[deployments/production/00_env_options.config](deployments/production/00_env_options.config) or [deployments/staging/00_env_options.config](deployments/staging/00_env_options.config)に記載して下さい。
+
+秘密鍵などのSSM経由で参照される値は、デプロイ時に動的に展開されます。
+
+```
+{{resolve:ssm:ssmのパラメータの名前:バージョン}}
+```
+
+https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/dynamic-references.html
 
 # GitHubからデプロイ
 
@@ -100,12 +108,12 @@ bundle install
 ```bash
 cd deployments
 
-// production
-cp deployments/production/00_options.config .ebextensions/00_options.config
-// staging(台数とかログの保持期間が小さい)
-cp deployments/staging/00_options.config .ebextensions/00_options.config
+# production
+cp production/*.config .ebextensions/
+# staging(台数とかログの保持期間が小さい)
+cp staging/*.config .ebextensions/
 
-eb create production
+eb create production --process
 ```
 
 最後エラーで終わるがOK
@@ -143,9 +151,7 @@ Elastic Beanstalk のインスタンスをAレコードとして割り当てる
 
 sidekiqの設定をする必要はありません。dockerでデプロイされています。
 
-stagingはcloud formationで作成しています。
-
-[.cloudformation/elastic_cache.yml](.cloudformation/elastic_cache.yml)
+stagingはcloud formationで作成しています。 [./INFRA.md###redis](./INFRA.md###redis)
 
 ## 10. S3 の設定をする
 

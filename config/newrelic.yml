@@ -29,6 +29,8 @@ common: &default_settings
 
   log_file_path: STDOUT
 
+  monitor_mode: false
+
 
 # Environment-specific settings are in this section.
 # RAILS_ENV or RACK_ENV (as appropriate) is used to determine the environment.
@@ -40,7 +42,6 @@ development:
 test:
   <<: *default_settings
   # It doesn't make sense to report to New Relic from automated test runs.
-  monitor_mode: false
 
 staging:
   <<: *default_settings
@@ -48,3 +49,4 @@ staging:
 
 production:
   <<: *default_settings
+  monitor_mode: true
