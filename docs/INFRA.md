@@ -6,7 +6,7 @@ AWS の code as a infrastructureサービスCloud Formationで、インフラス
 
 これにより、本番とstagingの環境を簡単に揃えられます。
 
-テンプレートファイルは、[./cloudformation](./cloudformation)にまとめます。1テンプレートに多くのリソースを含むと、変更が大きくなるので分割して作成してください。
+テンプレートファイルは、[.cloudformation](/.cloudformation)にまとめます。1テンプレートに多くのリソースを含むと、変更が大きくなるので分割して作成してください。
 
 ## VPC & Subnets
 
@@ -15,7 +15,7 @@ https://github.com/awsdocs/elastic-beanstalk-samples/blob/main/cfn-templates/vpc
 
 ### template file
 
-[.cloudformation/vpc_subnets.yml](.cloudformation/vpc_subnets.yml)
+[.cloudformation/vpc_subnets.yml](/.cloudformation/vpc_subnets.yml)
 
 ### Stack Name
 
@@ -27,7 +27,7 @@ https://github.com/awsdocs/elastic-beanstalk-samples/blob/main/cfn-templates/vpc
 
 ### template file
 
-[.cloudformation/elastic_cache.yml](.cloudformation/elastic_cache.yml)
+[.cloudformation/elastic_cache.yml](/.cloudformation/elastic_cache.yml)
 
 ### Stack Name
 
@@ -39,7 +39,7 @@ https://github.com/awsdocs/elastic-beanstalk-samples/blob/main/cfn-templates/vpc
 
 ### template file
 
-[.cloudformation/cloud_front.yml] (.cloudformation/cloud_front.yml)
+[.cloudformation/cloud_front.yml](/.cloudformation/cloud_front.yml)
 
 ### Stack Name
 
@@ -51,7 +51,7 @@ staging用と本番は同じレポジトリです。Dockerイメージのタグ�
 
 ### template file
 
-[.cloudformation/ecr.yml](.cloudformation/ecr.yml)
+[.cloudformation/ecr.yml](/.cloudformation/ecr.yml)
 
 ### Stack Name
 
