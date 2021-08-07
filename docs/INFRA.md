@@ -13,7 +13,7 @@ AWS の code as a infrastructureサービスCloud Formationで、インフラス
 下記を参考に作成しています。VPC 1つ、public Subnet 3です。
 https://github.com/awsdocs/elastic-beanstalk-samples/blob/main/cfn-templates/vpc-public.yaml
 
-### template file
+### Template file
 
 [.cloudformation/vpc_subnets.yml](/.cloudformation/vpc_subnets.yml)
 
@@ -21,11 +21,11 @@ https://github.com/awsdocs/elastic-beanstalk-samples/blob/main/cfn-templates/vpc
 
 - staging-decidim-app-cloud-front
 
-## redis
+## Redis
 
 シンプルに本体を作成するだけです。サブネットグループ等は現状手動作成となります。
 
-### template file
+### Template file
 
 [.cloudformation/elastic_cache.yml](/.cloudformation/elastic_cache.yml)
 
@@ -33,11 +33,11 @@ https://github.com/awsdocs/elastic-beanstalk-samples/blob/main/cfn-templates/vpc
 
 - staging-decidim-redis
 
-## cloud Front
+## Cloud Front
 
 キャッシュポリシーとクラウドフロント本体を作成します。
 
-### template file
+### Template file
 
 [.cloudformation/cloud_front.yml](/.cloudformation/cloud_front.yml)
 
@@ -47,9 +47,9 @@ https://github.com/awsdocs/elastic-beanstalk-samples/blob/main/cfn-templates/vpc
 
 ## ECR
 
-staging用と本番は同じレポジトリです。Dockerイメージのタグで区別します。
+staging用と本番は同じリポジトリです。Dockerイメージのタグで区別します。
 
-### template file
+### Template file
 
 [.cloudformation/ecr.yml](/.cloudformation/ecr.yml)
 

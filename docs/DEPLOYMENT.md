@@ -53,7 +53,7 @@ Dockerイメージのタグ例: staging-dfasfste
 
 切り戻しを早くするため、masterマージの際、Dockerイメージは毎回buildします。
 
-パイプラインが通ったのを確認後、git上でデプロイしたいコミットに、v○○とタグを打ちます。
+パイプラインが通ったのを確認後、Git上でデプロイしたいコミットに、v○○とタグを打ちます。
 タグはvから始まる必要があります。すぐにeb deployが実行されます。
 
 例: v1.0.0
@@ -145,13 +145,13 @@ Elastic Beanstalk のインスタンスをAレコードとして割り当てる
 
 [6.4 Setup email](https://platoniq.github.io/decidim-install/decidim-aws/#64-setup-email)
 
-## 9. REDIS の設定をする
+## 9. Redis の設定をする
 
 [6.5 Configure the job system with Sidekiq and Redis](https://platoniq.github.io/decidim-install/decidim-aws/#65-configure-the-job-system-with-sidekiq-and-redis)
 
 sidekiqの設定をする必要はありません。dockerでデプロイされています。
 
-stagingはcloud formationで作成しています。 [./INFRA.md###redis](./INFRA.md###redis)
+stagingはcloud formationで作成しています。 [./INFRA.md#Redis](./INFRA.md#Redis)
 
 ## 10. S3 の設定をする
 

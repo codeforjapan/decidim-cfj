@@ -22,7 +22,7 @@ Dockerで環境を構築する際は、1.環境構築と2. 実行（ローカル
 ```
 rbenv install 2.6.6
 ```
-### 2.2 レポジトリをクローン
+### 2.2 リポジトリをクローン
 ```
 git clone git@github.com:codeforjapan/decidim-cfj.git
 
@@ -72,7 +72,7 @@ http://localhost:3000 にアクセス
 ## 3. 実行（Dockerバージョン）
 事前準備、rubyのインストールは不要です。
 
-### 3.1 レポジトリをクローン
+### 3.1 リポジトリをクローン
 ```
 git clone git@github.com:codeforjapan/decidim-cfj.git
 
