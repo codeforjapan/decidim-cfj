@@ -32,7 +32,16 @@ Resources:
     Properties:
       BucketName: !Sub ${AppEnvironment}-cfj-decidim-cloudfront-log
       AccessControl: LogDeliveryWrite
-
+      LifecycleConfiguration:
+        Rules:
+          - Id: !Sub ${AppEnvironment}-cfj-decidim-cloudfront-log-life-cycle
+            Status: Enabled
+            Prefix: logs/
+            Transitions:
+              - StorageClass: STANDARD_IA
+                TransitionInDays: 30
+              - StorageClass: GLACIER
+                TransitionInDays: 90
   # ------------------------------------------------------------#
   #  CloudFront
   # ------------------------------------------------------------#
