@@ -4,10 +4,10 @@ Elastic Beanstalkの設定はコードで管理されています。
 
 インスタンスタイプやオートスケールの設定が違うため、stagingとproductionで一部ファイルが別です。それ以外の共通の設定は同じファイルを使っているので気を付けて下さい。
 
-共通: [deployments/.ebextensions](deployments/.ebextensions)
+共通: [deployments/.ebextensions](/deployments/.ebextensions)
 
-staging: [deployments/staging](deployments/staging)
-production: [deployments/production](deployments/production)
+staging: [deployments/staging](/deployments/staging)
+production: [deployments/production](/deployments/production)
 
 デプロイの際に上記の設定ファイルを元にデプロイが実行されます。コードでの設定がある場合、インフラも含め反映されます。
 
@@ -15,7 +15,7 @@ production: [deployments/production](deployments/production)
 
 GUIの設定とコードの書き方は、[公式](https://docs.aws.amazon.com/ja_jp/elasticbeanstalk/latest/dg/command-options-general.html#command-options-general-elasticbeanstalkapplicationenvironment)　を参考にしてください。
 
-環境変数は環境別に設定する値だけ、[deployments/production/00_env_options.config](deployments/production/00_env_options.config) or [deployments/staging/00_env_options.config](deployments/staging/00_env_options.config) に記載して下さい。
+環境変数は環境別に設定する値だけ、[deployments/production/00_env_options.config](/deployments/production/00_env_options.config) or [deployments/staging/00_env_options.config](/deployments/staging/00_env_options.config) に記載して下さい。
 
 秘密鍵などのSSM経由で参照される値は、デプロイ時に動的に展開されます。
 
@@ -27,8 +27,8 @@ https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/dynamic-ref
 
 # GitHubからデプロイ
 
-ワークフローの設定：[.github/workflows/deploy.yml](.github/workflows/deploy.yml)
-デプロイの基本設定: [./deployments/](./deployments/)
+ワークフローの設定：[.github/workflows/deploy.yml](/.github/workflows/deploy.yml)
+デプロイの基本設定: [deployments/](/deployments/)
 
 1. ECRにログイン
 1. Dockerコンテナをbuild
@@ -53,7 +53,7 @@ Dockerイメージのタグ例: staging-dfasfste
 
 切り戻しを早くするため、masterマージの際、Dockerイメージは毎回buildします。
 
-パイプラインが通ったのを確認後、git上でデプロイしたいコミットに、v○○とタグを打ちます。
+パイプラインが通ったのを確認後、Git上でデプロイしたいコミットに、v○○とタグを打ちます。
 タグはvから始まる必要があります。すぐにeb deployが実行されます。
 
 例: v1.0.0
@@ -98,11 +98,11 @@ bundle install
 
 ## 4. Elastic Beanstalk に 環境をセットアップする
 
-1. [docker-compose.yml](deployments/docker-compose.yml)で`{RepositoryName}`をデプロイしたいECRのイメージパスに修正。
-1. [docker-compose.yml](deployments/docker-compose.yml)で`{EBEnvironment}}`をデプロイする環境名に修正。
+1. [docker-compose.yml](/deployments/docker-compose.yml)で`{RepositoryName}`をデプロイしたいECRのイメージパスに修正。
+1. [docker-compose.yml](/deployments/docker-compose.yml)で`{EBEnvironment}`をデプロイする環境名に修正。
 1. 作成したい環境の設定をコピー。
 
-[deployments/.elasticbeanstalk/config.yml](deployments/.elasticbeanstalk/config.yml)に設定があるので、基本的に何も聞かれないはずです。
+[deployments/.elasticbeanstalk/config.yml](/deployments/.elasticbeanstalk/config.yml)に設定があるので、基本的に何も聞かれないはずです。
 
 
 ```bash
@@ -145,13 +145,13 @@ Elastic Beanstalk のインスタンスをAレコードとして割り当てる
 
 [6.4 Setup email](https://platoniq.github.io/decidim-install/decidim-aws/#64-setup-email)
 
-## 9. REDIS の設定をする
+## 9. Redis の設定をする
 
 [6.5 Configure the job system with Sidekiq and Redis](https://platoniq.github.io/decidim-install/decidim-aws/#65-configure-the-job-system-with-sidekiq-and-redis)
 
 sidekiqの設定をする必要はありません。dockerでデプロイされています。
 
-stagingはcloud formationで作成しています。 [./INFRA.md###redis](./INFRA.md###redis)
+stagingはcloud formationで作成しています。 [./INFRA.md#Redis](./INFRA.md#Redis)
 
 ## 10. S3 の設定をする
 
