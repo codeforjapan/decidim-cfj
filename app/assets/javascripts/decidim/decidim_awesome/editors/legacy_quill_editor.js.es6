@@ -8,6 +8,7 @@
 
 ((exports) => {
   exports.DecidimAwesome = exports.DecidimAwesome || {};
+
   /*** begin Decidim-cfj Extension ***/
     function __createCSS() {
         var css = document.createElement("style")
@@ -89,7 +90,7 @@
         }
     };
 
-    class htmlEditButton {
+    class HtmlEditButton {
         constructor(quill, options) {
             debug = options && options.debug;
             Logger.log("logging enabled");
@@ -97,7 +98,7 @@
             const toolbarModule = quill.getModule("toolbar");
             if (!toolbarModule) {
                 throw new Error(
-                    'quill.htmlEditButton requires the "toolbar" module to be included too'
+                    'quill.HtmlEditButton requires the "toolbar" module to be included too'
                 );
             }
             this.registerDivModule();
@@ -340,7 +341,7 @@
         }
       }
 
-      Quill.register("modules/htmlEditButton", htmlEditButton);
+      Quill.register("modules/htmlEditButton", HtmlEditButton);
       const quill = new Quill(container, {
         modules: modules,
         formats: quillFormats,
