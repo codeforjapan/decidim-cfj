@@ -277,8 +277,7 @@
     "testURL": "https://decidim.dev/",
     "setupFiles": [
       "raf/polyfill",
-      "<rootDir>/decidim-admin/app/frontend/entry_test.ts",
-      "<rootDir>/decidim-comments/app/frontend/entry_test.ts"
+      "<rootDir>/app/frontend/entry_test.ts"
     ],
     "moduleFileExtensions": [
       "ts",
@@ -291,7 +290,7 @@
     "transform": {
       "^.+\\.(ts|tsx)$": "typescript-babel-jest",
       "\\.yml$": "yaml-jest",
-      "\\.(gql|graphql)$": "<rootDir>/decidim-comments/app/frontend/support/graphql_transformer.js",
+      "\\.(gql|graphql)$": "<rootDir>/app/frontend/support/graphql_transformer.js",
       ".*": "babel-jest"
     },
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$"
