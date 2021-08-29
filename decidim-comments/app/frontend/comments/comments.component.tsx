@@ -140,9 +140,9 @@ export class Comments extends React.Component<CommentsProps> {
    * @returns {Void|DOMElement} - A warning message or nothing.
    */
   private _renderBlockedCommentsWarning() {
-    const { commentable: { acceptsNewComments, userAllowedToComment } } = this.props;
+    const { commentable: { acceptsNewComments, userAllowedToComment }, loading } = this.props;
 
-    if (!acceptsNewComments && !userAllowedToComment) {
+    if (!acceptsNewComments && !userAllowedToComment && !loading) {
       return (
         <div className="callout warning">
           <p>{I18n.t("components.comments.blocked_comments_warning")}</p>
