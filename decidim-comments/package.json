@@ -17,7 +17,7 @@
     "build": "webpack --env.dev",
     "build:prod": "NODE_ENV=production webpack -p --env.prod",
     "start": "webpack --env.dev --watch --progress --color --display-error-details",
-    "prelint": "tslint ./**/*.ts ./**/*.tsx",
+    "prelint": "tslint ./app/**/*.ts ./app/**/*.tsx",
     "lint": "eslint -c .eslintrc.json --ext .js,.js.es6,.jsx .",
     "test": "jest",
     "test:watch": "npm run test -- --watch",
