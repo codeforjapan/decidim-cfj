@@ -4,6 +4,8 @@ module Decidim
   module Comments
     # A helper to expose the comments component for a commentable
     module CommentsHelper
+      COMMENTS_LIMIT = 3
+
       # Render commentable comments inside the `expanded` template content.
       #
       # resource - A commentable resource
@@ -31,6 +33,7 @@ module Decidim
                    commentableId: commentable_id,
                    locale: I18n.locale,
                    toggleTranslations: machine_translations_toggled?,
+                   limit: comments_limit(resource),
                    commentsMaxLength: comments_max_length(resource)
         )
       end
@@ -50,10 +53,15 @@ module Decidim
                 commentableId: "#{props[:commentableId]}",
                 locale: "#{props[:locale]}",
                 toggleTranslations: #{props[:toggleTranslations]},
+                limit: #{props[:limit]},
                 commentsMaxLength: "#{props[:commentsMaxLength]}"
               }
             );
           })
+      end
+
+      def comments_limit(_resource)
+        COMMENTS_LIMIT
       end
 
       def comments_max_length(resource)

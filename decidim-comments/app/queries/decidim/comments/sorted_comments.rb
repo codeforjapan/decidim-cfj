@@ -47,7 +47,11 @@ module Decidim
                   order_by_older(scope)
                 end
 
-        scope
+        if @options[:limit]
+          scope.limit(@options[:limit])
+        else
+          scope
+        end
       end
 
       private

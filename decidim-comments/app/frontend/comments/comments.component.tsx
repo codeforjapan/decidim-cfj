@@ -24,6 +24,12 @@ interface CommentsProps extends GetCommentsQuery {
   singleCommentId?: string;
   reorderComments: (orderBy: string) => void;
   commentsMaxLength: number;
+  limit: number;
+  refetchCommentsWithLimit: (limit: number) => void;
+}
+
+interface CommentsState {
+  limit: number;
 }
 
 /**
@@ -33,7 +39,7 @@ interface CommentsProps extends GetCommentsQuery {
  * @class
  * @augments Component
  */
-export class Comments extends React.Component<CommentsProps> {
+export class Comments extends React.Component<CommentsProps, CommentsState> {
   public static defaultProps: any = {
     loading: false,
     session: null,
@@ -46,6 +52,13 @@ export class Comments extends React.Component<CommentsProps> {
     locale: PropTypes.string,
     toggleTranslations: PropTypes.bool
   };
+
+  constructor(props: CommentsProps) {
+    super(props);
+    this.state = {
+      limit: this.props.limit
+    };
+  }
 
   public getChildContext() {
     return {
@@ -79,6 +92,7 @@ export class Comments extends React.Component<CommentsProps> {
           {this._renderSingleCommentWarning()}
           {this._renderBlockedCommentsWarning()}
           {this._renderCommentThreads()}
+          {this._renderAllCommentsButton(totalCommentsCount)}
           {this._renderAddCommentForm()}
           {this._renderBlockedCommentsForUserWarning()}
         </section>
@@ -198,6 +212,37 @@ export class Comments extends React.Component<CommentsProps> {
   }
 
   /**
+   * If comments are overflowed it renders the show all comments form
+   * @private
+   * @returns {Void|ReactComponent} - A AddCommentForm component or nothing
+   */
+  private _renderAllCommentsButton(totalCommentsCount: number) {
+    const maxComments = 3000;
+
+    const limit = this.state.limit;
+    if (totalCommentsCount > limit) {
+      return (
+        <div className="">
+          <button
+            className="button expanded"
+            onClick={this.showAllComments(maxComments)}
+          >
+          すべてのコメントを表示する
+          </button>
+        </div>
+      );
+    }
+  }
+
+  private showAllComments(limit: number) {
+    return (event: React.MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+      this.setState({ limit });
+      this.props.refetchCommentsWithLimit(limit);
+    };
+  }
+
+  /**
    * If current user is present it renders the add comment form
    * @private
    * @returns {Void|ReactComponent} - A AddCommentForm component or nothing
@@ -249,10 +294,16 @@ const CommentsWithData: any = graphql<GetCommentsQuery, CommentsProps>(commentsQ
         session,
         commentable,
         orderBy: ownProps.orderBy,
+        limit: ownProps.limit,
         singleCommentId: ownProps.singleCommentId,
         reorderComments: (orderBy: string) => {
           return refetch({
             orderBy
+          });
+        },
+        refetchCommentsWithLimit: (limit: number) => {
+          return refetch({
+            limit
           });
         }
       };
@@ -265,6 +316,7 @@ export interface CommentsApplicationProps extends GetCommentsQueryVariables {
   locale: string;
   toggleTranslations: boolean;
   commentsMaxLength: number;
+  limit: number;
 }
 
 /**
@@ -272,7 +324,7 @@ export interface CommentsApplicationProps extends GetCommentsQueryVariables {
  * connect it with Apollo client and store.
  * @returns {ReactComponent} - A component wrapped within an Application component
  */
-const CommentsApplication: React.SFC<CommentsApplicationProps> = ({ locale, toggleTranslations, commentableId, commentableType, singleCommentId, commentsMaxLength }) => (
+const CommentsApplication: React.SFC<CommentsApplicationProps> = ({ locale, toggleTranslations, commentableId, commentableType, singleCommentId, commentsMaxLength, limit }) => (
   <Application locale={locale}>
     <CommentsWithData
       commentsMaxLength={commentsMaxLength}
@@ -281,6 +333,7 @@ const CommentsApplication: React.SFC<CommentsApplicationProps> = ({ locale, togg
       locale={locale}
       toggleTranslations={toggleTranslations}
       orderBy="older"
+      limit={limit}
       singleCommentId={singleCommentId}
     />
   </Application>
