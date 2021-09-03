@@ -23,15 +23,6 @@ Parameters:
     Description: Type of this SSL id
     Type: String
 
-Metadata:
-  "AWS::CloudFormation::Interface":
-    ParameterGroups:
-      - Label:
-          default: "CloudFront"
-        Parameters:
-          - AlbDnsName
-          - ErrorCacheTTL
-
 Resources:
   # ------------------------------------------------------------#
   #  S3 Bucket
@@ -41,7 +32,16 @@ Resources:
     Properties:
       BucketName: !Sub ${AppEnvironment}-cfj-decidim-cloudfront-log
       AccessControl: LogDeliveryWrite
-
+      LifecycleConfiguration:
+        Rules:
+          - Id: !Sub ${AppEnvironment}-cfj-decidim-cloudfront-log-life-cycle
+            Status: Enabled
+            Prefix: logs/
+            Transitions:
+              - StorageClass: STANDARD_IA
+                TransitionInDays: 30
+              - StorageClass: GLACIER
+                TransitionInDays: 90
   # ------------------------------------------------------------#
   #  CloudFront
   # ------------------------------------------------------------#
@@ -52,7 +52,7 @@ Resources:
         DefaultTTL: 600
         MinTTL: 60
         MaxTTL: 3600
-        Name: Decidim-Static-Cache-Policy
+        Name: !Sub ${AppEnvironment}-decidim-static-cache-policy
         ParametersInCacheKeyAndForwardedToOrigin:
           CookiesConfig:
             CookieBehavior: none
