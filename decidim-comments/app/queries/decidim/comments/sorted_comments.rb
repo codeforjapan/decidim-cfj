@@ -47,7 +47,7 @@ module Decidim
                   order_by_older(scope)
                 end
 
-        if @options[:limit]
+        if @options[:limit] && @options[:limit].to_i.positive?
           scope.limit(@options[:limit])
         else
           scope

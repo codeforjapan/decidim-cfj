@@ -217,15 +217,15 @@ export class Comments extends React.Component<CommentsProps, CommentsState> {
    * @returns {Void|ReactComponent} - A AddCommentForm component or nothing
    */
   private _renderAllCommentsButton(totalCommentsCount: number) {
-    const maxComments = 3000;
+    const allCommentsNum = 0;
 
     const limit = this.state.limit;
-    if (totalCommentsCount > limit) {
+    if ((limit !== 0) && (totalCommentsCount > limit)) {
       return (
         <div className="">
           <button
             className="button expanded"
-            onClick={this.showAllComments(maxComments)}
+            onClick={this.showAllComments(allCommentsNum)}
           >
           すべてのコメントを表示する
           </button>
