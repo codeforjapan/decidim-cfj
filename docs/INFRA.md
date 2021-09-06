@@ -48,6 +48,19 @@ https://github.com/awsdocs/elastic-beanstalk-samples/blob/main/cfn-templates/vpc
 
 - staging-decidim-app-cloud-front
 
+## WAF
+
+Cloud frontに合わせてus-east-1にあります。
+
+### Template file
+
+[.cloudformation/waf.yml](/.cloudformation/waf.yml)
+
+### Stack Name
+
+- staging-decidim-waf
+- production-decidim-waf
+
 ## ECR
 
 staging用と本番は同じリポジトリです。Dockerイメージのタグで区別します。
