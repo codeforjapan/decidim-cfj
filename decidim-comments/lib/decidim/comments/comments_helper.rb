@@ -4,7 +4,7 @@ module Decidim
   module Comments
     # A helper to expose the comments component for a commentable
     module CommentsHelper
-      COMMENTS_LIMIT = 3
+      COMMENTS_LIMIT = 100
 
       # Render commentable comments inside the `expanded` template content.
       #
@@ -61,7 +61,7 @@ module Decidim
       end
 
       def comments_limit(_resource)
-        COMMENTS_LIMIT
+        Rails.application.config.respond_to?(:default_comments_limit) ? Rails.application.config.default_comments_limit : COMMENTS_LIMIT
       end
 
       def comments_max_length(resource)
