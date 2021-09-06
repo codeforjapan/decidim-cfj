@@ -227,7 +227,7 @@ export class Comments extends React.Component<CommentsProps, CommentsState> {
             className="button expanded"
             onClick={this.showAllComments(allCommentsNum)}
           >
-          すべてのコメントを表示する
+          {I18n.t("components.comments.show_all_comments")}
           </button>
         </div>
       );
