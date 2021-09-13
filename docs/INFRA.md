@@ -17,9 +17,12 @@ https://github.com/awsdocs/elastic-beanstalk-samples/blob/main/cfn-templates/vpc
 
 [.cloudformation/vpc_subnets.yml](/.cloudformation/vpc_subnets.yml)
 
+ログ出力用のs3バケットも作成してます。
+
 ### Stack Name
 
 - staging-decidim-app-cloud-front
+- production-decidim-app-cloud-front
 
 ## Redis
 
@@ -44,6 +47,19 @@ https://github.com/awsdocs/elastic-beanstalk-samples/blob/main/cfn-templates/vpc
 ### Stack Name
 
 - staging-decidim-app-cloud-front
+
+## WAF
+
+Cloud frontに合わせてus-east-1にあります。
+
+### Template file
+
+[.cloudformation/waf.yml](/.cloudformation/waf.yml)
+
+### Stack Name
+
+- staging-decidim-waf
+- production-decidim-waf
 
 ## ECR
 
