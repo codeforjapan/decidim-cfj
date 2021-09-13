@@ -30,9 +30,10 @@ module Decidim
 
         argument :orderBy, types.String, "Order the comments"
         argument :singleCommentId, types.String, "ID of the single comment to look at"
+        argument :limit, types.Int
 
         resolve lambda { |obj, args, _ctx|
-          SortedComments.for(obj, order_by: args[:orderBy], id: args[:singleCommentId])
+          SortedComments.for(obj, order_by: args[:orderBy], id: args[:singleCommentId], limit: args[:limit])
         }
       end
 

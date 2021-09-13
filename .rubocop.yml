@@ -14,6 +14,7 @@ AllCops:
     - "development_app/**/*"
     - "spec/decidim_dummy_app/**/*"
     - "node_modules/**/*"
+    - "**/node_modules/**/*"
     - "db/migrate/*"
     - "db/schema.rb"
   # Default formatter will be used if no -f/--format option is given.
