@@ -40,8 +40,7 @@ Resources:
             Transitions:
               - StorageClass: STANDARD_IA
                 TransitionInDays: 30
-              - StorageClass: GLACIER
-                TransitionInDays: 90
+
   # ------------------------------------------------------------#
   #  CloudFront
   # ------------------------------------------------------------#
