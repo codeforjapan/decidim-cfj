@@ -9,6 +9,9 @@ Parameters:
     AllowedValues:
       - staging
       - production
+  KinesisDeliveryStreamArn:
+    Description: Type of Kinesis Firehose arn for WAF Log
+    Type: String
 
 Resources:
 # ------------------------------------------------------------#
@@ -37,7 +40,7 @@ Resources:
         - Name: !Sub ${AppEnvironment}-AWSManagedRulesKnownBadInputsRuleSet
           Priority: 1
           OverrideAction:
-            Count: {}
+            None: {}
           VisibilityConfig:
             SampledRequestsEnabled: true
             CloudWatchMetricsEnabled: true
@@ -49,7 +52,7 @@ Resources:
         - Name: !Sub ${AppEnvironment}-AWSManagedRulesAmazonIpReputationList
           Priority: 2
           OverrideAction:
-            Count: {}
+            None: {}
           VisibilityConfig:
             SampledRequestsEnabled: true
             CloudWatchMetricsEnabled: true
@@ -61,7 +64,7 @@ Resources:
         - Name: !Sub ${AppEnvironment}-AWSManagedRulesLinuxRuleSet
           Priority: 3
           OverrideAction:
-            Count: {}
+            None: {}
           VisibilityConfig:
             SampledRequestsEnabled: true
             CloudWatchMetricsEnabled: true
@@ -73,7 +76,7 @@ Resources:
         - Name: !Sub ${AppEnvironment}-AWSManagedRulesSQLiRuleSet
           Priority: 4
           OverrideAction:
-            Count: {}
+            None: {}
           VisibilityConfig:
             SampledRequestsEnabled: true
             CloudWatchMetricsEnabled: true
@@ -87,3 +90,23 @@ Resources:
         SampledRequestsEnabled: true
         CloudWatchMetricsEnabled: true
         MetricName: !Sub ${AppEnvironment}-cfj-decidim-web-acl
+  WafLoggingConfig:
+    Type: AWS::WAFv2::LoggingConfiguration
+    Properties:
+      LogDestinationConfigs:
+        - !Sub ${KinesisDeliveryStreamArn}
+      RedactedFields:
+        - Method: {}
+        - QueryString: {}
+        - UriPath: {}
+      ResourceArn: !Sub "${WebAclCloudFront.Arn}"
+      LoggingFilter:
+        DefaultBehavior: DROP
+        Filters:
+          - Behavior: KEEP
+            Conditions:
+              - ActionCondition:
+                  Action: BLOCK
+              - ActionCondition:
+                  Action: COUNT
+            Requirement: MEETS_ANY
