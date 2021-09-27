@@ -805,3 +805,5 @@ ja:
     decidim:
       header:
         sign_in: ログイン
+      notifications_dashboard:
+        mark_all_as_read: すべての通知を削除する
