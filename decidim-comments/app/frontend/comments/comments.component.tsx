@@ -217,6 +217,7 @@ export class Comments extends React.Component<CommentsProps, CommentsState> {
    * @returns {Void|ReactComponent} - A AddCommentForm component or nothing
    */
   private _renderAllCommentsButton(totalCommentsCount: number) {
+    const { loading } = this.props;
     const allCommentsNum = 0;
 
     const limit = this.state.limit;
@@ -228,6 +229,14 @@ export class Comments extends React.Component<CommentsProps, CommentsState> {
             onClick={this.showAllComments(allCommentsNum)}
           >
           {I18n.t("components.comments.show_all_comments")}
+          </button>
+        </div>
+      );
+    } else if (loading) {
+      return (
+        <div className="">
+          <button className="button expanded">
+          {I18n.t("components.comments.loading")}
           </button>
         </div>
       );
