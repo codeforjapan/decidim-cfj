@@ -1,6 +1,6 @@
 FROM node:10.23.0-alpine as node
 
-FROM ruby:2.6.6-alpine
+FROM ruby:2.7.4-alpine
 
 RUN apk update \
     && apk add --no-cache --virtual build-dependencies \

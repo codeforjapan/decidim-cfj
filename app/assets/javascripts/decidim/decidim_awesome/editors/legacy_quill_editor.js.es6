@@ -1,7 +1,15 @@
-// = require quill.min
+// = require image-upload.min
+// = require image-resize.min
+// = require inscrybmde.min.js
+// = require inline-attachment.js
+// = require codemirror-4.inline-attachment.js
+// = require jquery.inline-attachment.js
 // = require_self
 
 ((exports) => {
+  exports.DecidimAwesome = exports.DecidimAwesome || {};
+
+  /*** begin Decidim-cfj Extension ***/
     function __createCSS() {
         var css = document.createElement("style")
         css.type = "text/css"
@@ -82,7 +90,7 @@
         }
     };
 
-    class htmlEditButton {
+    class HtmlEditButton {
         constructor(quill, options) {
             debug = options && options.debug;
             Logger.log("logging enabled");
@@ -90,7 +98,7 @@
             const toolbarModule = quill.getModule("toolbar");
             if (!toolbarModule) {
                 throw new Error(
-                    'quill.htmlEditButton requires the "toolbar" module to be included too'
+                    'quill.HtmlEditButton requires the "toolbar" module to be included too'
                 );
             }
             this.registerDivModule();
@@ -247,83 +255,165 @@
         });
         return result;
     }
+    const htmlEditButtonOptions = {
+        debug: true, // logging, default:false
+        msg: "HTMLソースを編集", //Custom message to display in the editor, default: Edit HTML here, when you click "OK" the quill editor's contents will be replaced
+        okText: "OK", // Text to display in the OK button, default: Ok,
+        cancelText: "キャンセル", // Text to display in the cancel button, default: Cancel
+        buttonHTML: "&lt;&gt;", // Text to display in the toolbar button, default: <>
+        buttonTitle: "HTMLソースを編集", // Text to display as the tooltip for the toolbar button, default: Show HTML source
+        syntax: false // Show the HTML with syntax highlighting. Requires highlightjs on window.hljs (similar to Quill itself), default: false
+    }
+  /*** end Decidim-cfj Extension ***/
 
-    const quillFormats = ["bold", "italic", "link", "underline", "header", "list", "video"];
+  // Redefines Quill editor with images
+  if(exports.DecidimAwesome.allow_images_in_full_editor  || exports.DecidimAwesome.allow_images_in_small_editor || exports.DecidimAwesome.use_markdown_editor) {
+
+    const quillFormats = ["bold", "italic", "link", "underline", "header", "list", "video", "image", "alt"];
 
     const createQuillEditor = (container) => {
-        const toolbar = $(container).data("toolbar");
-        const disabled = $(container).data("disabled");
+      const toolbar = $(container).data("toolbar");
+      const disabled = $(container).data("disabled");
 
-        let quillToolbar = [
-            ["bold", "italic", "underline"],
-            [{ list: "ordered" }, { list: "bullet" }],
-            ["link", "clean"]
+      let quillToolbar = [
+        ["bold", "italic", "underline"],
+        [{ list: "ordered" }, { list: "bullet" }],
+        ["link", "clean"]
+      ];
+
+      let addImage = false;
+
+      if (toolbar === "full") {
+        quillToolbar = [
+          [{ header: [1, 2, 3, 4, 5, 6, false] }],
+          ...quillToolbar
         ];
+          if(exports.DecidimAwesome.allow_images_in_full_editor) {
+            quillToolbar.push(["video", "image"]);
+            addImage = true;
+          } else {
+            quillToolbar.push(["video"]);
+          }
+      } else if (toolbar === "basic") {
+          if(exports.DecidimAwesome.allow_images_in_small_editor) {
+            quillToolbar.push(["video", "image"]);
+            addImage = true;
+          } else {
+            quillToolbar.push(["video"]);
+          }
+      } else if(exports.DecidimAwesome.allow_images_in_small_editor) {
+        quillToolbar.push(["image"]);
+        addImage = true;
+      }
 
-        if (toolbar === "full") {
-            quillToolbar = [
-                [{ header: [1, 2, 3, 4, 5, 6, false] }],
-                ...quillToolbar,
-                ["video"]
-            ];
-        } else if (toolbar === "basic") {
-            quillToolbar = [
-                ...quillToolbar,
-                ["video"]
-            ];
+      let modules = {
+        toolbar: quillToolbar,
+        htmlEditButton: htmlEditButtonOptions
+      };
+      const $input = $(container).siblings('input[type="hidden"]');
+      container.innerHTML = $input.val() || "";
+      const token = $( 'meta[name="csrf-token"]' ).attr( 'content' );
+
+      if(addImage) {
+        modules.imageResize = {
+          modules: ["Resize", "DisplaySize"]
         }
-
-        const $input = $(container).siblings('input[type="hidden"]');
-        container.innerHTML = $input.val() || "";
-        Quill.register("modules/htmlEditButton", htmlEditButton);
-
-        const quill = new Quill(container, {
-            modules: {
-                toolbar: quillToolbar,
-                htmlEditButton: {
-                    debug: true, // logging, default:false
-                    msg: "HTMLソースを編集", //Custom message to display in the editor, default: Edit HTML here, when you click "OK" the quill editor's contents will be replaced
-                    okText: "OK", // Text to display in the OK button, default: Ok,
-                    cancelText: "キャンセル", // Text to display in the cancel button, default: Cancel
-                    buttonHTML: "&lt;&gt;", // Text to display in the toolbar button, default: <>
-                    buttonTitle: "HTMLソースを編集", // Text to display as the tooltip for the toolbar button, default: Show HTML source
-                    syntax: false // Show the HTML with syntax highlighting. Requires highlightjs on window.hljs (similar to Quill itself), default: false
-                }
-            },
-            // Disabled to allow for more HTML tags!
-            //formats: quillFormats,
-            theme: "snow"
-        });
-
-        if (disabled) {
-            quill.disable();
+        modules.imageUpload = {
+          url: exports.DecidimAwesome.editor_uploader_path, // server url. If the url is empty then the base64 returns
+          method: 'POST', // change query method, default 'POST'
+          name: 'image', // custom form name
+          withCredentials: false, // withCredentials
+          headers: { 'X-CSRF-Token': token }, // add custom headers, example { token: 'your-token'}
+          // personalize successful callback and call next function to insert new url to the editor
+          callbackOK: (serverResponse, next) => {
+            $(quill.getModule("toolbar").container).last().removeClass('editor-loading')
+            next(serverResponse.url);
+          },
+          // personalize failed callback
+          callbackKO: serverError => {
+            $(quill.getModule("toolbar").container).last().removeClass('editor-loading')
+            alert(serverError.message);
+          },
+          checkBeforeSend: (file, next) => {
+            $(quill.getModule("toolbar").container).last().addClass('editor-loading')
+            next(file); // go back to component and send to the server
+          }
         }
+      }
 
-        quill.on("text-change", () => {
-            const text = quill.getText();
+      Quill.register("modules/htmlEditButton", HtmlEditButton);
+      const quill = new Quill(container, {
+        modules: modules,
+        formats: quillFormats,
+        theme: "snow"
+      });
 
-            // Triggers CustomEvent with the cursor position
-            // It is required in input_mentions.js
-            let event = new CustomEvent("quill-position", {
-                detail: quill.getSelection()
-            });
-            container.dispatchEvent(event);
+      if (disabled) {
+        quill.disable();
+      }
 
-            if (text === "\n") {
-                $input.val("");
-            } else {
-                $input.val(quill.root.innerHTML);
-            }
+      quill.on("text-change", () => {
+        const text = quill.getText();
+
+        // Triggers CustomEvent with the cursor position
+        // It is required in input_mentions.js
+        let event = new CustomEvent("quill-position", {
+          detail: quill.getSelection()
         });
+        container.dispatchEvent(event);
+
+        if (text === "\n") {
+          $input.val("");
+        } else {
+          $input.val(quill.root.innerHTML);
+        }
+      });
+
+      if(addImage) {
+        const t = window.DecidimAwesome.texts["drag_and_drop_image"];
+        $(container).after(`<p class="help-text" style="margin-top:-1.5rem;">${t}</p>`);
+      }
+    };
+
+    const createMarkdownEditor = (container) => {
+      $(container).hide();
+      const t = window.DecidimAwesome.texts["drag_and_drop_image"];
+      const token = $( 'meta[name="csrf-token"]' ).attr( 'content' );
+      const $input = $(container).siblings('input[type="hidden"]');
+      const inscrybmde = new InscrybMDE({
+        element: $input[0],
+        spellChecker: false,
+        renderingConfig: {
+          codeSyntaxHighlighting: true
+        }
+      });
+
+      // Allow image upload
+      if(window.DecidimAwesome.allow_images_in_markdown_editor) {
+        $(inscrybmde.gui.statusbar).prepend(`<span class="help-text" style="float:left;margin:0;text-align:left;">${t}</span>`);
+        inlineAttachment.editors.codemirror4.attach(inscrybmde.codemirror, {
+          uploadUrl: window.DecidimAwesome.editor_uploader_path,
+          uploadFieldName: "image",
+          jsonFieldName: "url",
+          extraHeaders: { "X-CSRF-Token": token }
+        });
+      }
     };
 
     const quillEditor = () => {
-        $(".editor-container").each((_idx, container) => {
-            createQuillEditor(container);
-        });
+      $(".editor-container").each((idx, container) => {
+        if(exports.DecidimAwesome.use_markdown_editor) {
+          createMarkdownEditor(container);
+        } else {
+          createQuillEditor(container);
+        }
+      });
     };
 
     exports.Decidim = exports.Decidim || {};
     exports.Decidim.quillEditor = quillEditor;
     exports.Decidim.createQuillEditor = createQuillEditor;
+    exports.Decidim.createMarkdownEditor = createMarkdownEditor;
+
+  }
 })(window);
