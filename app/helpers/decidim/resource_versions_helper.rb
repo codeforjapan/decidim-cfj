@@ -5,6 +5,10 @@ module Decidim
   module ResourceVersionsHelper
     include ResourceHelper
 
+    # Override `Decidim::ResourceVersionsHelper.resource_version` to enhance performance.
+    #
+    # (Original Comment is below:)
+    #
     # Displays the localized version for the given resource.
     #
     # resource - the Resource that has the version to display.
@@ -13,7 +17,7 @@ module Decidim
     #
     # Returns a String.
     def resource_version(resource, options = {})
-      return unless resource.respond_to?(:versions) && resource.versions.present?
+      return unless resource.respond_to?(:versions) && resource.versions_count > 0
 
       html = []
       html << resource_version_number(resource.versions_count)
