@@ -3,7 +3,7 @@
 class UpdateOrganizationsAvailableAuthorizations < ActiveRecord::Migration[5.2]
 
   class MigrationOrganization < ActiveRecord::Base
-    self.table_name = :decidim_organizations
+    self.table_name = "decidim_organizations"
   end
 
   def up
