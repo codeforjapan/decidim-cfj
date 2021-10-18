@@ -108,6 +108,10 @@ ja:
       initiatives:
         vote_cabin:
           votes_blocked: ログインが無効になっています
+    forms:
+      file_help:
+        image:
+          message_1: "テキストを含まない風景画像が適しています（推奨サイズ: 縦横どちらも3800ピクセル以下程度）"
     meetings:
       meetings:
         filters:
