@@ -80,6 +80,7 @@ Resources:
             HTTPPort: 80
             HTTPSPort: 443
             OriginProtocolPolicy: https-only
+            OriginReadTimeout: 60
         DefaultCacheBehavior:
           AllowedMethods:
             - GET
