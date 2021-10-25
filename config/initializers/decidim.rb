@@ -48,7 +48,7 @@ Decidim.configure do |config|
   # end
 
   # Currency unit
-  config.currency_unit = "¥"
+  config.currency_unit = "円"
 
   # Defines the quality of image uploads after processing. Image uploads are
   # processed by Decidim, this value helps reduce the size of the files.
@@ -231,6 +231,9 @@ end
 
 Rails.application.config.i18n.available_locales = Decidim.available_locales
 Rails.application.config.i18n.default_locale = Decidim.default_locale
+
+## Set default comments limit. It's used in Decidim::Comments component. Default value is 100.
+Rails.application.config.default_comments_limit = ENV.fetch("DECIDIM_COMMENTS_LIMIT") { 100 }.to_i
 
 # Overwrite Devise.allow_unconfirmed_access_for
 Devise.allow_unconfirmed_access_for = Decidim.unconfirmed_access_for

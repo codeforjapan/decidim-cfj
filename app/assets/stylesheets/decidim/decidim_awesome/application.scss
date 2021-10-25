@@ -1,0 +1,8 @@
+//= require github.min
+//= require inscrybmde.min
+//= require_self
+
+@import "./editors/quill_editor";
+@import "decidim/decidim_awesome/editors/markdown_editor";
+@import "decidim/decidim_awesome/editors/markdown_view";
+@import "decidim/decidim_awesome/forms/autosave";
