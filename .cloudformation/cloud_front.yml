@@ -22,6 +22,9 @@ Parameters:
   CFSSLCertificateId:
     Description: Type of this SSL id
     Type: String
+  WebACLArn:
+    Description: Type of this AWS WAF arn
+    Type: String
 
 Resources:
   # ------------------------------------------------------------#
@@ -127,6 +130,7 @@ Resources:
             ErrorCachingMinTTL: !Ref ErrorCacheTTL
           - ErrorCode: 504
             ErrorCachingMinTTL: !Ref ErrorCacheTTL
+        WebACLId: !Ref WebACLArn
       Tags:
         - Key: Name
           Value: !Sub ${AppEnvironment}-decidim-cfj-cloud-front
