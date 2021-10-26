@@ -1,5 +1,37 @@
 # Change Log
 
+## [v0.23.5-2021-10-27](https://github.com/codeforjapan/decidim-cfj/releases/tag/v0.23.5-2021-10-27)
+
+### Added
+- chore: add cloud formation of waf [#280](https://github.com/codeforjapan/decidim-cfj/pull/280)
+- Feature/update decidim v0.23.5 [#223](https://github.com/codeforjapan/decidim-cfj/pull/223)
+- Support Decidim::DecidimAwesome [#1](https://github.com/ayuki-joto/decidim-cfj/pull/1)
+- Use ENV var to define default_comments_limit [#5](https://github.com/ayuki-joto/decidim-cfj/pull/5)
+
+### Changed
+- Fix message of mark_all_as_read [#284](https://github.com/codeforjapan/decidim-cfj/pull/284)
+- upgrade instance type to t2.medium [#287](https://github.com/codeforjapan/decidim-cfj/pull/287)
+- Update production environment name [#291](https://github.com/codeforjapan/decidim-cfj/pull/291)
+- chore: fix cloud front CustomOrigin timeout 30s -> 60s [#295](https://github.com/codeforjapan/decidim-cfj/pull/295)
+
+### Fixed
+- fix: delete public docker volume for cache [#275](https://github.com/codeforjapan/decidim-cfj/pull/275)
+- Decidim::ResourceVersionsHelper.resource_version でのクエリを最適化する [#289](https://github.com/codeforjapan/decidim-cfj/pull/289)
+- Fix translation versions.resource_version.of_version [#290](https://github.com/codeforjapan/decidim-cfj/pull/290)
+- 画像のファイルサイズではなく画像の縦横サイズの文言も追加 [#293](https://github.com/codeforjapan/decidim-cfj/pull/293)
+- Use 円 instead of YEN mark [#294](https://github.com/codeforjapan/decidim-cfj/pull/294)
+- Support HtmlEditButton for Quill editor in DecidimAwesome [#2](https://github.com/ayuki-joto/decidim-cfj/pull/2)
+- Show limited number of comments, add "show all comments" button [#4](https://github.com/ayuki-joto/decidim-cfj/pull/4)
+- Fix show comments [#6](https://github.com/ayuki-joto/decidim-cfj/pull/6)
+- コメント読み込み中にはボタンを消さないようにする [#7](https://github.com/ayuki-joto/decidim-cfj/pull/7)
+
+
+### Developer improvements
+- docs: move markdown document to docs [#273](https://github.com/codeforjapan/decidim-cfj/pull/273)
+- fix: change cache policy name to by environment [#277](https://github.com/codeforjapan/decidim-cfj/pull/277)
+- chore: remove glacier life cycle on cloud front log s3 [#282](https://github.com/codeforjapan/decidim-cfj/pull/282)
+
+
 ## [v0.23.0-2021-08-07-01](https://github.com/codeforjapan/decidim-cfj/releases/tag/v0.23.0-2021-08-07-01)
 
 ### Fixed
