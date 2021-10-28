@@ -4,11 +4,10 @@
 
 ### Added
 - chore: add cloud formation of waf [#280](https://github.com/codeforjapan/decidim-cfj/pull/280)
-- Feature/update decidim v0.23.5 [#223](https://github.com/codeforjapan/decidim-cfj/pull/223)
 - Support Decidim::DecidimAwesome [#1](https://github.com/ayuki-joto/decidim-cfj/pull/1)
-- Use ENV var to define default_comments_limit [#5](https://github.com/ayuki-joto/decidim-cfj/pull/5)
 
 ### Changed
+- Feature/update decidim v0.23.5 [#223](https://github.com/codeforjapan/decidim-cfj/pull/223)
 - Fix message of mark_all_as_read [#284](https://github.com/codeforjapan/decidim-cfj/pull/284)
 - upgrade instance type to t2.medium [#287](https://github.com/codeforjapan/decidim-cfj/pull/287)
 - Update production environment name [#291](https://github.com/codeforjapan/decidim-cfj/pull/291)
@@ -21,7 +20,7 @@
 - 画像のファイルサイズではなく画像の縦横サイズの文言も追加 [#293](https://github.com/codeforjapan/decidim-cfj/pull/293)
 - Use 円 instead of YEN mark [#294](https://github.com/codeforjapan/decidim-cfj/pull/294)
 - Support HtmlEditButton for Quill editor in DecidimAwesome [#2](https://github.com/ayuki-joto/decidim-cfj/pull/2)
-- Show limited number of comments, add "show all comments" button [#4](https://github.com/ayuki-joto/decidim-cfj/pull/4)
+- Show limited number of comments, add "show all comments" button [#4](https://github.com/ayuki-joto/decidim-cfj/pull/4), [#5](https://github.com/ayuki-joto/decidim-cfj/pull/5)
 - Fix show comments [#6](https://github.com/ayuki-joto/decidim-cfj/pull/6)
 - コメント読み込み中にはボタンを消さないようにする [#7](https://github.com/ayuki-joto/decidim-cfj/pull/7)
 
