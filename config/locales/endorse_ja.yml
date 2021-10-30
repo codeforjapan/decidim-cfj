@@ -1,0 +1,105 @@
+---
+ja:
+  activemodel:
+    errors:
+      models:
+        proposals_merge:
+          attributes:
+            base:
+              supported: サポートまたはオススメを受けました
+        proposals_split:
+          attributes:
+            base:
+              supported: サポートまたはオススメを受けました
+    models:
+      decidim/resource_endorsed_event: オススメされた
+  activerecord:
+    models:
+      decidim/endorsement: オススメ
+  decidim:
+    assemblies:
+      statistics:
+        endorsements_count: オススメ
+    author:
+      endorsements: オススメ
+    components:
+      blogs:
+        settings:
+          step:
+            endorsements_blocked: オススメをブロック
+            endorsements_enabled: オススメが有効
+      debates:
+        actions:
+          endorse: オススメ
+        settings:
+          step:
+            endorsements_blocked: オススメがブロックされました
+            endorsements_enabled: オススメを有効にする
+      dummy:
+        settings:
+          step:
+            endorsements_blocked: オススメをブロック
+            endorsements_enabled: オススメを有効にする
+      proposals:
+        actions:
+          endorse: オススメする
+        settings:
+          global:
+            default_sort_order_options:
+              most_endorsed: 最もオススメされた順
+          step:
+            default_sort_order_options:
+              most_endorsed: 最もオススメされた順
+            endorsements_blocked: オススメをブロック
+            endorsements_enabled: オススメを有効にする
+    conferences:
+      statistics:
+        endorsements_count: オススメ
+    endorsable:
+      endorsements: オススメ
+      endorsements_count: オススメ数
+    endorsement_buttons_cell:
+      already_endorsed: オススメ済み
+      endorse: オススメする
+    events:
+      proposals:
+        endorsing_enabled:
+          email_intro: 'あなたは %{participatory_space_title} で提案をオススメすることができます! このページへの参加を開始します:'
+      resource_endorsed:
+        email_intro: あなたがフォローしている%{endorser_name} %{endorser_nickname} は、「%{resource_title}」をオススメしました。私たちはあなたにとって興味深いことかもしれません。 チェックアウトして貢献：
+        email_subject: "%{endorser_nickname} が新しいオススメを行いました"
+        notification_title: <a href="%{resource_path}">%{resource_title}</a> %{resource_type} は <a href="%{endorser_path}">%{endorser_name} %{endorser_nickname}</a>によってオススメされました。
+    initiatives:
+      events:
+        endorse_initiative_event:
+          email_subject: "%{author_nickname} によってオススメされたイニシアチブ"
+          notification_title: <a href="%{resource_path}">%{resource_title}</a> イニシアチブは、 <a href="%{author_path}">%{author_name} %{author_nickname}</a> によってオススメされました。
+    metrics:
+      endorsements:
+        description: 提案へのオススメ数
+        object: オススメ
+        title: オススメ
+    pages:
+      home:
+        statistics:
+          endorsements_count: オススメ
+    participatory_processes:
+      statistics:
+        endorsements_count: オススメ
+    proposals:
+      admin:
+        proposals:
+          show:
+            endorsements_count: オススメ数
+            endorsements_ranking: オススメランキング
+            endorsers: オススメしている人
+      proposals:
+        orders:
+          most_endorsed: 最もオススメされた
+        show:
+          endorsements_list: オススメ一覧
+    resource_endorsements:
+      create:
+        error: オススメする際に問題がありました。
+    statistics:
+      endorsements_count: オススメ
