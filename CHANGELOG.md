@@ -17,7 +17,7 @@
 - fix: delete public docker volume for cache [#275](https://github.com/codeforjapan/decidim-cfj/pull/275)
 - Optimize queries in Decidim::ResourceVersionsHelper.resource_version [#289](https://github.com/codeforjapan/decidim-cfj/pull/289)
 - Fix translation versions.resource_version.of_version [#290](https://github.com/codeforjapan/decidim-cfj/pull/290)
-- 画像のファイルサイズではなく画像の縦横サイズの文言も追加 [#293](https://github.com/codeforjapan/decidim-cfj/pull/293)
+- Add comments about height/width of the image instead of file size [#293](https://github.com/codeforjapan/decidim-cfj/pull/293)
 - Use 円 instead of YEN mark [#294](https://github.com/codeforjapan/decidim-cfj/pull/294)
 - Support HtmlEditButton for Quill editor in DecidimAwesome [#2](https://github.com/ayuki-joto/decidim-cfj/pull/2)
 - Show limited number of comments, add "show all comments" button [#4](https://github.com/ayuki-joto/decidim-cfj/pull/4), [#5](https://github.com/ayuki-joto/decidim-cfj/pull/5)
