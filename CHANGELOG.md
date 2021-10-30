@@ -22,7 +22,7 @@
 - Support HtmlEditButton for Quill editor in DecidimAwesome [#2](https://github.com/ayuki-joto/decidim-cfj/pull/2)
 - Show limited number of comments, add "show all comments" button [#4](https://github.com/ayuki-joto/decidim-cfj/pull/4), [#5](https://github.com/ayuki-joto/decidim-cfj/pull/5)
 - Fix show comments [#6](https://github.com/ayuki-joto/decidim-cfj/pull/6)
-- コメント読み込み中にはボタンを消さないようにする [#7](https://github.com/ayuki-joto/decidim-cfj/pull/7)
+- Do not hide the button while loading comments [#7](https://github.com/ayuki-joto/decidim-cfj/pull/7)
 
 
 ### Developer improvements
