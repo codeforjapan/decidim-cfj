@@ -48,7 +48,7 @@ module Decidim
                 end
 
         if @options[:limit] && @options[:limit].to_i.positive?
-          if scope.kind_of?(Array)
+          if scope.is_a?(Array)
             scope.take(@options[:limit])
           else
             scope.limit(@options[:limit])
