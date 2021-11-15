@@ -10,8 +10,7 @@ if Rails.application.secrets.aws_access_key_id.present?
   CarrierWave.configure do |config|
     config.storage = :fog
     config.fog_provider = "fog/aws"
-    config.fog_public = false
-    config.fog_authenticated_url_expiration = 60 * 60 * 24 * 365 * 100
+    config.fog_public = true
     config.fog_directory = ENV.fetch("AWS_BUCKET_NAME", "cfj-decidim")
     config.asset_host = "https://s3.ap-northeast-1.amazonaws.com/cfj-decidim"
     config.fog_credentials = {
