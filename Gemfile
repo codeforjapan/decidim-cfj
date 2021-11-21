@@ -4,13 +4,9 @@ source "https://rubygems.org"
 
 ruby RUBY_VERSION
 
-gem "decidim", "0.23.5"
+gem "decidim", "0.24.3"
 
-# gem "decidim", "0.23.5"
-# gem "decidim-consultations", "0.23.5"
-# gem "decidim-initiatives", "0.23.5"
-
-gem "decidim-comments", path: "decidim-comments"
+# gem "decidim-comments", path: "decidim-comments"
 
 gem "decidim-decidim_awesome", "~> 0.7.0"
 
@@ -35,7 +31,7 @@ group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
   gem "figaro"
 
-  gem "decidim-dev", "0.23.5"
+  gem "decidim-dev", "0.24.3"
   gem "dotenv-rails"
   gem "factory_bot_rails"
   gem "rspec-rails"
