@@ -37,6 +37,7 @@ RSpec.configure do |config|
   config.raise_errors_for_deprecations!
   config.example_status_persistence_file_path = ".rspec-failures"
 
+# rubocop:disable Style/BlockComments
 # The settings below are suggested to provide a good initial experience
 # with RSpec, but feel free to customize to your heart's content.
 =begin
@@ -86,6 +87,7 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 =end
+  # rubocop:enable Style/BlockComments
 
   config.before do
     I18n.available_locales = [:en, :es, :ja]
