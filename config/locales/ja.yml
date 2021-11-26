@@ -44,6 +44,9 @@ ja:
             nickname: アカウントID
         search_placeholder:
           name_or_nickname_or_email_cont: "%{collection} をメール、表示名、アカウントIDで検索します。"
+      officializations:
+        show_email_modal:
+          hidden: 非表示
       users_statistics:
         users_count:
           last_day: 過去24時間
@@ -137,6 +140,11 @@ ja:
           origin_values:
             citizens: 一般参加者
             official: 事務局
+    moderations:
+      actions:
+        hidden: 非表示
+        hide: 非表示にする
+        not_hidden: 表示
     notifications_settings:
       show:
         allow_public_contact: フォローしていない人からもダイレクトメッセージを受信する
