@@ -20,17 +20,35 @@ ja:
         gender: 性別
         occupation: 職業
         real_name: 本名
+      organization:
+        primary_color: プライマリ
+        secondary_color: セカンダリ
+  date:
+    formats:
+      decidim_short: "%Y/%m/%d"
+      decidim_short_with_month_name_short: "%Y %b %d"
+      decidim_with_day_and_month_name: "%Y %b %d %A"
+      decidim_with_month_name: "%Y %B %d"
+      decidim_with_month_name_short: "%b %d"
   decidim:
     admin:
       admin_terms_of_use:
         actions:
           refuse: 同意しない
+      dashboard:
+        show:
+          welcome: Decidim 管理画面へようこそ。
       filters:
         officializations:
           index:
             nickname: アカウントID
         search_placeholder:
           name_or_nickname_or_email_cont: "%{collection} をメール、表示名、アカウントIDで検索します。"
+      users_statistics:
+        users_count:
+          last_day: 過去24時間
+          last_month: 過去1ヶ月
+          last_week: 過去1週間
     authorization_handlers:
       user_extension_authorization_handler:
         explanation: 'ユーザー拡張属性保持用'
@@ -814,3 +832,20 @@ ja:
         sign_in: ログイン
       notifications_dashboard:
         mark_all_as_read: すべての通知を削除する
+  time:
+    formats:
+      day_of_month: "%b %d"
+      day_of_week: "%a"
+      day_of_week_long: "%e %a"
+      day_of_year: "%y.%m.%d"
+      decidim_day_of_year: "%Y %B %d"
+      decidim_short: "%Y/%m/%d %H:%M"
+      default: "%Y %b %d (%a) %H:%M:%S %z"
+      devise:
+        mailer:
+          invitation_instructions:
+            accept_until_format: "%Y/%m/%d %I:%M %p"
+      long: "%Y/%m/%d %H:%M"
+      long_dashed: "%Y-%m-%d %H:%M:%S"
+      short: "%Y/%m/%d %H:%M"
+      time_of_day: "%H:%M"
