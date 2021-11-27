@@ -49,9 +49,9 @@ ja:
           hidden: 非表示
       users_statistics:
         users_count:
-          last_day: 過去24時間
-          last_month: 過去1ヶ月
-          last_week: 過去1週間
+          last_day: 直近24時間
+          last_month: 直近1ヶ月
+          last_week: 直近1週間
     authorization_handlers:
       user_extension_authorization_handler:
         explanation: 'ユーザー拡張属性保持用'
