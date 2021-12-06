@@ -28,13 +28,17 @@ Resources:
         - Name: !Sub ${AppEnvironment}-AWSManagedRulesCommonRuleSet
           Priority: 0
           OverrideAction:
-            Count: {}
+            None: {}
           VisibilityConfig:
             SampledRequestsEnabled: true
             CloudWatchMetricsEnabled: true
             MetricName: AWSManagedRulesCommonRuleSetMetric
           Statement:
             ManagedRuleGroupStatement:
+              ExcludedRules:
+                - Name: CrossSiteScripting_BODY
+                - Name: SizeRestrictions_BODY
+                - Name: GenericRFI_BODY
               VendorName: AWS
               Name: AWSManagedRulesCommonRuleSet
         - Name: !Sub ${AppEnvironment}-AWSManagedRulesKnownBadInputsRuleSet
@@ -96,9 +100,7 @@ Resources:
       LogDestinationConfigs:
         - !Sub ${KinesisDeliveryStreamArn}
       RedactedFields:
-        - Method: {}
-        - QueryString: {}
-        - UriPath: {}
+        - SingleHeader: { Name: cookie }
       ResourceArn: !Sub "${WebAclCloudFront.Arn}"
       LoggingFilter:
         DefaultBehavior: DROP
