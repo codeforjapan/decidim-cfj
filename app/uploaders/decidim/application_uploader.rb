@@ -17,6 +17,19 @@ module Decidim
       default_path
     end
 
+    def url(options = {})
+      encoded_path = encode_path(path)
+      if host = asset_host
+        if host.respond_to? :call
+          "#{host.call(self)}/#{encoded_path}"
+        else
+          "#{host}/#{encoded_path}"
+        end
+      else
+          (base_path || "") + path
+      end
+    end
+
     protected
 
     # Validates that the associated model is always within an organization in
