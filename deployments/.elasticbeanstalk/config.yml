@@ -1,6 +1,8 @@
 branch-defaults:
   default:
     environment: staging
+  v0243:
+    environment: devtest-v0-24-3
 global:
   application_name: decidim-app
   default_ec2_keyname: null
