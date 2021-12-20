@@ -157,3 +157,9 @@ Resources:
       Tags:
         - Key: Name
           Value: !Sub ${AppEnvironment}-decidim-cfj-cloud-front
+
+  OriginAccessIdentity:
+    Type: "AWS::CloudFront::CloudFrontOriginAccessIdentity"
+    Properties:
+      CloudFrontOriginAccessIdentityConfig:
+        Comment: "画面用s3にアクセスする用"
