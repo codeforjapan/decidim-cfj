@@ -16,9 +16,6 @@ Parameters:
   S3BucketName:
     Description: Type of this s3 Bucket name like "cfj-decidim"
     Type: String
-  OriginAccessIdentity:
-    Description: Type of this OriginAccessIdentity
-    Type: String
   EbAlbDnsName:
     Description: Type of this AlB domain name like "staging-alb-origin.diycities.jp"
     Type: String
@@ -49,6 +46,27 @@ Resources:
             Transitions:
               - StorageClass: STANDARD_IA
                 TransitionInDays: 30
+
+  S3Bucket:
+    Type: "AWS::S3::Bucket"
+    Properties:
+      BucketName: !Sub ${AppEnvironment}-cfj-decidim
+
+    S3BucketPolicy:
+      Type: "AWS::S3::BucketPolicy"
+      Properties:
+        Bucket: !Sub ${AppEnvironment}-cfj-decidim
+        PolicyDocument:
+          Version: "2008-10-17"
+          Id: "PolicyForCloudFrontPrivateContent"
+          Statement:
+            - Sid: "1"
+              Effect: "Allow"
+              Principal:
+                AWS: !Sub "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${OriginAccessIdentity}"
+              Action: "s3:GetObject"
+              Resource: !Sub "arn:aws:s3:::${S3BucketName}/uploads/decidim/*"
+
 
   # ------------------------------------------------------------#
   #  CloudFront
