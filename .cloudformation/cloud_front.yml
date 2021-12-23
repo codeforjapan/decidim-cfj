@@ -13,9 +13,6 @@ Parameters:
     Description: The error cache time in seconds.
     Type: String
     Default: 1
-  S3BucketName:
-    Description: Type of this s3 Bucket name like "cfj-decidim"
-    Type: String
   EbAlbDnsName:
     Description: Type of this AlB domain name like "staging-alb-origin.diycities.jp"
     Type: String
@@ -65,7 +62,7 @@ Resources:
               Principal:
                 AWS: !Sub "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${OriginAccessIdentity}"
               Action: "s3:GetObject"
-              Resource: !Sub "arn:aws:s3:::${S3BucketName}/uploads/decidim/*"
+              Resource: !Sub "arn:aws:s3:::${AppEnvironment}-cfj-decidim/uploads/decidim/*"
 
 
   # ------------------------------------------------------------#
@@ -108,8 +105,8 @@ Resources:
             HTTPSPort: 443
             OriginProtocolPolicy: https-only
             OriginReadTimeout: 60
-        - Id: !Sub "${S3BucketName}.s3.ap-northeast-1.amazonaws.com"
-          DomainName: !Sub "${S3BucketName}.s3.ap-northeast-1.amazonaws.com"
+        - Id: !Sub "${AppEnvironment}-cfj-decidim.s3.ap-northeast-1.amazonaws.com"
+          DomainName: !Sub "${AppEnvironment}-cfj-decidim.s3.ap-northeast-1.amazonaws.com"
           OriginPath: /uploads/decidim
           S3OriginConfig:
             OriginAccessIdentity: !Sub "origin-access-identity/cloudfront/${OriginAccessIdentity}"
@@ -143,7 +140,7 @@ Resources:
               Compress: true
             -
               PathPattern: uploads/*
-              TargetOriginId: !Sub "${S3BucketName}.s3.ap-northeast-1.amazonaws.com"
+              TargetOriginId: !Sub "${AppEnvironment}-cfj-decidim.s3.ap-northeast-1.amazonaws.com"
               ViewerProtocolPolicy: redirect-to-https
               AllowedMethods:
                 - HEAD
