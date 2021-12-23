@@ -17,16 +17,14 @@ module Decidim
       default_path
     end
 
+    # Overwrite: If the content block is in preview mode, then we show the
+    # URL using the asset_host domain
     def url(*)
       encoded_path = encode_path(path)
-      if (host = asset_host)
-        if host.respond_to? :call
-          "#{host.call(self)}/#{encoded_path}"
-        else
-          "#{host}/#{encoded_path}"
-        end
+      if asset_host.respond_to? :call
+        "#{asset_host.call(self)}/#{encoded_path}"
       else
-        (base_path || "") + path
+        "#{asset_host}/#{encoded_path}"
       end
     end
 
