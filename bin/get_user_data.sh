@@ -1,4 +1,14 @@
 #!/bin/bash
+#
+# A script for retrieving user data from the decidim database
+# You need to set below environment variables before running this script
+#
+# export RDS_DB_NAME=ebdb
+# export RDS_PASSWORD=password
+# export RDS_HOSTNAME=database-host
+# export RDS_USERNAME=decidimapp
+#
+
 function print_orgs() {
   export PGPASSWORD=$RDS_PASSWORD; psql -h $RDS_HOSTNAME -U $RDS_USERNAME -c "SELECT id, name FROM decidim_organizations" $RDS_DB_NAME
 }
