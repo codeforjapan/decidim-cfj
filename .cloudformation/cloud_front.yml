@@ -49,20 +49,20 @@ Resources:
     Properties:
       BucketName: !Sub ${AppEnvironment}-cfj-decidim
 
-    S3BucketPolicy:
-      Type: "AWS::S3::BucketPolicy"
-      Properties:
-        Bucket: !Sub ${AppEnvironment}-cfj-decidim
-        PolicyDocument:
-          Version: "2008-10-17"
-          Id: "PolicyForCloudFrontPrivateContent"
-          Statement:
-            - Sid: "1"
-              Effect: "Allow"
-              Principal:
-                AWS: !Sub "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${OriginAccessIdentity}"
-              Action: "s3:GetObject"
-              Resource: !Sub "arn:aws:s3:::${AppEnvironment}-cfj-decidim/uploads/decidim/*"
+  S3BucketPolicy:
+    Type: "AWS::S3::BucketPolicy"
+    Properties:
+      Bucket: !Sub ${AppEnvironment}-cfj-decidim
+      PolicyDocument:
+        Version: "2008-10-17"
+        Id: "PolicyForCloudFrontPrivateContent"
+        Statement:
+          - Sid: "1"
+            Effect: "Allow"
+            Principal:
+              AWS: !Sub "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${OriginAccessIdentity}"
+            Action: "s3:GetObject"
+            Resource: !Sub "arn:aws:s3:::${AppEnvironment}-cfj-decidim/uploads/decidim/*"
 
 
   # ------------------------------------------------------------#
