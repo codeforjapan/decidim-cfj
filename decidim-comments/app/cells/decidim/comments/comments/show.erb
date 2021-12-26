@@ -20,6 +20,11 @@
           <%= cell("decidim/comments/comment_thread", comment, order: order) %>
         <% end %>
       </div>
+      <% if comment_limited? %>
+        <%= link_to commentable_path(limit: 0), class: "button primary expanded" do %>
+          <span><%= t("decidim.components.comments.show_all_comments") %></a></span>
+        <% end %>
+      <% end %>
       <%= add_comment %>
       <%= user_comments_blocked_warning %>
     </div>

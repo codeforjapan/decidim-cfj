@@ -6,7 +6,7 @@ ruby RUBY_VERSION
 
 gem "decidim", "0.24.3"
 
-# gem "decidim-comments", path: "decidim-comments"
+gem "decidim-comments", path: "decidim-comments"
 
 gem "decidim-decidim_awesome", "~> 0.7.0"
 
