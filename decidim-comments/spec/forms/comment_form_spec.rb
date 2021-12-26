@@ -48,6 +48,12 @@ module Decidim
         let(:body) { "c" * 1001 }
 
         it { is_expected.not_to be_valid }
+
+        context "with carriage return characters that cause it to exceed" do
+          let(:body) { "#{("c" * 500)}\r\n#{("c" * 499)}" }
+
+          it { is_expected.to be_valid }
+        end
       end
 
       context "when alignment is not present" do
@@ -85,6 +91,16 @@ module Decidim
           let(:body) { "c" * 1000 }
 
           it { is_expected.to be_valid }
+        end
+
+        context "when the component settings do not define comments_max_length" do
+          let(:organization) { create(:organization, comments_max_length: 3549) }
+          let(:settings) { double }
+
+          it "returns the organization comments_max_length" do
+            expect(component).to receive(:settings).and_return(settings)
+            expect(subject.max_length).to eq(organization.comments_max_length)
+          end
         end
       end
     end

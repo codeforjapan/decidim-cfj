@@ -67,7 +67,6 @@ uk:
       comments:
         blocked_comments_warning: Коментарі зараз вимкнені, але ви можете прочитати попередні.
         loading: Завантаження коментарів...
-        title: "%{count} коментарів"
     events:
       comments:
         comment_by_followed_user:

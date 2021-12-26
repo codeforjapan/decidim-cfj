@@ -14,8 +14,11 @@ ja:
         other: 投票
   decidim:
     comments:
-      comments: コメント
+      comments:
+        create:
+          error: コメントの登録に問題がありました。
       comments_count: コメント数
+      comments_title: コメント
       last_activity:
         new_comment_at_html: "<span> %{link}に新しいコメント</span>"
       view: 表示
@@ -74,8 +77,8 @@ ja:
         loading: コメントを読み込んでいます...
         single_comment_warning: コメントの残りは <a href="%{url}">こちら</a>で確認できます。
         single_comment_warning_title: コメントを1件のみ表示しています
-        title: "%{count} 件のコメント"
-        show_all_comments: "すべてのコメントを表示する"
+        title:
+          other: "%{count} 件のコメント"
       down_vote_button:
         text: このコメントに同意しません
       up_vote_button:
