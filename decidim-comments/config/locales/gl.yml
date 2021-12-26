@@ -16,8 +16,11 @@ gl:
         other: Votos
   decidim:
     comments:
-      comments: Comentarios
+      comments:
+        create:
+          error: Produciuse un problema ao crear o comentario.
       comments_count: Número de comentarios
+      comments_title: Comentarios
       last_activity:
         new_comment_at_html: "<span>Novo comentario en %{link}</span>"
       view: Ver
@@ -76,7 +79,9 @@ gl:
         loading: Cargando comentarios ...
         single_comment_warning: Podes revisar os comentarios restantes <a href="%{url}">aquí</a>.
         single_comment_warning_title: Estás a ver un único comentario
-        title: "%{count} comentarios"
+        title:
+          one: "%{count} comentario"
+          other: "%{count} comentarios"
       down_vote_button:
         text: Non estou de acordo con este comentario
       up_vote_button:

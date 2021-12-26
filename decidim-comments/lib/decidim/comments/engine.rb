@@ -19,20 +19,22 @@ module Decidim
     class Engine < ::Rails::Engine
       isolate_namespace Decidim::Comments
 
+      routes do
+        resources :comments, only: [:index, :create] do
+          resources :votes, only: [:create]
+        end
+      end
+
       initializer "decidim_comments.assets" do |app|
         app.config.assets.precompile += %w(decidim_comments_manifest.js)
       end
 
       initializer "decidim_comments.query_extensions" do
-        Decidim::Api::QueryType.define do
-          QueryExtensions.define(self)
-        end
+        Decidim::Api::QueryType.include QueryExtensions
       end
 
       initializer "decidim_comments.mutation_extensions" do
-        Decidim::Api::MutationType.define do
-          MutationExtensions.define(self)
-        end
+        Decidim::Api::MutationType.include MutationExtensions
       end
 
       initializer "decidim.stats" do
@@ -63,7 +65,7 @@ module Decidim
       initializer "decidim_comments.register_resources" do
         Decidim.register_resource(:comment) do |resource|
           resource.model_class_name = "Decidim::Comments::Comment"
-          resource.card = "decidim/comments/comment"
+          resource.card = "decidim/comments/comment_card"
           resource.searchable = true
         end
       end
