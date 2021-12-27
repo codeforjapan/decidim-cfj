@@ -17,6 +17,17 @@ module Decidim
       default_path
     end
 
+    # Overwrite: If the content block is in preview mode, then we show the
+    # URL using the asset_host domain
+    def url(*)
+      encoded_path = encode_path(path)
+      if asset_host.respond_to? :call
+        "#{asset_host.call(self)}/#{encoded_path}"
+      else
+        "#{asset_host}/#{encoded_path}"
+      end
+    end
+
     protected
 
     # Validates that the associated model is always within an organization in
