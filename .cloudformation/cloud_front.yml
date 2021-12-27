@@ -62,7 +62,7 @@ Resources:
             Principal:
               AWS: !Sub "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${OriginAccessIdentity}"
             Action: "s3:GetObject"
-            Resource: !Sub "arn:aws:s3:::${AppEnvironment}-cfj-decidim/uploads/decidim/*"
+            Resource: !Sub "arn:aws:s3:::${AppEnvironment}-cfj-decidim/*"
 
 
   # ------------------------------------------------------------#
@@ -107,7 +107,6 @@ Resources:
             OriginReadTimeout: 60
         - Id: !Sub "${AppEnvironment}-cfj-decidim.s3.ap-northeast-1.amazonaws.com"
           DomainName: !Sub "${AppEnvironment}-cfj-decidim.s3.ap-northeast-1.amazonaws.com"
-          OriginPath: /uploads/decidim
           S3OriginConfig:
             OriginAccessIdentity: !Sub "origin-access-identity/cloudfront/${OriginAccessIdentity}"
         DefaultCacheBehavior:
