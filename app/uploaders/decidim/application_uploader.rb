@@ -23,7 +23,7 @@ module Decidim
       if path.nil?
         default_url(*args)
       else
-        encoded_path = encode_path(path.sub(File.expand_path(root), ''))
+        encoded_path = encode_path(path.sub(File.expand_path(root), ""))
         if (host = asset_host)
           if host.respond_to? :call
             "#{host.call(self)}/#{encoded_path}"
