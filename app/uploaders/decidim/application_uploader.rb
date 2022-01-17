@@ -61,13 +61,6 @@ module Decidim
       return if model.is_a?(Decidim::Organization)
       return if model.respond_to?(:organization) && model.organization.is_a?(Decidim::Organization)
 
-      # HACK: Temporary fix for https://github.com/decidim/decidim/issues/6720
-      # If this is fixed by decidim, this file (application_uploader.rb)
-      # should be deleted to keep in sync with upstream!
-      return if model.class.to_s == "decidim/hero_homepage_content_block"
-      #      Fix for https://github.com/codeforjapan/decidim-cfj/issues/101
-      return if model.nil?
-
       raise CarrierWave::IntegrityError, I18n.t("carrierwave.errors.not_inside_organization")
     end
   end
