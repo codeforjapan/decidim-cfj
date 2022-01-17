@@ -44,6 +44,27 @@ Resources:
               - StorageClass: STANDARD_IA
                 TransitionInDays: 30
 
+  S3Bucket:
+    Type: "AWS::S3::Bucket"
+    Properties:
+      BucketName: !Sub ${AppEnvironment}-cfj-decidim
+
+  S3BucketPolicy:
+    Type: "AWS::S3::BucketPolicy"
+    Properties:
+      Bucket: !Sub ${AppEnvironment}-cfj-decidim
+      PolicyDocument:
+        Version: "2008-10-17"
+        Id: "PolicyForCloudFrontPrivateContent"
+        Statement:
+          - Sid: "1"
+            Effect: "Allow"
+            Principal:
+              AWS: !Sub "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${OriginAccessIdentity}"
+            Action: "s3:GetObject"
+            Resource: !Sub "arn:aws:s3:::${AppEnvironment}-cfj-decidim/*"
+
+
   # ------------------------------------------------------------#
   #  CloudFront
   # ------------------------------------------------------------#
@@ -84,6 +105,10 @@ Resources:
             HTTPSPort: 443
             OriginProtocolPolicy: https-only
             OriginReadTimeout: 60
+        - Id: !Sub "${AppEnvironment}-cfj-decidim.s3.ap-northeast-1.amazonaws.com"
+          DomainName: !Sub "${AppEnvironment}-cfj-decidim.s3.ap-northeast-1.amazonaws.com"
+          S3OriginConfig:
+            OriginAccessIdentity: !Sub "origin-access-identity/cloudfront/${OriginAccessIdentity}"
         DefaultCacheBehavior:
           AllowedMethods:
             - GET
@@ -99,16 +124,28 @@ Resources:
           TargetOriginId: appEbOrigin
           ViewerProtocolPolicy: redirect-to-https
         CacheBehaviors:
-        - AllowedMethods:
-          - GET
-          - HEAD
-          - OPTIONS
-          Compress: true
-          CachePolicyId: !GetAtt StaticCachePolicy.Id
-          OriginRequestPolicyId: 216adef6-5c7f-47e4-b989-5492eafa07d3
-          PathPattern: assets/*
-          TargetOriginId: appEbOrigin
-          ViewerProtocolPolicy: redirect-to-https
+          Quantity: 2
+          Items:
+            -
+              PathPattern: assets/*
+              TargetOriginId: appEbOrigin
+              CachePolicyId: !GetAtt StaticCachePolicy.Id
+              OriginRequestPolicyId: 216adef6-5c7f-47e4-b989-5492eafa07d3
+              ViewerProtocolPolicy: redirect-to-https
+              AllowedMethods:
+                - GET
+                - HEAD
+                - OPTIONS
+              Compress: true
+            -
+              PathPattern: uploads/*
+              TargetOriginId: !Sub "${AppEnvironment}-cfj-decidim.s3.ap-northeast-1.amazonaws.com"
+              ViewerProtocolPolicy: redirect-to-https
+              AllowedMethods:
+                - HEAD
+                - GET
+              Compress: true
+              CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6
         HttpVersion: http2
         PriceClass: PriceClass_All
         ViewerCertificate:
@@ -134,3 +171,9 @@ Resources:
       Tags:
         - Key: Name
           Value: !Sub ${AppEnvironment}-decidim-cfj-cloud-front
+
+  OriginAccessIdentity:
+    Type: "AWS::CloudFront::CloudFrontOriginAccessIdentity"
+    Properties:
+      CloudFrontOriginAccessIdentityConfig:
+        Comment: "画面用s3にアクセスする用"

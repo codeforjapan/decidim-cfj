@@ -1,4 +1,16 @@
 # Change Log
+## [v0.23.5-2021-11-08](https://github.com/codeforjapan/decidim-cfj/releases/tag/v0.23.5-2021-11-08)
+### Fixed
+- Fix messages endorsement in JA [#299](https://github.com/codeforjapan/decidim-cfj/pull/299)
+
+## [v0.23.5-2021-10-31](https://github.com/codeforjapan/decidim-cfj/releases/tag/v0.23.5-2021-10-31)
+
+### Added
+- chore: add kinesis firehose for waf log [#283](https://github.com/codeforjapan/decidim-cfj/pull/283)
+
+### Fixed
+- Fix limit for Decidim::Comments::SortedCommments [#298](https://github.com/codeforjapan/decidim-cfj/pull/298)
+- Update changelog & hotfix release [#297](https://github.com/codeforjapan/decidim-cfj/pull/297)
 
 ## [v0.23.5-2021-10-27](https://github.com/codeforjapan/decidim-cfj/releases/tag/v0.23.5-2021-10-27)
 
