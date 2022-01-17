@@ -19,6 +19,14 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 
   QuillエディタでHTML編集ができるようにするために追加されたファイル。現在はDecidim Awesome対応になっています(decidim_awesome内の`app/assets/javascripts/decidim/decidim_awesome/editors/legacy_quill_editor.js.es6`がベースになっています)。
 
+* `app/assets/stylesheets/buttons.scss`
+
+  `https://github.com/codeforjapan/decidim-cfj/issues/46` の対応で `https://github.com/codeforjapan/decidim-cfj/pull/96` で追加しています。
+
+* `app/assets/stylesheets/decidim/decidim_awesome/editors/quill_editor.scss`
+
+  Decidim Awesomeを追加した際に https://github.com/codeforjapan/decidim-cfj/pull/223 で上書きしています。
+
 * `app/commands/decidim/admin/process_participatory_space_private_user_import_csv.rb`
 
   https://github.com/codeforjapan/decidim-cfj/issues/202 の対応のため追加したファイル。
@@ -42,3 +50,22 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 
   https://github.com/decidim/decidim/issues/6720 や https://github.com/codeforjapan/decidim-cfj/issues/101 などの対応のために導入。
 
+* `app/views/decidim/application/_collection.html.erb`
+
+  https://github.com/codeforjapan/decidim-cfj/issues/192 の対応で https://github.com/codeforjapan/decidim-cfj/pull/210 で追加しています。
+  本家の https://github.com/decidim/decidim/pull/7418 で対応済みなので、取り込まれたバージョンでは削除できます。
+
+* `app/views/decidim/blogs/posts/show.html.erb`
+
+  https://github.com/codeforjapan/decidim-cfj/issues/107 の対応として https://github.com/codeforjapan/decidim-cfj/pull/126 で追加しています。
+
+
+* `app/views/decidim/proposals/admin/proposals/_form.html.erb`
+
+  https://github.com/codeforjapan/decidim-cfj/issues/24 の対応として https://github.com/codeforjapan/decidim-cfj/pull/51 で追加しています。
+  本家には https://github.com/decidim/decidim/issues/6739 でフィードバック済で、再現まではできてようですが、修正されたかどうかは不明です。
+
+* `app/views/layouts/decidim/_main_footer.html.erb`
+
+  https://github.com/codeforjapan/decidim-cfj/issues/101 の対応として https://github.com/codeforjapan/decidim-cfj/pull/108 で追加しています。
+  ダウンロードに問題がなければ削除しても大丈夫かと思われます。
