@@ -31,7 +31,12 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 
   https://github.com/codeforjapan/decidim-cfj/issues/202 の対応のため追加したファイル。
 
-  https://github.com/decidim/decidim/pull/7781 で本家にフィードバックしたので、これが取り込まれたバージョンになればファイルごと削除できるはずです。
+  https://github.com/decidim/decidim/pull/7781 で本家にフィードバックしたので、これが取り込まれたバージョン(v0.25.0以降)になればファイルごと削除できるはずです。
+
+* `app/forms/decidim/proposals/proposal_wizard_create_step_form.rb`, `app/forms/decidim/proposals/admin/proposal_form.rb`
+
+  https://github.com/codeforjapan/decidim-cfj/issues/23 の対応のために追加されたもの。対応するPRは https://github.com/codeforjapan/decidim-cfj/pull/60 https://github.com/codeforjapan/decidim-cfj/pull/163 です。
+  EtiquetteValidatorは修正が入っているので戻せるかもしれませんが、8文字程度のタイトルでも許可するようにする修正はフィードバックできていません。
 
 * `decidim-comments`
 
@@ -63,7 +68,7 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 * `app/views/decidim/proposals/admin/proposals/_form.html.erb`
 
   https://github.com/codeforjapan/decidim-cfj/issues/24 の対応として https://github.com/codeforjapan/decidim-cfj/pull/51 で追加しています。
-  本家には https://github.com/decidim/decidim/issues/6739 でフィードバック済で、再現まではできてようですが、修正されたかどうかは不明です。
+  本家には https://github.com/decidim/decidim/issues/6739 でフィードバック済で、再現まではできていたようですが、修正されたかどうかは不明です。
 
 * `app/views/layouts/decidim/_main_footer.html.erb`
 
