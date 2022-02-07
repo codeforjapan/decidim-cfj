@@ -1,10 +1,10 @@
             <%= f.fields_for :user_extension, f.object.user_extension do |f_ext| %>
               <div class="field">
-                <%= f_ext.text_field :real_name, label: t(:real_name, scope: "activemodel.attributes.user_extension") %>
+                <%= f_ext.text_field :real_name, label: t(:real_name, scope: "activemodel.attributes.user_extension"), autocomplete: 'name' %>
               </div>
 
               <div class="field">
-                <%= f_ext.text_field :address, label: t(:address, scope: "activemodel.attributes.user_extension") %>
+                <%= f_ext.text_field :address, label: t(:address, scope: "activemodel.attributes.user_extension"), autocomplete: 'street-address' %>
               </div>
 
               <div class="field">
