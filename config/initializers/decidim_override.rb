@@ -3,4 +3,7 @@
 # Override Decidim::Orderable
 #
 # Use cookies to store default orders
-Decidim::Proposals::ProposalsController.prepend Decidim::Proposals::CookieOrderable
+#
+Rails.application.config.to_prepare do
+  Decidim::Proposals::ProposalsController.prepend Decidim::Proposals::CookieOrderable
+end
