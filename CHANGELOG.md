@@ -1,5 +1,19 @@
 # Change Log
+## [v0.23.5-2022-01-17](https://github.com/codeforjapan/decidim-cfj/releases/tag/v0.23.5-2022-01-17)
+
+### Fixed
+- Fix [#304](https://github.com/codeforjapan/decidim-cfj/issues/304); ignore seeds of DecidimAwesome [#305](https://github.com/codeforjapan/decidim-cfj/pull/305)
+- Fix db:seed in docker [#306](https://github.com/codeforjapan/decidim-cfj/pull/306)
+- Fix Translation [#313](https://github.com/codeforjapan/decidim-cfj/pull/313)
+- Updated translation file for Decidim Awesome [#315](https://github.com/codeforjapan/decidim-cfj/pull/315)
+- fix url & remove OriginPath [#321](https://github.com/codeforjapan/decidim-cfj/pull/321)
+
+### Changed
+- Extended CloudWatch application log retention period[#308](https://github.com/codeforjapan/decidim-cfj/pull/308)
+- chore: enabled AWSManagedRulesCommonRuleSet on AWS WAF [#314](https://github.com/codeforjapan/decidim-cfj/pull/314)
+
 ## [v0.23.5-2021-11-08](https://github.com/codeforjapan/decidim-cfj/releases/tag/v0.23.5-2021-11-08)
+
 ### Fixed
 - Fix messages endorsement in JA [#299](https://github.com/codeforjapan/decidim-cfj/pull/299)
 
