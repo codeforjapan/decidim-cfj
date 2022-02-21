@@ -13,6 +13,10 @@ ja:
       officializations:
         index:
           show_user_extension: ユーザー属性を表示
+    devise:
+      registrations:
+        user_extension:
+          birth_year_help: 数値4桁で入力してください。例) 1997
     user_extension:
       admin:
         officializations:
