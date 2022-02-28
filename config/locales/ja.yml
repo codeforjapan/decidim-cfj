@@ -23,6 +23,8 @@ ja:
       organization:
         primary_color: プライマリ
         secondary_color: セカンダリ
+      minutes:
+        visible: 表示する
   date:
     formats:
       decidim_short: "%Y/%m/%d"
@@ -32,6 +34,8 @@ ja:
       decidim_with_month_name_short: "%b %d"
   decidim:
     admin:
+      actions:
+        duplicate: 複製
       admin_terms_of_use:
         actions:
           refuse: 同意しない
