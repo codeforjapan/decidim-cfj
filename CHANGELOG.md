@@ -1,4 +1,21 @@
 # Change Log
+## [v0.23.5-2022-02-22](https://github.com/codeforjapan/decidim-cfj/releases/tag/v0.23.5-2022-02-22)
+
+### Added
+- add new script [#318](https://github.com/codeforjapan/decidim-cfj/pull/318)
+- Add UPGRADE.md [#326](https://github.com/codeforjapan/decidim-cfj/pull/326)
+
+### Fixed
+- Fixed #24 in original Decidim [#328](https://github.com/codeforjapan/decidim-cfj/pull/328)
+- Redirect https://www.diycities.jp/ to Metadecidim Japan [#338](https://github.com/codeforjapan/decidim-cfj/pull/338)
+
+### Changed
+- Reset Decidim::ApplicationUploader#validate_inside_organization to original definition [#324](https://github.com/codeforjapan/decidim-cfj/pull/324)
+- Update docs/UPGRADE.md [#330](https://github.com/codeforjapan/decidim-cfj/pull/330)
+- Add CookieOrderable; store proposals orders in cookies [#331](https://github.com/codeforjapan/decidim-cfj/pull/331)
+- Improved input form; year of birth and name (added input restrictions and input support) [#335](https://github.com/codeforjapan/decidim-cfj/pull/335)
+- Appropriate line breaks for long comments (alphabet, etc.) [#337](https://github.com/codeforjapan/decidim-cfj/pull/337)
+
 ## [v0.23.5-2022-01-17](https://github.com/codeforjapan/decidim-cfj/releases/tag/v0.23.5-2022-01-17)
 
 ### Fixed
