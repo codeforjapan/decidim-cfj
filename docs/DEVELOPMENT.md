@@ -44,6 +44,14 @@ export DATABASE_USERNAME=<yourname>
 export DATABASE_PASSWORD=<yourpassword>
 ```
 
+なお、DBのhost、port、DB名も設定したい場合は、以下のように環境変数を指定します。
+
+```
+export DATABASE_HOST=<yourhost>
+export DATABASE_PORT=<yourport>
+export DATABASE_DBNAME_DEV=<yourdbname>
+```
+
 ### 2.6 bundle install
 ```
 bundle install

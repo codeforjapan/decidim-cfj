@@ -87,6 +87,8 @@ Resources:
             MetricName: AWSManagedRulesSQLiRuleSetMetric
           Statement:
             ManagedRuleGroupStatement:
+              ExcludedRules:
+                - Name: SQLi_BODY
               VendorName: AWS
               Name: AWSManagedRulesSQLiRuleSet
       Scope: CLOUDFRONT
