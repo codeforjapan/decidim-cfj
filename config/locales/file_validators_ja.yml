@@ -1,0 +1,11 @@
+ja:
+  errors:
+    messages:
+      file_size_is_in: ! 'ファイルサイズは %{min} から %{max} の間でなければいけません'
+      file_size_is_less_than: ! 'ファイルサイズは %{count} より小さくなければいけません'
+      file_size_is_less_than_or_equal_to: ! 'ファイルサイズは %{count} 以下でなければいけません'
+      file_size_is_greater_than: ! 'ファイルサイズは %{count} より大きくなければいけません'
+      file_size_is_greater_than_or_equal_to: ! 'ファイルサイズは %{count} 以上でなければいけません'
+
+      allowed_file_content_types: ! 'ファイルは %{types} のうちのどれかを使用してください'
+      excluded_file_content_types: ! '%{types} のファイルは使用できません'
