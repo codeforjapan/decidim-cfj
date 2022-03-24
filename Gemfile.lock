@@ -1,3 +1,12 @@
+GIT
+  remote: https://github.com/mainio/decidim-module-term_customizer.git
+  revision: 4b385c55996e390406ac68a8b5ab68b9da2c8817
+  branch: 0.24-stable
+  specs:
+    decidim-term_customizer (0.24.0)
+      decidim-admin (~> 0.24.0)
+      decidim-core (~> 0.24.0)
+
 PATH
   remote: decidim-comments
   specs:
@@ -892,6 +901,7 @@ DEPENDENCIES
   decidim-comments!
   decidim-decidim_awesome (~> 0.7.0)
   decidim-dev (= 0.24.3)
+  decidim-term_customizer!
   decidim-user_extension!
   deface
   dotenv-rails
