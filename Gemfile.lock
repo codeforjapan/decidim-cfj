@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/takahashim/decidim-module-term_customizer.git
-  revision: 769405ab054dda2981333eb7ad272388b759bfbb
+  revision: a244a4ddabf73a3d8b810311eb475b4274579243
   branch: 024-ja
   specs:
     decidim-term_customizer (0.24.0)
