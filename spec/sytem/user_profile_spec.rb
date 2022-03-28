@@ -6,7 +6,14 @@ describe "Profile", type: :system do
   let(:user) { create(:user, :confirmed) }
 
   before do
+    I18n.default_locale = :en
+    Decidim.default_locale = :en
     switch_to_host(user.organization.host)
+  end
+
+  after do
+    I18n.default_locale = :ja
+    Decidim.default_locale = :ja
   end
 
   context "when navigating privately" do
@@ -132,11 +139,11 @@ describe "Profile", type: :system do
           visit decidim.profile_path(user.nickname)
         end
 
-        it "shows a badges tab" do
+        xit "shows a badges tab" do
           expect(page).to have_link("Badges")
         end
 
-        it "shows a badges section on the sidebar" do
+        xit "shows a badges section on the sidebar" do
           within ".profile--sidebar" do
             expect(page).to have_css(".badge-container img[title^='Tests']")
           end
