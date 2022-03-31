@@ -9,6 +9,10 @@ en:
         occupation: Occupation
         real_name: Real Name
   decidim:
+    debates:
+      debates:
+        versions:
+          too_large_changeset: This changeset is too large to show.
     following:
       non_public_followings: Some of the resources followed are not public.
   enums:
