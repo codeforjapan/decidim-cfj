@@ -5,7 +5,7 @@
 if Rails.application.secrets.aws_access_key_id.present?
   require "carrierwave/storage/fog"
 
-  CarrierWave::SanitizedFile.sanitize_regexp = /[^[:word:]\.\-\+]/
+  CarrierWave::SanitizedFile.sanitize_regexp = /[^[:word:].\-+]/
 
   CarrierWave.configure do |config|
     config.storage = :fog

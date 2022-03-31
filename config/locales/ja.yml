@@ -129,6 +129,8 @@ ja:
           notification_title: おめでとうございます！ あなたは <a href="%{resource_path}">%{badge_name} バッジ</a> のレベル %{current_level} に到達しました！
     fingerprint:
       check: フィンガープリントを確認
+    following:
+      non_public_followings: フォローしているリソースのいくつかは公開されていません。
     initiatives:
       initiatives:
         vote_cabin:

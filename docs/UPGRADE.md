@@ -74,3 +74,12 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 
   https://github.com/codeforjapan/decidim-cfj/issues/101 の対応として https://github.com/codeforjapan/decidim-cfj/pull/108 で追加しています。
   ダウンロードに問題がなければ削除しても大丈夫かと思われます。
+
+* `app/cells/decidim/following/show.erb`
+    * 本家のv0.25系での修正をバックポートするためにv0.24.3から持ってきたファイルなので、v0.25.1に更新すればファイルごと削除できます。以下のファイルも同様です。
+    * `app/cells/decidim/following_cell.rb`
+    * `app/models/decidim/user_base_entity.rb`
+    * `lib/decidim/has_component.rb`
+    * `lib/decidim/participable.rb`
+    * `lib/decidim/resourceable.rb`
+    * `spec/sytem/user_profile_spec.rb`

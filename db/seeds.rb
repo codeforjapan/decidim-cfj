@@ -34,7 +34,7 @@ if !Rails.env.production? || ENV["SEED"]
   Decidim::User.find_each do |user|
     user_extension = {
       real_name: "#{user.name}_実名",
-      address: Faker::Lorem.words(4).join(""),
+      address: Faker::Lorem.words(number: 4).join(""),
       gender: [0, 1, 2].sample,
       birth_year: (1980..2010).to_a.sample,
       occupation: ["会社員", "学生", "公務員", "自営業", "無職", nil].sample

@@ -8,6 +8,9 @@ en:
         gender: Gender
         occupation: Occupation
         real_name: Real Name
+  decidim:
+    following:
+      non_public_followings: Some of the resources followed are not public.
   enums:
     user_extension:
       gender:
