@@ -33,6 +33,10 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 
   https://github.com/decidim/decidim/pull/7781 で本家にフィードバックしたので、これが取り込まれたバージョン(v0.25.0以降)になればファイルごと削除できるはずです。
 
+* `app/controllers/decidim/debates/versions_controller.rb`
+
+  https://github.com/codeforjapan/decidim-cfj/pull/359 で追加したファイル。履歴の差分が巨大になるとサーバ負荷が大きいため、renderを実行させないよう表示前にredirectさせるものです。
+
 * `app/forms/decidim/proposals/proposal_wizard_create_step_form.rb`, `app/forms/decidim/proposals/admin/proposal_form.rb`
 
   https://github.com/codeforjapan/decidim-cfj/issues/23 の対応のために追加されたもの。対応するPRは https://github.com/codeforjapan/decidim-cfj/pull/60 https://github.com/codeforjapan/decidim-cfj/pull/163 です。
