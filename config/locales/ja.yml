@@ -79,6 +79,8 @@ ja:
           citizens: 一般参加者
           official: 事務局
           origin: 起案者
+        versions:
+          too_large_changeset: 履歴のサイズが大きすぎるため表示できません
     devise:
       registrations:
         new:
