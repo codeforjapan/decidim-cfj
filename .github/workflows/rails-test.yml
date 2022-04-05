@@ -6,6 +6,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    env:
+      DATABASE_HOST: 127.0.0.1
+      DATABASE_PORT: 5432
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: postgres
+      RAILS_ENV: test
+
     services:
       db:
         image: postgres:12
@@ -37,17 +44,11 @@ jobs:
       with:
         ruby-version: 2.7
         bundler-cache: true
-    - name: Build and Test with RSpec
-      env:
-        DATABASE_HOST: 127.0.0.1
-        DATABASE_PORT: 5432
-        DATABASE_USERNAME: postgres
-        DATABASE_PASSWORD: postgres
-        RAILS_ENV: test
-        REDIS_PORT: ${{ job.services.redis.ports[6379] }}
+    - name: Migrate DB
       run: |
-        bundle install --jobs 4 --retry 3
         bundle exec rails db:create db:migrate
+    - name: Test with RSpec
+      run: |
         bundle exec rails spec
     - name: Lint by RuboCop
       run: |
