@@ -30,8 +30,8 @@ jobs:
         id: set-env-production
         if: endsWith(github.ref, 'heads/master') || contains(github.ref, 'tags/v')
         run: |
-          echo "IMAGE_TAG_PREFIX=production-v0-23-5" >> $GITHUB_ENV
-          echo "EB_ENVIRONMENT_NAME=production-v0-23-5" >> $GITHUB_ENV
+          echo "IMAGE_TAG_PREFIX=production-v0-24-3" >> $GITHUB_ENV
+          echo "EB_ENVIRONMENT_NAME=production-v0-24-3" >> $GITHUB_ENV
 
       - name: Output App Env
         id: output-app-env

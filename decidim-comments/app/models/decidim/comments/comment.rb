@@ -55,11 +55,13 @@ module Decidim
       delegate :organization, to: :commentable
 
       translatable_fields :body
-      searchable_fields(
-        participatory_space: :itself,
-        A: :body,
-        datetime: :created_at
-      )
+      searchable_fields({
+                          participatory_space: :itself,
+                          A: :body,
+                          datetime: :created_at
+                        },
+                        index_on_create: true,
+                        index_on_update: ->(comment) { comment.visible? })
 
       def self.positive
         where(alignment: 1)
@@ -71,6 +73,10 @@ module Decidim
 
       def self.negative
         where(alignment: -1)
+      end
+
+      def visible?
+        participatory_space.try(:visible?) && component.try(:published?)
       end
 
       def participatory_space
@@ -130,6 +136,16 @@ module Decidim
         end
       end
 
+      # Public: Overrides the `reported_attributes` Reportable concern method.
+      def reported_attributes
+        [:body]
+      end
+
+      # Public: Overrides the `reported_searchable_content_extras` Reportable concern method.
+      def reported_searchable_content_extras
+        [normalized_author.name]
+      end
+
       def self.export_serializer
         Decidim::Comments::CommentSerializer
       end
@@ -144,6 +160,8 @@ module Decidim
                                     .where(decidim_commentable_id: resources.pluck(:id))
                                     .where(decidim_commentable_type: commentable_type)
                                     .where("decidim_author_type" => "Decidim::UserBaseEntity").pluck(:decidim_author_id)
+        else
+          []
         end
       end
 
@@ -169,7 +187,7 @@ module Decidim
       end
 
       def comment_maximum_length
-        return unless commentable.commentable?
+        return 0 unless commentable.commentable?
         return component.settings.comments_max_length if component_settings_comments_max_length?
         return organization.comments_max_length if organization.comments_max_length.positive?
 

@@ -79,6 +79,8 @@ ja:
           citizens: 一般参加者
           official: 事務局
           origin: 起案者
+        versions:
+          too_large_changeset: 履歴のサイズが大きすぎるため表示できません
     devise:
       registrations:
         new:
@@ -129,6 +131,8 @@ ja:
           notification_title: おめでとうございます！ あなたは <a href="%{resource_path}">%{badge_name} バッジ</a> のレベル %{current_level} に到達しました！
     fingerprint:
       check: フィンガープリントを確認
+    following:
+      non_public_followings: フォローしているリソースのいくつかは公開されていません。
     initiatives:
       initiatives:
         vote_cabin:

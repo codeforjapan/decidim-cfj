@@ -16,8 +16,11 @@ sv:
         other: Röster
   decidim:
     comments:
-      comments: Kommentarer
+      comments:
+        create:
+          error: Det gick inte att skapa kommentaren.
       comments_count: Antal kommentarer
+      comments_title: Kommentarer
       last_activity:
         new_comment_at_html: "<span>Ny kommentar på %{link}</span>"
       view: Visa
@@ -76,7 +79,9 @@ sv:
         loading: Laddar kommentarer...
         single_comment_warning: Läs återstående <a href="%{url}">kommentarer</a>.
         single_comment_warning_title: Du visar en enda kommentar
-        title: "%{count} kommentarer"
+        title:
+          one: "%{count} kommentarer"
+          other: "%{count} kommentarer"
       down_vote_button:
         text: Jag håller inte med om denna kommentar
       up_vote_button:
@@ -98,6 +103,16 @@ sv:
           email_outro: Du har fått det här meddelandet eftersom du följer "%{resource_title}" eller dess författare. Du kan avfölja det från föregående länk.
           email_subject: Det finns en ny kommentar från %{author_name} i %{resource_title}
           notification_title: Det finns en ny kommentar från <a href="%{author_path}">%{author_name} %{author_nickname}</a> i <a href="%{resource_path}">%{resource_title}</a>
+        comment_downvoted:
+          email_intro: Din kommentar i "%{resource_title}" har blivit nedröstad. Den har nu totalt %{upvotes} uppröster och %{downvotes} nedröster.
+          email_outro: Du har fått det här meddelandet eftersom du är författare till denna kommentar.
+          email_subject: Din kommentar i "%{resource_title}" har nedröstats.
+          notification_title: Din <a href="%{resource_path}">kommentar</a> i "%{resource_title}" har nedröstats. Den har nu totalt %{upvotes} uppröster och %{downvotes} nedröster.
+        comment_upvoted:
+          email_intro: Din kommentar i "%{resource_title}" har uppröstats. Den har nu totalt %{upvotes} uppröster och %{downvotes} nedröster.
+          email_outro: Du har fått det här meddelandet eftersom du är författare till denna kommentar.
+          email_subject: Din kommentar i "%{resource_title}" har uppröstats.
+          notification_title: Din <a href="%{resource_path}">kommentar</a> i "%{resource_title}" har uppröstats. Den har nu totalt %{upvotes} uppröster och %{downvotes} nedröster.
         reply_created:
           email_intro: "%{author_name} har svarat din kommentar i %{resource_title}. Du kan läsa den på den här sidan:"
           email_outro: Du har fått denna notis eftersom din kommentar blev besvarad.

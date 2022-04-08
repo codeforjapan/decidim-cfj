@@ -17,8 +17,11 @@ en:
         other: Votes
   decidim:
     comments:
-      comments: Comments
+      comments:
+        create:
+          error: There was a problem creating the comment.
       comments_count: Comments count
+      comments_title: Comments
       last_activity:
         new_comment_at_html: "<span>New comment at %{link}</span>"
       view: View
@@ -77,7 +80,9 @@ en:
         loading: Loading comments ...
         single_comment_warning: You can check the rest of the comments <a href="%{url}">here</a>.
         single_comment_warning_title: You are seeing a single comment
-        title: "%{count} comments"
+        title:
+          one: "%{count} comment"
+          other: "%{count} comments"
         show_all_comments: "Show all comments"
       down_vote_button:
         text: I disagree with this comment
@@ -100,6 +105,16 @@ en:
           email_outro: You have received this notification because you are following "%{resource_title}" or its author. You can unfollow it from the previous link.
           email_subject: There is a new comment from %{author_name} in %{resource_title}
           notification_title: There is a new comment from <a href="%{author_path}">%{author_name} %{author_nickname}</a> in <a href="%{resource_path}">%{resource_title}</a>
+        comment_downvoted:
+          email_intro: Your comment in "%{resource_title}" has been downvoted. It now has a total of %{upvotes} upvotes and %{downvotes} downvotes.
+          email_outro: You have received this notification because you are the author of this comment.
+          email_subject: Your comment in "%{resource_title}" has been downvoted.
+          notification_title: Your <a href="%{resource_path}">comment</a> in "%{resource_title}" has been downvoted. It now has a total of %{upvotes} upvotes and %{downvotes} downvotes.
+        comment_upvoted:
+          email_intro: Your comment in "%{resource_title}" has been upvoted. It now has a total of %{upvotes} upvotes and %{downvotes} downvotes.
+          email_outro: You have received this notification because you are the author of this comment.
+          email_subject: Your comment in "%{resource_title}" has been upvoted.
+          notification_title: Your <a href="%{resource_path}">comment</a> in "%{resource_title}" has been upvoted. It now has a total of %{upvotes} upvotes and %{downvotes} downvotes.
         reply_created:
           email_intro: "%{author_name} has replied your comment in %{resource_title}. You can read it in this page:"
           email_outro: You have received this notification because your comment was replied.

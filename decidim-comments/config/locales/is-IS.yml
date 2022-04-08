@@ -43,7 +43,6 @@ is-IS:
       comments:
         blocked_comments_warning: Athugasemdir eru gerðar óvirkar á þessum tíma, en þú getur lesið þau fyrri.
         loading: Hleð inn athugasemdir ...
-        title: "%{count} athugasemdir"
     events:
       comments:
         comment_by_followed_user:

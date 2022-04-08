@@ -19,7 +19,7 @@ describe "Need user extension", type: :system do
       context "without user extension" do
         it "redirect to account page" do
           visit decidim.notifications_path
-          expect(page).to have_current_path(decidim.account_path)
+          expect(page).to have_current_path(decidim.account_path, ignore_query: true)
         end
 
         it "not redirect in root page" do

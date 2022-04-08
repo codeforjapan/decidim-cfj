@@ -9,10 +9,6 @@ require "digest/md5"
 class UserExtensionAuthorizationHandler < Decidim::AuthorizationHandler
   validate :check_response
 
-  def metadata
-    super
-  end
-
   def unique_id
     nil
   end
