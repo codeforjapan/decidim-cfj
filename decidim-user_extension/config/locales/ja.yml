@@ -13,6 +13,10 @@ ja:
       officializations:
         index:
           show_user_extension: ユーザー属性を表示
+    authorization_handlers:
+      user_extension:
+        explanation: 'ユーザー拡張属性保持用'
+        name: 'ユーザー拡張属性'
     devise:
       registrations:
         user_extension:
@@ -35,6 +39,12 @@ ja:
               gender: 性別
               occupation: 職業
               real_name: 本名
+    verifications:
+      user_extension:
+        authorizations:
+          edit:
+            title: アカウントの検証
+            under_construction: 現在準備中です。しばらくお待ち下さい。
   enums:
     user_extension:
       gender:
