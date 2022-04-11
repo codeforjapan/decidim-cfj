@@ -52,7 +52,11 @@ module Decidim
       scope = klass.where(id: ids)
       scope = scope.public_spaces if klass.try(:participatory_space?)
       scope = scope.includes(:component) if klass.try(:has_component?)
-      scope = scope.filter(&:visible?) if klass.method_defined?(:visible?)
+      begin
+        scope = scope.filter(&:visible?) if klass.method_defined?(:visible?)
+      rescue StandardError => _e
+        # Ignore `undefined local variable or method 'component'` error
+      end
       scope
     end
   end

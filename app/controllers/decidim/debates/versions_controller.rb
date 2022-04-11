@@ -16,7 +16,7 @@ module Decidim
 
       def show
         description = current_version.object_changes
-        if description.size > OBJECT_CHANGE_SIZE_LIMIT
+        if description && description.size > OBJECT_CHANGE_SIZE_LIMIT
           flash[:alert] = I18n.t("debates.versions.too_large_changeset", scope: "decidim.debates")
           redirect_to action: :index
         end
