@@ -71,6 +71,7 @@ class DummyAuthorizationHandler < Decidim::AuthorizationHandler
   class DummyActionAuthorizer < Decidim::Verifications::DefaultActionAuthorizer
     attr_reader :allowed_postal_codes, :allowed_scope_id
 
+    # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     # Overrides the parent class method, but it still uses it to keep the base behavior
     def authorize
       # Remove the additional setting from the options hash to avoid to be considered missing.
@@ -125,6 +126,8 @@ class DummyAuthorizationHandler < Decidim::AuthorizationHandler
 
       [status_code, data]
     end
+
+    # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
     # Adds the list of allowed postal codes and scope to the redirect URL, to allow forms to inform about it
     def redirect_params
@@ -200,7 +203,7 @@ module Decidim::Verifications
 
     context "when the form is not authorized" do
       before do
-        expect(handler).to receive(:valid?).and_return(false)
+        expect(handler).to receive(:valid?).and_return(false) # rubocop:disable RSpec/StubbedMock
       end
 
       it "is not valid" do
