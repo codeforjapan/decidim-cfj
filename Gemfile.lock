@@ -1,5 +1,5 @@
 GIT
-  remote: https://github.com/takahashim/decidim-module-term_customizer.git
+  remote: https://github.com/codeforjapan/decidim-module-term_customizer.git
   revision: ae993619f88761ef4133299e625450621c8f24c8
   branch: 024-ja
   specs:
