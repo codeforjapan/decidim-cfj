@@ -21,7 +21,7 @@ PATH
     decidim-user_extension (0.1.0)
       decidim-admin
       decidim-core
-      rails (~> 5.2.4, >= 5.2.4.4)
+      rails
 
 GEM
   remote: https://rubygems.org/

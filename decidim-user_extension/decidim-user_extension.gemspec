@@ -24,7 +24,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "decidim-admin"
   spec.add_dependency "decidim-core"
-  spec.add_dependency "rails", "~> 5.2.4", ">= 5.2.4.4"
+  spec.add_dependency "rails"
 
   spec.add_development_dependency "decidim-dev"
 end
