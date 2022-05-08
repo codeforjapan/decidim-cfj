@@ -1,4 +1,44 @@
 # Change Log
+## [v0.24.3-2022-04-14](https://github.com/codeforjapan/decidim-cfj/releases/tag/v0.23.5-2022-04-14)
+
+### Added
+- Add JA locale data for verification [#367](https://github.com/codeforjapan/decidim-cfj/pull/367)
+
+### Fixed
+- Fix AuthorizeUser; "Fix verification report with multitenants" [#366](https://github.com/codeforjapan/decidim-cfj/pull/366)
+
+## [v0.24.3-2022-04-11](https://github.com/codeforjapan/decidim-cfj/releases/tag/v0.23.5-2022-04-11)
+
+### Fixed
+- Fix error in /debates/versions [#361](https://github.com/codeforjapan/decidim-cfj/pull/361)
+- Fix undefined local variable or method component error [#363](https://github.com/codeforjapan/decidim-cfj/pull/363)
+
+## [v0.24.3-2022-04-08](https://github.com/codeforjapan/decidim-cfj/releases/tag/v0.23.5-2022-04-08)
+
+### Added
+- Feedback from decidim/decidim v0.24.3 [#329](https://github.com/codeforjapan/decidim-cfj/pull/329)
+
+### Fixed
+- Reset Decidim::ApplicationUploader#validate_inside_organization to original definition [#324](https://github.com/codeforjapan/decidim-cfj/pull/324)
+- Fixed not to be displayed when the history is too large [#359](https://github.com/codeforjapan/decidim-cfj/pull/359)
+- Fix GitHub Actions: move env, no need bundler  [#360](https://github.com/codeforjapan/decidim-cfj/pull/360)
+
+### Changed
+- update decidim v0.24.3  [#312](https://github.com/codeforjapan/decidim-cfj/pull/312)
+- update production environment name  [#356](https://github.com/codeforjapan/decidim-cfj/pull/356)
+
+## [v0.23.5-2022-03-06](https://github.com/codeforjapan/decidim-cfj/releases/tag/v0.23.5-2022-03-06)
+
+### Fixed
+- chore: disabled SQLi_BODY rule on waf for uploading image [#343](https://github.com/codeforjapan/decidim-cfj/pull/343)
+- Fix translation: Is visible duplicate  [#349](https://github.com/codeforjapan/decidim-cfj/pull/349)
+
+### Changed
+- Allow to change DB name in dev/test [#342](https://github.com/codeforjapan/decidim-cfj/pull/342)
+- use aws ses ap-northeast-1 region [#346](https://github.com/codeforjapan/decidim-cfj/pull/346)
+- Update newrelic_rpm gem [#347](https://github.com/codeforjapan/decidim-cfj/pull/347)
+- Remove search box [#348](https://github.com/codeforjapan/decidim-cfj/pull/348)
+
 ## [v0.23.5-2022-02-22](https://github.com/codeforjapan/decidim-cfj/releases/tag/v0.23.5-2022-02-22)
 
 ### Added
