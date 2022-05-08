@@ -20,12 +20,12 @@ module Decidim
     # Regex for name & nickname format validations
     REGEXP_NAME = /\A(?!.*[<>?%&\^*#@()\[\]=+:;"{}\\|])/.freeze
 
-    validates_avatar
-    mount_uploader :avatar, Decidim::AvatarUploader
+    has_one_attached :avatar
+    validates_avatar :avatar, uploader: Decidim::AvatarUploader
 
     validates :name, format: { with: REGEXP_NAME }
 
-    # Public: Returns a collection with all the entities this user is following.
+    # Public: Returns a collection with all the public entities this user is following.
     #
     # This can't be done as with a `has_many :following, through: :following_follows`
     # since it's a polymorphic relation and Rails doesn't know how to load it. With
@@ -52,11 +52,7 @@ module Decidim
       scope = klass.where(id: ids)
       scope = scope.public_spaces if klass.try(:participatory_space?)
       scope = scope.includes(:component) if klass.try(:has_component?)
-      begin
-        scope = scope.filter(&:visible?) if klass.method_defined?(:visible?)
-      rescue StandardError => _e
-        # Ignore `undefined local variable or method 'component'` error
-      end
+      scope = scope.filter(&:visible?) if klass.method_defined?(:visible?)
       scope
     end
   end
