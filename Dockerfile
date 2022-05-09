@@ -1,4 +1,4 @@
-FROM node:10.23.0-alpine as node
+FROM node:16.9.0-alpine as node
 
 FROM ruby:2.7.4-alpine
 
