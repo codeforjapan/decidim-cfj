@@ -17,3 +17,8 @@
 // Activate Active Storage
 // import * as ActiveStorage from "@rails/activestorage"
 // ActiveStorage.start()
+//= require jquery
+//= require rails-ujs
+//= require activestorage
+//= require decidim
+//= require_tree .
