@@ -46,6 +46,7 @@ pgadmin
 .idea
 
 /public/packs
+/public/decidim-packs
 /public/packs-test
 /node_modules
 /yarn-error.log

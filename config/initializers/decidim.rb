@@ -237,3 +237,6 @@ Rails.application.config.default_comments_limit = ENV.fetch("DECIDIM_COMMENTS_LI
 
 # Overwrite Devise.allow_unconfirmed_access_for
 Devise.allow_unconfirmed_access_for = Decidim.unconfirmed_access_for
+
+# Inform Decidim about the assets folder
+Decidim.register_assets_path File.expand_path("app/packs", Rails.application.root)
