@@ -25,6 +25,8 @@ gem "wicked_pdf", "~> 1.4"
 gem "deface"
 gem "newrelic_rpm"
 
+gem "omniauth-line_login", git: "https://github.com/takahashim/omniauth-line_login.git", branch: "main"
+
 gem "decidim-user_extension", path: "decidim-user_extension"
 
 # When rails >= 5.2.5 or 6.0.3.6, you can remove this gem.

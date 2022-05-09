@@ -7,6 +7,14 @@ GIT
       decidim-admin (~> 0.24.0)
       decidim-core (~> 0.24.0)
 
+GIT
+  remote: https://github.com/takahashim/omniauth-line_login.git
+  revision: ce5abc408fd59acf6db43461a4a6296551d7b99a
+  branch: main
+  specs:
+    omniauth-line_login (0.1.0)
+      omniauth-oauth2
+
 PATH
   remote: decidim-comments
   specs:
@@ -913,6 +921,7 @@ DEPENDENCIES
   listen (~> 3.1)
   mimemagic (~> 0.3.10)
   newrelic_rpm
+  omniauth-line_login!
   puma (>= 5.0.0)
   rspec-rails
   rubocop-faker
