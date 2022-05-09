@@ -1,4 +1,4 @@
-FROM node:10.23.0-alpine as node
+FROM node:16.9.1-alpine as node
 
 FROM ruby:2.7.4-alpine
 
@@ -18,12 +18,12 @@ ENV YARN_VERSION=v1.22.5
 
 # node install
 COPY --from=node /usr/local/bin/node /usr/local/bin/node
-COPY --from=node /usr/local/include/node /usr/local/include/node
 COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
 COPY --from=node /opt/yarn-${YARN_VERSION} /opt/yarn
-RUN ln -s /usr/local/bin/node /usr/local/bin/nodejs \
-    && ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
-    && ln -s /opt/yarn/bin/yarn /usr/local/bin/yarn
+RUN ln -s /opt/yarn/bin/yarn /usr/local/bin/yarn \
+  && ln -s /opt/yarn/bin/yarn /usr/local/bin/yarnpkg \
+  && ln -s /usr/local/bin/node /usr/local/bin/nodejs \
+  && ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm
 
 ARG RAILS_ENV="production"
 
