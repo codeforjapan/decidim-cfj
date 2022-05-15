@@ -1,12 +1,3 @@
-GIT
-  remote: https://github.com/codeforjapan/decidim-module-term_customizer.git
-  revision: ae993619f88761ef4133299e625450621c8f24c8
-  branch: 024-ja
-  specs:
-    decidim-term_customizer (0.24.0)
-      decidim-admin (~> 0.24.0)
-      decidim-core (~> 0.24.0)
-
 PATH
   remote: decidim-comments
   specs:
@@ -892,6 +883,7 @@ GEM
       rubyzip (>= 1.0.0)
 
 PLATFORMS
+  aarch64-linux
   ruby
 
 DEPENDENCIES
@@ -901,7 +893,6 @@ DEPENDENCIES
   decidim-comments!
   decidim-decidim_awesome (~> 0.7.0)
   decidim-dev (= 0.24.3)
-  decidim-term_customizer!
   decidim-user_extension!
   deface
   dotenv-rails
