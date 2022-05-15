@@ -57,7 +57,8 @@ RUN cp ./entrypoint /usr/bin/entrypoint \
     && chmod +x /usr/bin/entrypoint \
     && chmod -R +x ./bin/
 
-RUN ./bin/rails assets:precompile \
+RUN yarn install \
+    && ./bin/rails assets:precompile \
     && yarn cache clean
 
 ENTRYPOINT ["entrypoint"]
