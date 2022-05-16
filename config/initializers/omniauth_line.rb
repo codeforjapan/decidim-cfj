@@ -15,13 +15,11 @@ end
 Rails.application.config.middleware.use OmniAuth::Builder do
   omniauth_config = Rails.application.secrets[:omniauth]
 
-  if omniauth_config
-    if omniauth_config[:line_login].present?
-      require "omniauth-line_login"
-      provider(
-        :line_login,
-        setup: setup_provider_proc(:line_login, client_id: :client_id, client_secret: :client_secret)
-      )
-    end
+  if omniauth_config && omniauth_config[:line_login].present?
+    require "omniauth-line_login"
+    provider(
+      :line_login,
+      setup: setup_provider_proc(:line_login, client_id: :client_id, client_secret: :client_secret)
+    )
   end
 end
