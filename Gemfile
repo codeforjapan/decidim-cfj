@@ -25,7 +25,7 @@ gem "wicked_pdf", "~> 1.4"
 gem "deface"
 gem "newrelic_rpm"
 
-gem "omniauth-line_login", git: "https://github.com/takahashim/omniauth-line_login.git", branch: "main"
+gem "omniauth-line_login", path: "omniauth-line_login"
 
 gem "decidim-user_extension", path: "decidim-user_extension"
 
