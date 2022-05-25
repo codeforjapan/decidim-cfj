@@ -4,7 +4,6 @@ require "csv"
 namespace :download do
   desc "Download users list including extended attirubtion"
   task :users, ["org_id"] => :environment do |_task, args|
-    Time.zone = "Tokyo"
     file = Rails.root.join("tmp/user_data.csv")
     if args.org_id
       download_users(file, args.org_id)
@@ -25,11 +24,13 @@ namespace :download do
     datevalue.strftime("%Y/%m/%d %H:%M:%S")
   end
 
-  def download_users(file, _id)
+  def download_users(file, id)
     puts "[INFO] Creating csv files. It will take few minutes"
     headers = %w(id created_at sign_in_count last_sign_in nickname name email real_name gender address birth_year occupation)
+    organization = Decidim::Organization.find(id)
+    Time.zone = organization.time_zone
     CSV.open(file, "w", write_headers: true, headers: headers, force_quotes: true) do |writer|
-      Decidim::Organization.find(1).users.where(deleted_at: [nil, ""]).each do |user|
+      organization.users.where(deleted_at: [nil, ""]).each do |user|
         auth = Decidim::Authorization.find_by(decidim_user_id: user.id)
         metadata = [nil, nil, nil, nil, nil]
         if auth
