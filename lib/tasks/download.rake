@@ -29,7 +29,7 @@ namespace :download do
     CSV.open(file, 'w', :write_headers=> true, :headers => headers, force_quotes: true) do  | writer |
       Decidim::Organization.find(1).users.where(deleted_at: [nil, '']).each do | user |
         auth = Decidim::Authorization.find_by(decidim_user_id: user.id)
-          metadata = [nil, nil, nil, nil]
+          metadata = [nil, nil, nil, nil, nil]
         if (auth)
           metadata = [auth.metadata["real_name"], auth.metadata["gender"], 
             auth.metadata["address"], auth.metadata["birth_year"], 
