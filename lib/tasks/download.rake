@@ -30,16 +30,20 @@ namespace :download do
     organization = Decidim::Organization.find(id)
     Time.zone = organization.time_zone
     CSV.open(file, "w", write_headers: true, headers: headers, force_quotes: true) do |writer|
-      organization.users.where(deleted_at: [nil, ""]).each do |user|
-        auth = Decidim::Authorization.find_by(decidim_user_id: user.id)
-        metadata = [nil, nil, nil, nil, nil]
-        if auth
-          metadata = [auth.metadata["real_name"], auth.metadata["gender"],
-                      auth.metadata["address"], auth.metadata["birth_year"],
-                      auth.metadata["occupation"]]
+      Decidim::User.where(organization: organization).not_deleted.in_batches do |users|
+        metadata_hash = {}
+        Decidim::Authorization.where(decidim_user_id: users).find_each do |auth|
+          metadata_hash[auth.decidim_user_id] = auth.metadata
         end
-        writer << [user.id, format_date(user.created_at), user.sign_in_count,
-                   format_date(user.last_sign_in_at), user.nickname, user.name, user.email] + metadata
+
+        users.each do |user|
+          metadata = metadata_hash[user.id] || {}
+
+          writer << [user.id, format_date(user.created_at), user.sign_in_count,
+                     format_date(user.last_sign_in_at), user.nickname, user.name, user.email,
+                     metadata["real_name"], metadata["gender"], metadata["address"],
+                     metadata["birth_year"], metadata["occupation"]]
+        end
       end
     end
     puts "[INFO] success: #{file} was created."
