@@ -30,7 +30,7 @@ namespace :download do
     organization = Decidim::Organization.find(id)
     Time.zone = organization.time_zone
     CSV.open(file, "w", write_headers: true, headers: headers, force_quotes: true) do |writer|
-      Decidim::User.where(organization: organization).not_deleted.in_batches.each do |users|
+      Decidim::User.where(organization: organization).not_deleted.in_batches do |users|
         metadata_hash = {}
         Decidim::Authorization.where(decidim_user_id: users).find_each do |auth|
           metadata_hash[auth.decidim_user_id] = auth.metadata
