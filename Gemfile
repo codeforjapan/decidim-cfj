@@ -5,6 +5,7 @@ source "https://rubygems.org"
 ruby RUBY_VERSION
 
 gem "decidim", "0.24.3"
+gem "decidim-initiatives", "0.24.3"
 
 gem "decidim-comments", path: "decidim-comments"
 
