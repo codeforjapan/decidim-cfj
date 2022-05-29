@@ -12,7 +12,7 @@ Decidim.configure do |config|
   # When an organization is created through the System area, system admins will
   # be able to choose the available languages for that organization. That list
   # of languages will be equal or a subset of the list in this file.
-  config.available_locales = [:en, :ja]
+  config.available_locales = [:ja, :en]
 
   # Enable machine translations
   config.enable_machine_translations = false
