@@ -8,6 +8,13 @@ ja:
         name: アカウントID
       group:
         nickname: アカウントID
+      initiative:
+        offline_votes: 対面署名
+        offline_votes_for_scope: '%{scope_name} の 対面署名'
+        signature_type_values:
+          any: ハイブリッド
+          offline: 対面
+          online: オンライン
       question:
         origin_title: 起案者
         origin_url: 元のURL
