@@ -14,6 +14,10 @@ ja:
         index:
           show_user_extension: ユーザー属性を表示
     authorization_handlers:
+      admin:
+        user_extension:
+          help:
+            - (ヘルプ)
       user_extension:
         explanation: 'ユーザー拡張属性保持用'
         name: 'ユーザー拡張属性'
@@ -41,6 +45,19 @@ ja:
               real_name: 本名
     verifications:
       user_extension:
+        admin:
+          pending_authorizations:
+            index:
+              username: ユーザー名
+              title: オンラインでの検証待ちです
+              address: 住所
+              verification_code: 検証コード
+              letter_sent_at: 発送日時
+              mark_as_sent: 送信済みにする
+              not_yet_sent: 送信されていません
+          postages:
+            create:
+              error: エラーマーキング文字を送信しました
         authorizations:
           edit:
             title: アカウントの検証
