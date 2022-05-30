@@ -15,6 +15,10 @@ ja:
           any: ハイブリッド
           offline: 対面
           online: オンライン
+      initiatives_type:
+        area_enabled: 作成者がイニシアチブの領域を選択できるようにする
+        only_global_scope_enabled: グローバルスコープのイニシアチブの作成のみを許可する
+        promoting_committee_enabled: 推進委員会を有効にする
       question:
         origin_title: 起案者
         origin_url: 元のURL
@@ -32,6 +36,12 @@ ja:
         secondary_color: セカンダリ
       minutes:
         visible: 表示する
+  activerecord:
+    models:
+      decidim/initiative:
+        other: イニシアチブ
+      decidim/initiative_comittee:
+        other: イニシアチブ委員会
   date:
     formats:
       decidim_short: "%Y/%m/%d"
@@ -878,3 +888,52 @@ ja:
       long_dashed: "%Y-%m-%d %H:%M:%S"
       short: "%Y/%m/%d %H:%M"
       time_of_day: "%H:%M"
+  decidim:
+    admin:
+      actions:
+        new_initiative_type: 新しいイニシアチブ種別
+      menu:
+        initiatives: イニシアチブ
+        initiatives_types: イニシアチブ種別
+      models:
+        initiatives_votes:
+          fields:
+            initiative_signatures_count: 署名数
+            initiative_start_date: 開始日
+            initiative_title: イニシアチブのタイトル
+            name_and_surname: 氏名
+    initiatives:
+      actions:
+        initiatives:
+          edit:
+            accept: 取り組みを承認する
+      admin_states:
+        accepted: 署名数達成
+        created: 作成済み
+        discarded: 破棄済み
+        published: 公開済み
+        rejected: 署名数未達成
+        validating: 技術的検証
+      application_helper:
+        filter_state_values:
+          accepted: 署名数達成
+          all: すべて
+          answered: 回答済み
+          closed: 終了
+          open: 公開
+          rejected: 署名数未達成
+      committee_requests:
+        new:
+          help_text: このイニシアチブの推進委員会のメンバーになることをリクエストします
+      create_initiative:
+        previous_form:
+          help: このイニシアチブはどのようなものですか？タイトルと説明を書いてください。簡潔なタイトルと、提案する解決策に焦点を当てた説明をお勧めします。
+        share_committee_link:
+          invite_to_committee_help: 推進委員会に参加する人を招待するためのリンク
+        initiatives:
+          closed_initiatives_warning: 現在開催中のイニシアチブはありませんが、ここに記録されているすべてのイニシアチブから探すことができます。
+          no_initiatives_warning: 検索基準に一致するイニシアチブは見つかりませんでした
+  layouts:
+    decidim:
+      initiative_creation_header:
+        promotal_committee: 推進委員会
