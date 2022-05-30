@@ -1,6 +1,11 @@
 name: Rails Tests
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+    - master
+    - develop
+  pull_request:
 
 jobs:
   build:
@@ -50,6 +55,3 @@ jobs:
     - name: Test with RSpec
       run: |
         bundle exec rails spec
-    - name: Lint by RuboCop
-      run: |
-        bundle exec rubocop --parallel

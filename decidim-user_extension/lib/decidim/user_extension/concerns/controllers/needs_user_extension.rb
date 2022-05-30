@@ -34,7 +34,7 @@ module Decidim
           end
 
           def enable_user_extension?
-            current_organization.available_authorization_handlers&.include?("user_extension_authorization_handler")
+            current_organization.available_authorizations&.include?("user_extension")
           end
 
           def authorization_metadata

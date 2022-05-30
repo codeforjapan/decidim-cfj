@@ -10,6 +10,9 @@ gem "decidim-comments", path: "decidim-comments"
 
 gem "decidim-decidim_awesome", "~> 0.7.0"
 
+## gem "decidim-term_customizer", git: "https://github.com/mainio/decidim-module-term_customizer.git", branch: "0.24-stable"
+gem "decidim-term_customizer", git: "https://github.com/codeforjapan/decidim-module-term_customizer.git", branch: "024-ja"
+
 gem "bootsnap", "~> 1.3"
 
 gem "puma", ">= 5.0.0"

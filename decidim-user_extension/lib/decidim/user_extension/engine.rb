@@ -12,6 +12,9 @@ module Decidim
     class Engine < ::Rails::Engine
       isolate_namespace Decidim::UserExtension
 
+      paths["db/migrate"] = nil
+      paths["lib/tasks"] = nil
+
       routes do
         # Add engine routes here
         # resources :user_extension

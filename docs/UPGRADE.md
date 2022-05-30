@@ -87,3 +87,19 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
     * `lib/decidim/participable.rb`
     * `lib/decidim/resourceable.rb`
     * `spec/sytem/user_profile_spec.rb`
+
+#### `decidim-user_extension`について
+
+`decidim-user_extension`はカスタムモジュールとして追加されているものです。このモジュール内にもDecidim本体に依存している箇所があります。
+
+* `decidim-user_extension/app/overrides/decidim/admin/officializations/index/user_extension_modal_override.html.erb.deface`, `decidim-user_extension/app/overrides/decidim/admin/officializations/index/user_extension_override.html.erb.deface`
+
+管理画面のビュー `decidim-admin/app/views/decidim/admin/officializations/index.html.erb` を上書きしています。
+
+* `decidim-user_extension/app/views/decidim/devise/registrations/new.html.erb`, `decidim-user_extension/app/views/decidim/devise/registrations/_user_extension.html.erb`
+
+入力フォーム `decidim-core/app/views/decidim/devise/registrations/new.html.erb` を上書きしています。
+
+* `decidim-user_extension/app/views/decidim/account/show.html.erb`, `decidim-user_extension/app/views/decidim/account/_user_extension.html.erb`
+
+`decidim-core/app/views/decidim/account/show.html.erb` を上書きしています。
