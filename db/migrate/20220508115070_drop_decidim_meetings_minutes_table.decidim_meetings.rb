@@ -20,27 +20,36 @@ class DropDecidimMeetingsMinutesTable < ActiveRecord::Migration[6.0]
 
   def up
     ActionLog.where(resource_type: "Decidim::Meetings::Minutes").each do |action_log|
-      minutes = Minutes.find_by(id: action_log.resource_id)
-      version = Version.find_by(id: action_log.version_id)
+      if Minutes.where(id: action_log.resource_id).exists?
+        minutes = Minutes.find_by(id: action_log.resource_id)
+        version = Version.find_by(id: action_log.version_id)
+        version_updates = {
+          item_type: "Decidim::Meetings::Meeting",
+          item_id: minutes.decidim_meeting_id
+        }
+        if version.object_changes.present?
+          version_updates[:object_changes] = version.object_changes
+                                                    .gsub("\ndescription:\n-\n-", "\nminutes_description:\n-\n-")
+                                                    .gsub("\ndescription:\n-\n-", "\nminutes_description:\n-\n-")
+        end
 
-      version_updates = {
-        item_type: "Decidim::Meetings::Meeting",
-        item_id: minutes.decidim_meeting_id
-      }
-      if version.object_changes.present?
-        version_updates[:object_changes] = version.object_changes
-                                                  .gsub("\ndescription:\n-\n-", "\nminutes_description:\n-\n-")
-                                                  .gsub("\ndescription:\n-\n-", "\nminutes_description:\n-\n-")
+        version.update!(version_updates)
+        action_log.update!(
+          resource_type: "Decidim::Meetings::Meeting",
+          resource_id: minutes.decidim_meeting_id,
+          action: "close"
+        )
+      else
+        version = Version.find_by(id: action_log.version_id)
+        if version.present?
+          if version.object_changes.present?
+            version.object_changes.destroy!
+          end
+          version.destroy!
+        end
       end
 
-      version.update!(version_updates)
-      action_log.update!(
-        resource_type: "Decidim::Meetings::Meeting",
-        resource_id: minutes.decidim_meeting_id,
-        action: "close"
-      )
     end
-
     drop_table :decidim_meetings_minutes
   end
 
