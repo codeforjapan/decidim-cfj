@@ -1,4 +1,16 @@
 # Change Log
+## [v0.24.3-2022-06-01](https://github.com/codeforjapan/decidim-cfj/releases/tag/v0.23.5-2022-06-01)
+
+### Added
+- Add Decidim::TermCustomer [#355](https://github.com/codeforjapan/decidim-cfj/pull/355)
+- add rake task [#383](https://github.com/codeforjapan/decidim-cfj/pull/383)
+
+### Changed
+- Use Engine for user_extension modulee [#229](https://github.com/codeforjapan/decidim-cfj/pull/229)
+
+- ### Fixed
+Fix quill-html-edit-button (#377) [#379](https://github.com/codeforjapan/decidim-cfj/pull/379)
+
 ## [v0.24.3-2022-04-14](https://github.com/codeforjapan/decidim-cfj/releases/tag/v0.23.5-2022-04-14)
 
 ### Added
