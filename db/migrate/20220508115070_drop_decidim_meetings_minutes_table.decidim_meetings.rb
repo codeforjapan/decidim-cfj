@@ -20,9 +20,9 @@ class DropDecidimMeetingsMinutesTable < ActiveRecord::Migration[6.0]
 
   def up
     ActionLog.where(resource_type: "Decidim::Meetings::Minutes").each do |action_log|
-      if Minutes.where(id: action_log.resource_id).exists?
-        minutes = Minutes.find_by(id: action_log.resource_id)
-        version = Version.find_by(id: action_log.version_id)
+      minutes = Minutes.find_by(id: action_log.resource_id)
+      version = Version.find_by(id: action_log.version_id)
+      if minutes.present?
         version_updates = {
           item_type: "Decidim::Meetings::Meeting",
           item_id: minutes.decidim_meeting_id
@@ -40,7 +40,6 @@ class DropDecidimMeetingsMinutesTable < ActiveRecord::Migration[6.0]
           action: "close"
         )
       else
-        version = Version.find_by(id: action_log.version_id)
         if version.present?
           if version.object_changes.present?
             version.object_changes.destroy!
@@ -48,7 +47,6 @@ class DropDecidimMeetingsMinutesTable < ActiveRecord::Migration[6.0]
           version.destroy!
         end
       end
-
     end
     drop_table :decidim_meetings_minutes
   end
