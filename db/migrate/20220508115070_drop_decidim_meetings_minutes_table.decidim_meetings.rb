@@ -41,9 +41,6 @@ class DropDecidimMeetingsMinutesTable < ActiveRecord::Migration[6.0]
         )
       else
         if version.present?
-          if version.object_changes.present?
-            version.object_changes.destroy!
-          end
           version.destroy!
         end
       end
