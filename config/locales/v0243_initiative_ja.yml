@@ -1,13 +1,19 @@
 ja:
   activemodel:
     attributes:
-      organization_data:
-        name: 氏名
-  activemodel:
-    attributes:
+      initiative:
+        area_id: エリア
+        decidim_scope_id: スコープ
+        signature_end_date: 署名収集期間の終了日
+        signature_start_date: 署名収集期間の開始日
       initiatives_type:
         area_enabled: 作成者がイニシアチブのエリアを選択できるようにする
         only_global_scope_enabled: グローバルスコープのイニシアチブの作成のみを許可する
+      initiatives_type_scope:
+        supports_required: 必要署名数
+        decidim_scopes_id: スコープ
+      organization_data:
+        name: 氏名
   activerecord:
     models:
       decidim/initiative:
@@ -21,6 +27,13 @@ ja:
       menu:
         initiatives: イニシアチブ
         initiatives_types: イニシアチブ種別
+      models:
+        initiatives:
+          fields:
+            supports_count: 署名数
+        initiatives_type_scope:
+          fields:
+            supports_required: 必要署名数
     initiatives:
       admin:
         initiatives:
