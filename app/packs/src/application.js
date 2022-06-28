@@ -10,8 +10,12 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery
-//= require rails-ujs
-//= require activestorage
-//= require decidim
-//= require_tree .
+import "jquery"
+import Rails from "@rails/ujs"
+import * as ActiveStorage from "@rails/activestorage"
+import "channels"
+
+Rails.start()
+ActiveStorage.start()
+
+require('decidim')
