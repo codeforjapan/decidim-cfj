@@ -52,6 +52,7 @@ end
 group :production do
   gem "fog-aws"
   gem "sidekiq", "6.4.2"
+  gem "aws-sdk-s3", require: false
 end
 
 gem "rubyzip", ">= 1.0.0"
