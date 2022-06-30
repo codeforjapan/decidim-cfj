@@ -65,6 +65,22 @@ GEM
       public_suffix (>= 2.0.2, < 5.0)
     anchored (1.1.0)
     ast (2.4.2)
+    aws-eventstream (1.2.0)
+    aws-partitions (1.602.0)
+    aws-sdk-core (3.131.2)
+      aws-eventstream (~> 1, >= 1.0.2)
+      aws-partitions (~> 1, >= 1.525.0)
+      aws-sigv4 (~> 1.1)
+      jmespath (~> 1, >= 1.6.1)
+    aws-sdk-kms (1.57.0)
+      aws-sdk-core (~> 3, >= 3.127.0)
+      aws-sigv4 (~> 1.1)
+    aws-sdk-s3 (1.114.0)
+      aws-sdk-core (~> 3, >= 3.127.0)
+      aws-sdk-kms (~> 1)
+      aws-sigv4 (~> 1.4)
+    aws-sigv4 (1.5.0)
+      aws-eventstream (~> 1, >= 1.0.2)
     axe-core-api (4.4.0)
       dumb_delegator
       virtus
@@ -448,6 +464,7 @@ GEM
       ruby-vips (>= 2.0.17, < 3)
     invisible_captcha (0.13.0)
       rails (>= 3.2.0)
+    jmespath (1.6.1)
     json (2.6.1)
     jwt (2.3.0)
     kaminari (1.2.2)
@@ -806,6 +823,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  aws-sdk-s3
   bootsnap
   byebug (~> 11.0)
   decidim (= 0.25.2)
