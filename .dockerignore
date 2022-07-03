@@ -1,5 +1,4 @@
 *.md
-*.log
 
 .env
 .gitignore
@@ -10,7 +9,7 @@
 .git
 
 deployments
-log
+log/*
 node_modules
 spec
 test
