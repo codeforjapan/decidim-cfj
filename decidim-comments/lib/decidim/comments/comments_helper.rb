@@ -23,11 +23,13 @@ module Decidim
       def inline_comments_for(resource, options = {})
         return unless resource.commentable?
 
+        limit = options[:limit] || params[:limit]
         cell(
           "decidim/comments/comments",
           resource,
           machine_translations: machine_translations_toggled?,
           single_comment: params.fetch("commentId", nil),
+          limit: limit,
           order: options[:order],
           polymorphic: options[:polymorphic]
         ).to_s

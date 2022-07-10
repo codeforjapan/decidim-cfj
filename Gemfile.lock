@@ -1,3 +1,10 @@
+PATH
+  remote: decidim-comments
+  specs:
+    decidim-comments (0.25.2)
+      decidim-core (= 0.25.2)
+      redcarpet (~> 3.5, >= 3.5.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -205,9 +212,6 @@ GEM
     decidim-budgets (0.25.2)
       decidim-comments (= 0.25.2)
       decidim-core (= 0.25.2)
-    decidim-comments (0.25.2)
-      decidim-core (= 0.25.2)
-      redcarpet (~> 3.5, >= 3.5.1)
     decidim-core (0.25.2)
       active_link_to (~> 1.0)
       acts_as_list (~> 0.9)
@@ -824,6 +828,7 @@ DEPENDENCIES
   bootsnap
   byebug (~> 11.0)
   decidim (= 0.25.2)
+  decidim-comments!
   decidim-decidim_awesome (~> 0.8.1)
   decidim-dev (= 0.25.2)
   deface

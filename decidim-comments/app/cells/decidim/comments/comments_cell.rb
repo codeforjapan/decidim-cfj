@@ -46,7 +46,7 @@ module Decidim
         if single_comment?
           [single_comment]
         else
-          SortedComments.for(model, order_by: order)
+          SortedComments.for(model, order_by: order, limit: limit)
         end
       end
 
@@ -76,6 +76,10 @@ module Decidim
 
       def order
         options[:order] || "older"
+      end
+
+      def limit
+        options[:limit] || nil
       end
 
       def decidim
@@ -151,6 +155,16 @@ module Decidim
                   end
         action_authorized_link_to(:comment, commentable_path, options) do
           t("decidim.components.comments.blocked_comments_for_unauthorized_user_warning")
+        end
+      end
+
+      def comment_limited?
+        if options[:limit]
+          return false if options[:limit].to_i == 0
+
+          comments_count > options[:limit].to_i
+        else
+          comments_count > Decidim::Comments::SortedComments.comments_limit
         end
       end
     end

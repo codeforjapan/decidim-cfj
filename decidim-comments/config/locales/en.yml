@@ -99,6 +99,7 @@ en:
         title:
           one: "%{count} comment"
           other: "%{count} comments"
+        show_all_comments: "Show all comments"
       down_vote_button:
         text: I disagree with this comment
       edit_comment_modal_form:
