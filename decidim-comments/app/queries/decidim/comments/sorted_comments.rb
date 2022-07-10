@@ -4,13 +4,7 @@ module Decidim
   module Comments
     # A class used to find comments for a commentable resource
     class SortedComments < Rectify::Query
-      COMMENTS_LIMIT = 100
-
       attr_reader :commentable
-
-      def self.comments_limit
-        Rails.application.config.respond_to?(:default_comments_limit) ? Rails.application.config.default_comments_limit : COMMENTS_LIMIT
-      end
 
       # Syntactic sugar to initialize the class and return the queried objects.
       #
@@ -39,23 +33,6 @@ module Decidim
         scope = base_scope
                 .not_hidden
                 .includes(:author, :user_group, :up_votes, :down_votes)
-        if @options[:after]
-          scope = scope.where(
-            "decidim_comments_comments.id > ?",
-            @options[:after]
-          )
-        end
-
-        limit = (@options[:limit] || Decidim::Comments::SortedComments.comments_limit).to_i
-        if limit.positive?
-          if scope.is_a?(Array)
-            scope = scope.take(limit)
-          else
-            scope = scope.limit(limit)
-          end
-        else
-          # no limit
-        end
 
         case @options[:order_by]
         when "older"
@@ -76,6 +53,14 @@ module Decidim
       def base_scope
         id = @options[:id]
         return Comment.where(root_commentable: commentable, id: id) if id.present?
+
+        after = @options[:after]
+        if after.present?
+          return Comment.where(root_commentable: commentable).where(
+            "decidim_comments_comments.id > ?",
+            after
+          )
+        end
 
         Comment.where(commentable: commentable)
       end

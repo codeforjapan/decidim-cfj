@@ -2,7 +2,7 @@
   <div class="columns large-9 comments-container" id="comments">
     <div class="comments">
       <div class="row collapse order-by">
-        <h2 class="order-by__text section-heading">
+        <h4 class="order-by__text section-heading">
           <% if single_comment? %>
             <%= t("decidim.components.comments.comment_details_title") %>
           <% else %>
@@ -10,7 +10,7 @@
               <%= t("decidim.components.comments.title", count: comments_count) %>
             </span>
           <% end %>
-        </h2>
+        </h4>
         <%= render :order_control %>
       </div>
       <%= single_comment_warning %>
@@ -20,11 +20,6 @@
           <%= cell("decidim/comments/comment_thread", comment, order: order) %>
         <% end %>
       </div>
-      <% if comment_limited? %>
-        <%= link_to commentable_path(limit: 0), class: "button primary expanded" do %>
-          <span><%= t("decidim.components.comments.show_all_comments") %></a></span>
-        <% end %>
-      <% end %>
       <%= add_comment %>
       <%= user_comments_blocked_warning %>
     </div>
@@ -33,5 +28,3 @@
     </div>
   </div>
 <% end %>
-
-<%= javascript_pack_tag("decidim/comments/comments") %>
