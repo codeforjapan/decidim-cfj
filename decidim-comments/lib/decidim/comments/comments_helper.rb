@@ -7,11 +7,11 @@ module Decidim
       # Render commentable comments inside the `expanded` template content.
       #
       # resource - A commentable resource
-      def comments_for(resource)
+      def comments_for(resource, options = {})
         return unless resource.commentable?
 
         content_for :expanded do
-          inline_comments_for(resource)
+          inline_comments_for(resource, options)
         end
       end
 
@@ -30,7 +30,8 @@ module Decidim
           machine_translations: machine_translations_toggled?,
           single_comment: params.fetch("commentId", nil),
           limit: limit,
-          order: options[:order]
+          order: options[:order],
+          polymorphic: options[:polymorphic]
         ).to_s
       end
     end
