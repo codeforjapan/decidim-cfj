@@ -1,14 +1,14 @@
 name: build new version image
 
 on:
-  push:
-    branches:
-      - 'v*'
   pull_request:
+    branches:
+      - develop
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    if: contains(github.head_ref, 'v*')
     timeout-minutes: 1200
 
     steps:
