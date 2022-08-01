@@ -15,9 +15,9 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 このDecidimアプリ内で、Decidim本体やライブラリに含まれる元ファイルを上書きしているファイルがいくつかあります。
 これらのファイルについては、Decidim本体のファイルがバージョンアップ時に更新された場合、その更新内容をファイルに反映させなければアプリケーションが壊れる可能性があります。そのため、本体の更新時には確認が必要です。
 
-* `app/assets/javascripts/decidim/decidim_awesome/editors/legacy_quill_editor.js.es6`
+* `app/packs/src/decidim/decidim_awesome/editors/editor.js`
 
-  QuillエディタでHTML編集ができるようにするために追加されたファイル。現在はDecidim Awesome対応になっています(decidim_awesome内の`app/assets/javascripts/decidim/decidim_awesome/editors/legacy_quill_editor.js.es6`がベースになっています)。
+  QuillエディタでHTML編集ができるようにするために追加されたファイル。現在はDecidim Awesome対応になっています(decidim_awesome内の`app/packs/src/decidim/decidim_awesome/editors/editor.js`がベースになっています)。
 
 * `app/assets/stylesheets/buttons.scss`
 
@@ -63,12 +63,6 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 * `app/views/decidim/blogs/posts/show.html.erb`
 
   https://github.com/codeforjapan/decidim-cfj/issues/107 の対応として https://github.com/codeforjapan/decidim-cfj/pull/126 で追加しています。
-
-
-* `app/views/decidim/proposals/admin/proposals/_form.html.erb`
-
-  https://github.com/codeforjapan/decidim-cfj/issues/24 の対応として https://github.com/codeforjapan/decidim-cfj/pull/51 で追加しています。
-  本家には https://github.com/decidim/decidim/issues/6739 でフィードバック済で、再現まではできていたようですが、修正されたかどうかは不明です。
 
 * `app/views/layouts/decidim/_main_footer.html.erb`
 

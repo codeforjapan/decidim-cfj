@@ -3,3 +3,4 @@
 
 // Load images
 require.context("../../images", true)
+import "src/decidim/decidim_awesome/awesome_admin"
