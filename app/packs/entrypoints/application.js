@@ -17,3 +17,4 @@
 // Activate Active Storage
 // import * as ActiveStorage from "@rails/activestorage"
 // ActiveStorage.start()
+import "src/decidim/decidim_awesome/awesome_admin"
