@@ -1,8 +1,0 @@
-ja:
-  decidim:
-    system:
-      organizations:
-        omniauth_settings:
-          line_login:
-            client_id: チャンネルID
-            client_secret: チャンネルシークレット

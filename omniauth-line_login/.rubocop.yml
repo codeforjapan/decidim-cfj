@@ -1,6 +1,0 @@
-AllCops:
-    NewCops: enable
-
-Naming/FileName:
-  Exclude:
-    - 'lib/omniauth-line_login.rb'
