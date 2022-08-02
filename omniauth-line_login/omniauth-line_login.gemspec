@@ -19,9 +19,9 @@ Gem::Specification.new do |spec|
 
   # Specify which files should be added to the gem when it is released.
   spec.files = Dir[
-    "lib/**/*",
-    "Rakefile",
-    "README.md"
+    'lib/**/*',
+    'Rakefile',
+    'README.md'
   ]
   spec.bindir = 'exe'
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
