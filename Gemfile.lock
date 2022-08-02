@@ -1,3 +1,12 @@
+GIT
+  remote: https://github.com/codeforjapan/decidim-module-term_customizer.git
+  revision: 1d20451c56b7809cf0d509bbb4d0ac63d4791c8c
+  branch: release/0.25-stable
+  specs:
+    decidim-term_customizer (0.25.0)
+      decidim-admin (~> 0.25.0)
+      decidim-core (~> 0.25.0)
+
 PATH
   remote: decidim-comments
   specs:
@@ -831,6 +840,7 @@ DEPENDENCIES
   decidim-comments!
   decidim-decidim_awesome (~> 0.8.1)
   decidim-dev (= 0.25.2)
+  decidim-term_customizer!
   deface
   dotenv-rails
   factory_bot_rails
