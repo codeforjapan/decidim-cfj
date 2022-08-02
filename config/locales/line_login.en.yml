@@ -1,8 +1,0 @@
-en:
-  decidim:
-    system:
-      organizations:
-        omniauth_settings:
-          line_login:
-            client_id: Channel ID
-            client_secret: Channel secret
