@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
 
   spec.summary = 'Unofficial OmniAuth Strategy for LINE Login'
   spec.description = 'Unofficial OmniAuth Strategy for LINE Login'
-  spec.homepage = 'https://github.com/takahashim/omniauth-line_login'
+  spec.homepage = 'https://github.com/codeforjapan/decidim-cfj'
   spec.required_ruby_version = '>= 2.6.0' # rubocop:disable Gemspec/RequiredRubyVersion
 
   spec.metadata['homepage_uri'] = spec.homepage
