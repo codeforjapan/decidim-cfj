@@ -25,6 +25,8 @@ gem "wicked_pdf", "~> 2.1"
 gem "deface"
 gem "newrelic_rpm"
 
+gem "omniauth-line_login", path: "omniauth-line_login"
+
 # gem "decidim-user_extension", path: "decidim-user_extension"
 
 group :development, :test do
