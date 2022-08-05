@@ -42,7 +42,7 @@ WORKDIR $APP_HOME
 COPY Gemfile Gemfile.lock ./
 
 COPY decidim-comments /app/decidim-comments
-
+COPY omniauth-line_login /app/omniauth-line_login
 # bundle install
 RUN gem install bundler:${BUNDLER_VERSION} \
     && bundle config --global jobs ${BUNDLER_JOBS} \
