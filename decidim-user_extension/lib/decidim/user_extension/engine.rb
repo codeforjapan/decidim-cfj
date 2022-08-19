@@ -21,8 +21,8 @@ module Decidim
         # root to: "user_extension#index"
       end
 
-      initializer "decidim_user_extension.assets" do |app|
-        app.config.assets.precompile += %w(decidim_user_extension_manifest.js)
+      initializer "decidim_user_extension.assets_path" do |app|
+        Decidim.register_assets_path File.expand_path("app/packs", root)
       end
 
       initializer "decidim_user_extension.engine_additions" do
