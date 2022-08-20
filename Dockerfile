@@ -43,6 +43,8 @@ COPY Gemfile Gemfile.lock ./
 
 COPY decidim-comments /app/decidim-comments
 COPY omniauth-line_login /app/omniauth-line_login
+COPY decidim-user_extension /app/decidim-user_extension
+
 # bundle install
 RUN gem install bundler:${BUNDLER_VERSION} \
     && bundle config --global jobs ${BUNDLER_JOBS} \
