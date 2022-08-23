@@ -10,7 +10,7 @@ gem "decidim-comments", path: "decidim-comments"
 
 gem "decidim-decidim_awesome", "~> 0.8.1"
 
-gem "decidim-term_customizer", git: "https://github.com/codeforjapan/decidim-module-term_customizer.git", branch: "release/0.25-stable"
+gem "decidim-term_customizer", git: "https://github.com/codeforjapan/decidim-module-term_customizer.git", branch: "025-ja"
 
 gem "bootsnap"
 

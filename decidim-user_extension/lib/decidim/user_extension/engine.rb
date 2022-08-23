@@ -21,7 +21,7 @@ module Decidim
         # root to: "user_extension#index"
       end
 
-      initializer "decidim_user_extension.assets_path" do
+      initializer "decidim_user_extension.webpacker.assets_path" do
         Decidim.register_assets_path File.expand_path("app/packs", root)
       end
 

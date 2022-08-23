@@ -12,6 +12,7 @@ RUN apk update \
         postgresql-dev \
         tzdata \
         zip \
+        gcompat\
     && cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 
 ENV YARN_VERSION=v1.22.5
