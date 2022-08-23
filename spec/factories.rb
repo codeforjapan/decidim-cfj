@@ -2,6 +2,7 @@
 
 require "decidim/core/test/factories"
 require "decidim/cfj/test/factories"
+require "decidim/debates/test/factories"
 
 FactoryBot.define do
   sequence(:valid_jwt) do |_n|
