@@ -30,7 +30,7 @@ module Decidim
           machine_translations: machine_translations_toggled?,
           single_comment: params.fetch("commentId", nil),
           limit: limit,
-          order: options[:order],
+          order: options[:order] || cookies['comment_default_order'],
           polymorphic: options[:polymorphic]
         ).to_s
       end
