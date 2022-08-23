@@ -102,7 +102,15 @@ module Decidim
       end
 
       def order
-        params.fetch(:order, "older")
+        params_order = params.fetch(:order, nil)
+        if params_order
+          cookies['comment_default_order'] = params_order
+          params_order
+        elsif cookies['comment_default_order']
+          cookies['comment_default_order']
+        else
+          'older'
+        end
       end
 
       def limit
