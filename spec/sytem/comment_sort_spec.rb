@@ -14,12 +14,14 @@ describe "Comments", type: :system, perform_enqueued: true do
 
   before do
     switch_to_host(organization.host)
+    visit decidim.root_path
   end
 
   it "allows user to store selected comment order in cookies", :slow do
     comment = create(:comment, commentable: commentable, body: "Most Rated Comment")
     create(:comment_vote, comment: comment, author: user, weight: 1)
 
+    click_button "I agree"
     visit resource_path
 
     expect(page).to have_no_content("Comments are disabled at this time")
