@@ -104,9 +104,11 @@ module Decidim
       def order
         params_order = params.fetch(:order, nil)
         if params_order
-          cookies['comment_default_order'] = params_order
+          if cookies[Decidim.config.consent_cookie_name].present? # cookies_accepted?
+            cookies['comment_default_order'] = params_order
+          end
           params_order
-        elsif cookies['comment_default_order']
+        elsif cookies['comment_default_order'] && cookies[Decidim.config.consent_cookie_name].present? # cookies_accepted?
           cookies['comment_default_order']
         else
           'older'
