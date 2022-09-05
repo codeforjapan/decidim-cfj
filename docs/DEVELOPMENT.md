@@ -6,11 +6,11 @@
 Dockerで環境を構築する際は、1.環境構築と2. 実行（ローカルバージョン）は不要です。
 直接、3. 実行（Dockerバージョン）から開始してください。
 
-| アプリケーション名 | バージョン |
-| ------- | ------- |
-|[Ruby](https://www.ruby-lang.org/ja/)|2.7.4|
-|[Bundler](https://bundler.io/)|1.17.3 |
-|[PostgreSQL](https://www.postgresql.org/)|13 |
+| アプリケーション名                                 | バージョン  |
+|-------------------------------------------|--------|
+| [Ruby](https://www.ruby-lang.org/ja/)     | 2.7.4  |
+| [Bundler](https://bundler.io/)            | 1.17.3 |
+| [PostgreSQL](https://www.postgresql.org/) | 13     |
 
 ### 1-1. 事前準備
 - rbenvのインストール（macOSならhomebrew経由）

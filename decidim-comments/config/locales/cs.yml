@@ -23,6 +23,10 @@ cs:
       comments:
         create:
           error: Při vytváření komentáře došlo k chybě.
+        delete:
+          error: Komentář nemohl být odstraněn.
+        update:
+          error: Při aktualizaci komentáře došlo k chybě.
       comments_count: Počet komentářů
       comments_title: Komentáře
       last_activity:
@@ -43,7 +47,13 @@ cs:
           user_group_id:
             label: Komentovat jako
         opinion:
+          label: Váš názor na toto téma
+          negative: Negativní
+          negative_selected: Váš názor na toto téma je negativní
           neutral: Neutrální
+          neutral_selected: Váš názor na toto téma je neutrální
+          positive: Pozitivní
+          positive_selected: Váš názor na toto téma je pozitivní
         remaining_characters: "Zbývá %{count} znaků"
         remaining_characters_1: "Zbývá %{count} znak"
         title: Přidejte svůj komentář
@@ -51,7 +61,12 @@ cs:
         alignment:
           against: Proti
           in_favor: Ve prospěch
+        confirm_destroy: Opravdu chcete odstranit tento komentář?
+        delete: Smazat
+        deleted_at: Komentář byl smazán dne %{date}
         deleted_user: Vymazaný účastník
+        edit: Upravit
+        edited: Upraveno
         hide_replies: Skrýt odpovědi
         reply: Odpověď
         report:
@@ -66,7 +81,7 @@ cs:
             spam: Obsahuje clickbait, reklamu, podvody nebo škodlivé skripty.
           title: Nahlásit nevhodný obsah
         show_replies: Zobrazit %{replies_count} odpovědí
-        single_comment_link_title: Získat odkaz na jeden komentář
+        single_comment_link_title: Získat odkaz
       comment_order_selector:
         order:
           best_rated: Nejlépe hodnocené
@@ -77,6 +92,7 @@ cs:
       comment_thread:
         title: Konverzace s číslem %{authorName}
       comments:
+        blocked_comments_for_unauthorized_user_warning: Musíte být ověřen, abyste mohli komentovat tuto chvíli, ale můžete si přečíst ty předchozí.
         blocked_comments_for_user_warning: Momentálně nemůžete komentovat, ale můžete si přečíst ty předchozí.
         blocked_comments_warning: Komentáře jsou momentálně zakázány, ale můžete si přečíst ty předchozí.
         comment_details_title: Podrobnosti komentáře
@@ -90,6 +106,14 @@ cs:
           other: "%{count} komentářů"
       down_vote_button:
         text: Nesouhlasím s tímto komentářem
+      edit_comment_modal_form:
+        close: Zavřít
+        form:
+          body:
+            label: Komentář
+            placeholder: Co si o tom myslíte?
+          submit: Odeslat
+        title: Upravit komentář
       up_vote_button:
         text: Souhlasím s tímto komentářem
     events:
