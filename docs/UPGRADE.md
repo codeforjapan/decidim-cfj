@@ -15,17 +15,13 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 このDecidimアプリ内で、Decidim本体やライブラリに含まれる元ファイルを上書きしているファイルがいくつかあります。
 これらのファイルについては、Decidim本体のファイルがバージョンアップ時に更新された場合、その更新内容をファイルに反映させなければアプリケーションが壊れる可能性があります。そのため、本体の更新時には確認が必要です。
 
-* `app/assets/javascripts/decidim/decidim_awesome/editors/legacy_quill_editor.js.es6`
+* `app/packs/src/decidim/decidim_awesome/editors/editor.js`
 
-  QuillエディタでHTML編集ができるようにするために追加されたファイル。現在はDecidim Awesome対応になっています(decidim_awesome内の`app/assets/javascripts/decidim/decidim_awesome/editors/legacy_quill_editor.js.es6`がベースになっています)。
+  QuillエディタでHTML編集ができるようにするために追加されたファイル。現在はDecidim Awesome対応になっています(decidim_awesome内の`app/packs/src/decidim/decidim_awesome/editors/editor.js`がベースになっています)。
 
 * `app/assets/stylesheets/buttons.scss`
 
   `https://github.com/codeforjapan/decidim-cfj/issues/46` の対応で `https://github.com/codeforjapan/decidim-cfj/pull/96` で追加しています。
-
-* `app/assets/stylesheets/decidim/decidim_awesome/editors/quill_editor.scss`
-
-  Decidim Awesomeを追加した際に https://github.com/codeforjapan/decidim-cfj/pull/223 で上書きしています。
 
 * `app/commands/decidim/admin/process_participatory_space_private_user_import_csv.rb`
 
@@ -68,25 +64,10 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 
   https://github.com/codeforjapan/decidim-cfj/issues/107 の対応として https://github.com/codeforjapan/decidim-cfj/pull/126 で追加しています。
 
-
-* `app/views/decidim/proposals/admin/proposals/_form.html.erb`
-
-  https://github.com/codeforjapan/decidim-cfj/issues/24 の対応として https://github.com/codeforjapan/decidim-cfj/pull/51 で追加しています。
-  本家には https://github.com/decidim/decidim/issues/6739 でフィードバック済で、再現まではできていたようですが、修正されたかどうかは不明です。
-
 * `app/views/layouts/decidim/_main_footer.html.erb`
 
   https://github.com/codeforjapan/decidim-cfj/issues/101 の対応として https://github.com/codeforjapan/decidim-cfj/pull/108 で追加しています。
   ダウンロードに問題がなければ削除しても大丈夫かと思われます。
-
-* `app/cells/decidim/following/show.erb`
-    * 本家のv0.25系での修正をバックポートするためにv0.24.3から持ってきたファイルなので、v0.25.1に更新すればファイルごと削除できます。以下のファイルも同様です。
-    * `app/cells/decidim/following_cell.rb`
-    * `app/models/decidim/user_base_entity.rb`
-    * `lib/decidim/has_component.rb`
-    * `lib/decidim/participable.rb`
-    * `lib/decidim/resourceable.rb`
-    * `spec/sytem/user_profile_spec.rb`
 
 #### `decidim-user_extension`について
 

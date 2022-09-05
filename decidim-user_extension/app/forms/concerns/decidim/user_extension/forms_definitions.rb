@@ -9,7 +9,7 @@ module Decidim
       extend ActiveSupport::Concern
 
       included do
-        include ApplicationHelper
+        include ::Decidim::UserExtension::ApplicationHelper
 
         attribute :user_extension, Decidim::UserExtensionForm
 
