@@ -24,7 +24,11 @@ module Decidim
         # Debates can be translated in different languages from the admin but
         # the public form doesn't allow it. When a user closes a debate the
         # user locale is taken as the text locale.
-        self.conclusions = debate.conclusions&.values&.first
+        self.conclusions = if debate.conclusions.blank?
+                             nil
+                           else
+                             debate.conclusions&.values&.first
+                           end
       end
 
       private
