@@ -49,9 +49,21 @@ jobs:
       with:
         ruby-version: 2.7
         bundler-cache: true
+
+    - name: setup Node
+      uses: actions/setup-node@v2
+      with:
+        node-version: 16.9.1
+    - name: install yarn
+      run: |
+        npm i -g yarn@1.22.5
+        yarn install
+
     - name: Migrate DB
       run: |
         bundle exec rails db:create db:migrate
+    - name: Precompile assets
+      run: bundle exec rails assets:precompile
     - name: Test with RSpec
       run: |
         bundle exec rails spec
