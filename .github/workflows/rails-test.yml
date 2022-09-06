@@ -55,7 +55,9 @@ jobs:
       with:
         node-version: 16.9.1
     - name: install yarn
-      run: npm i -g yarn@1.22.5
+      run: |
+        npm i -g yarn@1.22.5
+        yarn install
 
     - name: Migrate DB
       run: |
