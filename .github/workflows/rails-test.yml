@@ -60,6 +60,8 @@ jobs:
     - name: Migrate DB
       run: |
         bundle exec rails db:create db:migrate
+    - name: Precompile assets
+      run: bundle exec rails assets:precompile
     - name: Test with RSpec
       run: |
         bundle exec rails spec
