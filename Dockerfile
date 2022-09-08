@@ -12,6 +12,7 @@ RUN apk update \
         postgresql-dev \
         tzdata \
         zip \
+        curl \
         gcompat\
     && cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 
