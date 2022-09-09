@@ -1,5 +1,41 @@
 # Change Log
-## [v0.24.3-2022-06-01](https://github.com/codeforjapan/decidim-cfj/releases/tag/v0.23.5-2022-06-01)
+## [v0.25.2-2022-09-09](https://github.com/codeforjapan/decidim-cfj/releases/tag/v0.25.2-2022-09-09)
+
+### Added
+- feat: add curl [#419](https://github.com/codeforjapan/decidim-cfj/pull/419)
+
+### Changed
+- GitHub Actions: Add node and yarn [#416](https://github.com/codeforjapan/decidim-cfj/pull/416)
+- GitHub Actions: Use cache [#418](https://github.com/codeforjapan/decidim-cfj/pull/418)
+- feat: add replace to null decidim_organization command [#420](https://github.com/codeforjapan/decidim-cfj/pull/420)
+
+## [v0.25.2-2022-09-06-2](https://github.com/codeforjapan/decidim-cfj/releases/tag/v0.25.2-2022-09-06-2)
+- Fix Decidim::Debates::Form [#415](https://github.com/codeforjapan/decidim-cfj/pull/415)
+
+## [v0.25.2-2022-09-06](https://github.com/codeforjapan/decidim-cfj/releases/tag/v0.25.2-2022-09-06)
+
+### Fixed
+- fix: deploy.yml version [#414](https://github.com/codeforjapan/decidim-cfj/pull/414)
+
+## [v0.25.2-2022-09-05](https://github.com/codeforjapan/decidim-cfj/releases/tag/v0.25.2-2022-09-05)
+
+### Added
+- feat: add LINE login [#404](https://github.com/codeforjapan/decidim-cfj/pull/404)
+- Add a cookie param for comment order [#409](https://github.com/codeforjapan/decidim-cfj/pull/409)
+
+### Changed
+- LINE login: default is false [#406](https://github.com/codeforjapan/decidim-cfj/pull/406)
+- Use cookie only with agreement [#410](https://github.com/codeforjapan/decidim-cfj/pull/410)
+
+### Fixed
+- typo: sytem -> system [#411](https://github.com/codeforjapan/decidim-cfj/pull/411)
+
+## [v0.24.3-2022-08-02](https://github.com/codeforjapan/decidim-cfj/releases/tag/v0.24.3-2022-08-02)
+
+### Fixed
+- fix: #401 remove visibility column [#402](https://github.com/codeforjapan/decidim-cfj/pull/402)
+
+## [v0.24.3-2022-06-01](https://github.com/codeforjapan/decidim-cfj/releases/tag/v0.24.3-2022-06-01)
 
 ### Added
 - Add Decidim::TermCustomer [#355](https://github.com/codeforjapan/decidim-cfj/pull/355)
@@ -11,7 +47,7 @@
 - ### Fixed
 Fix quill-html-edit-button (#377) [#379](https://github.com/codeforjapan/decidim-cfj/pull/379)
 
-## [v0.24.3-2022-04-14](https://github.com/codeforjapan/decidim-cfj/releases/tag/v0.23.5-2022-04-14)
+## [v0.24.3-2022-04-14](https://github.com/codeforjapan/decidim-cfj/releases/tag/v0.24.3-2022-04-14)
 
 ### Added
 - Add JA locale data for verification [#367](https://github.com/codeforjapan/decidim-cfj/pull/367)
@@ -19,13 +55,13 @@ Fix quill-html-edit-button (#377) [#379](https://github.com/codeforjapan/decidim
 ### Fixed
 - Fix AuthorizeUser; "Fix verification report with multitenants" [#366](https://github.com/codeforjapan/decidim-cfj/pull/366)
 
-## [v0.24.3-2022-04-11](https://github.com/codeforjapan/decidim-cfj/releases/tag/v0.23.5-2022-04-11)
+## [v0.24.3-2022-04-11](https://github.com/codeforjapan/decidim-cfj/releases/tag/v0.24.3-2022-04-11)
 
 ### Fixed
 - Fix error in /debates/versions [#361](https://github.com/codeforjapan/decidim-cfj/pull/361)
 - Fix undefined local variable or method component error [#363](https://github.com/codeforjapan/decidim-cfj/pull/363)
 
-## [v0.24.3-2022-04-08](https://github.com/codeforjapan/decidim-cfj/releases/tag/v0.23.5-2022-04-08)
+## [v0.24.3-2022-04-08](https://github.com/codeforjapan/decidim-cfj/releases/tag/v0.24.3-2022-04-08)
 
 ### Added
 - Feedback from decidim/decidim v0.24.3 [#329](https://github.com/codeforjapan/decidim-cfj/pull/329)
