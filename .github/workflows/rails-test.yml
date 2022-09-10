@@ -49,9 +49,39 @@ jobs:
       with:
         ruby-version: 2.7
         bundler-cache: true
+
+    - name: setup Node
+      uses: actions/setup-node@v2
+      with:
+        node-version: 16.9.1
+        cache: 'yarn'
+    - name: install yarn
+      run: |
+        npm i -g yarn@1.22.5
+        yarn install --frozen-lockfile
+
+    - name: create assets precompile cache key
+      run: |
+        # use newest commit hash of precompile target files
+        git rev-parse $(git log --oneline -n 1 app/packs lib/assets Gemfile.lock yarn.lock | awk '{print $1}') > ASSETS_VERSION
+
+    - name: asset cache
+      uses: actions/cache@v3
+      with:
+        path: |
+          public/packs
+          public/assets
+          tmp/cache/assets
+        key: asset-precompile-cache-${{ hashFiles('ASSETS_VERSION') }}
+        restore-keys: |
+          asset-precompile-cache-${{ hashFiles('ASSETS_VERSION') }}
+          asset-precompile-cache-
+
     - name: Migrate DB
       run: |
         bundle exec rails db:create db:migrate
+    - name: Precompile assets
+      run: bundle exec rails assets:precompile
     - name: Test with RSpec
       run: |
         bundle exec rails spec
