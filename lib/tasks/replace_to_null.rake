@@ -16,4 +16,14 @@ namespace :replace_to_null do
       end
     end
   end
+
+  desc 'fix participatory_processes edit bug.Make all "" columns of decidim_participatory_processes table null'
+  task decidim_participatory_processes: :environment do
+    Decidim::ParticipatoryProcess.transaction do
+      Decidim::ParticipatoryProcess.all.each do |org|
+        org.announcement = nil if org.announcement == ""
+        org.save!
+      end
+    end
+  end
 end
