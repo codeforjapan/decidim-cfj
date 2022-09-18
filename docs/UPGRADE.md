@@ -19,7 +19,7 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 
   QuillエディタでHTML編集ができるようにするために追加されたファイル。現在はDecidim Awesome対応になっています(decidim_awesome内の`app/packs/src/decidim/decidim_awesome/editors/editor.js`がベースになっています)。
 
-* `app/assets/stylesheets/buttons.scss`
+* `app/packs/stylesheets/buttons.scss`
 
   `https://github.com/codeforjapan/decidim-cfj/issues/46` の対応で `https://github.com/codeforjapan/decidim-cfj/pull/96` で追加しています。
 
@@ -51,7 +51,7 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 
   https://github.com/decidim/decidim/pull/8393 でフィードバック済みなので、取り込まれたバージョンでは削除できます。
 
-* `app/uploaders/decidim/application_uploader.rb`
+* `app/uploaders/decidim/cw/application_uploader.rb`
 
   https://github.com/decidim/decidim/issues/6720 や https://github.com/codeforjapan/decidim-cfj/issues/101 などの対応のために導入。
 
