@@ -23,15 +23,40 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 
   `https://github.com/codeforjapan/decidim-cfj/issues/46` の対応で `https://github.com/codeforjapan/decidim-cfj/pull/96` で追加しています。
 
+* `app/packs/stylesheets/comment_content.scss`
+
+  https://github.com/codeforjapan/decidim-cfj/pull/337 で追加されたファイル。コメント本文の改行をCSSで制御するためのものです。
+
+* `app/packs/stylesheets/forms.scss`
+
+  https://github.com/codeforjapan/decidim-cfj/pull/94 で追加されたファイル。職業欄の見た目を修正するためのもの。
+
+* `app/packs/stylesheets/search.scss`
+
+  https://github.com/codeforjapan/decidim-cfj/pull/348 で追加されたファイル。グローバル検索が日本語では機能していないため削除したもの。
+
 * `app/commands/decidim/admin/process_participatory_space_private_user_import_csv.rb`
 
   https://github.com/codeforjapan/decidim-cfj/issues/202 の対応のため追加したファイル。
 
   https://github.com/decidim/decidim/pull/7781 で本家にフィードバックしたので、これが取り込まれたバージョン(v0.25.0以降)になればファイルごと削除できるはずです。
 
+* `app/commands/decidim/verifications/authorize_user.rb`
+
+  https://github.com/codeforjapan/decidim-cfj/pull/366 で追加されたファイル。 https://github.com/decidim/decidim/pull/8940 の修正をバックポートしたもの。
+  v0.26にあげれば不要になるはずです。
+
+* `app/controllers/concerns/decidim/proposals/cookie_orderable.rb`
+
+  https://github.com/codeforjapan/decidim-cfj/pull/331 で追加されたファイル。提案コンポーネントのユーザー用一覧画面でのソート順をクッキーを使って保持できるようにするもの。
+
 * `app/controllers/decidim/debates/versions_controller.rb`
 
   https://github.com/codeforjapan/decidim-cfj/pull/359 で追加したファイル。履歴の差分が巨大になるとサーバ負荷が大きいため、renderを実行させないよう表示前にredirectさせるものです。
+
+* `app/forms/decidim/debates/close_debate_form.rb`
+
+  https://github.com/codeforjapan/decidim-cfj/pull/415 で追加されたファイル。ディベートでconclusionsに空文字列を許すための修正。
 
 * `app/forms/decidim/proposals/proposal_wizard_create_step_form.rb`, `app/forms/decidim/proposals/admin/proposal_form.rb`
 
