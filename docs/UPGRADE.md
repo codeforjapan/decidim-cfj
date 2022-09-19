@@ -31,6 +31,10 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 
   https://github.com/codeforjapan/decidim-cfj/pull/94 で追加されたファイル。職業欄の見た目を修正するためのもの。
 
+* `app/packs/stylesheets/search.scss`
+
+  https://github.com/codeforjapan/decidim-cfj/pull/348 で追加されたファイル。グローバル検索が日本語では機能していないため削除したもの。
+
 * `app/commands/decidim/admin/process_participatory_space_private_user_import_csv.rb`
 
   https://github.com/codeforjapan/decidim-cfj/issues/202 の対応のため追加したファイル。
