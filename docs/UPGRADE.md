@@ -35,12 +35,6 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 
   https://github.com/codeforjapan/decidim-cfj/pull/348 で追加されたファイル。グローバル検索が日本語では機能していないため削除したもの。
 
-* `app/commands/decidim/admin/process_participatory_space_private_user_import_csv.rb`
-
-  https://github.com/codeforjapan/decidim-cfj/issues/202 の対応のため追加したファイル。
-
-  https://github.com/decidim/decidim/pull/7781 で本家にフィードバックしたので、これが取り込まれたバージョン(v0.25.0以降)になればファイルごと削除できるはずです。
-
 * `app/commands/decidim/verifications/authorize_user.rb`
 
   https://github.com/codeforjapan/decidim-cfj/pull/366 で追加されたファイル。 https://github.com/decidim/decidim/pull/8940 の修正をバックポートしたもの。
@@ -79,11 +73,6 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 * `app/uploaders/decidim/cw/application_uploader.rb`
 
   https://github.com/decidim/decidim/issues/6720 や https://github.com/codeforjapan/decidim-cfj/issues/101 などの対応のために導入。
-
-* `app/views/decidim/application/_collection.html.erb`
-
-  https://github.com/codeforjapan/decidim-cfj/issues/192 の対応で https://github.com/codeforjapan/decidim-cfj/pull/210 で追加しています。
-  本家の https://github.com/decidim/decidim/pull/7418 で対応済みなので、取り込まれたバージョンでは削除できます。
 
 * `app/views/decidim/blogs/posts/show.html.erb`
 
