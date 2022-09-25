@@ -78,11 +78,6 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 
   https://github.com/codeforjapan/decidim-cfj/issues/107 の対応として https://github.com/codeforjapan/decidim-cfj/pull/126 で追加しています。
 
-* `app/views/layouts/decidim/_main_footer.html.erb`
-
-  https://github.com/codeforjapan/decidim-cfj/issues/101 の対応として https://github.com/codeforjapan/decidim-cfj/pull/108 で追加しています。
-  ダウンロードに問題がなければ削除しても大丈夫かと思われます。
-
 #### `decidim-user_extension`について
 
 `decidim-user_extension`はカスタムモジュールとして追加されているものです。このモジュール内にもDecidim本体に依存している箇所があります。
