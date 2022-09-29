@@ -26,4 +26,16 @@ namespace :replace_to_null do
       end
     end
   end
+
+  desc 'fix proposal edit bug.Make all "" columns of decidim_proposals_proposals table null'
+  task decidim_proposals: :environment do
+    Decidim::Proposals::Proposal.transaction do
+      Decidim::Proposals::Proposal.all.each do |proposal|
+        proposal.answer = nil if proposal.answer == ""
+        proposal.cost_report = nil if proposal.cost_report == ""
+        proposal.execution_period = nil if proposal.execution_period == ""
+        proposal.save!
+      end
+    end
+  end
 end
