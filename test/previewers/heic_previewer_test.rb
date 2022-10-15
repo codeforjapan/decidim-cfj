@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "test_helper"
 
 class HeicPreviewerTest < ActiveSupport::TestCase
@@ -10,7 +12,7 @@ class HeicPreviewerTest < ActiveSupport::TestCase
 
     blob = create_file_blob(filename: "heic-image-file.heic", content_type: CONTENT_TYPE)
 
-    refute_nil blob
+    assert_not_nil blob
     assert HeicPreviewer.accept?(blob)
 
     HeicPreviewer.new(blob).preview({}) do |attachable|
