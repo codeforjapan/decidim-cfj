@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 class HeicPreviewer < ActiveStorage::Previewer
-  CONTENT_TYPE = "image/heic"
+  CONTENT_TYPES = %w(image/heic image/heif image/heic-sequence image/heif-sequence).freeze
 
   class << self
     def accept?(blob)
-      blob.content_type == CONTENT_TYPE && minimagick_exists?
+      CONTENT_TYPES.include?(blob.content_type) && minimagick_exists?
     end
 
     def minimagick_exists?
