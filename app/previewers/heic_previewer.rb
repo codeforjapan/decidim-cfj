@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 class HeicPreviewer < ActiveStorage::Previewer
-  CONTENT_TYPE = "image/heic"
+  CONTENT_TYPES = %w(image/heic image/heif image/heic-sequence image/heif-sequence).freeze
 
   class << self
     def accept?(blob)
-      blob.content_type == CONTENT_TYPE && minimagick_exists?
+      CONTENT_TYPES.include?(blob.content_type) && minimagick_exists?
     end
 
     def minimagick_exists?
@@ -18,9 +18,13 @@ class HeicPreviewer < ActiveStorage::Previewer
     end
   end
 
-  def preview
+  def preview(**_options)
     download_blob_to_tempfile do |input|
-      io = ImageProcessing::MiniMagick.source(input).convert("png").call
+      begin
+        io = ImageProcessing::MiniMagick.source(input).convert("png").call
+      rescue ImageProcessing::Error
+        io = ImageProcessing::MiniMagick.loader(page: 0).source(input).convert("png").call
+      end
       yield io: io, filename: "#{blob.filename.base}.png", content_type: "image/png"
     end
   end

@@ -862,6 +862,7 @@ DEPENDENCIES
   faker (~> 2.14)
   figaro
   fog-aws
+  image_processing
   letter_opener_web (~> 1.3)
   listen (~> 3.1)
   newrelic_rpm
