@@ -18,7 +18,7 @@ class HeicPreviewer < ActiveStorage::Previewer
     end
   end
 
-  def preview
+  def preview(**_options)
     download_blob_to_tempfile do |input|
       io = ImageProcessing::MiniMagick.source(input).convert("png").call
       yield io: io, filename: "#{blob.filename.base}.png", content_type: "image/png"
