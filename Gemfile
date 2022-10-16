@@ -22,8 +22,8 @@ gem "faker", "~> 2.14"
 gem "wicked_pdf", "~> 2.1"
 
 gem "deface"
-gem "newrelic_rpm"
 gem "image_processing"
+gem "newrelic_rpm"
 
 gem "omniauth-line_login", path: "omniauth-line_login"
 gem "omniauth-rails_csrf_protection"
