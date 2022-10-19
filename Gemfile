@@ -8,7 +8,7 @@ gem "decidim", "0.25.2"
 
 gem "decidim-comments", path: "decidim-comments"
 
-gem "decidim-decidim_awesome", "~> 0.8.1"
+gem "decidim-decidim_awesome", git: "https://github.com/Platoniq/decidim-module-decidim_awesome", branch: "main"
 
 gem "decidim-term_customizer", git: "https://github.com/codeforjapan/decidim-module-term_customizer.git", branch: "025-ja"
 
