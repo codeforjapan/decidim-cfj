@@ -17,7 +17,7 @@ jobs:
       eb-environment-name: ${{ steps.output-app-env.outputs.eb-environment-name }}
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Set env to staging
         id: set-env-staging
@@ -45,7 +45,7 @@ jobs:
     needs: create-app-env
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -77,7 +77,7 @@ jobs:
       - build
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
