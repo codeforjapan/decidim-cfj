@@ -15,6 +15,8 @@ gem "decidim-term_customizer", git: "https://github.com/codeforjapan/decidim-mod
 gem "bootsnap"
 
 gem "puma", ">= 5.0.0"
+gem "puma_worker_killer"
+
 gem "uglifier", "~> 4.1"
 
 gem "faker", "~> 2.14"
