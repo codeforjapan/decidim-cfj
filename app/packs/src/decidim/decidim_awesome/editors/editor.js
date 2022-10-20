@@ -355,7 +355,7 @@ export function createQuillEditor(container) {
       modules: ["Resize", "DisplaySize"]
     }
     modules.imageUpload = {
-      url: $(container).data("uploadImagesPath") || DecidimAwesome.editor_uploader_path,
+      url: DecidimAwesome.editor_uploader_path,
       method: "POST",
       name: "image",
       withCredentials: false,
@@ -366,7 +366,18 @@ export function createQuillEditor(container) {
       },
       callbackKO: (serverError) => {
         $("div.ql-toolbar").last().removeClass("editor-loading")
-        console.error(`Image upload error: ${serverError.message}`);
+        let msg = serverError && serverError.body;
+        try {
+          msg = JSON.parse(msg).message;
+        } catch (e) { console.error("Parsing error", e); }
+        console.error(`Image upload error: ${msg}`);
+        let $p = $(`<p class="text-alert help-text">${msg}</p>`);
+        $(container).after($p)
+        setTimeout(() => {
+          $p.fadeOut(1000, () => {
+            $p.destroy();
+          });
+        }, 3000);
       },
       checkBeforeSend: (file, next) => {
         $("div.ql-toolbar").last().addClass("editor-loading")
