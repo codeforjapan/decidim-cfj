@@ -27,7 +27,7 @@ before_fork do
     config.percent_usage = 0.9
     config.rolling_restart_frequency = 24 * 60 * 60
     config.reaper_status_logs = true
-    config.pre_term = -> (worker) { puts "Worker #{worker.inspect} being killed" }
+    config.pre_term = ->(worker) { puts "Worker #{worker.inspect} being killed" }
   end
   PumaWorkerKiller.start
 end
@@ -38,7 +38,7 @@ end
 # Workers do not work on JRuby or Windows (both of which do not support
 # processes).
 #
-workers ENV.fetch("WEB_CONCURRENCY") { 2 }
+workers ENV.fetch("WEB_CONCURRENCY", 2)
 
 # Use the `preload_app!` method when specifying a `workers` number.
 # This directive tells Puma to first boot the application and load code
