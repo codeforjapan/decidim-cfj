@@ -22,12 +22,12 @@ pidfile ENV.fetch("PIDFILE", "tmp/pids/server.pid")
 
 before_fork do
   PumaWorkerKiller.config do |config|
-    config.ram = 1024
+    config.ram = 2048
     config.frequency = 5
     config.percent_usage = 0.9
     config.rolling_restart_frequency = 24 * 60 * 60
     config.reaper_status_logs = true
-    config.pre_term = ->(worker) { puts "Worker #{worker.inspect} being killed" }
+    config.pre_term = ->(worker) { puts "Worker #{worker.index}(#{worker.pid}) being killed" }
   end
   PumaWorkerKiller.start
 end
