@@ -31,6 +31,8 @@ gem "omniauth-rails_csrf_protection"
 
 gem "decidim-user_extension", path: "decidim-user_extension"
 
+gem "slack-ruby-client"
+
 group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
   gem "figaro"

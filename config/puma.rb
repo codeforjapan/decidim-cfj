@@ -20,6 +20,13 @@ environment ENV.fetch("RAILS_ENV", "development")
 # Specifies the `pidfile` that Puma will use.
 pidfile ENV.fetch("PIDFILE", "tmp/pids/server.pid")
 
+class SlackChatMessenger
+  def self.notify(channel: ch, message: msg)
+    client = Slack::Web::Client.new
+    client.chat_postMessage(channel: channel, text: message, as_user: true)
+  end
+end
+
 before_fork do
   PumaWorkerKiller.config do |config|
     config.ram = 2048
@@ -27,7 +34,10 @@ before_fork do
     config.percent_usage = 0.9
     config.rolling_restart_frequency = 24 * 60 * 60
     config.reaper_status_logs = true
-    config.pre_term = ->(worker) { puts "Worker #{worker.index}(#{worker.pid}) being killed" }
+    config.pre_term = ->(worker) do
+      SlackChatMessenger.notify(channel: '#test', message: "Worker #{worker.index}(#{worker.pid}) being killed")
+      puts "Worker #{worker.index}(#{worker.pid}) being killed"
+    end
   end
   PumaWorkerKiller.start
 end
