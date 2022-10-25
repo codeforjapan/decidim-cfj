@@ -1,4 +1,14 @@
 GIT
+  remote: https://github.com/codeforjapan/decidim-module-decidim_awesome.git
+  revision: 658d226e9ed164ffdca2efbde4dfaf79b02c295e
+  branch: v0.8.3-2022-10-20
+  specs:
+    decidim-decidim_awesome (0.8.3)
+      decidim-admin (>= 0.25.0, < 0.27)
+      decidim-core (>= 0.25.0, < 0.27)
+      sassc (~> 2.3)
+
+GIT
   remote: https://github.com/codeforjapan/decidim-module-term_customizer.git
   revision: a0ccb0b32d6d7943af90ff4f8029fd4e7b2afa8f
   branch: 025-ja
@@ -293,10 +303,6 @@ GEM
     decidim-debates (0.25.2)
       decidim-comments (= 0.25.2)
       decidim-core (= 0.25.2)
-    decidim-decidim_awesome (0.8.2)
-      decidim-admin (>= 0.25.0, < 0.27)
-      decidim-core (>= 0.25.0, < 0.27)
-      sassc (~> 2.3)
     decidim-dev (0.25.2)
       axe-core-rspec (~> 4.1.0)
       byebug (~> 11.0)
@@ -459,6 +465,8 @@ GEM
       activesupport (>= 4.1, < 7.1)
       railties (>= 4.1, < 7.1)
     geocoder (1.7.5)
+    get_process_mem (0.2.7)
+      ffi (~> 1.0)
     globalid (1.0.0)
       activesupport (>= 5.0)
     graphql (1.13.12)
@@ -610,6 +618,9 @@ GEM
     public_suffix (4.0.7)
     puma (5.6.4)
       nio4r (~> 2.0)
+    puma_worker_killer (0.3.1)
+      get_process_mem (~> 0.2)
+      puma (>= 2.7)
     racc (1.6.0)
     rack (2.2.3)
     rack-attack (6.6.1)
@@ -852,7 +863,7 @@ DEPENDENCIES
   byebug (~> 11.0)
   decidim (= 0.25.2)
   decidim-comments!
-  decidim-decidim_awesome (~> 0.8.1)
+  decidim-decidim_awesome!
   decidim-dev (= 0.25.2)
   decidim-term_customizer!
   decidim-user_extension!
@@ -862,12 +873,14 @@ DEPENDENCIES
   faker (~> 2.14)
   figaro
   fog-aws
+  image_processing
   letter_opener_web (~> 1.3)
   listen (~> 3.1)
   newrelic_rpm
   omniauth-line_login!
   omniauth-rails_csrf_protection
   puma (>= 5.0.0)
+  puma_worker_killer
   rspec-rails
   rubocop-faker
   rubyzip (>= 1.0.0)

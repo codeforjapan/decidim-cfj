@@ -8,13 +8,15 @@ gem "decidim", "0.25.2"
 
 gem "decidim-comments", path: "decidim-comments"
 
-gem "decidim-decidim_awesome", "~> 0.8.1"
+gem "decidim-decidim_awesome", git: "https://github.com/codeforjapan/decidim-module-decidim_awesome.git", branch: "v0.8.3-2022-10-20"
 
 gem "decidim-term_customizer", git: "https://github.com/codeforjapan/decidim-module-term_customizer.git", branch: "025-ja"
 
 gem "bootsnap"
 
 gem "puma", ">= 5.0.0"
+gem "puma_worker_killer"
+
 gem "uglifier", "~> 4.1"
 
 gem "faker", "~> 2.14"
@@ -22,6 +24,7 @@ gem "faker", "~> 2.14"
 gem "wicked_pdf", "~> 2.1"
 
 gem "deface"
+gem "image_processing"
 gem "newrelic_rpm"
 
 gem "omniauth-line_login", path: "omniauth-line_login"

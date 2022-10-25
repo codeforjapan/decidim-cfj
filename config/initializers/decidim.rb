@@ -242,4 +242,6 @@ Devise.allow_unconfirmed_access_for = Decidim.unconfirmed_access_for
 Decidim.register_assets_path File.expand_path("app/packs", Rails.application.root)
 
 # Set max_complexity of GraphQL::Schema
-Decidim::Api::Schema.max_complexity = 100_000
+Rails.application.config.to_prepare do
+  Decidim::Api::Schema.max_complexity = 100_000
+end
