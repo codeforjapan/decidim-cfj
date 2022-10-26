@@ -18,6 +18,7 @@ jobs:
       DATABASE_PASSWORD: postgres
       RAILS_ENV: test
       SLACK_API_TOKEN: xoxb-dummy
+      SLACK_MESSAGE_CHANNEL: '#test'
 
     services:
       db:

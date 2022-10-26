@@ -21,7 +21,7 @@ environment ENV.fetch("RAILS_ENV", "development")
 pidfile ENV.fetch("PIDFILE", "tmp/pids/server.pid")
 
 class SlackChatMessenger
-  def self.notify(channel: ch, message: msg)
+  def self.notify(channel:, message:)
     client = Slack::Web::Client.new
     client.chat_postMessage(channel: channel, text: message, as_user: true)
   end
@@ -35,7 +35,7 @@ before_fork do
     config.rolling_restart_frequency = 24 * 60 * 60
     config.reaper_status_logs = true
     config.pre_term = lambda do |worker|
-      SlackChatMessenger.notify(channel: '#test', message: "Worker #{worker.index}(#{worker.pid}) being killed") # rubocop:disable Style/StringLiterals
+      SlackChatMessenger.notify(channel: ENV['SLACK_MESSAGE_CHANNEL'], message: "[#{Rails.env}] Worker #{worker.index}(#{worker.pid}) being killed") # rubocop:disable Style/StringLiterals
       puts "Worker #{worker.index}(#{worker.pid}) being killed"
     end
   end
