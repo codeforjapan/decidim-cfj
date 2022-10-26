@@ -22,6 +22,10 @@ pidfile ENV.fetch("PIDFILE", "tmp/pids/server.pid")
 
 class SlackChatMessenger
   def self.notify(channel:, message:)
+    unless channel && message
+      Rails.logger.error "Cannot send messages to slack!"
+      return
+    end
     client = Slack::Web::Client.new
     client.chat_postMessage(channel: channel, text: message, as_user: true)
   end
