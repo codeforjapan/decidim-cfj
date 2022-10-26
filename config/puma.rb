@@ -34,7 +34,7 @@ end
 before_fork do
   PumaWorkerKiller.config do |config|
     config.ram = 2048
-    config.frequency = 5
+    config.frequency = 60
     config.percent_usage = 0.9
     config.rolling_restart_frequency = 24 * 60 * 60
     config.reaper_status_logs = true

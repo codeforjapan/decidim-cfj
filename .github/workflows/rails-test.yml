@@ -17,6 +17,7 @@ jobs:
       DATABASE_USERNAME: postgres
       DATABASE_PASSWORD: postgres
       RAILS_ENV: test
+      IMAGEMAGICK_SRC: 7.1.0-50.tar.gz
       SLACK_API_TOKEN: xoxb-dummy
       SLACK_MESSAGE_CHANNEL: '#test'
 
@@ -46,6 +47,36 @@ jobs:
       run: |
         sudo apt-get update -y
         sudo apt-get -yqq install libpq-dev postgresql-client
+
+    - name: remove imagemagick 6
+      run: sudo apt remove imagemagick
+    - name: setup imagemagick 7
+      run: |
+          sudo sed -Ei 's/^# deb-src /deb-src /' /etc/apt/sources.list
+          sudo apt update
+          sudo apt install build-essential
+          sudo apt build-dep imagemagick
+          sudo apt install libwebp-dev libopenjp2-7-dev librsvg2-dev libde265-dev
+    - name: install libheif
+      run: |
+          git clone https://github.com/strukturag/libheif.git
+          cd libheif
+          ./autogen.sh
+          ./configure --disable-go --disable-examples
+          make
+          sudo make install
+    - name: install imagemagick 7
+      run: |
+          wget https://github.com/ImageMagick/ImageMagick/archive/refs/tags/${IMAGEMAGICK_SRC}
+          tar xf ${IMAGEMAGICK_SRC}
+          cd ImageMagick-7*
+          ./configure
+          make
+          sudo make install
+          sudo ldconfig
+    - name: check imagemagick
+      run: convert -version
+
     - name: Set up Ruby 2.7
       uses: ruby/setup-ruby@v1
       with:
