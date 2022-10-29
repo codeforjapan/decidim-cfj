@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CommentForMigration < ActiveRecord::Base
+class CommentForMigration < ActiveRecord::Base # rubocop:disable Rails/ApplicationRecord
   self.table_name = :decidim_comments_comments
 end
 
