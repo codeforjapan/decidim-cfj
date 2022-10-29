@@ -1,14 +1,25 @@
 # frozen_string_literal: true
 
+class CommentForMigration < ActiveRecord::Base
+  self.table_name = :decidim_comments_comments
+end
+
 namespace :comment do
   desc "Remove all orphan comments"
   task remove_orphans: :environment do
     puts "Start remove_orphans"
 
-    Decidim::Comments::Comment.transaction do
-      Decidim::Comments::Comment.find_each do |comment|
-        unless comment.root_commentable && comment.commentable
-          puts "Remove comment #{comment.id}"
+    CommentForMigration.transaction do
+      CommentForMigration.find_each do |comment|
+        commentable_id = comment.decidim_commentable_id
+        commentable_type = comment.decidim_commentable_type
+
+        begin
+          commentable_class = commentable_type.constantize
+          comment_obj = commentable_class.find(commentable_id)
+          puts "OK: #{comment.id}, #{comment_obj.class}(id: #{comment_obj.id})"
+        rescue ActiveRecord::RecordNotFound, NameError
+          puts "XXX Remove comment #{comment.id}"
           comment.delete!
         end
       end
