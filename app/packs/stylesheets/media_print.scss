@@ -1,0 +1,447 @@
+@media print {
+  //====================================================
+  // mixin
+  //====================================================
+  // prefix
+  $set_prefix: -webkit-, -moz-, -ms-, null;
+
+  // border_radius
+  @mixin border_radius($value: 5px) {
+    @each $prefix in $set_prefix {
+      #{$prefix}border-radius: $value;
+    }
+  }
+
+  // print_box_design
+  @mixin print_box_design {
+    background: #FFF !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  //----------------------------------
+  // common
+  //----------------------------------
+  body {
+    background-color: red !important;
+    *, * > *, * > a, * > a:link, * > a:hover, * > a:visited, * > a:active { color: #000 !important; text-decoration: none !important; }
+  }
+
+  // main navigation
+  .cookie-warning,
+  .title-bar,
+  .show-for-medium,
+  .row.expanded,
+  .main-footer,
+  .mini-footer,
+  .tech-info,
+  .collection-sort-controls,
+  .section.view-side,
+  .button,
+  button.share-link {
+    display: none !important;
+  }
+
+  // display:none;
+  main#content h1.section-heading::before,
+  main#content .floating-helper-container,
+  main#content .wrapper .row.column .row > div.columns .card.extra,
+  main#content .wrapper .row.column .row > div.columns .card.extra.definition-data,
+  main#content .wrapper .row.column .row > div.columns .card .card--list__data,
+  section#highlighted-processes .card--process__row a.button.card__button,
+  section#highlighted-processes .card--process__row a.button.button--sc,
+  section#highlighted-assemblies .card--process__row a.button.card__button,
+  section#highlighted-assemblies .card--process__row a.button.button--sc,
+  section#processes-grid #participatory-space-filters,
+  section#processes-grid #assemblies-filter,
+  section#processes-grid .callout.warning,
+  section#processes-grid .card--stack .card__block,
+  section#processes-grid hr.reset.mt-s.mb-s,
+  section#processes-grid .card--stack .card__footer.card__footer--spaces,
+  section#processes-grid .card--stack::after,
+  section#processes-grid .card--stack::before,
+  section#processes-grid .card--stack .card__status ul.card-data li.card-data__item br,
+  section#processes-grid .card--stack .card__status ul.card-data li.card-data__item button.follow-button,
+  section#processes-grid h3.section-heading::before,
+  section#processes-grid h3.section-heading span,
+  section#parent-assemblies .callout.warning,
+  section#parent-assemblies .card--stack .card__block,
+  section#parent-assemblies hr.reset.mt-s.mb-s,
+  section#parent-assemblies .card--stack .card__footer.card__footer--spaces,
+  section#parent-assemblies .card--stack::after,
+  section#parent-assemblies .card--stack::before,
+  section#parent-assemblies .card--stack .card__status ul.card-data li.card-data__item br,
+  section#parent-assemblies .card--stack .card__status ul.card-data li.card-data__item button.follow-button,
+  section#parent-assemblies #participatory-space-filters,
+  section#parent-assemblies #assemblies-filter,
+  section#parent-assemblies h3.section-heading::before,
+  section#parent-assemblies h3.section-heading span,
+  #comments .order-by__dropdown.order-by__dropdown--right,
+  #comments .add-comment,
+  #comments .author__avatar,
+  #comments h2.order-by__text.section-heading,
+  #debates .row.card-grid .column .card__content .author-data,
+  #debates .row.card-grid .column .card__status ul.card-data li > br,
+  #debates .row.card-grid .column .card__footer,
+  #debates .row.card-grid .column .tags.tags--debate,
+  #debates .row.card-grid .card__icondata ul.card-data li:first-of-type,
+  .hide.show-more-panel .section p.text-center,
+  .show-more button.button.hollow.small,
+  .hide-more button.button.hollow.small,
+  .section.upcoming_meetings h3.section-heading a.text-small,
+  .section.upcoming_meetings .card .card--list__item + a.button,
+  .section.view-side + .columns.mediumlarge-8.mediumlarge-pull-4 ul.tags.tags--debate,
+  .row.column.view-header .m-bottom,
+  .row.column.view-header .author.author--inline,
+  .row.column.view-header .author-data__extra::before,
+  h3#debates-count::before,
+  .hide-for-mediumlarge,
+  .show-for-mediumlarge,
+  .callout.secondary,
+  .row.column.process-header__main,
+  .row.accountability .categories--header,
+  #blogs nav ul.pagination,
+  #debates .row.card-grid.collection-sort-controls,
+  .columns.section.view-side,
+  a.small.hollow {
+    display: none;
+  }
+
+  // box design
+  // border_radius all 10px
+  #content section.wrapper-home.home-section .row .row .columns .card.card--activity .card__content,
+  section#processes-grid .card--stack,
+  section#parent-assemblies .card--stack,
+  section#assemblies-grid,
+  .card.card--process,
+  .section.documents,
+  .section.images,
+  .section.upcoming_meetings,
+  .hide.show-more-panel,
+    // .highlighted_proposals,
+  .highlighted_results,
+  #blogs .card.card--post,
+  #debates .row.card-grid .column,
+  .row.column.view-header,
+  #comments .comment-thread,
+  .row.column .row.section-statistics,
+  .progress-level,
+  .category--title,
+  .row.accountability .categories .categories--group .card__link .category--line,
+  .row.accountability .card.card--action.card--list,
+  #most-commented,
+  #assembly_members-grid .card.card--member,
+  #budgets.card,
+  .card.card--secondary,
+  ul.tags.tags--meeting li a,
+  #meetings .row.card-grid .column .card.card--meeting,
+  .row.card-grid .column .card.card--proposal {
+    @include border_radius(10px);
+    @include print_box_design;
+  }
+
+  // border_radius top 10px
+  .section > .lead {
+    @include border_radius(10px 10px 0 0);
+    @include print_box_design;
+  }
+
+  // border_radius bottom 10px
+  .section > .lead + p {
+    @include border_radius(0 0 10px 10px);
+    @include print_box_design;
+  }
+
+  // box border design none
+  section#processes-grid .card--stack .card__status ul.card-data li.card-data__item,
+  section#parent-assemblies .card--stack .card__status ul.card-data li.card-data__item,
+  .section.upcoming_meetings .card,
+  .section.upcoming_meetings .card .card--list__item,
+  #debates .row.card-grid .column .card.card--debate,
+  .row.column .row .columns .row .columns .section .card.card--list {
+    @include border_radius(0);
+    border: none;
+  }
+
+  // margin,padding
+  .diff-view-by, .order-by,
+  .show-more, .hide-more,
+  .section > .lead > p,
+  .section > .lead + p {
+    margin-bottom: 0;
+  }
+
+  #meetings .card.card--meeting ul li.card-data__item {
+    border-right: none;
+  }
+  #meetings .row.card-grid .column .card.card--meeting .card__footer,
+  .row.column .row .columns .section.row .column .card.card--proposal .card__footer,
+  #meetings .row.card-grid .column .card.card--meeting .card__footer .card__support,
+  .row.column .row .columns .section.row .column .card.card--proposal .card__footer .card__support {
+    @include border_radius(0);
+    padding: 0;
+    background: none;
+    border: none;
+  }
+  section#assemblies-grid,
+  .highlighted_proposals,
+  .highlighted_results,
+  .section.documents,
+  .section.images,
+  .section.upcoming_meetings {
+    margin: 3rem auto 0;
+    padding: 1rem;
+  }
+
+  // display block
+  .diff-view-by, .order-by {
+    display: block;
+  }
+
+  //----------------------------------
+  // main
+  //----------------------------------
+  main#content {
+    background-color: #ADEBFF !important;
+
+    .process-header { background: #FFF !important; }
+    .text-highlight { text-shadow: none !important; }
+
+    .wrapper {
+      overflow: auto;
+      padding: 2.5rem;
+
+      .row.column {
+        padding: 0;
+      }
+      .row.column .row > div.columns {
+        float: none;
+        width: 100%;
+      }
+      .row.column .card__footer {
+        background: none;
+        border: none;
+        @include border_radius(0);
+      }
+    }
+    section.home-section .row .column .home-bullet {
+      float: right;
+      overflow: visible;
+    }
+    section.home-section .row .columns {
+      float: none;
+      width: 100%;
+    }
+    .card.card--activity {
+      margin-bottom: 30px;
+      background: none;
+      border: none;
+      @include border_radius(0);
+      // overflow: auto;
+    }
+  }
+
+  .row.column .row.section-statistics {
+    margin: 0 auto;
+    padding: 1rem 0;
+  }
+
+  //accountability
+  .row.accountability .intro.section .row .columns p {
+    padding: 1rem;
+  }
+  .row.accountability .columns:last-child:not(:first-child) {
+    float: right;
+  }
+
+  //----------------------------------
+  // section
+  //----------------------------------
+  section#highlighted-processes,
+  section#highlighted-assemblies {
+
+    .card.card--process {
+      margin-bottom: 1rem;
+    }
+    .card--process__row {
+
+      .card--process__column {
+        float: none;
+        width: 100% !important;
+
+        .card__content {
+          padding: 1rem 1rem 0;
+
+          .card__link {
+            color: #3d393c !important;
+          }
+          .card__title {
+            font-size: 1.5em;
+          }
+        }
+      }
+      .card--full__image {
+        @media screen and (min-width: 28.125em) {
+          padding: 2rem;
+          @include border_radius(0 0 10px 10px);
+        }
+
+        @media screen and (min-width: 40em) {
+          padding: 2rem;
+          @include border_radius(0 0 10px 10px);
+        }
+
+        @media screen and (min-width: 50em) {
+          @include border_radius(0 10px 10px 0);
+        }
+
+        @media screen and (min-width: 64em) {
+          @include border_radius(0 10px 10px 0);
+        }
+        @media screen and (min-width: 40em) and (max-width: 49.99875em) {
+          min-height: auto;
+        }
+      }
+    }
+  }
+
+  section#processes-grid,
+  section#parent-assemblies {
+
+    h3#assemblies-count { margin-bottom: 1rem; }
+
+    .card--stack {
+
+      .card__status ul.card-data {
+        padding: 0 0 1rem;
+        display: inline-block;
+
+        li.card-data__item {
+          padding: 0 0 0 1rem;
+          font-size: 1em;
+          color: #3d393c !important;
+
+          strong { padding-right: .3rem; font-weight: 600; font-size: 1em; color: #3d393c !important; }
+        }
+      }
+      .card__content {
+        padding: 1rem 1rem 0;
+
+        .card__link { color: #3d393c !important; }
+        .card__title { font-size: 1.5em; }
+      }
+      img.card__image { @include border_radius(10px 10px 0 0); }
+    }
+  }
+
+  .section > .lead {
+    padding: 1rem 1rem 0;
+    & + p { padding: 0 1rem 1rem; }
+  }
+  // more show active
+  .hide.show-more-panel {
+    padding: 0 1rem;
+
+    .section {
+      margin: 0; padding: 1rem 0;
+
+      h3.section-heading { margin: 0; }
+      p { margin: .5rem 0 0; }
+    }
+  }
+
+  .section.upcoming_meetings {
+
+    .card {
+      margin: 0;
+
+      .card--list__item {
+        padding: .5rem 1rem; border-top: 1px solid #CCC;
+
+        &:first-of-type   { padding-top: 0; border-top: none; }
+        &:last-of-type    { padding-bottom: 0; }
+        .card--list__text { padding: 0; }
+      }
+    }
+  }
+
+  #blogs {
+    width: 100%;
+    padding: 0;
+
+    & > .row { margin: 0; }
+    .card.card--post { margin-bottom: 1rem; }
+  }
+
+  #most-commented { padding: 1rem; float: none; clear: both; width: auto; }
+
+  .off-canvas-wrapper { background-color: #ADEBFF !important; }
+  .column:last-child:not(:first-child), .columns:last-child:not(:first-child) { float: none; }
+  .section.view-side + .columns.mediumlarge-8.mediumlarge-pull-4 { width: 100%; left: auto; }
+
+  .row.column.view-header {
+    margin-bottom: 1rem !important;
+    padding: 1.5rem !important;
+
+    .author-data {
+      display: block; padding-left: 0;
+
+      & > div { display: inline-block; border: none; }
+    }
+  }
+
+  .columns.mediumlarge-8.mediumlarge-pull-4 > .section {
+    margin-bottom: 0;
+  }
+
+  .expanded > .wrapper--inner {
+    background: none !important;
+  }
+
+  #comments {
+    padding: 0 !important;
+    width: 100%;
+
+    .comments { padding-top: 0 !important; }
+
+    .comment-thread { margin-bottom: 1rem; }
+    .author-data { padding-left: 0 !important; color: #000 !important; }
+    .author-data .author__name { color: #000 !important; }
+  }
+
+  #debates { width: 100%; padding: 0; }
+  #debates .row { width: 100%; margin: 0; }
+
+  #debates .row.card-grid {
+    display: block;
+
+    .column {
+      margin-bottom: 1rem; padding: 1rem;
+
+      .card.card--debate { display: block; }
+      .card__content { margin: 0; padding: 0; }
+      .card__content a { color: #000 !important; }
+      .card__icondata ul { border: none; display: block; }
+      .card__icondata ul li { display: inline-block; padding: 0; border: none; }
+      .card__icondata ul li > * { margin: 0; }
+      .card__status ul.card-data { display: block; }
+      .card__status ul.card-data li { display: inline-block; padding: 0; border: none; }
+    }
+  }
+  #debates .row.medium-up-2 > .column { float: none; width: 100%; }
+  .row.card-grid .column .card.card--proposal .card__footer {
+    @include border_radius(0 0 10px 10px);
+  }
+
+  .row.card-grid .column .card.warning .card__label {
+    margin: 0.3rem 1.5rem 0;
+    padding: 0;
+    font-size: 75%;
+    &::before { display: none; }
+  }
+
+  .process-header__phase, .process-phase {
+    @include border_radius(10px);
+    border: 1px solid #e8e8e8;
+  }
+}
