@@ -20,6 +20,17 @@ environment ENV.fetch("RAILS_ENV", "development")
 # Specifies the `pidfile` that Puma will use.
 pidfile ENV.fetch("PIDFILE", "tmp/pids/server.pid")
 
+class SlackChatMessenger
+  def self.notify(channel:, message:)
+    unless channel && message
+      Rails.logger.error "Cannot send messages to slack!"
+      return
+    end
+    client = Slack::Web::Client.new
+    client.chat_postMessage(channel: channel, text: message, as_user: true)
+  end
+end
+
 before_fork do
   PumaWorkerKiller.config do |config|
     config.ram = 2048
@@ -27,7 +38,10 @@ before_fork do
     config.percent_usage = 0.9
     config.rolling_restart_frequency = 24 * 60 * 60
     config.reaper_status_logs = true
-    config.pre_term = ->(worker) { puts "Worker #{worker.index}(#{worker.pid}) being killed" }
+    config.pre_term = lambda do |worker|
+      SlackChatMessenger.notify(channel: ENV['SLACK_MESSAGE_CHANNEL'], message: "[#{Rails.env}] Worker #{worker.index}(#{worker.pid}) being killed") # rubocop:disable Style/StringLiterals
+      puts "Worker #{worker.index}(#{worker.pid}) being killed"
+    end
   end
   PumaWorkerKiller.start
 end
