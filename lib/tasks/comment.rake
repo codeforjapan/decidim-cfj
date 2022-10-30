@@ -20,7 +20,7 @@ namespace :comment do
           puts "OK: #{comment.id}, #{comment_obj.class}(id: #{comment_obj.id})"
         rescue ActiveRecord::RecordNotFound, NameError
           puts "XXX Remove comment #{comment.id}"
-          comment.delete!
+          comment.destroy!
         end
       end
     end
