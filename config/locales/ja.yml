@@ -57,6 +57,8 @@ ja:
           last_month: 直近1ヶ月
           last_week: 直近1週間
     authorization_handlers:
+      csv_census:
+        name: 組織のセンサス
       user_extension_authorization_handler:
         explanation: 'ユーザー拡張属性保持用'
         name: 'ユーザー拡張属性'
@@ -219,7 +221,21 @@ ja:
       authorizations:
         first_login:
           actions:
+            csv_census: 組織のセンサスに照らして確認
             user_extension_authorization_handler: ユーザー拡張属性対応用
+      csv_census:
+        admin:
+          census:
+            destroy_all:
+              success: すべてのセンサスデータが削除されました
+          destroy:
+            confirm: センサスをすべて削除することはできません。続行してもよろしいですか？
+            title: センサスデータをすべて削除する
+          index:
+            empty: センサスデータがありません。CSVファイルを使用してインポートするには、以下のフォームを使用してください。
+            title: 現在のセンサスデータ
+          new:
+            title: 新しいセンサスをアップロード
       postal_letter:
         admin:
           pending_authorizations:
