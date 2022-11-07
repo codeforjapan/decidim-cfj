@@ -2,6 +2,7 @@
 
 class CommentForMigration < ActiveRecord::Base # rubocop:disable Rails/ApplicationRecord
   self.table_name = :decidim_comments_comments
+  has_many :votes, foreign_key: "decidim_comment_id", class_name: "CommentVote", dependent: :destroy
 end
 
 namespace :comment do
