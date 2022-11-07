@@ -17,8 +17,7 @@ namespace :comment do
 
         begin
           commentable_class = commentable_type.constantize
-          comment_obj = commentable_class.find(commentable_id)
-          puts "OK: #{comment.id}, #{comment_obj.class}(id: #{comment_obj.id})"
+          _comment_obj = commentable_class.find(commentable_id)
         rescue ActiveRecord::RecordNotFound, NameError
           puts "XXX Remove comment #{comment.id}"
           comment.destroy!
