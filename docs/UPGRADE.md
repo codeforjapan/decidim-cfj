@@ -74,6 +74,10 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 
   https://github.com/decidim/decidim/issues/6720 や https://github.com/codeforjapan/decidim-cfj/issues/101 などの対応のために導入。
 
+* `app/uploaders/decidim/image_uploader.rb`
+
+  https://github.com/codeforjapan/decidim-cfj/pull/455 で追加したもの。ピクセル数の大きい画像に対応するため、max_image_height_or_widthの値を変更している。
+
 * `app/views/decidim/blogs/posts/show.html.erb`
 
   https://github.com/codeforjapan/decidim-cfj/issues/107 の対応として https://github.com/codeforjapan/decidim-cfj/pull/126 で追加しています。

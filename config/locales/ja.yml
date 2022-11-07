@@ -57,6 +57,8 @@ ja:
           last_month: 直近1ヶ月
           last_week: 直近1週間
     authorization_handlers:
+      csv_census:
+        name: 組織のセンサス
       user_extension_authorization_handler:
         explanation: 'ユーザー拡張属性保持用'
         name: 'ユーザー拡張属性'
@@ -129,12 +131,32 @@ ja:
           email_outro: サイトでの活動によって、この通知を受け取りました。
           email_subject: "%{badge_name} のバッジがレベル %{current_level} に達しました！"
           notification_title: おめでとうございます！ あなたは <a href="%{resource_path}">%{badge_name} バッジ</a> のレベル %{current_level} に到達しました！
+      proposals:
+        collaborative_draft_access_accepted:
+          email_intro: '%{requester_name} は、 <a href="%{resource_path}">%{resource_title}</a> の共同草案のコントリビューターとして承認されました。'
+          notification_title: <a href="%{requester_path}">%{requester_name} %{requester_nickname}</a> は、 <strong>コントリビューターとして</strong> <a href="%{resource_path}">%{resource_title}</a> 共同草案のコントリビューターとしてアクセスできるようになりました。
+        collaborative_draft_access_rejected:
+          email_intro: '%{requester_name} は、 <a href="%{resource_path}">%{resource_title}</a> の共同草案のコントリビューターとしてアクセスするために拒否されました。'
+          email_outro: <a href="%{resource_path}">%{resource_title}</a> のコラボレーターであるため、この通知を受け取りました。
+          email_subject: "%{requester_name} は、 %{resource_title} の共同草案の貢献者としてアクセスするために拒否されました。"
+          notification_title: <a href="%{requester_path}">%{requester_name} %{requester_nickname}</a> は、 <a href="%{resource_path}">%{resource_title}</a> の共同草案にアクセスをリクエストしました。 <strong>リクエストを承認または拒否してください</strong>。
+        collaborative_draft_access_requester_accepted:
+          email_intro: <a href="%{resource_path}">%{resource_title}</a> の共同草案の投稿者としてアクセスすることを承認されました。
+          notification_title: あなたは <strong></strong> <a href="%{resource_path}">%{resource_title}</a> の共同草案の貢献者としてアクセスすることを受け入れられました。
+        collaborative_draft_access_requester_rejected:
+          email_intro: <a href="%{resource_path}">%{resource_title}</a> の共同草案の投稿者としてアクセスが拒否されました。
+        collaborative_draft_withdrawn:
+          email_intro: <a href="%{author_path}">%{author_name} %{author_nickname}</a> は、 <a href="%{resource_path}">%{resource_title}</a> の共同草案を撤回しました。
+          email_subject: "%{author_name} %{author_nickname} は %{resource_title} の共同草案を撤回しました。"
       verifications:
         verify_with_managed_user:
           email_intro: 参加者 <a href="%{resource_path}">%{resource_title}</a> が管理対象参加者 <a href="%{managed_user_path}">%{managed_user_name}</a>のデータで自身を検証しようとしました。
           email_outro: <a href="%{conflicts_path}">検証の競合リスト</a> を確認し、参加者に連絡して詳細を調査し、問題を解決してください。
           email_subject: 管理対象参加者に対する検証の試みに失敗しました
           notification_title: 参加者 <a href="%{resource_path}">%{resource_title}</a> が管理対象参加者 <a href="%{managed_user_path}">%{managed_user_name}</a>のデータで自身を検証しようとしました。
+    filters:
+      linked_classes:
+        collaborative_draft: 共同草案
     fingerprint:
       check: フィンガープリントを確認
     following:
@@ -181,10 +203,62 @@ ja:
         filter_origin_values:
           citizens: 一般参加者
           official: 事務局
+      collaborative_drafts:
+        collaborative_draft:
+          publish:
+            error: 共同草案を公開する際に問題が発生しました。
+            irreversible_action_modal:
+              body: 提案として共同草案を公開した後、草案は編集できなくなります。提案は新しい著者や貢献者を受け入れません。
+              cancel: キャンセル
+              ok: 提案として公開
+            success: 共同草案は提案として正常に公開されました。
+          view_collaborative_draft: 共同草案を表示
+          withdraw:
+            error: 共同草案を閉じる際に問題が発生しました。
+            irreversible_action_modal:
+              body: 共同草案を閉じた後、草案は編集できなくなります。草案は新しい投稿者や投稿を受け入れません。
+            success: 共同草案は正常に撤回されました。
+        count:
+          drafts_count:
+            other: "%{count} 件の共同草案です"
+        create:
+          error: 共同草案作成中に問題が発生しました
+          success: 共同草案を作成しました。
+        edit:
+          title: 共同草案を編集
+        new_collaborative_draft_button:
+          new_collaborative_draft: 新しい共同草案を作成
       models:
         proposal:
           fields:
             official_proposal: 事務局の提案
+        orders:
+          label: '草案の注文:'
+          most_contributed: 最も貢献したもの
+          random: ランダム
+          recent: 最近のもの
+        requests:
+          access_requested:
+            error: リクエストを完了できませんでした。後でもう一度お試しください。
+            success: 共同草案のリクエストが正常に送信されました
+        show:
+          back: 戻る
+          edit: 共同草案を編集
+          final_proposal_help_text: この草案は終了しました。最終提案を確認してください。
+          info-message: これは提案のための <strong>共同草案</strong> です。 これは、以下のコメントセクションを使用して提案を作成したり、編集するためのアクセスを要求することで、提案を改善したりすることができることを意味します。 作成者がアクセスを許可すると、この草案を変更することができます。
+          withdraw: 草案を撤回する
+        update:
+          error: 共同草案を保存する際に問題が発生しました。
+          success: 共同草案が正常に更新されました。
+        wizard_aside:
+          info: <strong>共同草案</strong>を作成しています。
+        wizard_header:
+          title: 共同草案を作成する
+      create:
+        success: 提案は正常に作成されました。草案として保存されました。
+      destroy_draft:
+        error: 共同草案を削除する際に問題が発生しました。
+        success: 提案の草案は正常に削除されました。
       proposals:
         edit:
           add_documents: 添付ファイル
@@ -200,6 +274,14 @@ ja:
         filters:
           activity: 参加したもの
           origin: 起案者
+        index:
+          collaborative_drafts_list: 共同草案にアクセスする
+        show:
+          link_to_collaborative_draft_help_text: この提案は共同草案の結果です。履歴を確認してください
+          link_to_collaborative_draft_text: 共同草案を見る
+      update_draft:
+        error: 共同草案を保存する際に問題が発生しました。
+        success: 草案が正常に更新されました。
     shared:
       flag_modal:
         does_not_belong: 違法行為、個人情報、または %{organization_name} に属していないと思われる内容が含まれています。
@@ -219,7 +301,21 @@ ja:
       authorizations:
         first_login:
           actions:
+            csv_census: 組織のセンサスに照らして確認
             user_extension_authorization_handler: ユーザー拡張属性対応用
+      csv_census:
+        admin:
+          census:
+            destroy_all:
+              success: すべてのセンサスデータが削除されました
+          destroy:
+            confirm: センサスをすべて削除することはできません。続行してもよろしいですか？
+            title: センサスデータをすべて削除する
+          index:
+            empty: センサスデータがありません。CSVファイルを使用してインポートするには、以下のフォームを使用してください。
+            title: 現在のセンサスデータ
+          new:
+            title: 新しいセンサスをアップロード
       postal_letter:
         admin:
           pending_authorizations:
