@@ -18,6 +18,12 @@ ro:
         other: Voturi
   decidim:
     comments:
+      admin:
+        shared:
+          availability_fields:
+            enabled: Comentarii activate
+            end_time: Comentarii activate până la
+            start_time: Comentarii activate de la
       comments:
         create:
           error: A apărut o problemă la crearea comentariului.
@@ -95,7 +101,7 @@ ro:
         blocked_comments_warning: Comentariile sunt dezactivate în acest moment, dar le poți citi pe cele anterioare.
         comment_details_title: Detaliile comentariului
         loading: Se încarcă comentariile...
-        single_comment_warning: Poţi verifica restul comentariilor <a href="%{url}">aici</a>.
+        single_comment_warning: <a href="%{url}">Vezi toate comentariile</a>
         single_comment_warning_title: Poți vedea un singur comentariu
         title:
           one: "%{count} comentariu"

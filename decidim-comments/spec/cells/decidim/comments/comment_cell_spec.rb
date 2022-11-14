@@ -35,7 +35,7 @@ module Decidim::Comments
       end
 
       context "when deleted" do
-        let(:comment) { create(:comment, commentable: commentable, deleted_at: 1.hour.ago, created_at: 1.day.ago) }
+        let(:comment) { create(:comment, :deleted, commentable: commentable) }
 
         it "renders the card with a deletion message and replies" do
           expect(subject).to have_css("#comment_#{comment.id}")
@@ -46,6 +46,28 @@ module Decidim::Comments
           expect(subject).to have_no_content(comment.body.values.first)
           expect(subject).to have_no_content(I18n.l(comment.created_at, format: :decidim_short))
           expect(subject).to have_content(I18n.l(comment.deleted_at, format: :decidim_short))
+          expect(subject).to have_no_content(comment.author.name)
+
+          expect(subject).to have_no_css(".comment__additionalreply")
+          expect(subject).to have_no_css(".add-comment")
+          expect(subject).to have_no_css(".comment__reply")
+          expect(subject).to have_no_css("#flagModalComment#{comment.id}")
+        end
+      end
+
+      context "when moderated" do
+        let(:comment) { create(:comment, commentable: commentable, created_at: 1.day.ago) }
+        let!(:moderation) { create(:moderation, hidden_at: 6.hours.ago, reportable: comment) }
+
+        it "renders the card with a moderation message and replies" do
+          expect(subject).to have_css("#comment_#{comment.id}")
+          expect(subject).to have_css("#comment-#{comment.id}-replies", text: "")
+          expect(subject).to have_css(".comment__moderated")
+          expect(subject).to have_no_css("button[data-open='loginModal'][title='#{I18n.t("decidim.components.comment.report.title")}']")
+          expect(subject).to have_no_css("a[href='/processes/#{participatory_process.slug}/f/#{component.id}/dummy_resources/#{commentable.id}?commentId=#{comment.id}#comment_#{comment.id}']")
+          expect(subject).to have_no_content(comment.body.values.first)
+          expect(subject).to have_no_content(I18n.l(comment.created_at, format: :decidim_short))
+          expect(subject).to have_content(I18n.l(moderation.hidden_at, format: :decidim_short))
           expect(subject).to have_no_content(comment.author.name)
 
           expect(subject).to have_no_css(".comment__additionalreply")

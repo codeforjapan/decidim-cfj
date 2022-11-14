@@ -6,12 +6,14 @@ module Decidim
     #
     class CommentsController < Decidim::Comments::ApplicationController
       include Decidim::ResourceHelper
+      include Decidim::SkipTimeoutable
 
+      prepend_before_action :skip_timeout, only: :index
       before_action :authenticate_user!, only: [:create]
       before_action :set_commentable, except: [:destroy, :update]
       before_action :ensure_commentable!, except: [:destroy, :update]
 
-      helper_method :root_depth, :commentable, :order, :limit, :reply?, :reload?
+      helper_method :root_depth, :commentable, :order, :reply?, :reload?
 
       def index
         enforce_permission_to :read, :comment, commentable: commentable
@@ -19,7 +21,6 @@ module Decidim
         @comments = SortedComments.for(
           commentable,
           order_by: order,
-          limit: limit,
           after: params.fetch(:after, 0).to_i
         )
         @comments_count = commentable.comments_count
@@ -159,21 +160,7 @@ module Decidim
       end
 
       def order
-        params_order = params.fetch(:order, nil)
-        if params_order
-          if cookies[Decidim.config.consent_cookie_name].present? # cookies_accepted?
-            cookies['comment_default_order'] = params_order
-          end
-          params_order
-        elsif cookies['comment_default_order'] && cookies[Decidim.config.consent_cookie_name].present? # cookies_accepted?
-          cookies['comment_default_order']
-        else
-          'older'
-        end
-      end
-
-      def limit
-        params.fetch(:limit, nil)
+        params.fetch(:order, "older")
       end
 
       def reload?
