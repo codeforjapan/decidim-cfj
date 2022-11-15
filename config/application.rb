@@ -35,4 +35,5 @@ module DecidimApp
     # the framework and any gems in your application.
   end
 end
-NOBSPW.configuration.min_password_length = 6
+# todo: PasswordValidatorのMINIMUM_LENGTHを更新しないといけない
+# NOBSPW.configuration.min_password_length = 6
