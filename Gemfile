@@ -4,7 +4,7 @@ source "https://rubygems.org"
 
 ruby RUBY_VERSION
 
-gem "decidim", "0.26.3"
+gem "decidim", "0.26.4"
 
 # gem "decidim-comments", path: "decidim-comments"
 
@@ -33,7 +33,7 @@ group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
   gem "figaro"
 
-  gem "decidim-dev", "0.26.3"
+  gem "decidim-dev", "0.26.4"
   gem "dotenv-rails"
   gem "factory_bot_rails"
   gem "rspec-rails"
