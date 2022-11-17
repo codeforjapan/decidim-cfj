@@ -30,7 +30,7 @@ gem "newrelic_rpm"
 gem "omniauth-line_login", path: "omniauth-line_login"
 gem "omniauth-rails_csrf_protection"
 
-# gem "decidim-user_extension", path: "decidim-user_extension"
+gem "decidim-user_extension", path: "decidim-user_extension"
 
 gem "slack-ruby-client"
 

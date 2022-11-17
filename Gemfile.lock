@@ -25,6 +25,14 @@ PATH
       redcarpet (~> 3.5, >= 3.5.1)
 
 PATH
+  remote: decidim-user_extension
+  specs:
+    decidim-user_extension (0.2.0)
+      decidim-admin
+      decidim-core
+      rails
+
+PATH
   remote: omniauth-line_login
   specs:
     omniauth-line_login (0.1.0)
@@ -864,6 +872,7 @@ DEPENDENCIES
   decidim-decidim_awesome!
   decidim-dev (= 0.26.4)
   decidim-term_customizer!
+  decidim-user_extension!
   deface
   dotenv-rails
   factory_bot_rails
