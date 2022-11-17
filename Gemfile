@@ -4,13 +4,13 @@ source "https://rubygems.org"
 
 ruby RUBY_VERSION
 
-gem "decidim", "0.25.2"
+gem "decidim", "0.26.4"
 
-gem "decidim-comments", path: "decidim-comments"
+# gem "decidim-comments", path: "decidim-comments"
 
 gem "decidim-decidim_awesome", git: "https://github.com/codeforjapan/decidim-module-decidim_awesome.git", branch: "v0.8.3-2022-10-20"
 
-gem "decidim-term_customizer", git: "https://github.com/codeforjapan/decidim-module-term_customizer.git", branch: "025-ja"
+gem "decidim-term_customizer", git: "https://github.com/codeforjapan/decidim-module-term_customizer.git", branch: "release/0.26-stable"
 
 gem "bootsnap"
 
@@ -30,7 +30,7 @@ gem "newrelic_rpm"
 gem "omniauth-line_login", path: "omniauth-line_login"
 gem "omniauth-rails_csrf_protection"
 
-gem "decidim-user_extension", path: "decidim-user_extension"
+# gem "decidim-user_extension", path: "decidim-user_extension"
 
 gem "slack-ruby-client"
 
@@ -38,7 +38,7 @@ group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
   gem "figaro"
 
-  gem "decidim-dev", "0.25.2"
+  gem "decidim-dev", "0.26.4"
   gem "dotenv-rails"
   gem "factory_bot_rails"
   gem "rspec-rails"
