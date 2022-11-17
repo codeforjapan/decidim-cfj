@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_15_135828) do
+ActiveRecord::Schema.define(version: 2022_11_17_104040) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "ltree"
