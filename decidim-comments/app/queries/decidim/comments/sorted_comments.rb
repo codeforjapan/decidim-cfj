@@ -37,7 +37,6 @@ module Decidim
       # level of nested replies.
       def query
         scope = base_scope
-                .not_hidden
                 .includes(:author, :user_group, :up_votes, :down_votes)
 
         limit = (@options[:limit] || Decidim::Comments::SortedComments.comments_limit).to_i

@@ -4,6 +4,7 @@ en:
     models:
       decidim/comments/comment_by_followed_user_event: Comment
       decidim/comments/comment_created_event: Comment
+      decidim/comments/comment_upvoted_event: Comment upvoted
       decidim/comments/reply_created_event: Comment reply
       decidim/comments/user_group_mentioned_event: Mention
       decidim/comments/user_mentioned_event: Mention
@@ -17,6 +18,12 @@ en:
         other: Votes
   decidim:
     comments:
+      admin:
+        shared:
+          availability_fields:
+            enabled: Comments enabled
+            end_time: Comments enabled until
+            start_time: Comments enabled from
       comments:
         create:
           error: There was a problem creating the comment.
@@ -65,6 +72,7 @@ en:
         edit: Edit
         edited: Edited
         hide_replies: Hide replies
+        moderated_at: Comment moderated on %{date}
         reply: Reply
         report:
           action: Report
@@ -94,7 +102,7 @@ en:
         blocked_comments_warning: Comments are disabled at this time, but you can read the previous ones.
         comment_details_title: Comment details
         loading: Loading comments ...
-        single_comment_warning: You can check the rest of the comments <a href="%{url}">here</a>.
+        single_comment_warning: <a href="%{url}">View all comments</a>
         single_comment_warning_title: You are seeing a single comment
         title:
           one: "%{count} comment"

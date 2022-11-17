@@ -18,6 +18,13 @@ GIT
       decidim-core (~> 0.26.0)
 
 PATH
+  remote: decidim-comments
+  specs:
+    decidim-comments (0.26.4)
+      decidim-core (= 0.26.4)
+      redcarpet (~> 3.5, >= 3.5.1)
+
+PATH
   remote: omniauth-line_login
   specs:
     omniauth-line_login (0.1.0)
@@ -229,9 +236,6 @@ GEM
     decidim-budgets (0.26.4)
       decidim-comments (= 0.26.4)
       decidim-core (= 0.26.4)
-    decidim-comments (0.26.4)
-      decidim-core (= 0.26.4)
-      redcarpet (~> 3.5, >= 3.5.1)
     decidim-core (0.26.4)
       active_link_to (~> 1.0)
       acts_as_list (~> 0.9)
@@ -856,6 +860,7 @@ DEPENDENCIES
   bootsnap
   byebug (~> 11.0)
   decidim (= 0.26.4)
+  decidim-comments!
   decidim-decidim_awesome!
   decidim-dev (= 0.26.4)
   decidim-term_customizer!
