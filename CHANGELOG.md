@@ -1,4 +1,66 @@
 # Change Log
+
+## [v0.25.2-2022-11-08](https://github.com/codeforjapan/decidim-cfj/releases/tag/v0.25.2-2022-11-08)
+
+### Added
+- Add notification to slack [#452](https://github.com/codeforjapan/decidim-cfj/pull/452)
+- Add task comment:remove_orphans [#454](https://github.com/codeforjapan/decidim-cfj/pull/454)
+- Add comments for Decidim::ImageUploader in UPGRADE.md [#458](https://github.com/codeforjapan/decidim-cfj/pull/458)
+- feat: add slack env [#459](https://github.com/codeforjapan/decidim-cfj/pull/459)
+- feat: add print css [#460](https://github.com/codeforjapan/decidim-cfj/pull/460)
+
+### Changed
+- refactor: change image upload size limit [#455](https://github.com/codeforjapan/decidim-cfj/pull/455)
+
+
+### Fixed
+- locale: fix term census [#456](https://github.com/codeforjapan/decidim-cfj/pull/456)
+- locale: fix collaborative_draft [#457](https://github.com/codeforjapan/decidim-cfj/pull/457)
+
+## [v0.25.2-2022-10-25](https://github.com/codeforjapan/decidim-cfj/releases/tag/v0.25.2-2022-10-25)
+
+### Added
+- feat: add support for heic format [#438](https://github.com/codeforjapan/decidim-cfj/pull/438)
+- Make frequncy of puma-worker-killer 60(sec) [#451](https://github.com/codeforjapan/decidim-cfj/pull/451)
+
+### Changed
+- Update actions/checkout and actions/setup-node [#441](https://github.com/codeforjapan/decidim-cfj/pull/441)
+
+### Fixed
+- Fix nginx.conf; add $proxy_port to Host header [#440](https://github.com/codeforjapan/decidim-cfj/pull/440)
+- Fix/production nginx.conf [#442](https://github.com/codeforjapan/decidim-cfj/pull/442)
+- hotfix: deployments nginx conf [#443](https://github.com/codeforjapan/decidim-cfj/pull/443)
+- Refactor/some fix [#444](https://github.com/codeforjapan/decidim-cfj/pull/444)
+- fix: user upload image error [#445](https://github.com/codeforjapan/decidim-cfj/pull/445)
+- Fix #446; set max_complexity after initializers [#450](https://github.com/codeforjapan/decidim-cfj/pull/450)
+
+
+## [v0.25.2-2022-09-29](https://github.com/codeforjapan/decidim-cfj/releases/tag/v0.25.2-2022-09-29)
+
+### Added
+- feat: add replace to null ParticipatoryProcess command [#423](https://github.com/codeforjapan/decidim-cfj/pull/423)
+- feat: add replace to null decidim_proposals command [#436](https://github.com/codeforjapan/decidim-cfj/pull/436)
+
+### Changed
+- Remove ProcessParticipatorySpacePrivateUserImportCsv [#428](https://github.com/codeforjapan/decidim-cfj/pull/428)
+- Add some items in UPGRADE.md [#431](https://github.com/codeforjapan/decidim-cfj/pull/431)
+- Remove _main_footer.html.erb patch file; already fixed in #138 [#435](https://github.com/codeforjapan/decidim-cfj/pull/435)
+
+### Fixed
+- Revert #210; Fixed in v0.25.2 [#429](https://github.com/codeforjapan/decidim-cfj/pull/429)
+- Fix paths in UPGRADE.md [#430](https://github.com/codeforjapan/decidim-cfj/pull/430)
+- doc: Remove fixed(removed) files in UPGRADE.md [#432](https://github.com/codeforjapan/decidim-cfj/pull/432)
+
+## [v0.25.2-2022-09-16](https://github.com/codeforjapan/decidim-cfj/releases/tag/v0.25.2-2022-09-16)
+
+### Added
+- Set max_complexity of GraphQL::Schema [#426](https://github.com/codeforjapan/decidim-cfj/pull/426)
+
+## [v0.25.2-2022-09-15](https://github.com/codeforjapan/decidim-cfj/releases/tag/v0.25.2-2022-09-15)
+
+### Added
+- feat: add replace to null ParticipatoryProcess command [#423](https://github.com/codeforjapan/decidim-cfj/pull/423)
+
 ## [v0.25.2-2022-09-09](https://github.com/codeforjapan/decidim-cfj/releases/tag/v0.25.2-2022-09-09)
 
 ### Added
