@@ -132,6 +132,34 @@ module Decidim
         end
       end
 
+      describe "#reported_content_url" do
+        subject { comment.reported_content_url }
+
+        let(:url_format) { "http://%{host}/processes/%{slug}/f/%{component_id}/dummy_resources/%{resource_id}#comment_%{comment_id}" }
+
+        it "returns the resource URL" do
+          expect(subject).to eq(
+            format(
+              url_format,
+              host: commentable.organization.host,
+              slug: commentable.participatory_space.slug,
+              component_id: commentable.component.id,
+              resource_id: commentable.id,
+              comment_id: comment.id
+            )
+          )
+        end
+
+        context "when the root commentable has been deleted" do
+          before do
+            comment.root_commentable.destroy!
+            comment.reload
+          end
+
+          it { is_expected.to be_nil }
+        end
+      end
+
       describe "#users_to_notify_on_comment_created" do
         let(:user) { create :user, organization: comment.organization }
 
@@ -159,7 +187,7 @@ module Decidim
         end
 
         it "sanitizes user input" do
-          expect(comment).to receive(:sanitize_content)
+          expect(comment).to receive(:sanitize_content_for_comment)
           comment.formatted_body
         end
 
@@ -181,6 +209,15 @@ module Decidim
           end
         end
 
+        describe "when the body contains HTML" do
+          let(:body) { %(<a target="alert(1)" href="javascript:alert(document.location)">XSS via target in a tag</a>) }
+          let(:result) { "<div><p>XSS via target in a tag</p></div>" }
+
+          it "parses the HTML and renders them only with accepted tags" do
+            expect(comment.formatted_body).to eq(result)
+          end
+        end
+
         describe "when the body contains quotes with paragraphs" do
           let(:body) { "> quote first paragraph\n>\n> quote second paragraph\n\nanswer" }
           let(:result) { "<div><blockquote class=\"comment__quote\">\n<br /><p>quote first paragraph</p>\n<br /><p>quote second paragraph</p>\n<br /></blockquote><p>answer</p></div>" }
@@ -197,7 +234,7 @@ module Decidim
             %(Content with <a href="http://urls.net" onmouseover="alert('hello')">URLs</a> of anchor type and text urls like https://decidim.org. And a malicous <a href="javascript:document.cookies">click me</a>)
           end
           let(:result) do
-            %(<div><p>Content with URLs of anchor type and text urls like <a href="https://decidim.org" target="_blank" rel="nofollow noopener">https://decidim.org</a>. And a malicous click me</p></div>)
+            %(<div><p>Content with URLs of anchor type and text urls like <a href="https://decidim.org" target="_blank" rel="nofollow noopener noreferrer ugc">https://decidim.org</a>. And a malicous click me</p></div>)
           end
 
           it "converts all URLs to links and strips attributes in anchors" do
@@ -214,10 +251,10 @@ module Decidim
           expect(parent.comment_threads.count).to eq 3
         end
 
-        it "returns 2 when a comment has been moderated" do
+        it "still returns 3 when a comment has been moderated" do
           Decidim::Moderation.create!(reportable: comments.last, participatory_space: comments.last.participatory_space, hidden_at: 1.day.ago)
 
-          expect(parent.comment_threads.count).to eq 2
+          expect(parent.comment_threads.count).to eq 3
         end
 
         describe "#body_length" do
