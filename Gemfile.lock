@@ -10,8 +10,8 @@ GIT
 
 GIT
   remote: https://github.com/codeforjapan/decidim-module-term_customizer.git
-  revision: f0d720710822f1231ea249dd71f978143d38a6c4
-  branch: release/0.26-stable
+  revision: e865c58b790fed27c1653a243303216d2e8955b8
+  branch: 026-ja
   specs:
     decidim-term_customizer (0.26.0)
       decidim-admin (~> 0.26.0)
@@ -27,7 +27,7 @@ PATH
 PATH
   remote: decidim-user_extension
   specs:
-    decidim-user_extension (0.2.0)
+    decidim-user_extension (0.3.0)
       decidim-admin
       decidim-core
       rails
