@@ -36,8 +36,8 @@ jobs:
       - name: Output App Env
         id: output-app-env
         run: |
-          echo "::set-output name=image-tag::${IMAGE_TAG_PREFIX}-${GITHUB_SHA::8}"
-          echo "::set-output name=eb-environment-name::${EB_ENVIRONMENT_NAME}"
+          echo "image-tag::${IMAGE_TAG_PREFIX}-${GITHUB_SHA=8}" >> $GITHUB_OUTPUT
+          echo "eb-environment-name=${EB_ENVIRONMENT_NAME}" >> $GITHUB_OUTPUT
 
   build:
     runs-on: ubuntu-latest
@@ -48,7 +48,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v1-node16
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -80,7 +80,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v1-node16
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
