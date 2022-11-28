@@ -17,6 +17,8 @@
 @import "stylesheets/decidim/admin/extra/sort";
 @import "stylesheets/decidim/admin/extra/title_bar";
 
+@import "stylesheets/decidim/cfj/ql_html_editor";
+
 // This imports all the Decidim module stylesheet imports registered at
 // `config/assets.rb` of the module for the "admin" group.
 @import "!decidim-style-imports[admin]";
