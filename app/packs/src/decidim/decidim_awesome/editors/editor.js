@@ -40,66 +40,6 @@ export function destroyQuillEditor(container) {
 
 export function createQuillEditor(container) {
   // decidim-cfj custom start
-  function __createCSS() {
-    var css = document.createElement("style")
-    css.type = "text/css"
-    css.innerText = `
-.ql-html-overlayContainer {
-  background: #0000007d;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 9999;
-}
-
-.ql-html-popupContainer {
-  background: #ddd;
-  position: absolute;
-  top: 5%;
-  left: 5%;
-  right: 5%;
-  bottom: 5%;
-  border-radius: 10px;
-}
-
-.ql-html-textContainer {
-  position: relative;
-  width: calc(100% - 40px);
-  height: calc(100% - 40px);
-  padding: 20px;
-}
-
-.ql-html-textArea {
-  background: #fff;
-  position: absolute;
-  left: 15px;
-  width: calc(100% - 45px);
-  height: calc(100% - 116px);
-}
-
-.ql-html-buttonCancel {
-  margin-right: 20px;
-}
-
-.ql-html-popupTitle {
-  margin: 0;
-  display: block;
-}
-
-.ql-html-buttonGroup {
-  position: absolute;
-  bottom: 20px;
-  transform: scale(1.5);
-  left: calc(50% - 60px);
-}
-        `;
-    document.head.appendChild(css);
-  }
-  __createCSS();
-
-
   function $create(elName) {
     return document.createElement(elName);
   }
