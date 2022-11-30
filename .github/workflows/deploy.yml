@@ -79,6 +79,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 1800
     if: endsWith(github.ref, 'heads/develop') || contains(github.ref, 'tags/v')
+    permissions:
+      actions: write
+      contents: read
+      id-token: write
     needs:
       - create-app-env
       - build
