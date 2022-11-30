@@ -43,7 +43,7 @@ jobs:
       - name: Output App Env
         id: output-app-env
         run: |
-          echo "image-tag::${IMAGE_TAG_PREFIX}-${GITHUB_SHA=8}" >> $GITHUB_OUTPUT
+          echo "image-tag=${IMAGE_TAG_PREFIX}-${GITHUB_SHA::8}" >> $GITHUB_OUTPUT
           echo "eb-environment-name=${EB_ENVIRONMENT_NAME}" >> $GITHUB_OUTPUT
 
   build:
