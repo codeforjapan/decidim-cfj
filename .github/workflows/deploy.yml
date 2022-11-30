@@ -1,4 +1,4 @@
-name: Deploy to Elastic Beanstalk
+name: Deploy to decidim-cfj cdk
 
 on:
   push:
@@ -89,8 +89,7 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1-node16
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: ${{ env.AWS_ROLE_ARN }}
           aws-region: ap-northeast-1
 
       - name: Login to Amazon ECR
@@ -123,12 +122,6 @@ jobs:
         with:
           repository: codeforjapan/decidim-cfj-cdk
           path: ./
-
-      - name: aws switch role
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          role-to-assume: ${{ env.AWS_ROLE_ARN }}
-          aws-region: ap-northeast-1
 
       - name: cdk deploy
         uses: youyo/aws-cdk-github-actions@v2
