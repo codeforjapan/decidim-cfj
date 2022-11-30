@@ -140,7 +140,7 @@ jobs:
           cdk_subcommand: 'deploy'
           cdk_version: '2.50.0'
           actions_comment: true
-          cdk_args: '--context stage=$EB_ENVIRONMENT_NAME --context tag:$IMAGE_TAG --require-approval never'
+          cdk_args: '--context stage=$EB_ENVIRONMENT_NAME --context tag=$IMAGE_TAG --require-approval never'
           working_dir: 'decidim-cfj-cdk'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
