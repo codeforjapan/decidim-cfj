@@ -135,6 +135,7 @@ jobs:
           actions_comment: true
           cdk_args: '--context stage=$EB_ENVIRONMENT_NAME --context tag=$IMAGE_TAG --require-approval never'
           working_dir: 'decidim-cfj-cdk'
+          debug_log: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           AWS_DEFAULT_REGION: 'ap-northeast-1'
