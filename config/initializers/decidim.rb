@@ -52,7 +52,7 @@ Decidim.configure do |config|
     },
     # static: { url: "https://staticmap.example.org/" }, # optional
     geocoding: { host: "www.openstreetmap.org/", use_https: true },
-    autocomplete: { url: "https://nominatim.openstreetmap.org/search"}
+    autocomplete: { url: "https://nominatim.openstreetmap.org/search" }
   }
 
   # Custom resource reference generator method. Check the docs for more info.
