@@ -1,4 +1,4 @@
-name: Deploy to Elastic Beanstalk
+name: Deploy to decidim-cfj cdk
 
 on:
   push:
@@ -43,7 +43,7 @@ jobs:
       - name: Output App Env
         id: output-app-env
         run: |
-          echo "image-tag::${IMAGE_TAG_PREFIX}-${GITHUB_SHA=8}" >> $GITHUB_OUTPUT
+          echo "image-tag=${IMAGE_TAG_PREFIX}-${GITHUB_SHA::8}" >> $GITHUB_OUTPUT
           echo "eb-environment-name=${EB_ENVIRONMENT_NAME}" >> $GITHUB_OUTPUT
 
   build:
@@ -79,6 +79,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 1800
     if: endsWith(github.ref, 'heads/develop') || contains(github.ref, 'tags/v')
+    permissions:
+      actions: write
+      contents: read
+      id-token: write
     needs:
       - create-app-env
       - build
@@ -89,8 +93,7 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1-node16
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: ${{ env.AWS_ROLE_ARN }}
           aws-region: ap-northeast-1
 
       - name: Login to Amazon ECR
@@ -122,13 +125,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: codeforjapan/decidim-cfj-cdk
-          path: ./
-
-      - name: aws switch role
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          role-to-assume: ${{ env.AWS_ROLE_ARN }}
-          aws-region: ap-northeast-1
+          path: decidim-cfj-cdk
 
       - name: cdk deploy
         uses: youyo/aws-cdk-github-actions@v2
@@ -136,7 +133,7 @@ jobs:
           cdk_subcommand: 'deploy'
           cdk_version: '2.50.0'
           actions_comment: true
-          cdk_args: '--context stage=$EB_ENVIRONMENT_NAME --context tag:$IMAGE_TAG --require-approval never'
+          cdk_args: '--context stage=$EB_ENVIRONMENT_NAME --context tag=$IMAGE_TAG --require-approval never'
           working_dir: 'decidim-cfj-cdk'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
