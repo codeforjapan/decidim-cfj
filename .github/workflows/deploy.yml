@@ -50,6 +50,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 1200
     needs: create-app-env
+    permissions:
+      actions: write
+      contents: read
+      id-token: write
 
     steps:
       - uses: actions/checkout@v3
@@ -57,8 +61,7 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1-node16
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: ${{ env.AWS_ROLE_ARN }}
           aws-region: ap-northeast-1
 
       - name: Login to Amazon ECR
@@ -114,29 +117,43 @@ jobs:
               exit 1
           fi
 
-      - uses: actions/setup-python@master
-        with:
-          python-version: "3.7"
-
-      - name: Install awsebcli
-        run: pip install -U awsebcli
-
       - name: Checkout decidim-cfj cdk
         uses: actions/checkout@v3
         with:
           repository: codeforjapan/decidim-cfj-cdk
           path: decidim-cfj-cdk
 
-      - name: cdk deploy
-        uses: youyo/aws-cdk-github-actions@v2
+      - name: Setup Node
+        uses: actions/setup-node@v1
         with:
-          cdk_subcommand: 'deploy'
-          cdk_version: '2.50.0'
-          actions_comment: true
-          cdk_args: '--context stage=$EB_ENVIRONMENT_NAME --context tag=$IMAGE_TAG --require-approval never'
-          working_dir: 'decidim-cfj-cdk'
+          node-version: '16'
+
+      - name: Cache node modules
+        id: cache-npm
+        uses: actions/cache@v3
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          cache-name: cache-node-modules
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: decidim-cfj-cdk
+
+      - name: Install dependencies
+        run: npm install -g aws-cdk
+        working-directory: decidim-cfj-cdk
+
+      - name: cdk deploy
+        run: cdk -c stage=$EB_ENVIRONMENT_NAME -c tag=$IMAGE_TAG deploy --all --require-approval never
+        working-directory: decidim-cfj-cdk
+        env:
           AWS_DEFAULT_REGION: 'ap-northeast-1'
           EB_ENVIRONMENT_NAME: ${{ needs.create-app-env.outputs.eb-environment-name }}
           IMAGE_TAG: ${{ needs.create-app-env.outputs.image-tag }}
