@@ -1,11 +1,10 @@
-name: Deploy to decidim-cfj cdk
+name: Deploy to ecs
 
 on:
   push:
     branches:
       - develop
       - master
-      - feat/update-ci
     tags:
       - 'v*'
 
@@ -29,7 +28,7 @@ jobs:
 
       - name: Set env to staging
         id: set-env-staging
-        if: endsWith(github.ref, 'heads/develop') || endsWith(github.ref, 'heads/feat/update-ci')
+        if: endsWith(github.ref, 'heads/develop')
         run: |
           echo "IMAGE_TAG_PREFIX=staging" >> $GITHUB_ENV
           echo "EB_ENVIRONMENT_NAME=staging" >> $GITHUB_ENV
@@ -70,7 +69,7 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
 
       - name: Build, tag, and push image to Amazon ECR
-        if: endsWith(github.ref, 'heads/master') || endsWith(github.ref, 'heads/develop') || endsWith(github.ref, 'heads/feat/update-ci')
+        if: endsWith(github.ref, 'heads/master') || endsWith(github.ref, 'heads/develop')
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{ secrets.AWS_ECR_REPO_NAME }}
@@ -82,7 +81,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     timeout-minutes: 1800
-    if: endsWith(github.ref, 'heads/develop') || contains(github.ref, 'tags/v') || endsWith(github.ref, 'heads/feat/update-ci')
+    if: endsWith(github.ref, 'heads/develop') || contains(github.ref, 'tags/v')
     permissions:
       actions: write
       contents: read
