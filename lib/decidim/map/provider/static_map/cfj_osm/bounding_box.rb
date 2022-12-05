@@ -8,8 +8,7 @@ module Decidim
           class BoundingBox
             TILE_SIZE = 256
 
-            attr_reader :lng, :lat, :width, :height, :zoom
-            attr_reader :left, :right, :top, :bottom
+            attr_reader :lng, :lat, :width, :height, :zoom, :left, :right, :top, :bottom
 
             def initialize(lng:, lat:, width:, height:, zoom:)
               @lng = lng
@@ -18,10 +17,10 @@ module Decidim
               @height = height
               @zoom = zoom
 
-              @left = Conversion.x_to_lng( to_x - ((width / TILE_SIZE) / 2), zoom)
-              @right = Conversion.x_to_lng( to_x + ((width / TILE_SIZE) / 2 ), zoom)
-              @top = Conversion.y_to_lat( to_y - ((height / TILE_SIZE) / 2 ), zoom)
-              @bottom = Conversion.y_to_lat( to_y + ((height / TILE_SIZE) / 2 ), zoom)
+              @left = Conversion.x_to_lng(to_x - ((width / TILE_SIZE) / 2), zoom)
+              @right = Conversion.x_to_lng(to_x + ((width / TILE_SIZE) / 2), zoom)
+              @top = Conversion.y_to_lat(to_y - ((height / TILE_SIZE) / 2), zoom)
+              @bottom = Conversion.y_to_lat(to_y + ((height / TILE_SIZE) / 2), zoom)
             end
 
             def in_tiles_left
@@ -41,7 +40,7 @@ module Decidim
             end
 
             def to_s
-              [left, right, top, bottom].join(',')
+              [left, right, top, bottom].join(",")
             end
 
             private

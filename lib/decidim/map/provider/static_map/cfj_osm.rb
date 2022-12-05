@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'cfj_osm/map'
+require_relative "cfj_osm/map"
 
 module Decidim
   module Map
@@ -9,7 +9,6 @@ module Decidim
         # The static map utility class based on Osm
         class CfjOsm < ::Decidim::Map::StaticMap
           def image_data(latitude:, longitude:, options: {})
-
             zoom = options[:zoom] || 15
             width = options[:width] || 120
             height = options[:height] || 120
@@ -20,7 +19,7 @@ module Decidim
               lng: longitude,
               width: width,
               height: height,
-              provider: 'http://tile.openstreetmap.jp/{z}/{x}/{y}.png',
+              provider: "http://tile.openstreetmap.jp/{z}/{x}/{y}.png",
               organization: organization
             )
 

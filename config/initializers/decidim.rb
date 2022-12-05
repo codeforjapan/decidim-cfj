@@ -52,7 +52,7 @@ Decidim.configure do |config|
     },
     static: {
       provider: :cfj_osm,
-      url: 'http://www.openstreetmap.org/',
+      url: "http://www.openstreetmap.org/"
     }, # use StaticMap::CfjOsm
     geocoding: { host: "nominatim.openstreetmap.org", use_https: true }
     # autocomplete: { url: "https://nominatim.openstreetmap.org/search" }

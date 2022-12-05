@@ -1,17 +1,16 @@
 # frozen_string_literal: true
 
-require 'mini_magick'
+require "mini_magick"
 
-require_relative 'conversion'
-require_relative 'tile_source'
-require_relative 'bounding_box'
+require_relative "conversion"
+require_relative "tile_source"
+require_relative "bounding_box"
 
 module Decidim
   module Map
     module Provider
       module StaticMap
         class CfjOsm < ::Decidim::Map::StaticMap
-
           Tile = Struct.new(:x, :y, :zoom, keyword_init: true)
 
           # static map generator (cf. https://github.com/crofty/mapstatic)
@@ -20,10 +19,10 @@ module Decidim
 
             attr_reader :zoom, :lat, :lng, :width, :height
 
-            def initialize(zoom:, lat:, lng:, width:, height:, provider:, organization:)
-              @lat    = lat.to_f
-              @lng    = lng.to_f
-              @width  = width.to_f
+            def initialize(zoom:, lat:, lng:, width:, height:, provider:, organization:) # rubocop:disable Metrics/ParameterLists
+              @lat = lat.to_f
+              @lng = lng.to_f
+              @width = width.to_f
               @height = height.to_f
               @zoom = zoom.to_i
               @tile_source = TileSource.new(provider, organization)
@@ -51,11 +50,11 @@ module Decidim
 
             def metadata
               {
-                :bbox => bounding_box.to_s,
-                :width => width.to_i,
-                :height => height.to_i,
-                :zoom => zoom,
-                :number_of_tiles => required_tiles.length,
+                bbox: bounding_box.to_s,
+                width: width.to_i,
+                height: height.to_i,
+                zoom: zoom,
+                number_of_tiles: required_tiles.length
               }
             end
 
@@ -79,13 +78,13 @@ module Decidim
 
             def required_tiles
               required_y_tiles.map do |y|
-                required_x_tiles.map{|x| Tile.new(x: x.floor, y: y.floor, zoom: zoom) }
+                required_x_tiles.map { |x| Tile.new(x: x.floor, y: y.floor, zoom: zoom) }
               end.flatten
             end
 
             def crop_to_size(image)
               distance_from_left = (bounding_box.in_tiles_left - required_x_tiles[0]) * TILE_SIZE
-              distance_from_top  = (bounding_box.in_tiles_top - required_y_tiles[0]) * TILE_SIZE
+              distance_from_top = (bounding_box.in_tiles_top - required_y_tiles[0]) * TILE_SIZE
 
               image.crop "#{width}x#{height}+#{distance_from_left}+#{distance_from_top}"
             end
@@ -93,12 +92,12 @@ module Decidim
             def create_uncropped_image
               image = MiniMagick::Image.read(map_tiles[0])
 
-              uncropped_width  = required_x_tiles.length * TILE_SIZE
+              uncropped_width = required_x_tiles.length * TILE_SIZE
               uncropped_height = required_y_tiles.length * TILE_SIZE
 
               image.combine_options do |c|
-                c.background 'none'
-                c.extent [uncropped_width, uncropped_height].join('x')
+                c.background "none"
+                c.extent [uncropped_width, uncropped_height].join("x")
               end
 
               image
@@ -111,8 +110,8 @@ module Decidim
                 length = required_x_tiles.length
 
                 map_tiles.slice(start, length).each_with_index do |tile, column|
-                  image = image.composite( MiniMagick::Image.read(tile) ) do |c|
-                    c.geometry "+#{ (column) * TILE_SIZE }+#{ (row) * TILE_SIZE }"
+                  image = image.composite(MiniMagick::Image.read(tile)) do |c|
+                    c.geometry "+#{column * TILE_SIZE}+#{row * TILE_SIZE}"
                   end
                 end
 
