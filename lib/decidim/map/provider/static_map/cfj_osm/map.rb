@@ -42,6 +42,15 @@ module Decidim
               to_image.write filename
             end
 
+            def render_as_binary
+              Dir.mktmpdir do |dir|
+                tmpfile = File.join(dir, "map.png")
+                render_map(tmpfile)
+
+                return File.binread(tmpfile)
+              end
+            end
+
             def metadata
               {
                 :bbox => bounding_box.to_s,

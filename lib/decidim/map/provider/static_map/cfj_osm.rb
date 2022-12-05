@@ -24,12 +24,7 @@ module Decidim
               organization: organization
             )
 
-            Dir.mktmpdir do |dir|
-              tmpfile = File.join(dir, "map.png")
-              map.render_map(tmpfile)
-
-              return File.binread(tmpfile)
-            end
+            map.render_as_binary
           end
 
           # @See Decidim::Map::StaticMap#url_params
