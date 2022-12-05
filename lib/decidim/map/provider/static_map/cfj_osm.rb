@@ -14,9 +14,6 @@ module Decidim
             width = options[:width] || 120
             height = options[:height] || 120
 
-            Rails.logger.info("######################image_data###############")
-            Rails.logger.info([latitude, longitude, zoom, width, height])
-
             map = ::Decidim::Map::Provider::StaticMap::CfjOsm::Map.new(
               zoom: zoom,
               lat: latitude,

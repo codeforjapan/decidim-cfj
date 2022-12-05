@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
+require 'mini_magick'
+
 require_relative 'conversion'
 require_relative 'tile_source'
+require_relative 'bounding_box'
 
 module Decidim
   module Map
@@ -28,20 +31,6 @@ module Decidim
               @map_tiles = tile_source.get_tiles(required_tiles)
             end
 
-            def width
-              @width ||= begin
-                           left, bottom, right, top = bounding_box_in_tiles
-                           (right - left) * TILE_SIZE
-                         end
-            end
-
-            def height
-              @height ||= begin
-                            left, bottom, right, top = bounding_box_in_tiles
-                            (bottom - top) * TILE_SIZE
-                          end
-            end
-
             def to_image
               base_image = create_uncropped_image
               base_image = fill_image_with_tiles(base_image)
@@ -55,7 +44,7 @@ module Decidim
 
             def metadata
               {
-                :bbox => bounding_box.join(','),
+                :bbox => bounding_box.to_s,
                 :width => width.to_i,
                 :height => height.to_i,
                 :zoom => zoom,
@@ -65,51 +54,16 @@ module Decidim
 
             private
 
-            def x_tile_space
-              Conversion.lng_to_x(lng, zoom)
-            end
-
-            def y_tile_space
-              Conversion.lat_to_y(lat, zoom)
-            end
-
-            def width_tile_space
-              width / TILE_SIZE
-            end
-
-            def height_tile_space
-              height / TILE_SIZE
-            end
-
             def bounding_box
-              @bounding_box ||= begin
-                                  left      = Conversion.x_to_lng( x_tile_space - (width_tile_space / 2), zoom)
-                                  right     = Conversion.x_to_lng( x_tile_space + ( width_tile_space / 2 ), zoom)
-                                  top       = Conversion.y_to_lat( y_tile_space - ( height_tile_space / 2 ), zoom)
-                                  bottom    = Conversion.y_to_lat( y_tile_space + ( height_tile_space / 2 ), zoom)
-
-                                  [ left, bottom, right, top ]
-                                end
-            end
-
-            def bounding_box_in_tiles
-              left, bottom, right, top = bounding_box
-              [
-                Conversion.lng_to_x(left, zoom),
-                Conversion.lat_to_y(bottom, zoom),
-                Conversion.lng_to_x(right, zoom),
-                Conversion.lat_to_y(top, zoom)
-              ]
+              @bounding_box ||= BoundingBox.new(lng: lng, lat: lat, width: width, height: height, zoom: zoom)
             end
 
             def required_x_tiles
-              left, bottom, right, top = bounding_box_in_tiles
-              Range.new(*[left, right].map(&:floor)).to_a
+              Range.new(*[bounding_box.in_tiles_left, bounding_box.in_tiles_right].map(&:floor)).to_a
             end
 
             def required_y_tiles
-              left, bottom, right, top = bounding_box_in_tiles
-              Range.new(*[top, bottom].map(&:floor)).to_a
+              Range.new(*[bounding_box.in_tiles_top, bounding_box.in_tiles_bottom].map(&:floor)).to_a
             end
 
             def required_tiles
@@ -119,8 +73,8 @@ module Decidim
             end
 
             def crop_to_size(image)
-              distance_from_left = (bounding_box_in_tiles[0] - required_x_tiles[0]) * TILE_SIZE
-              distance_from_top  = (bounding_box_in_tiles[3] - required_y_tiles[0]) * TILE_SIZE
+              distance_from_left = (bounding_box.in_tiles_left - required_x_tiles[0]) * TILE_SIZE
+              distance_from_top  = (bounding_box.in_tiles_top - required_y_tiles[0]) * TILE_SIZE
 
               image.crop "#{width}x#{height}+#{distance_from_left}+#{distance_from_top}"
             end
@@ -156,7 +110,6 @@ module Decidim
 
               image
             end
-
           end
         end
       end
