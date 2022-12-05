@@ -19,7 +19,6 @@ module Decidim
             TILE_SIZE = 256
 
             attr_reader :zoom, :lat, :lng, :width, :height
-            attr_reader :map_tiles
 
             def initialize(zoom:, lat:, lng:, width:, height:, provider:, organization:)
               @lat    = lat.to_f
@@ -27,8 +26,7 @@ module Decidim
               @width  = width.to_f
               @height = height.to_f
               @zoom = zoom.to_i
-              tile_source = TileSource.new(provider, organization)
-              @map_tiles = tile_source.get_tiles(required_tiles)
+              @tile_source = TileSource.new(provider, organization)
             end
 
             def to_image
@@ -62,6 +60,10 @@ module Decidim
             end
 
             private
+
+            def map_tiles
+              @map_tiles ||= @tile_source.get_tiles(required_tiles)
+            end
 
             def bounding_box
               @bounding_box ||= BoundingBox.new(lng: lng, lat: lat, width: width, height: height, zoom: zoom)
