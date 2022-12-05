@@ -50,7 +50,10 @@ Decidim.configure do |config|
         # attribution: -> { I18n.t("tile_layer_attribution") }
       }
     },
-    # static: { url: "https://staticmap.example.org/" }, # optional
+    static: {
+      provider: :cfj_osm,
+      url: "http://www.openstreetmap.org/"
+    }, # use StaticMap::CfjOsm
     geocoding: { host: "nominatim.openstreetmap.org", use_https: true }
     # autocomplete: { url: "https://nominatim.openstreetmap.org/search" }
   }
@@ -242,6 +245,8 @@ Decidim.configure do |config|
   #
   # config.machine_translation_service = "MyTranslationService"
 end
+
+require "decidim/map/provider/static_map/cfj_osm"
 
 Rails.application.config.i18n.available_locales = Decidim.available_locales
 Rails.application.config.i18n.default_locale = Decidim.default_locale
