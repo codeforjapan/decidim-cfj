@@ -58,6 +58,17 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-  
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1-node16
         with:
@@ -69,14 +80,19 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
 
       - name: Build, tag, and push image to Amazon ECR
+        uses: docker/build-push-action@v2
         if: endsWith(github.ref, 'heads/master') || endsWith(github.ref, 'heads/develop')
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: ${{ secrets.AWS_ECR_REPO_NAME }}
-          IMAGE_TAG: ${{ needs.create-app-env.outputs.image-tag }}
+        id: build-image
+        with:
+          push: true
+          tags: ${{ steps.login-ecr.outputs.registry }}/${{ secrets.AWS_ECR_REPO_NAME }}:${{ needs.create-app-env.outputs.image-tag }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
+
+      - name: Move cache
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
 
   deploy:
     runs-on: ubuntu-latest
