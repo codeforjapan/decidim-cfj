@@ -1,15 +1,22 @@
+# frozen_string_literal: true
+
+require_relative 'conversion'
+require_relative 'tile_source'
+
 module Decidim
   module Map
     module Provider
       module StaticMap
         class CfjOsm < ::Decidim::Map::StaticMap
 
+          Tile = Struct.new(:x, :y, :zoom, keyword_init: true)
+
           # static map generator (cf. https://github.com/crofty/mapstatic)
           class Map
             TILE_SIZE = 256
 
             attr_reader :zoom, :lat, :lng, :width, :height
-            attr_accessor :tile_source
+            attr_reader :map_tiles
 
             def initialize(zoom:, lat:, lng:, width:, height:, provider:, organization:)
               @lat    = lat.to_f
@@ -17,7 +24,8 @@ module Decidim
               @width  = width.to_f
               @height = height.to_f
               @zoom = zoom.to_i
-              @tile_source = TileSource.new(provider, organization)
+              tile_source = TileSource.new(provider, organization)
+              @map_tiles = tile_source.get_tiles(required_tiles)
             end
 
             def width
@@ -106,12 +114,8 @@ module Decidim
 
             def required_tiles
               required_y_tiles.map do |y|
-                required_x_tiles.map{|x| Tile.new(x,y,zoom) }
+                required_x_tiles.map{|x| Tile.new(x: x.floor, y: y.floor, zoom: zoom) }
               end.flatten
-            end
-
-            def map_tiles
-              @map_tiles ||= tile_source.get_tiles(required_tiles)
             end
 
             def crop_to_size(image)

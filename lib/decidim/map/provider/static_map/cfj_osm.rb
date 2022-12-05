@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'cfj_osm/conversion'
-require_relative 'cfj_osm/tile'
-require_relative 'cfj_osm/tile_source'
 require_relative 'cfj_osm/map'
 
 module Decidim
