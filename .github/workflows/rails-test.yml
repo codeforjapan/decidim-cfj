@@ -105,6 +105,7 @@ jobs:
           public/packs
           public/assets
           tmp/cache/assets
+          public/packs-test
         key: asset-precompile-cache-${{ hashFiles('ASSETS_VERSION') }}
         restore-keys: |
           asset-precompile-cache-${{ hashFiles('ASSETS_VERSION') }}
