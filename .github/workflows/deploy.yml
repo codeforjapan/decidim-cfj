@@ -1,4 +1,4 @@
-name: Deploy to Elastic Beanstalk
+name: Deploy to ecs
 
 on:
   push:
@@ -8,10 +8,17 @@ on:
     tags:
       - 'v*'
 
+env:
+  AWS_ROLE_ARN: arn:aws:iam::887442827229:role/GithubActions_decidim-cfj-cdk-deploy
+
 jobs:
   create-app-env:
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    permissions:
+      actions: write
+      contents: read
+      id-token: write
     outputs:
       image-tag: ${{ steps.output-app-env.outputs.image-tag }}
       eb-environment-name: ${{ steps.output-app-env.outputs.eb-environment-name }}
@@ -30,28 +37,42 @@ jobs:
         id: set-env-production
         if: endsWith(github.ref, 'heads/master') || contains(github.ref, 'tags/v')
         run: |
-          echo "IMAGE_TAG_PREFIX=production-v0-25-2" >> $GITHUB_ENV
-          echo "EB_ENVIRONMENT_NAME=production-v0-25-2" >> $GITHUB_ENV
+          echo "IMAGE_TAG_PREFIX=prd-v0252" >> $GITHUB_ENV
+          echo "EB_ENVIRONMENT_NAME=prd-v0252" >> $GITHUB_ENV
 
       - name: Output App Env
         id: output-app-env
         run: |
-          echo "::set-output name=image-tag::${IMAGE_TAG_PREFIX}-${GITHUB_SHA::8}"
-          echo "::set-output name=eb-environment-name::${EB_ENVIRONMENT_NAME}"
+          echo "image-tag=${IMAGE_TAG_PREFIX}-${GITHUB_SHA::8}" >> $GITHUB_OUTPUT
+          echo "eb-environment-name=${EB_ENVIRONMENT_NAME}" >> $GITHUB_OUTPUT
 
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 1200
     needs: create-app-env
+    permissions:
+      actions: write
+      contents: read
+      id-token: write
 
     steps:
       - uses: actions/checkout@v3
 
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Cache Docker layers
+        uses: actions/cache@v2
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-  
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1-node16
+        with:
+          role-to-assume: ${{ env.AWS_ROLE_ARN }}
           aws-region: ap-northeast-1
 
       - name: Login to Amazon ECR
@@ -59,19 +80,28 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
 
       - name: Build, tag, and push image to Amazon ECR
+        uses: docker/build-push-action@v2
         if: endsWith(github.ref, 'heads/master') || endsWith(github.ref, 'heads/develop')
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: ${{ secrets.AWS_ECR_REPO_NAME }}
-          IMAGE_TAG: ${{ needs.create-app-env.outputs.image-tag }}
+        id: build-image
+        with:
+          push: true
+          tags: ${{ steps.login-ecr.outputs.registry }}/${{ secrets.AWS_ECR_REPO_NAME }}:${{ needs.create-app-env.outputs.image-tag }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
+
+      - name: Move cache
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
 
   deploy:
     runs-on: ubuntu-latest
     timeout-minutes: 1800
     if: endsWith(github.ref, 'heads/develop') || contains(github.ref, 'tags/v')
+    permissions:
+      actions: write
+      contents: read
+      id-token: write
     needs:
       - create-app-env
       - build
@@ -80,10 +110,9 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v1-node16
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: ${{ env.AWS_ROLE_ARN }}
           aws-region: ap-northeast-1
 
       - name: Login to Amazon ECR
@@ -104,22 +133,43 @@ jobs:
               exit 1
           fi
 
-      - uses: actions/setup-python@master
+      - name: Checkout decidim-cfj cdk
+        uses: actions/checkout@v3
         with:
-          python-version: "3.7"
+          repository: codeforjapan/decidim-cfj-cdk
+          path: decidim-cfj-cdk
 
-      - name: Install awsebcli
-        run: pip install -U awsebcli
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '16'
 
-      - name: Deploy to Elastic Beanstalk
+      - name: Cache node modules
+        id: cache-npm
+        uses: actions/cache@v3
         env:
+          cache-name: cache-node-modules
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: decidim-cfj-cdk
+
+      - name: Install dependencies
+        run: npm install -g aws-cdk
+        working-directory: decidim-cfj-cdk
+
+      - name: cdk deploy
+        run: cdk -c stage=$EB_ENVIRONMENT_NAME -c tag=$IMAGE_TAG deploy --all --require-approval never
+        working-directory: decidim-cfj-cdk
+        env:
+          AWS_DEFAULT_REGION: 'ap-northeast-1'
           EB_ENVIRONMENT_NAME: ${{ needs.create-app-env.outputs.eb-environment-name }}
           IMAGE_TAG: ${{ needs.create-app-env.outputs.image-tag }}
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: ${{ secrets.AWS_ECR_REPO_NAME }}
-        run: |
-          cd deployments
-          cp ${EB_ENVIRONMENT_NAME}/*.config .ebextensions/
-          sed -i -e "s|{RepositoryName}|$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG|g" docker-compose.yml
-          sed -i -e "s|{EBEnvironment}|$EB_ENVIRONMENT_NAME|g" docker-compose.yml
-          eb deploy ${EB_ENVIRONMENT_NAME} --timeout=20 --process

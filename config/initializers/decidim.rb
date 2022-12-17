@@ -36,10 +36,27 @@ Decidim.configure do |config|
   # config.force_ssl = true
 
   # Geocoder configuration
-  # config.geocoder = {
-  #   static_map_url: "https://image.maps.ls.hereapi.com/mia/1.6/mapview",
-  #   here_api_key: Rails.application.secrets.geocoder[:here_api_key]
-  # }
+  config.maps = {
+    provider: :osm,
+    api_key: Rails.application.secrets.maps[:api_key],
+    dynamic: {
+      tile_layer: {
+        url: "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        api_key: true,
+        attribution: %(
+        <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap</a> contributors
+      ).strip
+        # Translatable attribution:
+        # attribution: -> { I18n.t("tile_layer_attribution") }
+      }
+    },
+    static: {
+      provider: :cfj_osm,
+      url: "http://www.openstreetmap.org/"
+    }, # use StaticMap::CfjOsm
+    geocoding: { host: "nominatim.openstreetmap.org", use_https: true }
+    # autocomplete: { url: "https://nominatim.openstreetmap.org/search" }
+  }
 
   # Custom resource reference generator method. Check the docs for more info.
   # config.reference_generator = lambda do |resource, component|
@@ -228,6 +245,8 @@ Decidim.configure do |config|
   #
   # config.machine_translation_service = "MyTranslationService"
 end
+
+require "decidim/map/provider/static_map/cfj_osm"
 
 Rails.application.config.i18n.available_locales = Decidim.available_locales
 Rails.application.config.i18n.default_locale = Decidim.default_locale

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "../lib/slack_chat_messenger"
+
 # Puma can serve each request in a thread from an internal thread pool.
 # The `threads` method setting takes two numbers: a minimum and maximum.
 # Any libraries that use thread pools should be configured to match
@@ -19,17 +21,6 @@ environment ENV.fetch("RAILS_ENV", "development")
 
 # Specifies the `pidfile` that Puma will use.
 pidfile ENV.fetch("PIDFILE", "tmp/pids/server.pid")
-
-class SlackChatMessenger
-  def self.notify(channel:, message:)
-    unless channel && message
-      Rails.logger.error "Cannot send messages to slack!"
-      return
-    end
-    client = Slack::Web::Client.new
-    client.chat_postMessage(channel: channel, text: message, as_user: true)
-  end
-end
 
 before_fork do
   PumaWorkerKiller.config do |config|
