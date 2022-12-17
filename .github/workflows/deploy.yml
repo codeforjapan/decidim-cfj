@@ -90,6 +90,7 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
 
       - name: Move cache
+        if: endsWith(github.ref, 'heads/master') || endsWith(github.ref, 'heads/develop')
         run: |
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
