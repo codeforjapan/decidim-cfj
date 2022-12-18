@@ -40,24 +40,10 @@ export function destroyQuillEditor(container) {
 
 export function createQuillEditor(container) {
   // decidim-cfj custom start
-  let debug = false;
-  const Logger = {
-    prefixString() {
-      return `</> quill-html-edit-button: `;
-    },
-    get log() {
-      if (!debug) {
-        return (...any) => {};
-      }
-      const boundLogFn = console.log.bind(console, this.prefixString());
-      return boundLogFn;
-    }
-  };
-
   class HtmlEditButton {
     constructor(quill, options) {
-      debug = options && options.debug;
-      Logger.log("logging enabled");
+      let debug = options && options.debug;
+      console.log("logging enabled");
       // Add button to all quill toolbar instances
       const toolbarModule = quill.getModule("toolbar");
       if (!toolbarModule) {
@@ -213,7 +199,7 @@ export function createQuillEditor(container) {
 
       result += char;
     }
-    Logger.log("formatHTML", {
+    console.dir({
       before: code,
       after: result
     });
