@@ -177,16 +177,22 @@ ja:
     messaging:
       conversation_mailer:
         comanagers_new_conversation:
+          greeting: "%{recipient}さん、こんにちは。"
           outro: ''
         comanagers_new_message:
+          greeting: "%{recipient}さん、こんにちは。"
           outro: ''
         new_conversation:
+          greeting: "%{recipient}さん、こんにちは。"
           outro: ''
         new_group_conversation:
+          greeting: "%{recipient}さん、こんにちは。"
           outro: ''
         new_group_message:
+          greeting: "%{recipient}さん、こんにちは。"
           outro: ''
         new_message:
+          greeting: "%{recipient}さん、こんにちは。"
           outro: ''
 
     moderations:
