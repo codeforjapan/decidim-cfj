@@ -60,11 +60,6 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 
   https://github.com/codeforjapan/decidim-cfj/pull/415 で追加されたファイル。ディベートでconclusionsに空文字列を許すための修正。
 
-* `app/forms/decidim/proposals/proposal_wizard_create_step_form.rb`, `app/forms/decidim/proposals/admin/proposal_form.rb`
-
-  https://github.com/codeforjapan/decidim-cfj/issues/23 の対応のために追加されたもの。対応するPRは https://github.com/codeforjapan/decidim-cfj/pull/60 https://github.com/codeforjapan/decidim-cfj/pull/163 です。
-  EtiquetteValidatorは修正が入っているので戻せるかもしれませんが、8文字程度のタイトルでも許可するようにする修正はフィードバックできていません。
-
 * `decidim-comments`
 
   https://github.com/codeforjapan/decidim-cfj/issues/319 などの対応のために追加されたディレクトリ(gem)。
