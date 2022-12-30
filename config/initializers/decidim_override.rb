@@ -9,8 +9,8 @@ Rails.application.config.to_prepare do
   # Decidim::Proposals::ProposalWizardCreateStepForm
   #
   # minimum title length should be 8
-  Decidim::Proposals::ProposalWizardCreateStepForm.validators.each_with_index do |validator, idx|
-    if validator.class == ActiveModel::Validations::LengthValidator &&
+  Decidim::Proposals::ProposalWizardCreateStepForm.validators.each do |validator|
+    if validator.class == ActiveModel::Validations::LengthValidator && # rubocop:disable Style/Next
        validator.attributes.include?(:title)
 
       fixed_options = validator.options.dup
@@ -24,8 +24,8 @@ Rails.application.config.to_prepare do
   # Decidim::Proposals::Admin::ProposalForm
   #
   # minimum title length should be 8
-  Decidim::Proposals::Admin::ProposalForm.validators.each_with_index do |validator, idx|
-    if validator.class == ActiveModel::Validations::LengthValidator &&
+  Decidim::Proposals::Admin::ProposalForm.validators.each do |validator|
+    if validator.class == ActiveModel::Validations::LengthValidator && # rubocop:disable Style/Next
        validator.attributes.first.match?(/^title_/)
 
       fixed_options = validator.options.dup
