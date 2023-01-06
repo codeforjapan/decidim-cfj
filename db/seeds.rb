@@ -11,19 +11,6 @@
 
 require_relative "../lib/monkey_patching_faker"
 
-# Seeds of DecidimAwesome 0.7.0 and 0.7.2 support Faker 2.x, not 1.9.x.
-# So Decidim 0.23.5 (using Faker 1.9.6) should ignore seeds of them.
-#
-map_component = Decidim.find_component_manifest("awesome_map")
-map_component.seeds do |participatory_space|
-  # noop
-end
-
-iframe_component = Decidim.find_component_manifest("awesome_iframe")
-iframe_component.seeds do |participatory_space|
-  # noop
-end
-
 Decidim.seed!
 
 if !Rails.env.production? || ENV["SEED"]
