@@ -4,6 +4,7 @@ namespace :delete do
   desc "Destroy all components for a given organization"
   task destroy_all: [
     :destroy_all_comments,
+    :destroy_all_attachments,
     :destroy_all_accountability,
     :destroy_all_budgets,
     :destroy_all_proposals,
@@ -49,6 +50,25 @@ namespace :delete do
     end
 
     puts "Finish destroy_all_accountability of #{ENV["DECIDIM_ORGANIZATION_NAME"]}"
+  end
+
+  desc "Destroy all attachments for a given organization"
+  task destroy_all_attachments: :environment do
+    puts "Start destroy_all_attachments of #{ENV["DECIDIM_ORGANIZATION_NAME"]}"
+
+    organization = Decidim::Organization.find_by(name: ENV["DECIDIM_ORGANIZATION_NAME"])
+
+    unless organization
+      puts "Organization not found: '#{ENV["DECIDIM_ORGANIZATION_NAME"]}'"
+      puts "Usage: DECIDIM_ORGANIZATION_NAME=<organization name> rails delete::destroy_all_attachments"
+      return
+    end
+
+    Decidim::Attachment.transaction do
+      Decidim::DestroyAllAttachments.call(organization)
+    end
+
+    puts "Finish destroy_all_attachments of #{ENV["DECIDIM_ORGANIZATION_NAME"]}"
   end
 
   desc "Destroy all budgets for a given organization"
