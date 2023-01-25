@@ -48,7 +48,7 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
   https://github.com/codeforjapan/decidim-cfj/pull/366 で追加されたファイル。 https://github.com/decidim/decidim/pull/8940 の修正をバックポートしたもの。
   v0.26にあげれば不要になるはずです。
 
-* `app/controllers/concerns/decidim/proposals/cookie_orderable.rb`
+* `app/controllers/concerns/decidim/proposals/cfj_orderable.rb`
 
   https://github.com/codeforjapan/decidim-cfj/pull/331 で追加されたファイル。提案コンポーネントのユーザー用一覧画面でのソート順をクッキーを使って保持できるようにするもの。
 
