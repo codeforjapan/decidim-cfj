@@ -16,7 +16,6 @@ module Decidim
 
       def order_by_cookie
         cookie = cookies[order_cookie_name]
-        param = params[:orderable]
         cookie if cookie && available_orders.include?(cookie)
       end
 
