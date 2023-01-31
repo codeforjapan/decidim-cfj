@@ -6,7 +6,7 @@ module Decidim
       private
 
       def default_order
-         order_by_cookie || super
+        order_by_cookie || super
       end
 
       def order_by_cookie
