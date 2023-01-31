@@ -2,16 +2,11 @@
 
 module Decidim
   module Proposals
-    module CfjOrderable
+    module CookieOrderable
       private
 
       def default_order
-        order_by_query_param || order_by_cookie || super
-      end
-
-      def order_by_query_param
-        param = params[:orderable]
-        param if param && available_orders.include?(param)
+         order_by_cookie || super
       end
 
       def order_by_cookie

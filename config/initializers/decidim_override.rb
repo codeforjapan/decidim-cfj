@@ -4,7 +4,7 @@ Rails.application.config.to_prepare do
   # Override Decidim::Orderable
   #
   # Use cookies to store default orders
-  Decidim::Proposals::ProposalsController.prepend Decidim::Proposals::CfjOrderable
+  Decidim::Proposals::ProposalsController.prepend Decidim::Proposals::CookieOrderable
 
   # Decidim::Proposals::ProposalWizardCreateStepForm
   #
