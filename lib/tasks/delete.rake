@@ -15,7 +15,10 @@ namespace :delete do
     :destroy_all_surveys,
     :destroy_all_assemblies,
     :destroy_all_participatory_processes,
-    :destroy_all_users
+    :destroy_all_areas,
+    :destroy_all_users,
+    :destroy_organization,
+    :destroy_all_messages
   ]
 
   desc "Destroy all comments for a given organization"
@@ -186,6 +189,20 @@ namespace :delete do
     puts "Finish destroy_all_participatory_processes of #{ENV["DECIDIM_ORGANIZATION_NAME"]}"
   end
 
+  desc "Destroy all areas for a given organization"
+  task destroy_all_areas: :environment do
+    puts "Start destroy_all_areas of #{ENV["DECIDIM_ORGANIZATION_NAME"]}"
+
+    organization = decidim_find_organization
+    return unless organization
+
+    Decidim::Area.transaction do
+      Decidim::Areas::DestroyAllAreas.call(organization)
+    end
+
+    puts "Finish destroy_all_areas of #{ENV["DECIDIM_ORGANIZATION_NAME"]}"
+  end
+
   desc "Destroy all users for a given organization"
   task destroy_all_users: :environment do
     puts "Start destroy_all_users of #{ENV["DECIDIM_ORGANIZATION_NAME"]}"
@@ -204,6 +221,31 @@ namespace :delete do
     end
 
     puts "Finish destroy_all_users of #{ENV["DECIDIM_ORGANIZATION_NAME"]}"
+  end
+
+  desc "Destroy a given organization"
+  task destroy_organization: :environment do
+    puts "Start destroy_organization of #{ENV["DECIDIM_ORGANIZATION_NAME"]}"
+
+    organization = decidim_find_organization
+    return unless organization
+
+    Decidim::Organization.transaction do
+      Decidim::Organizations::DestroyOrganization.call(organization)
+    end
+
+    puts "Finish destroy_organization of #{ENV["DECIDIM_ORGANIZATION_NAME"]}"
+  end
+
+  desc "Destroy all messages for a given organization"
+  task destroy_all_messages: :environment do
+    puts "Start destroy_all_messages"
+
+    Decidim::Messaging::Message.transaction do
+      Decidim::Messaging::DestroyAllMessages.call
+    end
+
+    puts "Finish destroy_all_messages"
   end
 end
 

@@ -19,6 +19,10 @@ module Decidim
       def call
         Decidim::Proposals::Proposal.find_each do |proposal|
           if proposal.organization == organization
+            proposal.amendments.each do |amendment|
+              puts "destroy amendment id: #{amendment.id}"
+              amendment.destroy!
+            end
             puts "destroy proposal id: #{proposal.id}, for component id: #{proposal.decidim_component_id}"
             proposal.destroy!
           end

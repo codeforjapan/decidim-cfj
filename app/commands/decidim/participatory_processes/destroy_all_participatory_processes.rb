@@ -28,7 +28,7 @@ module Decidim
         Decidim::ContentBlock.where(organization: organization).destroy_all
         Decidim::Scope.where(organization: organization).destroy_all
         Decidim::ScopeType.where(organization: organization).destroy_all
-        Decidim::StaticPage.where(organization: organization).destroy_all
+        Decidim::StaticPage.where(organization: organization).delete_all ## some static_pages are not removed by `destroy_all`
         Decidim::StaticPageTopic.where(organization: organization).destroy_all
         Decidim::SearchableResource.where(organization: organization).destroy_all
         Decidim::ContextualHelpSection.where(organization: organization).destroy_all
