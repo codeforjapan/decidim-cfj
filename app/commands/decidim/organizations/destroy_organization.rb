@@ -24,6 +24,8 @@ module Decidim
           end
         end
 
+        Decidim::ActionLog.where(organization: organization).delete_all
+
         organization.destroy!
 
         broadcast(:ok)
