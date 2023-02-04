@@ -37,8 +37,8 @@ jobs:
         id: set-env-production
         if: endsWith(github.ref, 'heads/master') || contains(github.ref, 'tags/v')
         run: |
-          echo "IMAGE_TAG_PREFIX=production-v0-25-2" >> $GITHUB_ENV
-          echo "EB_ENVIRONMENT_NAME=production-v0-25-2" >> $GITHUB_ENV
+          echo "IMAGE_TAG_PREFIX=prd-v0252" >> $GITHUB_ENV
+          echo "EB_ENVIRONMENT_NAME=prd-v0252" >> $GITHUB_ENV
 
       - name: Output App Env
         id: output-app-env
@@ -90,6 +90,7 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
 
       - name: Move cache
+        if: endsWith(github.ref, 'heads/master') || endsWith(github.ref, 'heads/develop')
         run: |
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache

@@ -19,19 +19,27 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 
   QuillエディタでHTML編集ができるようにするために追加されたファイル。現在はDecidim Awesome対応になっています(decidim_awesome内の`app/packs/src/decidim/decidim_awesome/editors/editor.js`がベースになっています)。
 
-* `app/packs/stylesheets/buttons.scss`
+* `app/packs/stylesheets/decidim/cfj/buttons.scss`
 
   `https://github.com/codeforjapan/decidim-cfj/issues/46` の対応で `https://github.com/codeforjapan/decidim-cfj/pull/96` で追加しています。
 
-* `app/packs/stylesheets/comment_content.scss`
+* `app/packs/stylesheets/decidim/cfj/comment_content.scss`
 
   https://github.com/codeforjapan/decidim-cfj/pull/337 で追加されたファイル。コメント本文の改行をCSSで制御するためのものです。
 
-* `app/packs/stylesheets/forms.scss`
+* `app/packs/stylesheets/decidim/cfj/forms.scss`
 
   https://github.com/codeforjapan/decidim-cfj/pull/94 で追加されたファイル。職業欄の見た目を修正するためのもの。
 
-* `app/packs/stylesheets/search.scss`
+* `app/packs/stylesheets/decidim/cfj/media_print.scss`
+
+  https://github.com/codeforjapan/decidim-cfj/pull/460 で追加されたファイル。印刷用のCSSファイル。
+
+* `app/packs/stylesheets/decidim/cfj/ql_html_editor.scss`
+
+  https://github.com/codeforjapan/decidim-cfj/pull/469 で追加されたファイル。Quill HTML Editor用のCSSファイル。
+
+* `app/packs/stylesheets/decidim/cfj/search.scss`
 
   https://github.com/codeforjapan/decidim-cfj/pull/348 で追加されたファイル。グローバル検索が日本語では機能していないため削除したもの。
 
@@ -51,11 +59,6 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 * `app/forms/decidim/debates/close_debate_form.rb`
 
   https://github.com/codeforjapan/decidim-cfj/pull/415 で追加されたファイル。ディベートでconclusionsに空文字列を許すための修正。
-
-* `app/forms/decidim/proposals/proposal_wizard_create_step_form.rb`, `app/forms/decidim/proposals/admin/proposal_form.rb`
-
-  https://github.com/codeforjapan/decidim-cfj/issues/23 の対応のために追加されたもの。対応するPRは https://github.com/codeforjapan/decidim-cfj/pull/60 https://github.com/codeforjapan/decidim-cfj/pull/163 です。
-  EtiquetteValidatorは修正が入っているので戻せるかもしれませんが、8文字程度のタイトルでも許可するようにする修正はフィードバックできていません。
 
 * `decidim-comments`
 
@@ -97,3 +100,8 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 * `decidim-user_extension/app/views/decidim/account/show.html.erb`, `decidim-user_extension/app/views/decidim/account/_user_extension.html.erb`
 
 `decidim-core/app/views/decidim/account/show.html.erb` を上書きしています。
+
+* `lib/decidim/map/provider/static_map`以下
+
+`Decidim::Map::Provider::StaticMap::CfjOsm`という独自のstatic map providerを定義するためのものです。
+`config/initializers/decidim.rb`のconfig.maps以下のstaticのところで導入されています。
