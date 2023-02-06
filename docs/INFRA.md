@@ -11,5 +11,5 @@ CDKは　[decidim-cfj-cdk](https://github.com/codeforjapan/decidim-cfj-cdk)に�
 
 # 実行方法
 こちらのドキュメントをご覧ください
-[Document](https://github.com/codeforjapan/decidim-cfj-cdk/blob/main/docs/build_dev.md)
+[検証環境構築手順](https://github.com/codeforjapan/decidim-cfj-cdk/blob/main/docs/build_dev.md)
 
