@@ -21,7 +21,6 @@ module Decidim
       def detect_order(candidate)
         detected = available_orders.detect { |order| order == candidate }
         cookies[order_cookie_name] = detected if detected
-
         detected
       end
     end

@@ -1,39 +1,25 @@
-# ※GUIでElastic Beanstalkの設定をいじらないでください。デプロイで戻ります。
-
-Elastic Beanstalkの設定はコードで管理されています。
+aws環境の設定はAWS CDKのコードで管理されています。
 
 インスタンスタイプやオートスケールの設定が違うため、stagingとproductionで一部ファイルが別です。それ以外の共通の設定は同じファイルを使っているので気を付けて下さい。
 
-共通: [deployments/.ebextensions](/deployments/.ebextensions)
-
-staging: [deployments/staging](/deployments/staging)
-production: [deployments/production](/deployments/production)
+staging: [config/staging](https://github.com/codeforjapan/decidim-cfj-cdk/blob/main/config/staging.json)
+production: [config/production](https://github.com/codeforjapan/decidim-cfj-cdk/blob/main/config/prd-v0252.json)
 
 デプロイの際に上記の設定ファイルを元にデプロイが実行されます。コードでの設定がある場合、インフラも含め反映されます。
 
 急ぎで、GUIで変更することはあると思います。しかし、GUIだけ変更してソースコードを変更しないと、デプロイの際に戻って事故の原因になります。なので、ソースコードに反映してください。
 
-GUIの設定とコードの書き方は、[公式](https://docs.aws.amazon.com/ja_jp/elasticbeanstalk/latest/dg/command-options-general.html#command-options-general-elasticbeanstalkapplicationenvironment)　を参考にしてください。
-
-環境変数は環境別に設定する値だけ、[deployments/production/00_env_options.config](/deployments/production/00_env_options.config) or [deployments/staging/00_env_options.config](/deployments/staging/00_env_options.config) に記載して下さい。
-
 秘密鍵などのSSM経由で参照される値は、デプロイ時に動的に展開されます。
-
-```
-{{resolve:ssm:ssmのパラメータの名前:バージョン}}
-```
-
-https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/dynamic-references.html
 
 # GitHubからデプロイ
 
 ワークフローの設定：[.github/workflows/deploy.yml](/.github/workflows/deploy.yml)
-デプロイの基本設定: [deployments/](/deployments/)
+デプロイの基本設定: [decidim-cfj-cdk](https://github.com/codeforjapan/decidim-cfj-cdk)
 
 1. ECRにログイン
-1. Dockerコンテナをbuild
-1. short commit hashを含む環境ごとのタグで、ECRにDockerイメージをpush
-1. elastic beanstalkに該当のイメージを指定してデプロイ
+2. Dockerコンテナをbuild
+3. short commit hashを含む環境ごとのタグで、ECRにDockerイメージをpush
+4. ECSに該当のイメージを指定してデプロイ
 
 Dockerイメージのタグ例: staging-dfasfste
 
@@ -69,90 +55,140 @@ developブランチにpushすると自動でデプロイされます。
 普通にデプロイするのと同様に戻したい先commitに対してタグを打ちます。
 バグの場合、バグが発生したcommitの1つ前のcommitにたいしてタグを打ちます。
 
-コンテナイメージはbuild済みなので、すぐにeb deployが実行されます。
+コンテナイメージはbuild済みなので、すぐにcdk deployが実行されます。
 
 ### staging
 
 revetしてdevelopブランチにpushしてください。
 
-# CfJ Decidim AWS への Install（Beanstalk 編）
+# CfJ Decidim AWS への Install（cdk 編）
 
-## 1. Install AWS tools and setup user
+# 検証環境構築手順
 
-[こちらの手順書](https://platoniq.github.io/decidim-install/decidim-aws/) の手順2を実施
+# 0. decidim-cfj-cdkのリポジトリの準備
+手元に [decidim-cfj-cdk](https://github.com/codeforjapan/decidim-cfj-cdk)のリポジトリをクローンし、以下の作業は全てそのディレクトリ以下で行う
 
-## 2. Get Decidim source code
+# 1. AWS (Amazon Web Services) へのアクセスする準備
 
-```bash
-git clone https://github.com/codeforjapan/decidim-cfj.git
+## 1-1. config/dev.json の作成
+
+[dev.json](https://github.com/codeforjapan/decidim-cfj-cdk/blob/main/config/dev.json) ファイルを作成し、[config](https://github.com/codeforjapan/decidim-cfj-cdk/blob/main//config) ディレクトリ下に配置。
+
+## 1-2. credentials fileの作成
+
+[設定ファイルと認証情報ファイルの設定](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/cli-configure-files.html)を参考に、credentialsファイルを作成する。
+
+
+今回は、`~/.aws/credentials`に以下のようprofileが`decidim`になるよう作成。（違う名前にした場合、以下読み変えが必要です。）
+```
+[decidim]
+aws_access_key_id=YOUR_ACCESS_KEY
+aws_secret_access_key=YOUR_SECRET_ACCESS_KEY
 ```
 
-## 3. Bundle install
+# 2. SESの設定
+[Amazon Simple Email Service を設定する](https://docs.aws.amazon.com/ja_jp/ses/latest/dg/setting-up.html)や、[Setup email](https://docs.aws.amazon.com/ja_jp/ses/latest/dg/setting-up.html)を参考に、AWS SESの準備を行う。
 
-Ruby 環境はインストール済とする(ruby 2.7.4p191)
+# 2-1. [dev.json](https://github.com/codeforjapan/decidim-cfj-cdk/blob/main//config/dev.json) を編集する
+[dev.json](https://github.com/codeforjapan/decidim-cfj-cdk/blob/main//config/dev.json)の’smtpDomain’を用意したドメインに書き換える。
 
-```bash
-cd decidim-cfj
-bundle install
+
+# 3. パラメータストアに環境変数を登録する
+
+# 3-1 シークレットの作成
+AWS Systems Manager のパラメータストアで以下のようなパラメータを手動で作成する。
+
+```
+  /decidim-cfj/${props.stage}/AWS_ACCESS_KEY_ID
+  /decidim-cfj/${props.stage}/AWS_SECRET_ACCESS_KEY
+  /decidim-cfj/${props.stage}/AWS_CLOUD_FRONT_END_POINT
+  /decidim-cfj/${props.stage}/RDS_DB_NAME
+  /decidim-cfj/${props.stage}/RDS_USERNAME
+  /decidim-cfj/${props.stage}/RDS_PASSWORD
+  /decidim-cfj/${props.stage}/SECRET_KEY_BASE
+  /decidim-cfj/${props.stage}/NEW_RELIC_LICENSE_KEY
+  /decidim-cfj/${props.stage}/SMTP_ADDRESS
+  /decidim-cfj/${props.stage}/SMTP_USERNAME
 ```
 
-## 4. Elastic Beanstalk に 環境をセットアップする
+# 4. ECRの準備
 
-1. [docker-compose.yml](/deployments/docker-compose.yml)で`{RepositoryName}`をデプロイしたいECRのイメージパスに修正。
-1. [docker-compose.yml](/deployments/docker-compose.yml)で`{EBEnvironment}`をデプロイする環境名に修正。
-1. 作成したい環境の設定をコピー。
+# 4-1 プライベートリポジトリを作成する
+[プライベートリポジトリを作成する](https://docs.aws.amazon.com/ja_jp/AmazonECR/latest/userguide/repository-create.html) を参考に AWS ECRのリポジトリを用意する。
 
-[deployments/.elasticbeanstalk/config.yml](/deployments/.elasticbeanstalk/config.yml)に設定があるので、基本的に何も聞かれないはずです。
+# 4-2 用意したリポジトリにdecidim の docker imageをpushする
+手元の環境で、[decidim-cfj](https://github.com/codeforjapan/decidim-cfj)のdocker imageをbuildし、
+[Docker イメージをプッシュする](https://docs.aws.amazon.com/ja_jp/AmazonECR/latest/userguide/docker-push-ecr-image.html)を参考に
+buildしたdocker imageを用意したリポジトリにpushする。
 
+# 4-3 [dev.json](https://github.com/codeforjapan/decidim-cfj-cdk/blob/main//config/dev.json) を編集する
+[dev.json](https://github.com/codeforjapan/decidim-cfj-cdk/blob/main//config/dev.json)の’repository’部分に用意したECRリポジトリ名、’tag’部分にpushした際のtagに書き換える。
 
-```bash
-cd deployments
+# 5. 証明書の準備
 
-# production
-cp production/*.config .ebextensions/
-# staging(台数とかログの保持期間が小さい)
-cp staging/*.config .ebextensions/
+# 5-1 任意のドメインをroute53に用意し、aws certificate managerで証明書を発行する
+[証明書を発行して管理する](https://docs.aws.amazon.com/ja_jp/acm/latest/userguide/gs.html)を参考に証明書を発行、Arnをメモする
 
-eb create production --process
+# 5-2 [dev.json](https://github.com/codeforjapan/decidim-cfj-cdk/blob/main//config/dev.json) を編集する
+[dev.json](https://github.com/codeforjapan/decidim-cfj-cdk/blob/main//config/dev.json)の’certificates’部分にメモしたArnに書き換える。
+
+# 6. デプロイ
+
+## 6-1. cdk bootstrap の実行
+
+使用するリージョンごとに一回実行する必要がある。2回目以降は不要。
+
+```console
+$ npx cdk --context stage=dev --profile decidim bootstrap
 ```
 
-最後エラーで終わるがOK
+## 6-2. デプロイ前の差分確認
 
-## 4. Secret Key Base を設定
+どんなリソースが作成されるのかを確認できる。
 
-```bash
-eb setenv SECRET_KEY_BASE=$(bin/rails secret)
+```console
+$ npx cdk --context stage=dev --profile decidim diff  
 ```
 
-## 5. Postgres データベースを作成する
+## 6-3. デプロイ実行
 
-必要な設定を行い、DBを立ち上げる
+```console
+$ npx cdk --context stage=dev --profile decidim deploy --all  --require-approval never
+```
 
-その後`eb deploy`を実行
+上記コマンドが成功すれば、デプロイは成功です。
 
-## 6. CNAME 設定とSSL設定
+## 6-4. デプロイ確認
 
-Elastic Beanstalk のインスタンスをAレコードとして割り当てる
+`devdecidimStack` とCloudFormationのスタック一覧から[検索](https://ap-northeast-1.console.aws.amazon.com/cloudformation/home?region=ap-northeast-1#/stacks?filteringStatus=active&filteringText=devdecidimStack&viewNested=true&hideStacks=false&stackId=)し、以下のように各Stackに`CREATE_COMPLETE`が表示されていることを確認してください。
 
-ロードバランサの設定をする（手順[6.2 Configure SSL](https://platoniq.github.io/decidim-install/decidim-aws/#62-configure-ssl) ）
+# 7. 初回デプロイ
 
-## 7. 最初のユーザを作る
+## 7.1 環境へのアクセス
+```console
+$ aws ecs execute-command --region ap-northeast-1 --cluster devDecidimCluster --task ${タスク名} --container appContainer --interactive --command "/bin/ash" --profile decidim
+```
 
-[6.3 Create the first admin user](https://platoniq.github.io/decidim-install/decidim-aws/#63-create-the-first-admin-user)
-に従う(root で)
+## 7.2 migrateとseedの実行
+```console
+$ ./bin/rails db:migrate
+$ ./bin/rails db:seed SEED=true
+```
 
-## 8. SES の設定をする
+## 7.3 環境へのアクセス
+``dev-decidim-alb-origin.${指定したドメイン}``で管理画面にアクセス
 
-[6.4 Setup email](https://platoniq.github.io/decidim-install/decidim-aws/#64-setup-email)
+### 8. 別のドメインを追加する場合
 
-## 9. Redis の設定をする
+## cloudfrontの代替ドメイン名に対象のドメインを追加
+cloudfrontの管理画面に行き作成したcloudfrontの管理画面で代替ドメインに追加したいドメインを加えて保存する
 
-[6.5 Configure the job system with Sidekiq and Redis](https://platoniq.github.io/decidim-install/decidim-aws/#65-configure-the-job-system-with-sidekiq-and-redis)
+## decidimの管理画面にアクセスし、対象の組織にドメインを設定する
+設定したい組織にドメインを設定して、対象のドメインいアクセスする
 
-sidekiqの設定をする必要はありません。dockerでデプロイされています。
+手順を変えるとエラーでアクセスに失敗します。
 
-stagingはcloud formationで作成しています。 [./INFRA.md#Redis](./INFRA.md#Redis)
+### seedの実行について
+decidimではproduction環境のseedは以下のenvをつけて実行する必要があります
+SEED=true bundle exec rake db:seed
 
-## 10. S3 の設定をする
-
-[6.6 File storage](https://platoniq.github.io/decidim-install/decidim-aws/#66-file-storage)
