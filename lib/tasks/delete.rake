@@ -13,11 +13,11 @@ namespace :delete do
     :destroy_all_meetings,
     :destroy_all_pages,
     :destroy_all_surveys,
+    :destroy_all_users,
     :destroy_all_assemblies,
     :destroy_all_participatory_processes,
     :destroy_all_areas,
     :destroy_all_newsletters,
-    :destroy_all_users,
     :destroy_organization,
     :destroy_all_messages
   ]
