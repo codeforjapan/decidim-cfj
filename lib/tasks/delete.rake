@@ -16,6 +16,7 @@ namespace :delete do
     :destroy_all_assemblies,
     :destroy_all_participatory_processes,
     :destroy_all_areas,
+    :destroy_all_newsletters,
     :destroy_all_users,
     :destroy_organization,
     :destroy_all_messages
@@ -201,6 +202,20 @@ namespace :delete do
     end
 
     puts "Finish destroy_all_areas of #{ENV["DECIDIM_ORGANIZATION_NAME"]}"
+  end
+
+  desc "Destroy all newsletters for a given organization"
+  task destroy_all_newsletters: :environment do
+    puts "Start destroy_all_newsletters of #{ENV["DECIDIM_ORGANIZATION_NAME"]}"
+
+    organization = decidim_find_organization
+    return unless organization
+
+    Decidim::Newsletter.transaction do
+      Decidim::Newsletter.where(organization: organization).destroy_all
+    end
+
+    puts "Finish destroy_all_newsletters of #{ENV["DECIDIM_ORGANIZATION_NAME"]}"
   end
 
   desc "Destroy all users for a given organization"

@@ -26,6 +26,8 @@ module Decidim
 
         Decidim::ActionLog.where(organization: organization).delete_all
 
+        Decidim::AssembliesSetting.where(organization: organization).delete_all
+
         organization.destroy!
 
         broadcast(:ok)
