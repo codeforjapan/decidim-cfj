@@ -18,7 +18,7 @@ module Decidim
       # Returns nothing.
       def call
         Decidim::Comments::Comment.find_each do |comment|
-          if comment.organization == organization
+          if comment&.organization == organization
             puts "destroy comment id: #{comment.id}, for #{comment.decidim_root_commentable_type}:#{comment.decidim_root_commentable_id}"
             comment.destroy!
           end
