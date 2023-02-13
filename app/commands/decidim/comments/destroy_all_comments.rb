@@ -20,20 +20,20 @@ module Decidim
         begin
           deletable_ids = []
           Decidim::Comments::Comment.find_each(batch_size: 100) do |comment|
-            begin
-              if comment&.organization == organization # rubocop:disable Style/IfUnlessModifier
-                deletable_ids << comment.id
-              end
-            rescue Module::DelegationError
-              # If commentable of comment is nil, the comment should be removed
+            if comment&.organization == organization # rubocop:disable Style/IfUnlessModifier
               deletable_ids << comment.id
             end
+          rescue Module::DelegationError
+            # If commentable of comment is nil, the comment should be removed
+            deletable_ids << comment.id
           end
 
           deletable_ids.reverse.each_slice(50) do |ids|
             Decidim::Comments::Comment.where(id: ids).order(id: :desc).each do |comment|
               puts "destroy comment id: #{comment.id}, for #{comment.decidim_root_commentable_type}:#{comment.decidim_root_commentable_id}"
               comment.destroy!
+            rescue Module::DelegationError
+              # skip
             end
           end
         rescue Exception => e # rubocop:disable Lint/RescueException
