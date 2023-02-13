@@ -227,7 +227,7 @@ namespace :delete do
 
     Decidim::User.transaction do
       form = OpenStruct.new(valid?: true, delete_reason: "Testing")
-      Decidim::User.where(organization: organization).find_each do |user|
+      Decidim::User.where(organization: organization).find_each(batch_size: 100) do |user|
         Decidim::Gamifications::DestroyAllBadges.call(organization, user)
         Decidim::Authorization.where(user: user).destroy_all
         puts "destroy user id: #{user.id}"
@@ -271,7 +271,7 @@ def decidim_find_organization
 
   unless organization
     puts "Organization not found: '#{ENV["DECIDIM_ORGANIZATION_NAME"]}'"
-    puts "Usage: DECIDIM_ORGANIZATION_NAME=<organization name> rails delete::destroy_all_pages"
+    puts "Usage: DECIDIM_ORGANIZATION_NAME=<organization name> rails delete::destroy_all"
     return
   end
 
