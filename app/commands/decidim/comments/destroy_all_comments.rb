@@ -20,7 +20,12 @@ module Decidim
         begin
           deletable_ids = []
           Decidim::Comments::Comment.find_each(batch_size: 100) do |comment|
-            if comment&.organization == organization # rubocop:disable Style/IfUnlessModifier
+            begin
+              if comment&.organization == organization # rubocop:disable Style/IfUnlessModifier
+                deletable_ids << comment.id
+              end
+            rescue Module::DelegationError
+              # If commentable of comment is nil, the comment should be removed
               deletable_ids << comment.id
             end
           end
