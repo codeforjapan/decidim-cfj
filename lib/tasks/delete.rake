@@ -237,6 +237,8 @@ namespace :delete do
     Decidim::User.where(organization: organization).find_each(batch_size: 100) do |user|
       puts "destroy user id: #{user.id}"
       Decidim::DestroyAccount.call(user, form)
+    rescue StandardError => e
+      puts "Decidim::DestroyAccount failed: #{e.inspect}"
     end
 
     puts "Finish destroy_all_users of #{ENV["DECIDIM_ORGANIZATION_NAME"]}"

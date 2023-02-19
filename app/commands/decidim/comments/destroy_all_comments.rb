@@ -32,8 +32,11 @@ module Decidim
             Decidim::Comments::Comment.where(id: ids).order(id: :desc).each do |comment|
               puts "destroy comment id: #{comment.id}, for #{comment.decidim_root_commentable_type}:#{comment.decidim_root_commentable_id}"
               comment.destroy!
-            rescue Module::DelegationError
-              # skip
+            rescue Module::DelegationError => e
+              puts "DelegationError: #{e.inspect}"
+              # force to delete (ignore validation)
+              Decidim::Comments::CommentVote.where(comment: comment).delete_all
+              comment.delete
             end
           end
         rescue Exception => e # rubocop:disable Lint/RescueException
