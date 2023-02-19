@@ -25,7 +25,7 @@ module Decidim
         end
 
         Decidim::Verifications::Conflict.find_each do |conflict|
-          if conflict.current_user.organization == organization
+          if conflict.current_user.organization == organization || conflict.managed_user.organization == organization
             puts "destroy verifications_conflict id: #{conflict.id}"
             conflict.destroy!
           end
