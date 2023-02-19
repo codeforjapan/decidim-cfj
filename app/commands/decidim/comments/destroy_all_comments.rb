@@ -28,12 +28,9 @@ module Decidim
             deletable_ids << comment.id
           end
 
-          deletable_ids.reverse.each_slice(50) do |ids|
+          deletable_ids.reverse.each_slice(30) do |ids|
             Decidim::Comments::Comment.where(id: ids).order(id: :desc).each do |comment|
               puts "destroy comment id: #{comment.id}, for #{comment.decidim_root_commentable_type}:#{comment.decidim_root_commentable_id}"
-              comment.destroy!
-            rescue Module::DelegationError => e
-              puts "DelegationError: #{e.inspect}"
               # force to delete (ignore validation)
               Decidim::Comments::CommentVote.where(comment: comment).delete_all
               comment.delete

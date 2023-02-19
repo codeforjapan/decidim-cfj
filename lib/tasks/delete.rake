@@ -281,5 +281,7 @@ def decidim_find_organization
     return
   end
 
+  puts "Organization found: '#{ENV["DECIDIM_ORGANIZATION_NAME"]}' as '#{organization.id}'"
+
   organization
 end
