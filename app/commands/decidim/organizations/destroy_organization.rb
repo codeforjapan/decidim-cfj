@@ -24,6 +24,8 @@ module Decidim
           end
         end
 
+        Decidim::DecidimAwesome::EditorImage.where(organization: organization).delete_all
+
         Decidim::ActionLog.where(organization: organization).delete_all
 
         Decidim::AssembliesSetting.where(organization: organization).delete_all
