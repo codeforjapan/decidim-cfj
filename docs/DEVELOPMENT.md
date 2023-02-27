@@ -9,7 +9,7 @@ Dockerで環境を構築する際は、1.環境構築と2. 実行（ローカル
 | アプリケーション名                                 | バージョン  |
 |-------------------------------------------|--------|
 | [Ruby](https://www.ruby-lang.org/ja/)     | 2.7.4  |
-| [Bundler](https://bundler.io/)            | 1.17.3 |
+| [Bundler](https://bundler.io/)            | 2.2.18 |
 | [PostgreSQL](https://www.postgresql.org/) | 13     |
 
 ### 1-1. 事前準備
@@ -35,7 +35,7 @@ git checkout -b master origin/master
 ```
 ### 2.4 bundlerのインストール
 ```
-gem install bundler:1.17.3
+gem install bundler:2.2.18
 ```
 
 ### 2.5 DBのユーザーとパスワードの設定
