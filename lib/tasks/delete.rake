@@ -13,10 +13,11 @@ namespace :delete do
     :destroy_all_meetings,
     :destroy_all_pages,
     :destroy_all_surveys,
+    :destroy_all_users,
     :destroy_all_assemblies,
     :destroy_all_participatory_processes,
     :destroy_all_areas,
-    :destroy_all_users,
+    :destroy_all_newsletters,
     :destroy_organization,
     :destroy_all_messages
   ]
@@ -203,6 +204,20 @@ namespace :delete do
     puts "Finish destroy_all_areas of #{ENV["DECIDIM_ORGANIZATION_NAME"]}"
   end
 
+  desc "Destroy all newsletters for a given organization"
+  task destroy_all_newsletters: :environment do
+    puts "Start destroy_all_newsletters of #{ENV["DECIDIM_ORGANIZATION_NAME"]}"
+
+    organization = decidim_find_organization
+    return unless organization
+
+    Decidim::Newsletter.transaction do
+      Decidim::Newsletter.where(organization: organization).destroy_all
+    end
+
+    puts "Finish destroy_all_newsletters of #{ENV["DECIDIM_ORGANIZATION_NAME"]}"
+  end
+
   desc "Destroy all users for a given organization"
   task destroy_all_users: :environment do
     puts "Start destroy_all_users of #{ENV["DECIDIM_ORGANIZATION_NAME"]}"
@@ -210,14 +225,20 @@ namespace :delete do
     organization = decidim_find_organization
     return unless organization
 
+    form = OpenStruct.new(valid?: true, delete_reason: "Testing")
     Decidim::User.transaction do
-      form = OpenStruct.new(valid?: true, delete_reason: "Testing")
-      Decidim::User.where(organization: organization).find_each do |user|
+      Decidim::User.where(organization: organization).find_each(batch_size: 100) do |user|
         Decidim::Gamifications::DestroyAllBadges.call(organization, user)
         Decidim::Authorization.where(user: user).destroy_all
-        puts "destroy user id: #{user.id}"
-        Decidim::DestroyAccount.call(user, form)
       end
+    end
+
+    # Use tranzaction in Decidim::DestroyAccount
+    Decidim::User.where(organization: organization).find_each(batch_size: 100) do |user|
+      puts "destroy user id: #{user.id}"
+      Decidim::DestroyAccount.call(user, form)
+    rescue StandardError => e
+      puts "Decidim::DestroyAccount failed: #{e.inspect}"
     end
 
     puts "Finish destroy_all_users of #{ENV["DECIDIM_ORGANIZATION_NAME"]}"
@@ -256,9 +277,11 @@ def decidim_find_organization
 
   unless organization
     puts "Organization not found: '#{ENV["DECIDIM_ORGANIZATION_NAME"]}'"
-    puts "Usage: DECIDIM_ORGANIZATION_NAME=<organization name> rails delete::destroy_all_pages"
+    puts "Usage: DECIDIM_ORGANIZATION_NAME=<organization name> rails delete::destroy_all"
     return
   end
+
+  puts "Organization found: '#{ENV["DECIDIM_ORGANIZATION_NAME"]}' as '#{organization.id}'"
 
   organization
 end
