@@ -72,6 +72,12 @@ ja:
             does_not_belong: 違法行為、個人情報、または %{organization_name} に属していないと思われる内容が含まれています。
             offensive: 差別的な内容、誹謗中傷などの不適切な内容が含まれています。
             spam: 本来の内容に関係が無い広告、詐欺や悪意のある処理などが含まれています。
+      comment_order_selector:
+        order:
+          best_rated: 評価の高い順
+          most_discussed: 議論数の多い順
+          older: 古い順
+          recent: 新しい順
       down_vote_button:
         text: このコメントに同意しません
     debates:
@@ -174,6 +180,27 @@ ja:
           origin_values:
             citizens: 一般参加者
             official: 事務局
+    messaging:
+      conversation_mailer:
+        comanagers_new_conversation:
+          greeting: "%{recipient}さん、こんにちは。"
+          outro: ''
+        comanagers_new_message:
+          greeting: "%{recipient}さん、こんにちは。"
+          outro: ''
+        new_conversation:
+          greeting: "%{recipient}さん、こんにちは。"
+          outro: ''
+        new_group_conversation:
+          greeting: "%{recipient}さん、こんにちは。"
+          outro: ''
+        new_group_message:
+          greeting: "%{recipient}さん、こんにちは。"
+          outro: ''
+        new_message:
+          greeting: "%{recipient}さん、こんにちは。"
+          outro: ''
+
     moderations:
       actions:
         hidden: 非表示
@@ -274,6 +301,15 @@ ja:
           origin: 起案者
         index:
           collaborative_drafts_list: 共同草案にアクセスする
+        orders:
+          label: '提案の並び順：'
+          most_commented: コメントの多い順
+          most_endorsed: オススメの多い順
+          most_followed: フォローの多い順
+          most_voted: サポートの多い順
+          random: ランダム
+          recent: 新しい順
+          with_more_authors: 起案者の多い順
         show:
           link_to_collaborative_draft_help_text: この提案は共同草案の結果です。履歴を確認してください
           link_to_collaborative_draft_text: 共同草案を見る

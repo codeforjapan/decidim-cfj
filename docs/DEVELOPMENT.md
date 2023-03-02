@@ -9,7 +9,7 @@ Dockerで環境を構築する際は、1.環境構築と2. 実行（ローカル
 | アプリケーション名                                 | バージョン  |
 |-------------------------------------------|--------|
 | [Ruby](https://www.ruby-lang.org/ja/)     | 2.7.4  |
-| [Bundler](https://bundler.io/)            | 1.17.3 |
+| [Bundler](https://bundler.io/)            | 2.2.18 |
 | [PostgreSQL](https://www.postgresql.org/) | 13     |
 
 ### 1-1. 事前準備
@@ -35,7 +35,7 @@ git checkout -b master origin/master
 ```
 ### 2.4 bundlerのインストール
 ```
-gem install bundler:1.17.3
+gem install bundler:2.2.18
 ```
 
 ### 2.5 DBのユーザーとパスワードの設定
@@ -56,25 +56,15 @@ export DATABASE_DBNAME_DEV=<yourdbname>
 ```
 bundle install
 ```
-### 2.7 言語の設定
-```bash
-# default_localeを`:en`にセットする
-vim config/initializers/decidim.rb
-
-# before
-config.default_locale = :ja
-# after
-config.default_locale = :en
-```
-### 2.8 DB作成からシードまで
+### 2.7 DB作成からシードまで
 ```
 bin/rails db:create db:migrate
 bin/rails db:seed
 ```
-### 2.9 サーバー起動
+### 2.8 サーバー起動
 bin/rails s
 
-### 2.10 お疲れさまでした
+### 2.9 お疲れさまでした
 http://localhost:3000 にアクセス
 
 ## 3. 実行（Dockerバージョン）
@@ -97,27 +87,17 @@ git checkout -b master origin/master
 docker-compose build
 ```
 
-### 3.4 言語の設定
-```
-# default_localeを`:en`にセットする
-vim config/initializers/decidim.rb
-# before
-config.default_locale = :ja
-# after
-config.default_locale = :en
-```
-
-### 3.5 DB作成からシードまで
+### 3.4 DB作成からシードまで
 ```
 docker-compose run --rm app ./bin/rails db:create db:migrate
 docker-compose run --rm app ./bin/rails db:seed
 ```
 
-### 3.6 サーバー起動
+### 3.5 サーバー起動
 ```
 docker-compose up -d
 ```
-### 3.7 お疲れさまでした
+### 3.6 お疲れさまでした
 http://localhost:3000 にアクセス
 
 ## 4. テスト用アカウント情報
