@@ -37,8 +37,8 @@ jobs:
         id: set-env-production
         if: endsWith(github.ref, 'heads/master') || contains(github.ref, 'tags/v')
         run: |
-          echo "IMAGE_TAG_PREFIX=prd-v0252" >> $GITHUB_ENV
-          echo "EB_ENVIRONMENT_NAME=prd-v0252" >> $GITHUB_ENV
+          echo "IMAGE_TAG_PREFIX=prd-v0264" >> $GITHUB_ENV
+          echo "EB_ENVIRONMENT_NAME=prd-v0264" >> $GITHUB_ENV
 
       - name: Output App Env
         id: output-app-env
