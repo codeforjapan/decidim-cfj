@@ -9,7 +9,7 @@ module Decidim
     end
 
     def self.decidim_version
-      ">= 0.26.4"
+      ">= 0.26.5"
     end
   end
 end

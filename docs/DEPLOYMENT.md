@@ -3,7 +3,7 @@ aws環境の設定はAWS CDKのコードで管理されています。
 インスタンスタイプやオートスケールの設定が違うため、stagingとproductionで一部ファイルが別です。それ以外の共通の設定は同じファイルを使っているので気を付けて下さい。
 
 staging: [config/staging](https://github.com/codeforjapan/decidim-cfj-cdk/blob/main/config/staging.json)
-production: [config/production](https://github.com/codeforjapan/decidim-cfj-cdk/blob/main/config/prd-v0264.json)
+production: [config/production](https://github.com/codeforjapan/decidim-cfj-cdk/blob/main/config/prd-v0265.json)
 
 デプロイの際に上記の設定ファイルを元にデプロイが実行されます。コードでの設定がある場合、インフラも含め反映されます。
 

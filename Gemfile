@@ -4,11 +4,11 @@ source "https://rubygems.org"
 
 ruby RUBY_VERSION
 
-gem "decidim", "0.26.4"
+gem "decidim", "0.26.5"
 
 gem "decidim-comments", path: "decidim-comments"
 
-gem "decidim-decidim_awesome", git: "https://github.com/codeforjapan/decidim-module-decidim_awesome.git", branch: "v0.8.3-2022-10-20"
+gem "decidim-decidim_awesome", git: "https://github.com/codeforjapan/decidim-module-decidim_awesome.git", branch: "v0.9.0-2023-03-27"
 
 gem "decidim-term_customizer", git: "https://github.com/codeforjapan/decidim-module-term_customizer.git", branch: "026-ja"
 
@@ -38,7 +38,7 @@ group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
   gem "figaro"
 
-  gem "decidim-dev", "0.26.4"
+  gem "decidim-dev", "0.26.5"
   gem "dotenv-rails"
   gem "factory_bot_rails"
   gem "rspec-rails"
