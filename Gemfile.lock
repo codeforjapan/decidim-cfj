@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/codeforjapan/decidim-module-decidim_awesome.git
-  revision: a5fb3423cb09379e2cbf40e001e44325834b31c2
-  branch: v0.9.0-2023-03-27
+  revision: ca8785be4ed648878e9c6208512fc81cf1a042ec
+  branch: v0.9.0-2023-03-30
   specs:
     decidim-decidim_awesome (0.9.1)
       decidim-admin (>= 0.26.0, < 0.28)
