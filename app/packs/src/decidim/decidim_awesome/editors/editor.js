@@ -132,14 +132,15 @@ export function createQuillEditor(container) {
       const output = editor.container.querySelector(".ql-editor").innerText;
       const noNewlines = output
           .replace(/\s+/g, " ") // convert multiple spaces to a single space. This is how HTML treats them
-          .replace(/(<[^\/<>]+>)\s+/g, "$1") // remove spaces after the start of a new tag
+          .replace(/>\s+/g, ">") // remove spaces after the start of a new tag
           .replace(/<\/(p|ol|ul)>\s/g, "</$1>") // remove spaces after the end of lists and paragraphs, they tend to break quill
           .replace(/\s<(p|ol|ul)>/g, "<$1>") // remove spaces before the start of lists and paragraphs, they tend to break quill
           .replace(/<\/li>\s<li>/g, "</li><li>") // remove spaces between list items, they tend to break quill
           .replace(/\s<\//g, "</") // remove spaces before the end of tags
-          .replace(/(<[^\/<>]+>)\s(<[^\/<>]+>)/g, "$1$2") // remove space between multiple starting tags
+          .replace(/>\s</g, "><") // remove space between multiple starting tags
           .trim();
-      quill.container.querySelector(".ql-editor").innerHTML = noNewlines;
+      quill.container.querySelector(".ql-editor").innerHTML = '';
+      quill.clipboard.dangerouslyPasteHTML(0, noNewlines);
       document.body.removeChild(overlayContainer);
     };
   }
@@ -158,9 +159,9 @@ export function createQuillEditor(container) {
 
     let result = "";
     for (let pos = 0; pos <= code.length; pos++) {
-      prevChar = char;
-      char = code.substr(pos, 1);
-      nextChar = code.substr(pos + 1, 1);
+      const prevChar = char;
+      let char = code.substr(pos, 1);
+      const nextChar = code.substr(pos + 1, 1);
 
       const isBrTag = code.substr(pos, 4) === "<br>";
       const isOpeningTag = char === "<" && nextChar !== "/" && !isBrTag;
@@ -170,8 +171,9 @@ export function createQuillEditor(container) {
       if (isBrTag) {
         // If opening tag, add newline character and indention
         result += newlineChar;
-        currentIndent--;
-        pos += 4;
+        if (--currentIndent < 0) currentIndent = 0;
+        pos += 3;
+        char = "<br>";
       }
       if (isOpeningTag) {
         // If opening tag, add newline character and indention
@@ -183,15 +185,6 @@ export function createQuillEditor(container) {
         // If there're more closing tags than opening
         if (--currentIndent < 0) currentIndent = 0;
         result += newlineChar + whitespace.repeat(currentIndent);
-      }
-      // remove multiple whitespaces
-      else if (stripWhiteSpaces === true && char === " " && nextChar === " ")
-        char = "";
-      // remove empty lines
-      else if (stripEmptyLines === true && char === newlineChar) {
-        //debugger;
-        if (code.substr(pos, code.substr(pos).indexOf("<")).trim() === "")
-          char = "";
       }
       if(isTagEnd && !isTagNext) {
         result += newlineChar + whitespace.repeat(currentIndent);
