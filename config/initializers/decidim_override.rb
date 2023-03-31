@@ -10,7 +10,7 @@ Rails.application.config.to_prepare do
   #
   # minimum title length should be 8
   Decidim::Proposals::ProposalWizardCreateStepForm.validators.each do |validator|
-    if validator.class == ActiveModel::Validations::LengthValidator && # rubocop:disable Style/Next
+    if validator.class == ProposalLengthValidator && # rubocop:disable Style/Next
        validator.attributes.include?(:title)
 
       fixed_options = validator.options.dup
