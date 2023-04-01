@@ -27,7 +27,7 @@ module Decidim
           let(:body) { { ja: "提案のテストその１です。タイトルの文字数をテストします。" } }
           let(:created_in_meeting) { true }
           let(:meeting_component) { create(:meeting_component, participatory_space: participatory_space) }
-          let(:author) { create(:meeting, component: meeting_component) }
+          let(:author) { create(:meeting, :published, component: meeting_component) }
           let!(:meeting_as_author) { author }
 
           let(:params) do

@@ -2,12 +2,20 @@
 
 module Decidim
   module Comments
-    # A cell to display a form for edditing a comment.
+    # A cell to display a form for editing a comment.
     class EditCommentModalFormCell < Decidim::ViewModel
       delegate :current_user, :user_signed_in?, to: :controller
       alias comment model
 
       private
+
+      def cache_hash
+        hash = []
+        hash.push(I18n.locale)
+        hash.push(model.id)
+        hash.push(current_user.try(:id))
+        hash.join(Decidim.cache_key_separator)
+      end
 
       def decidim_comments
         Decidim::Comments::Engine.routes.url_helpers

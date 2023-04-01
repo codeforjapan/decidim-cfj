@@ -12,6 +12,7 @@ deployments
 log/*
 node_modules
 spec
+storage/*
 test
 tmp
 vendor

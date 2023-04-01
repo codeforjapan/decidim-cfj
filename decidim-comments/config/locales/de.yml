@@ -3,6 +3,7 @@ de:
     models:
       decidim/comments/comment_by_followed_user_event: Kommentar
       decidim/comments/comment_created_event: Kommentar
+      decidim/comments/comment_upvoted_event: Kommentar positiv bewertet
       decidim/comments/reply_created_event: Kommentarantwort
       decidim/comments/user_group_mentioned_event: Erwähnen
       decidim/comments/user_mentioned_event: Erwähnen
@@ -16,6 +17,12 @@ de:
         other: Stimmen
   decidim:
     comments:
+      admin:
+        shared:
+          availability_fields:
+            enabled: Kommentare aktiviert
+            end_time: Kommentare aktiviert bis
+            start_time: Kommentare aktiviert von
       comments:
         create:
           error: Beim Erstellen des Kommentars ist ein Fehler aufgetreten.
@@ -64,6 +71,7 @@ de:
         edit: Bearbeiten
         edited: Bearbeitet
         hide_replies: Antworten verbergen
+        moderated_at: Kommentar moderiert am %{date}
         reply: Antworten
         report:
           action: Melden
@@ -93,7 +101,7 @@ de:
         blocked_comments_warning: Kommentare sind zu diesem Zeitpunkt deaktiviert, aber Sie können die vorherigen lesen.
         comment_details_title: Kommentarinformationen
         loading: Kommentare werden geladen ...
-        single_comment_warning: Sie können die restlichen Kommentare <a href="%{url}">hier</a> prüfen.
+        single_comment_warning: <a href="%{url}">Alle Kommentare anzeigen</a>
         single_comment_warning_title: Ihnen wird ein einzelner Kommentar angezeigt
         title:
           one: "%{count} Kommentar"

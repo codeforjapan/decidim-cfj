@@ -3,6 +3,7 @@ ro:
     models:
       decidim/comments/comment_by_followed_user_event: Comentariu
       decidim/comments/comment_created_event: Comentează
+      decidim/comments/comment_upvoted_event: Comentariu votat
       decidim/comments/reply_created_event: Răspuns la comentariu
       decidim/comments/user_group_mentioned_event: Menționează
       decidim/comments/user_mentioned_event: Menționează
@@ -18,6 +19,12 @@ ro:
         other: Voturi
   decidim:
     comments:
+      admin:
+        shared:
+          availability_fields:
+            enabled: Comentarii activate
+            end_time: Comentarii activate până la
+            start_time: Comentarii activate de la
       comments:
         create:
           error: A apărut o problemă la crearea comentariului.
@@ -66,6 +73,7 @@ ro:
         edit: Editează
         edited: Editat
         hide_replies: Ascunde răspunsurile
+        moderated_at: Comentariu moderat pe %{date}
         reply: Răspunde
         report:
           action: Raportează
@@ -95,7 +103,7 @@ ro:
         blocked_comments_warning: Comentariile sunt dezactivate în acest moment, dar le poți citi pe cele anterioare.
         comment_details_title: Detaliile comentariului
         loading: Se încarcă comentariile...
-        single_comment_warning: Poţi verifica restul comentariilor <a href="%{url}">aici</a>.
+        single_comment_warning: <a href="%{url}">Vezi toate comentariile</a>
         single_comment_warning_title: Poți vedea un singur comentariu
         title:
           one: "%{count} comentariu"
