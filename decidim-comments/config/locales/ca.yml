@@ -3,6 +3,7 @@ ca:
     models:
       decidim/comments/comment_by_followed_user_event: Comentari
       decidim/comments/comment_created_event: Comentari
+      decidim/comments/comment_upvoted_event: Comentari valorat positivament
       decidim/comments/reply_created_event: Resposta al comentari
       decidim/comments/user_group_mentioned_event: Mencionar
       decidim/comments/user_mentioned_event: Mencionar
@@ -16,6 +17,12 @@ ca:
         other: Vots
   decidim:
     comments:
+      admin:
+        shared:
+          availability_fields:
+            enabled: Comentaris habilitats
+            end_time: Comentaris habilitats fins al
+            start_time: Comentaris habilitats des de
       comments:
         create:
           error: S'ha produït un error en crear el comentari.
@@ -64,6 +71,7 @@ ca:
         edit: Editar
         edited: Editat
         hide_replies: Oculta les respostes
+        moderated_at: Comentari moderat el %{date}
         reply: Respondre
         report:
           action: Denúncia
@@ -93,7 +101,7 @@ ca:
         blocked_comments_warning: Els comentaris estan desactivats en aquest moment, però pots llegir els anteriors.
         comment_details_title: Detalls del comentari
         loading: Carregant els comentaris ...
-        single_comment_warning: Pots revisar la resta de comentaris <a href="%{url}">aquí</a>.
+        single_comment_warning: <a href="%{url}">Mostra tots els comentaris</a>
         single_comment_warning_title: Estàs veient un sol comentari
         title:
           one: "%{count} comentari"

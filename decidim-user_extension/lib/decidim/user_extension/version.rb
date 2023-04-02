@@ -2,14 +2,14 @@
 
 module Decidim
   module UserExtension
-    VERSION = "0.2.0"
+    VERSION = "0.3.0"
 
     def self.version
       Decidim::UserExtension::VERSION
     end
 
     def self.decidim_version
-      ">= 0.25.2"
+      ">= 0.26.5"
     end
   end
 end

@@ -48,7 +48,7 @@ module Decidim::Comments
 
         it "renders the single comment warning" do
           expect(subject).to have_css(".callout.secondary", text: "You are seeing a single comment")
-          expect(subject).to have_css(".callout.secondary", text: "You can check the rest of the comments here.")
+          expect(subject).to have_css(".callout.secondary", text: "View all comments")
         end
 
         context "with the single comment being moderated" do
@@ -62,16 +62,14 @@ module Decidim::Comments
           end
 
           it "renders the thread" do
-            expect(subject).to have_css(".section-heading", text: "10 comments")
             expect(subject).to have_css(".callout.primary.loading-comments p", text: "Loading comments ...")
             expect(subject).not_to have_content(comment.body.values.first)
-            expect(subject).to have_css(".add-comment")
-            expect(subject).to have_content("Sign in with your account or sign up to add your comment.")
+            expect(subject).not_to have_css(".add-comment")
           end
 
-          it "does not render the single comment warning" do
-            expect(subject).not_to have_css(".callout.secondary", text: "You are seeing a single comment")
-            expect(subject).not_to have_css(".callout.secondary", text: "You can check the rest of the comments here.")
+          it "renders the single comment warning" do
+            expect(subject).to have_css(".callout.secondary", text: "You are seeing a single comment")
+            expect(subject).to have_css(".callout.secondary", text: "View all comments")
           end
         end
       end
