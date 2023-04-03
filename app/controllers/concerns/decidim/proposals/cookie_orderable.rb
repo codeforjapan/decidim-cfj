@@ -11,7 +11,7 @@ module Decidim
 
       def order_by_cookie
         cookie = cookies[order_cookie_name]
-        cookie if cookie && available_orders.include?(cookie)
+        cookie if cookie && possible_orders.include?(cookie)
       end
 
       def order_cookie_name
