@@ -1,11 +1,6 @@
 # frozen_string_literal: true
 
 Rails.application.config.to_prepare do
-  # Override Decidim::Orderable
-  #
-  # Use cookies to store default orders
-  Decidim::Proposals::ProposalsController.prepend Decidim::Proposals::CookieOrderable
-
   # Decidim::Proposals::ProposalWizardCreateStepForm
   #
   # minimum title length should be 8
