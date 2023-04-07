@@ -58,12 +58,6 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
   本家の https://github.com/decidim/decidim/tree/develop/decidim-comments から切り出して修正を加えたもの。
   バージョンアップ時には注意しつつ、変更点を適宜修正する必要があります。
 
-* `app/helpers/decidim/resource_versions_helper.rb`
-
-  高速化のために https://github.com/codeforjapan/decidim-cfj/pull/289 で追加されたファイル。
-
-  https://github.com/decidim/decidim/pull/8393 でフィードバック済みなので、取り込まれたバージョンでは削除できます。
-
 * `app/uploaders/decidim/cw/application_uploader.rb`
 
   https://github.com/decidim/decidim/issues/6720 や https://github.com/codeforjapan/decidim-cfj/issues/101 などの対応のために導入。
