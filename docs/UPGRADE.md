@@ -43,11 +43,6 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 
   https://github.com/codeforjapan/decidim-cfj/pull/348 で追加されたファイル。グローバル検索が日本語では機能していないため削除したもの。
 
-* `app/commands/decidim/verifications/authorize_user.rb`
-
-  https://github.com/codeforjapan/decidim-cfj/pull/366 で追加されたファイル。 https://github.com/decidim/decidim/pull/8940 の修正をバックポートしたもの。
-  v0.26にあげれば不要になるはずです。
-
 * `app/controllers/decidim/debates/versions_controller.rb`
 
   https://github.com/codeforjapan/decidim-cfj/pull/359 で追加したファイル。履歴の差分が巨大になるとサーバ負荷が大きいため、renderを実行させないよう表示前にredirectさせるものです。
