@@ -38,6 +38,7 @@ ENV LANG=C.UTF-8 \
     RAILS_LOG_TO_STDOUT=true \
     RAILS_SERVE_STATIC_FILES=true \
     SECRET_KEY_BASE=placeholder
+    SLACK_API_TOKEN=xoxb-dummy
 
 WORKDIR $APP_HOME
 
