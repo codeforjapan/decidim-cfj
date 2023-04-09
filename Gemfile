@@ -57,8 +57,8 @@ group :production do
   gem "aws-sdk-s3", require: false
   gem "fog-aws"
   gem "sidekiq", "6.4.2"
-  gem 'aws-xray-sdk', require: ['aws-xray-sdk/facets/rails/railtie']
-  gem 'oj', platform: :mri # 追記
+  gem "aws-xray-sdk", require: ["aws-xray-sdk/facets/rails/railtie"]
+  gem "oj", platform: :mri
 end
 
 gem "rubyzip", ">= 1.0.0"
