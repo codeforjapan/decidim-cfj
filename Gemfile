@@ -59,7 +59,6 @@ group :production do
   gem "sidekiq", "6.4.2"
   gem 'aws-xray-sdk', require: ['aws-xray-sdk/facets/rails/railtie']
   gem 'oj', platform: :mri # 追記
-  gem 'jrjackson', platform: :jruby # 追記
 end
 
 gem "rubyzip", ">= 1.0.0"
