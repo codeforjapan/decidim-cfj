@@ -55,7 +55,9 @@ end
 
 group :production do
   gem "aws-sdk-s3", require: false
+  gem "aws-xray-sdk", require: ["aws-xray-sdk/facets/rails/railtie"]
   gem "fog-aws"
+  gem "oj", platform: :mri
   gem "sidekiq", "6.4.2"
 end
 
