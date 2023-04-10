@@ -93,6 +93,12 @@ docker-compose run --rm app ./bin/rails db:create db:migrate
 docker-compose run --rm app ./bin/rails db:seed
 ```
 
+`db:seed`でエラーが起きた場合、ダミーのデータ作成に失敗している可能性があります。以下を実行し、DBを再作成してみてください。
+
+```
+docker-compose run --rm app ./bin/rails db:reset
+```
+
 ### 3.5 サーバー起動
 ```
 docker-compose up -d
