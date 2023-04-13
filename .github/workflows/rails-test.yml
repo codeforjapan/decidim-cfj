@@ -57,9 +57,6 @@ jobs:
     - name: Migrate DB
       run: |
         docker-compose -f docker-compose.yml run --rm app bundle exec rails db:create db:migrate -e test
-    - name: Precompile assets
-      run: |
-        docker-compose -f docker-compose.yml run --rm app bundle exec rails assets:precompile
     - name: Test with RSpec
       run: |
         docker-compose -f docker-compose.yml run --rm app bundle exec rails spec
