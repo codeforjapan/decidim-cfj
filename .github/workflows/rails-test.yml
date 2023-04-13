@@ -43,79 +43,16 @@ jobs:
     - uses: actions/checkout@v3
       with:
         fetch-depth: 1
-    - name: apt-get
+    - name: checkout and build
       run: |
-        sudo apt-get update -y
-        sudo apt-get -yqq install libpq-dev postgresql-client
-
-    - name: remove imagemagick 6
-      run: sudo apt remove imagemagick
-    - name: setup imagemagick 7
-      run: |
-          sudo sed -Ei 's/^# deb-src /deb-src /' /etc/apt/sources.list
-          sudo apt update
-          sudo apt install build-essential
-          sudo apt build-dep imagemagick
-          sudo apt install libwebp-dev libopenjp2-7-dev librsvg2-dev libde265-dev
-    - name: install libheif
-      run: |
-          git clone https://github.com/strukturag/libheif.git
-          cd libheif
-          ./autogen.sh
-          ./configure --disable-go --disable-examples
-          make
-          sudo make install
-    - name: install imagemagick 7
-      run: |
-          wget https://github.com/ImageMagick/ImageMagick/archive/refs/tags/${IMAGEMAGICK_SRC}
-          tar xf ${IMAGEMAGICK_SRC}
-          cd ImageMagick-7*
-          ./configure
-          make
-          sudo make install
-          sudo ldconfig
-    - name: check imagemagick
-      run: convert -version
-
-    - name: Set up Ruby 2.7
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.7
-        bundler-cache: true
-
-    - name: setup Node
-      uses: actions/setup-node@v3
-      with:
-        node-version: 16.9.1
-        cache: 'yarn'
-    - name: install yarn
-      run: |
-        npm i -g yarn@1.22.5
-        yarn install --frozen-lockfile
-
-    - name: create assets precompile cache key
-      run: |
-        # use newest commit hash of precompile target files
-        git rev-parse $(git log --oneline -n 1 app/packs lib/assets Gemfile.lock yarn.lock | awk '{print $1}') > ASSETS_VERSION
-
-    - name: asset cache
-      uses: actions/cache@v3
-      with:
-        path: |
-          public/packs
-          public/assets
-          tmp/cache/assets
-          public/packs-test
-        key: asset-precompile-cache-${{ hashFiles('ASSETS_VERSION') }}
-        restore-keys: |
-          asset-precompile-cache-${{ hashFiles('ASSETS_VERSION') }}
-          asset-precompile-cache-
-
+        docker-compose -f docker-compose.yml build
     - name: Migrate DB
       run: |
-        bundle exec rails db:create db:migrate
+        docker-compose -f docker-compose.yml run --rm app bundle exec rails db:create db:migrate
     - name: Precompile assets
-      run: bundle exec rails assets:precompile
+      run: |
+        docker-compose -f docker-compose.yml run --rm app bundle exec rails assets:precompile
     - name: Test with RSpec
       run: |
-        bundle exec rails spec
+        docker-compose -f docker-compose.yml run --rm app bundle exec rails spec
+
