@@ -61,4 +61,27 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 
   config.include ActiveStorageHelpers
+
+
+  # Chrome
+  Capybara.register_driver :remote_chrome do |app|
+    url = ENV.fetch('SELENIUM_REMOTE_URL', 'http://chrome:4444/wd/hub')
+    caps = ::Selenium::WebDriver::Remote::Capabilities.chrome(
+      'goog:chromeOptions' => {
+        'args' => [
+          'no-sandbox',
+          'headless',
+          'disable-gpu',
+          'window-size=1680,1050'
+        ]
+      }
+    )
+    Capybara::Selenium::Driver.new(app, browser: :remote, url: url, desired_capabilities: caps)
+  end
+
+  config.before :each, type: :system do
+    driven_by(:remote_chrome)
+    Capybara.server_host = 'app'
+    Capybara.app_host='http://app'
+  end
 end

@@ -42,8 +42,10 @@ services:
       DATABASE_USERNAME: *postgres_user
       DATABASE_PASSWORD: *postgres_password
       RAILS_ENV: *rails_env
+      SELENIUM_REMOTE_URL: http://chrome:4444/wd/hub
     links:
       - pg
+      - chrome
   pg:
     image: postgres:12
     volumes:
@@ -53,6 +55,10 @@ services:
       POSTGRES_PASSWORD: *postgres_password
     ports:
       - 5433:5432
+  chrome:
+    image: selenium/standalone-chrome
+    logging:
+      driver: none
 
 volumes:
   node_modules: {}
