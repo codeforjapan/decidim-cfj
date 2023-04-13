@@ -55,7 +55,7 @@ jobs:
         docker-compose -f docker-compose.yml build --progress=plain
     - name: Migrate DB
       run: |
-        docker-compose -f docker-compose.yml run --rm app bundle exec rails db:create db:migrate -e test
+        docker-compose -f docker-compose.yml run --rm app bundle exec rails db:create db:migrate
     - name: Test with RSpec
       run: |
         docker-compose -f docker-compose.yml run --rm app bundle exec rails spec
