@@ -2,6 +2,15 @@
 ja:
   activemodel:
     attributes:
+      config:
+        validate_body_max_caps_percent: 本文内での大文字の最大許容割合
+        validate_body_max_marks_together: 本文で許容される最多連続記号文字数
+        validate_body_min_length: 本文に必要な最小文字数
+        validate_body_start_with_caps: 本文を大文字で始めることを強制する
+        validate_title_max_caps_percent: タイトル内での大文字の最大許容割合
+        validate_title_max_marks_together: タイトルで許容される最多連続記号文字数
+        validate_title_min_length: タイトルに必要な最小文字数
+        validate_title_start_with_caps: タイトルを大文字で始めることを強制する
       debate:
         instructions: 参加方法
       decidim/user:
@@ -43,11 +52,26 @@ ja:
         show:
           welcome: Decidim 管理画面へようこそ。
       filters:
+        admin_accountability:
+          admin_role_type:
+            label: ロールの種別
+          participatory_space_type_eq:
+            label: 参加型スペース種別
+          role:
+            label: ロール
+          role_type_eq:
+            label: ロールの種別
+        label:
+          search_field_end_date: '終了日:'
+          search_field_start_date: '開始日:'
         officializations:
           index:
             nickname: アカウントID
         search_placeholder:
+          user_name_or_user_email_cont: ユーザー名、メールアドレスで検索する
           name_or_nickname_or_email_cont: "%{collection} をメール、表示名、アカウントIDで検索します。"
+      menu:
+        admin_accountability: 管理者のアカウンタビリティ
       officializations:
         show_email_modal:
           hidden: 非表示

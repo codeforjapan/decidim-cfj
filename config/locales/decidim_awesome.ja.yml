@@ -1,0 +1,53 @@
+ja:
+  decidim:
+    decidim_awesome:
+      admin:
+        admin_accountability:
+          admin_roles:
+            admin: スーパー管理者
+            user_manager: ユーザーマネージャー
+          created_at: ロールの作成日時
+          currently_active: 現在アクティブ
+          deleted_user: 削除されたユーザー
+          email: メールアドレス
+          exports:
+            button: この検索結果をエクスポート
+            export_as: '%{export_format} としてエクスポート'
+            export_format:
+              csv: CSV
+              json: JSON
+              xlsx: XLSX
+            notice: エクスポート処理がキューに追加されました。準備ができたらメールが届きます。
+          index:
+            description: ここには、参加型スペースの管理に何らかの役割を持っていたすべてのユーザーが表示されます。一般の管理者は表示されません。
+            global_description: ここには、この組織を管理するためにグローバルな役割を持っているすべてのユーザーが表示されます。参加型スペースの管理者は表示されません。
+            see_global: グローバル管理者一覧
+            see_spaces: 参加型スペース管理者一覧
+            title: 管理者のアカウンタビリティ
+          last_login: 最終ログイン日
+          missing_info: "(不足情報)"
+          missing_user: データベースにいないユーザー
+          name: 名前
+          never_logged: 未ログイン
+          participatory_space: 参加型スペース
+          removal_date: ロールの削除日時
+          role: ロール
+          roles:
+            admin: 管理者
+            collaborator: コラボレーター
+            moderator: モデレーター
+            valuator: 評価者
+        config:
+          form:
+            help:
+              validate_body_max_caps_percent: ゼロの場合大文字を許可しません。100の場合すべてを大文字で書くことを強制します。
+              validate_body_max_marks_together: '並べて入力できる「?」と「!」の数を制限します。 すなわち、それが2の場合、「!!!」はテキストに記入できません'
+              validate_body_min_length: この数字はゼロにできます。その場合、このフィールドを必須ではなくする効果があります。
+              validate_title_max_caps_percent: ゼロの場合大文字を許可しません。100の場合すべてを大文字で書くことを強制します。
+              validate_title_max_marks_together: '並べて入力できる「?」と「!」の数を制限します。 すなわち、それが2の場合、「!!!」はテキストに記入できません'
+              validate_title_min_length: タイトルは常に必須です。この数字はゼロにはできません
+            validators:
+              body: '「body」フィールドのユーザー入力検証'
+              title: '「タイトル」フィールドのユーザー入力検証'
+      validators:
+        too_much_caps: 大文字が多すぎます（テキストの %{percent}%以上）
