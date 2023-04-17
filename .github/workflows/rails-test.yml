@@ -50,7 +50,8 @@ jobs:
 
     - name: check imagemagick
       run: |
-        export PATH=${GITHUB_WORKSPACE}/vendor/imagemagick7/bin/magick:${PATH}
+        export PATH=${GITHUB_WORKSPACE}/vendor/imagemagick7/bin:${PATH}
+        which convert
         convert -version
 
     - name: Set up Ruby 2.7
