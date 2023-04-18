@@ -2,6 +2,15 @@
 ja:
   activemodel:
     attributes:
+      config:
+        validate_body_max_caps_percent: 本文内での大文字の最大許容割合
+        validate_body_max_marks_together: 本文で許容される最多連続記号文字数
+        validate_body_min_length: 本文に必要な最小文字数
+        validate_body_start_with_caps: 本文を大文字で始めることを強制する
+        validate_title_max_caps_percent: タイトル内での大文字の最大許容割合
+        validate_title_max_marks_together: タイトルで許容される最多連続記号文字数
+        validate_title_min_length: タイトルに必要な最小文字数
+        validate_title_start_with_caps: タイトルを大文字で始めることを強制する
       debate:
         instructions: 参加方法
       decidim/user:
@@ -43,11 +52,26 @@ ja:
         show:
           welcome: Decidim 管理画面へようこそ。
       filters:
+        admin_accountability:
+          admin_role_type:
+            label: ロールの種別
+          participatory_space_type_eq:
+            label: 参加型スペース種別
+          role:
+            label: ロール
+          role_type_eq:
+            label: ロールの種別
+        label:
+          search_field_end_date: '終了日:'
+          search_field_start_date: '開始日:'
         officializations:
           index:
             nickname: アカウントID
         search_placeholder:
+          user_name_or_user_email_cont: ユーザー名、メールアドレスで検索する
           name_or_nickname_or_email_cont: "%{collection} をメール、表示名、アカウントIDで検索します。"
+      menu:
+        admin_accountability: 管理者のアカウンタビリティ
       officializations:
         show_email_modal:
           hidden: 非表示
@@ -228,40 +252,7 @@ ja:
         filter_origin_values:
           citizens: 一般参加者
           official: 事務局
-      collaborative_drafts:
-        collaborative_draft:
-          publish:
-            error: 共同草案を公開する際に問題が発生しました。
-            irreversible_action_modal:
-              body: 提案として共同草案を公開した後、草案は編集できなくなります。提案は新しい著者や貢献者を受け入れません。
-              cancel: キャンセル
-              ok: 提案として公開
-            success: 共同草案は提案として正常に公開されました。
-          view_collaborative_draft: 共同草案を表示
-          withdraw:
-            error: 共同草案を閉じる際に問題が発生しました。
-            irreversible_action_modal:
-              body: 共同草案を閉じた後、草案は編集できなくなります。草案は新しい投稿者や投稿を受け入れません。
-            success: 共同草案は正常に撤回されました。
-        count:
-          drafts_count:
-            other: "%{count} 件の共同草案です"
-        create:
-          error: 共同草案作成中に問題が発生しました
-          success: 共同草案を作成しました。
-        edit:
-          title: 共同草案を編集
-        new_collaborative_draft_button:
-          new_collaborative_draft: 新しい共同草案を作成
       models:
-        proposal:
-          fields:
-            official_proposal: 事務局の提案
-        orders:
-          label: '草案の注文:'
-          most_contributed: 最も貢献したもの
-          random: ランダム
-          recent: 最近のもの
         requests:
           access_requested:
             error: リクエストを完了できませんでした。後でもう一度お試しください。
@@ -275,15 +266,8 @@ ja:
         update:
           error: 共同草案を保存する際に問題が発生しました。
           success: 共同草案が正常に更新されました。
-        wizard_aside:
-          info: <strong>共同草案</strong>を作成しています。
-        wizard_header:
-          title: 共同草案を作成する
       create:
         success: 提案は正常に作成されました。草案として保存されました。
-      destroy_draft:
-        error: 共同草案を削除する際に問題が発生しました。
-        success: 提案の草案は正常に削除されました。
       proposals:
         edit:
           add_documents: 添付ファイル
@@ -296,11 +280,6 @@ ja:
           select_a_category: カテゴリーを選択
           send: 送信
           title: 提案の編集
-        filters:
-          activity: 参加したもの
-          origin: 起案者
-        index:
-          collaborative_drafts_list: 共同草案にアクセスする
         orders:
           label: '提案の並び順：'
           most_commented: コメントの多い順
@@ -310,32 +289,10 @@ ja:
           random: ランダム
           recent: 新しい順
           with_more_authors: 起案者の多い順
-        show:
-          link_to_collaborative_draft_help_text: この提案は共同草案の結果です。履歴を確認してください
-          link_to_collaborative_draft_text: 共同草案を見る
-      update_draft:
-        error: 共同草案を保存する際に問題が発生しました。
-        success: 草案が正常に更新されました。
-    shared:
-      flag_modal:
-        does_not_belong: 違法行為、個人情報、または %{organization_name} に属していないと思われる内容が含まれています。
-        offensive: 差別的な内容、誹謗中傷などの不適切な内容が含まれています。
-        spam: 本来の内容に関係が無い広告、詐欺や悪意のある処理などが含まれています。
-      follow_button:
-        sign_in_before_follow: このアクションを実行する前にログインしてください
-      login_modal:
-        please_sign_in: ログインしてください
-    sortitions:
-      sortitions:
-        sortition_author:
-          deleted: 退会者
-        sortition_cancel_author:
-          deleted: 退会者
     verifications:
       authorizations:
         first_login:
           actions:
-            csv_census: 組織のセンサスに照らして確認
             user_extension_authorization_handler: ユーザー拡張属性対応用
       csv_census:
         admin:
@@ -372,11 +329,6 @@ ja:
           上記のリンクにアクセスし、アカウントIDとパスワードを設定するまで、あなたのアカウントは作成されません。
       updated: パスワードは正常に設定され、ログイン完了しました。
     mailer:
-      confirmation_instructions:
-        instruction: 下記のリンクにアクセスすると、メールアドレスの確認が完了します。
-        subject: 登録のご案内（メールアドレスの確認）
-      email_changed:
-        greeting: こんにちは、 %{recipient} さん!
       invitation_instructions:
         ignore: |-
           招待を受け入れたくない場合は、このメールを無視してください。<br />
@@ -393,19 +345,12 @@ ja:
     passwords:
       edit:
         password_help: "%{minimun_characters} 半角英数字10文字以上で入力してください。単純すぎてはいけません（例：123456）。アカウントIDやメールアドレスと異なる必要があります。"
-    registrations:
-      signed_up_but_inactive: 登録が完了しました。ただし、アカウントが有効化されていないため、ログインできませんでした。
-      signed_up_but_locked: 登録完了しましたが、アカウントがロックされているため、ログインできませんでした。
-    sessions:
-      signed_in: 正常にログインしました。
     shared:
       links:
         didn_t_receive_confirmation_instructions: ユーザ登録確認メールが届かない方はこちら
         didn_t_receive_unlock_instructions: ロック解除の手順を送信したい方はこちら
-        sign_in_with_provider: "%{provider} でログイン"
   errors:
     messages:
-      already_confirmed: が確認されました。ログインしてみてください
       needs_user_extension: 登録されていないユーザー属性情報が見つかりました。
   faker:
     lorem:
@@ -969,19 +914,8 @@ ja:
       - 鳴り出した
       - 黄いろ
       - 黒く
-  forms:
-    length_validator:
-      minimum:
-        one: 少なくとも %{count} 文字
-        other: 少なくとも %{count} 文字
-    questionnaires:
-      show:
-        answer_questionnaire:
-          anonymous_user_message: <a href="%{sign_in_link}">あなたのアカウントでログインする</a> か、 <a href="%{sign_up_link}">ユーザー登録</a> してフォームに回答してください。
   layouts:
     decidim:
-      header:
-        sign_in: ログイン
       notifications_dashboard:
         mark_all_as_read: すべての通知を削除する
   time:
