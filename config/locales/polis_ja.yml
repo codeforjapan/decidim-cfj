@@ -1,22 +1,19 @@
 ja:
+  activemodel:
+    attributes:
+      organization:
+        polis_site_id: Pol.isサイトID
+        polis_site_url: Pol.isサイトURL
   decidim:
     admin:
       menu:
-        appearance: 外見
-        area_types: エリアタイプ
-        areas: エリア
-        configuration: 設定
         decidim_polis: Pol.is
-        help_sections: ヘルプセクション
-        homepage: ホームページ
-        scope_types: スコープ種別
-        scopes: スコープ
       organization:
         update:
           error: エラー
           success: 成功
       polis_config:
-        reminder: Pol.is の管理画面への直接リンクが機能するように、Pol.is にログインすることを忘れないでください。
+        reminder: Pol.isの管理画面への直接リンクが機能するように、Pol.isにログインすることを忘れないでください。
         title: Pol.isの設定
         warning: これはあなたの固有のIDです。共有したり変更したりしないでください。
     components:
@@ -53,11 +50,11 @@ ja:
           moderation:
             comments: コメント
             participants: 参加者
-            stats: スター
+            stats: 統計
             exports: エクスポート
             reports: 報告する
           or: または
-          question_circle_alt: 質問サークル
+          question_circle_alt: 質問
   layouts:
     decidim:
       admin:
