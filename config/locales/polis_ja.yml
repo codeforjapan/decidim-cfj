@@ -1,0 +1,65 @@
+ja:
+  activemodel:
+    attributes:
+      organization:
+        polis_site_id: Pol.isサイトID
+        polis_site_url: Pol.isサイトURL
+  decidim:
+    admin:
+      menu:
+        decidim_polis: Pol.is
+      organization:
+        update:
+          error: エラー
+          success: 成功
+      polis_config:
+        reminder: Pol.isの管理画面への直接リンクが機能するように、Pol.isにログインすることを忘れないでください。
+        title: Pol.isの設定
+        warning: これはあなたの固有のIDです。共有したり変更したりしないでください。
+    components:
+      polis:
+        settings:
+          step:
+            write_enabled: 書き込みを有効する
+            vote_enabled: 投票を有効にする
+          global:
+            title: タイトル
+            description: 説明
+            social_sign_in_enabled: ソーシャルログインを有効にする
+            visualization_enabled: ビジュアライゼーションを有効にする
+        name: Pol.is ディベート
+        views:
+          moder: 'Moderation:'
+    polis:
+      admin:
+        configuration:
+          edit:
+            update: 更新
+      polis:
+        show:
+          data: データ
+          help:
+            bottom: 新しいタイプのディスカッションへようこそ
+            description_1: 他人の意見に投票する
+            description_2: 自分の意見を表明する
+            description_3: 7人以上の投票者がいる場合、意見グループが形成されます
+            description_4: 新しい視点を提供して合意形成しましょう（意見グループはリアルタイムで変化します）
+            top: Pol.isの使い方
+          login_instructions: あなたのアカウントでログイン
+          login_title: ディベートに参加する
+          moderation:
+            comments: コメント
+            participants: 参加者
+            stats: 統計
+            exports: エクスポート
+            reports: 報告する
+          or: または
+          question_circle_alt: 質問
+  layouts:
+    decidim:
+      admin:
+        settings:
+          title: タイトル
+      header:
+        sign_in: ログイン
+        sign_up: 新規登録

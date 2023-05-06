@@ -17,6 +17,14 @@ GIT
       decidim-admin (~> 0.26.0)
       decidim-core (~> 0.26.0)
 
+GIT
+  remote: https://github.com/takahashim/decidim-polis.git
+  revision: c0eecae2eb409fbead6076b3521146e05f26105f
+  branch: update-0-26-5
+  specs:
+    decidim-polis (0.26.5)
+      decidim-core (= 0.26.5)
+
 PATH
   remote: decidim-comments
   specs:
@@ -101,7 +109,7 @@ GEM
       zeitwerk (~> 2.2, >= 2.2.2)
     acts_as_list (0.9.19)
       activerecord (>= 3.0)
-    addressable (2.8.1)
+    addressable (2.8.4)
       public_suffix (>= 2.0.2, < 6.0)
     ast (2.4.2)
     aws-eventstream (1.2.0)
@@ -384,7 +392,7 @@ GEM
       rainbow (>= 2.1.0)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
-    devise (4.9.0)
+    devise (4.9.2)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
       railties (>= 4.1.0)
@@ -401,7 +409,7 @@ GEM
       nokogiri (>= 1.13.2, < 1.14.0)
       rubyzip (~> 2.3.0)
     docile (1.4.0)
-    doorkeeper (5.6.5)
+    doorkeeper (5.6.6)
       railties (>= 5)
     doorkeeper-i18n (4.0.1)
     dotenv (2.7.6)
@@ -480,7 +488,7 @@ GEM
     highline (2.1.0)
     html_tokenizer (0.0.7)
     htmlentities (4.3.4)
-    i18n (1.12.0)
+    i18n (1.13.0)
       concurrent-ruby (~> 1.0)
     i18n-tasks (0.9.37)
       activesupport (>= 4.0.2)
@@ -575,7 +583,7 @@ GEM
     net-smtp (0.3.3)
       net-protocol
     newrelic_rpm (9.1.0)
-    nio4r (2.5.8)
+    nio4r (2.5.9)
     nokogiri (1.13.10)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
@@ -643,12 +651,12 @@ GEM
       get_process_mem (~> 0.2)
       puma (>= 2.7)
     racc (1.6.2)
-    rack (2.2.6.4)
+    rack (2.2.7)
     rack-attack (6.6.1)
       rack (>= 1.0, < 3)
     rack-cors (1.1.1)
       rack (>= 2.0.0)
-    rack-protection (3.0.5)
+    rack-protection (3.0.6)
       rack
     rack-proxy (0.7.6)
       rack
@@ -888,6 +896,7 @@ DEPENDENCIES
   decidim-comments!
   decidim-decidim_awesome!
   decidim-dev (= 0.26.5)
+  decidim-polis!
   decidim-term_customizer!
   decidim-user_extension!
   deface

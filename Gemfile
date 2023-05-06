@@ -12,6 +12,8 @@ gem "decidim-decidim_awesome", git: "https://github.com/codeforjapan/decidim-mod
 
 gem "decidim-term_customizer", git: "https://github.com/codeforjapan/decidim-module-term_customizer.git", branch: "026-ja"
 
+gem "decidim-polis", git: "https://github.com/takahashim/decidim-polis.git", branch: "update-0-26-5"
+
 gem "bootsnap"
 
 gem "puma", ">= 5.0.0"
