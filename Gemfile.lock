@@ -19,7 +19,7 @@ GIT
 
 GIT
   remote: https://github.com/takahashim/decidim-polis.git
-  revision: c0eecae2eb409fbead6076b3521146e05f26105f
+  revision: 528c830677e3554e61808e98ba26a816a3f6ee78
   branch: update-0-26-5
   specs:
     decidim-polis (0.26.5)
