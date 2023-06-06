@@ -34,7 +34,7 @@ module Decidim
     validates :real_name, presence: true, length: { maximum: Decidim::UserExtensionForm.real_name_length }
     validates :address, presence: true, length: { maximum: Decidim::UserExtensionForm.address_length }
     validates :birth_year, presence: true, format: /\A[12][0-9]{3}\z/
-    validates :gender,presence: true, inclusion: { in: GENDERS.keys }
+    validates :gender, presence: true, inclusion: { in: GENDERS.keys }
     validates :occupation, presence: true, length: { maximum: Decidim::UserExtensionForm.occupation_length }
 
     # real_name && address && birth_year should be unique??
