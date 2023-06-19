@@ -8,6 +8,12 @@ ja:
         gender: 性別
         occupation: 職業
         real_name: 本名
+      user:
+        user_extension_address: 住所
+        user_extension_birth_year: 生年(西暦)
+        user_extension_gender: 性別
+        user_extension_occupation: 職業
+        user_extension_real_name: 本名
   decidim:
     admin:
       officializations:
