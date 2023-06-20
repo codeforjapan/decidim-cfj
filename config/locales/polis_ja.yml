@@ -27,6 +27,8 @@ ja:
             description: 説明
             social_sign_in_enabled: ソーシャルログインを有効にする
             visualization_enabled: ビジュアライゼーションを有効にする
+            site_id: サイトID
+            site_url: サイトURL
         name: Pol.is ディベート
         views:
           moder: 'Moderation:'
