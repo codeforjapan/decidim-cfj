@@ -28,7 +28,9 @@ ja:
             social_sign_in_enabled: ソーシャルログインを有効にする
             visualization_enabled: ビジュアライゼーションを有効にする
             site_id: サイトID
+            site_id_help: これはあなたの固有のIDです。共有したり変更したりしないでください。
             site_url: サイトURL
+            site_url_help: Pol.isの管理画面への直接リンクが機能するように、Pol.isにログインすることを忘れないでください。
         name: Pol.is ディベート
         views:
           moder: 'Moderation:'
