@@ -34,6 +34,11 @@ ja:
         secondary_color: セカンダリ
       minutes:
         visible: 表示する
+  activerecord:
+    attributes:
+      decidim/proposals/proposal:
+        title: タイトル
+        body: 本文
   date:
     formats:
       decidim_short: "%Y/%m/%d"
