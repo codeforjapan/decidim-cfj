@@ -1,0 +1,9 @@
+/* fix decidim-core/app/packs/stylesheets/decidim/modules/_navbar.scss */
+a.topbar__conversations {
+    display: none !important;
+}
+
+/* fix decidim-core/app/packs/stylesheets/decidim/layouts/_user.scss */
+span.user-contact_link {
+    display: none !important;
+}
