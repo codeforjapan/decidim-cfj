@@ -8,6 +8,11 @@ en:
         gender: Gender
         occupation: Occupation
         real_name: Real Name
+  activerecord:
+    attributes:
+      decidim/proposals/proposal:
+        title: Title
+        body: Body
   decidim:
     debates:
       debates:
