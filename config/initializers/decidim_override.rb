@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "../../lib/decidim/forms/user_answers_serializer"
+
 Rails.application.config.to_prepare do
   # Decidim::Proposals::ProposalWizardCreateStepForm
   #
