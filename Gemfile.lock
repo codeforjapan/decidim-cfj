@@ -456,6 +456,11 @@ GEM
     faraday-net_http (3.1.0)
       net-http
     ffi (1.16.3)
+    ferrum (0.13)
+      addressable (~> 2.5)
+      concurrent-ruby (~> 1.1)
+      webrick (~> 1.7)
+      websocket-driver (>= 0.6, < 0.8)
     figaro (1.2.0)
       thor (>= 0.14.0, < 2)
     file_validators (3.0.0)
@@ -900,6 +905,7 @@ GEM
     webpush (1.1.0)
       hkdf (~> 0.2)
       jwt (~> 2.0)
+    webrick (1.8.1)
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -932,6 +938,7 @@ DEPENDENCIES
   dotenv-rails
   factory_bot_rails
   faker (~> 3.2)
+  ferrum
   figaro
   fog-aws
   image_processing
