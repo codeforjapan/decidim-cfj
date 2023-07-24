@@ -247,6 +247,7 @@ Decidim.configure do |config|
 end
 
 require "decidim/map/provider/static_map/cfj_osm"
+require "decidim/exporters/pdf"
 
 Rails.application.config.i18n.available_locales = Decidim.available_locales
 Rails.application.config.i18n.default_locale = Decidim.default_locale
