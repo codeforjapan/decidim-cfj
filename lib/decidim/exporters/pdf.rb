@@ -22,14 +22,17 @@ module Decidim
         Dir.mktmpdir do |dir|
           html_path = File.join(dir, "tmp.html")
           File.write(html_path, html)
-          pdf_path = File.join(dir, "tmp.pdf")
           url = URI::File.build([nil, html_path])
 
           browser = Ferrum::Browser.new
           browser.go_to(url)
-          browser.pdf(path: pdf_path, landscape: orientation != "Portrait", printBackground: true)
+          document = browser.pdf(path: nil,
+                                 encoding: :binary,
+                                 landscape: orientation != "Portrait",
+                                 printBackground: true,
+                                 scale: 0.8,
+                                 format: :A4)
 
-          document = File.read(pdf_path)
           ExportData.new(document, "pdf")
         end
       end
