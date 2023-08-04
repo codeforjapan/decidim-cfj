@@ -19,22 +19,9 @@ module Decidim
           locals: locals
         )
 
-        Dir.mktmpdir do |dir|
-          html_path = File.join(dir, "tmp.html")
-          File.write(html_path, html)
-          url = URI::File.build([nil, html_path])
+        document = pdf_from_string(html, orientation:)
 
-          browser = Ferrum::Browser.new
-          browser.go_to(url)
-          document = browser.pdf(path: nil,
-                                 encoding: :binary,
-                                 landscape: orientation != "Portrait",
-                                 printBackground: true,
-                                 scale: 0.8,
-                                 format: :A4)
-
-          ExportData.new(document, "pdf")
-        end
+        ExportData.new(document, "pdf")
       end
 
       # may be overwritten if needed
@@ -61,6 +48,27 @@ module Decidim
 
       def controller
         raise NotImplementedError
+      end
+
+      private
+
+      def pdf_from_string(html, orientation:)
+        Dir.mktmpdir do |dir|
+          html_path = File.join(dir, "tmp.html")
+          File.write(html_path, html)
+          url = URI::File.build([nil, html_path])
+
+          browser = Ferrum::Browser.new
+          browser.go_to(url)
+          document = browser.pdf(path: nil,
+                                 encoding: :binary,
+                                 landscape: orientation != "Portrait",
+                                 printBackground: true,
+                                 scale: 0.8,
+                                 format: :A4)
+        end
+
+        document
       end
     end
   end
