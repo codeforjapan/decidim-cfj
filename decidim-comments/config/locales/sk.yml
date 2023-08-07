@@ -1,3 +1,4 @@
+---
 sk:
   activemodel:
     models:
@@ -20,6 +21,7 @@ sk:
         other: Hlasy
   decidim:
     comments:
+      comments_title: Komentáre
       last_activity:
         new_comment_at_html: "<span>Nový komentár na %{link}</span>"
       votes:
@@ -58,7 +60,6 @@ sk:
             does_not_belong: Obsahuje ilegálnu činnosť, vyhrážky, osobné informácie, alebo niečo ďalšie, o čom si myslíte, že nepatrí na %{organization_name}.
             offensive: Obsahuje rasizmus, sexizmus, urážky, osobné útoky, vyhrážky alebo inú podobu nenávistného prejavu.
             spam: Obsahuje clickbait, reklamy, scam alebo je to skriptovací robot.
-        show_replies: Zobraziť %{replies_count} odpovedí
       comment_order_selector:
         order:
           best_rated: Najlepšie hodnotené

@@ -1,4 +1,11 @@
 PATH
+  remote: decidim-comments
+  specs:
+    decidim-comments (0.27.3)
+      decidim-core (= 0.27.3)
+      redcarpet (~> 3.5, >= 3.5.1)
+
+PATH
   remote: decidim-user_extension
   specs:
     decidim-user_extension (0.3.0)
@@ -230,9 +237,6 @@ GEM
     decidim-budgets (0.27.3)
       decidim-comments (= 0.27.3)
       decidim-core (= 0.27.3)
-    decidim-comments (0.27.3)
-      decidim-core (= 0.27.3)
-      redcarpet (~> 3.5, >= 3.5.1)
     decidim-core (0.27.3)
       active_link_to (~> 1.0)
       acts_as_list (~> 0.9)
@@ -891,6 +895,7 @@ DEPENDENCIES
   bootsnap
   byebug (~> 11.0)
   decidim (= 0.27.3)
+  decidim-comments!
   decidim-decidim_awesome
   decidim-dev (= 0.27.3)
   decidim-user_extension!
