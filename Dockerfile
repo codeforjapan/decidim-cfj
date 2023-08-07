@@ -1,22 +1,28 @@
-FROM node:16.9.1-alpine as node
+FROM node:16.13.0-bullseye-slim as node
 
-FROM ruby:2.7.4-alpine
+FROM ruby:3.0.5-slim-bullseye
 
-RUN apk update \
-    && apk add --no-cache --virtual build-dependencies \
-        build-base \
-        curl-dev \
-        git \
-    && apk add --no-cache \
-        imagemagick \
-        postgresql-dev \
-        tzdata \
-        zip \
-        curl \
-        gcompat\
-    && cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
+RUN  apt-get update && \
+     apt-get install -y --no-install-recommends \
+        build-essential \
+        libpq-dev \
+        postgresql-client \
+        libicu-dev
+#RUN apk update \
+#    && apk add --no-cache --virtual build-dependencies \
+#        build-base \
+#        curl-dev \
+#        git \
+#    && apk add --no-cache \
+#        imagemagick \
+#        postgresql-dev \
+#        tzdata \
+#        zip \
+#        curl \
+#        gcompat\
+#    && cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 
-ENV YARN_VERSION=v1.22.5
+ENV YARN_VERSION=v1.22.15
 
 # node install
 COPY --from=node /usr/local/bin/node /usr/local/bin/node
@@ -32,7 +38,7 @@ ARG RAILS_ENV="production"
 ENV LANG=C.UTF-8 \
     LC_ALL=C.UTF-8 \
     BUNDLER_JOBS=4 \
-    BUNDLER_VERSION=2.2.18 \
+    BUNDLER_VERSION=2.2.22 \
     APP_HOME=/app \
     RAILS_ENV=${RAILS_ENV} \
     RAILS_LOG_TO_STDOUT=true \
@@ -44,7 +50,7 @@ WORKDIR $APP_HOME
 
 COPY Gemfile Gemfile.lock ./
 
-COPY decidim-comments /app/decidim-comments
+#COPY decidim-comments /app/decidim-comments
 COPY omniauth-line_login /app/omniauth-line_login
 COPY decidim-user_extension /app/decidim-user_extension
 
