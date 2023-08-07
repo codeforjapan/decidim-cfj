@@ -15,6 +15,25 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 このDecidimアプリ内で、Decidim本体やライブラリに含まれる元ファイルを上書きしているファイルがいくつかあります。
 これらのファイルについては、Decidim本体のファイルがバージョンアップ時に更新された場合、その更新内容をファイルに反映させなければアプリケーションが壊れる可能性があります。そのため、本体の更新時には確認が必要です。
 
+* `app/commands/decidim/accountability/destroy_all_results.rb`,
+  `app/commands/decidim/areas/destroy_all_areas.rb`,
+  `app/commands/decidim/assemblies/destroy_all_assemblies.rb`,
+  `app/commands/decidim/blogs/destroy_all_posts.rb`,
+  `app/commands/decidim/budgets/destroy_all_budgets.rb`,
+  `app/commands/decidim/comments/destroy_all_comments.rb`,
+  `app/commands/decidim/debates/destroy_all_debates.rb`,
+  `app/commands/decidim/destroy_all_attachments.rb`,
+  `app/commands/decidim/gamifications/destroy_all_badges.rb`,
+  `app/commands/decidim/meetings/destroy_all_meetings.rb`,
+  `app/commands/decidim/messaging/destroy_all_messages.rb`,
+  `app/commands/decidim/organizations/destroy_organization.rb`,
+  `app/commands/decidim/pages/destroy_all_pages.rb`,
+  `app/commands/decidim/participatory_processes/destroy_all_participatory_processes.rb`,
+  `app/commands/decidim/proposals/destroy_all_proposals.rb`,
+  `app/commands/decidim/surveys/destroy_all_surveys.rb`
+
+  `delete:destroy_all`タスクで不要なレコードを消せるように追加されたファイル。 https://github.com/codeforjapan/decidim-cfj/pull/501 で追加されたものです。
+
 * `app/packs/src/decidim/decidim_awesome/editors/editor.js`
 
   QuillエディタでHTML編集ができるようにするために追加されたファイル。現在はDecidim Awesome対応になっています(decidim_awesome内の`app/packs/src/decidim/decidim_awesome/editors/editor.js`がベースになっています)。
@@ -69,6 +88,14 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 * `app/views/decidim/blogs/posts/show.html.erb`
 
   https://github.com/codeforjapan/decidim-cfj/issues/107 の対応として https://github.com/codeforjapan/decidim-cfj/pull/126 で追加しています。
+
+* `lib/tasks/delete.rake`
+
+  `delete:destroy_all`タスク。https://github.com/codeforjapan/decidim-cfj/pull/501 で追加されたものです。
+
+* `lib/tasks/comment.rake`
+
+  `comment:remove_orphans`タスク。https://github.com/codeforjapan/decidim-cfj/pull/454 で追加されたものです。
 
 #### `decidim-user_extension`について
 
