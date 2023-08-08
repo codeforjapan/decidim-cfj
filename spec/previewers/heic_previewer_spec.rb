@@ -10,7 +10,7 @@ describe HeicPreviewer do
     expect(blob).not_to be_nil
     expect(HeicPreviewer.accept?(blob)).to be_truthy # rubocop:disable RSpec/PredicateMatcher
 
-    HeicPreviewer.new(blob).preview({}) do |attachable|
+    HeicPreviewer.new(blob).preview() do |attachable|
       expect(attachable[:content_type]).to eq("image/png")
     end
   end
