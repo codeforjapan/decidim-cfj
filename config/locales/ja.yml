@@ -209,6 +209,10 @@ ja:
           origin_values:
             citizens: 一般参加者
             official: 事務局
+            user_groups: グループ
+        show:
+          edit_close_meeting: ミーティングレポートを編集
+          join: ミーティングに参加
     messaging:
       conversation_mailer:
         comanagers_new_conversation:
@@ -262,6 +266,12 @@ ja:
         filters:
           explanations:
             no_active_nor_upcoming_callout: アクティブな参加型プロセスも今後の参加型プロセスもありません。ここでは過去の参加型プロセスのリストを示します。
+      show:
+        local_area: 組織エリア
+    participatory_process_groups:
+      content_blocks:
+        metadata:
+          developer_group: 制作グループ
     proposals:
       application_helper:
         filter_origin_values:
