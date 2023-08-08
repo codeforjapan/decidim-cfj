@@ -1,26 +1,14 @@
 FROM node:16.13.0-bullseye-slim as node
 
-FROM ruby:3.0.5-slim-bullseye
+FROM ruby:3.0.6-slim-bullseye
 
 RUN  apt-get update && \
      apt-get install -y --no-install-recommends \
         build-essential \
         libpq-dev \
         postgresql-client \
-        libicu-dev
-#RUN apk update \
-#    && apk add --no-cache --virtual build-dependencies \
-#        build-base \
-#        curl-dev \
-#        git \
-#    && apk add --no-cache \
-#        imagemagick \
-#        postgresql-dev \
-#        tzdata \
-#        zip \
-#        curl \
-#        gcompat\
-#    && cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
+        libicu-dev \
+        git
 
 ENV YARN_VERSION=v1.22.15
 
@@ -38,7 +26,7 @@ ARG RAILS_ENV="production"
 ENV LANG=C.UTF-8 \
     LC_ALL=C.UTF-8 \
     BUNDLER_JOBS=4 \
-    BUNDLER_VERSION=2.2.22 \
+    BUNDLER_VERSION=2.2.33 \
     APP_HOME=/app \
     RAILS_ENV=${RAILS_ENV} \
     RAILS_LOG_TO_STDOUT=true \
