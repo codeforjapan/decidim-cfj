@@ -54,20 +54,20 @@ jobs:
         which convert
         convert -version
 
-    - name: Set up Ruby 2.7
+    - name: Set up Ruby 3.0.6
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 2.7
+        ruby-version: 3.0.6
         bundler-cache: true
 
     - name: setup Node
       uses: actions/setup-node@v3
       with:
-        node-version: 16.9.1
+        node-version: 16.13.0
         cache: 'yarn'
     - name: install yarn
       run: |
-        npm i -g yarn@1.22.5
+        npm i -g yarn@1.22.15
         yarn install --frozen-lockfile
 
     - name: create assets precompile cache key
