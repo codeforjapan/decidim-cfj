@@ -32,7 +32,7 @@ RSpec.configure do |config|
 
   ## from decidim-dev/lib/decidim/dev/test/spec_helper.rb in decidim
   config.color = true
-  config.fail_fast = ENV["FAIL_FAST"] == "true"
+  config.fail_fast = ENV.fetch("FAIL_FAST", nil) == "true"
   config.order = :random
   config.raise_errors_for_deprecations!
   config.example_status_persistence_file_path = ".rspec-failures"

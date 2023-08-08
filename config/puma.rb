@@ -30,7 +30,7 @@ before_fork do
     config.rolling_restart_frequency = 24 * 60 * 60
     config.reaper_status_logs = true
     config.pre_term = lambda do |worker|
-      SlackChatMessenger.notify(channel: ENV['SLACK_MESSAGE_CHANNEL'], message: "[#{Rails.env}] Worker #{worker.index}(#{worker.pid}) being killed") # rubocop:disable Style/StringLiterals
+      SlackChatMessenger.notify(channel: ENV.fetch('SLACK_MESSAGE_CHANNEL', nil), message: "[#{Rails.env}] Worker #{worker.index}(#{worker.pid}) being killed") # rubocop:disable Style/StringLiterals
       puts "Worker #{worker.index}(#{worker.pid}) being killed"
     end
   end
