@@ -9,7 +9,17 @@ RUN  apt-get update && \
         postgresql-client \
         libicu-dev \
         git \
-        imagemagick
+        wget && \
+    apt-get clean && \
+    apt-get autoremove
+
+RUN wget https://github.com/ImageMagick/ImageMagick/archive/refs/tags/7.1.1-15.tar.gz && \
+    tar xzf 7.1.1-15.tar.gz && \
+    rm 7.1.1-15.tar.gz
+
+RUN sh ./ImageMagick-7.1.1-15/configure --prefix=/usr/local --with-bzlib=yes --with-fontconfig=yes --with-freetype=yes --with-gslib=yes --with-gvc=yes --with-jpeg=yes --with-jp2=yes --with-png=yes --with-tiff=yes --with-xml=yes --with-gs-font-dir=yes && \
+    make -j && make install && ldconfig /usr/local/lib/
+
 
 ENV YARN_VERSION=v1.22.15
 
