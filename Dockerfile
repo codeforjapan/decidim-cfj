@@ -8,7 +8,8 @@ RUN  apt-get update && \
         libpq-dev \
         postgresql-client \
         libicu-dev \
-        git
+        git \
+        imagemagick
 
 ENV YARN_VERSION=v1.22.15
 
