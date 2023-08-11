@@ -7,6 +7,14 @@ GIT
       decidim-admin (~> 0.27.0)
       decidim-core (~> 0.27.0)
 
+GIT
+  remote: https://github.com/codeforjapan/decidim-polis.git
+  revision: 381361dca6919d71fb76c2d0244afb78a2c3bd7d
+  branch: update-0-27-4
+  specs:
+    decidim-polis (0.27.4)
+      decidim-core (= 0.27.4)
+
 PATH
   remote: decidim-comments
   specs:
@@ -907,6 +915,7 @@ DEPENDENCIES
   decidim-comments!
   decidim-decidim_awesome
   decidim-dev (= 0.27.4)
+  decidim-polis!
   decidim-term_customizer!
   decidim-user_extension!
   deface

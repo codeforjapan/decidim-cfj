@@ -12,7 +12,7 @@ gem "decidim-decidim_awesome"
 
 gem "decidim-term_customizer", git: "https://github.com/codeforjapan/decidim-module-term_customizer.git", branch: "027-ja"
 
-# gem "decidim-polis", git: "https://github.com/takahashim/decidim-polis.git", branch: "update-0-26-5"
+gem "decidim-polis", git: "https://github.com/codeforjapan/decidim-polis.git", branch: "update-0-27-4"
 
 gem "bootsnap"
 
