@@ -9,6 +9,7 @@ RUN  apt-get update && \
         postgresql-client \
         libicu-dev \
         git \
+        curl \
         wget && \
     apt-get clean && \
     apt-get autoremove
@@ -58,7 +59,6 @@ RUN gem install bundler:${BUNDLER_VERSION} \
     && bundle config --global jobs ${BUNDLER_JOBS} \
     && if [ "${RAILS_ENV}" = "production" ];then \
             bundle install --without development test \
-            && apt-get clean \
         ;else \
             bundle install \
         ;fi
