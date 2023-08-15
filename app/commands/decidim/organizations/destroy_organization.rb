@@ -3,7 +3,7 @@
 module Decidim
   module Organizations
     # A command with all the business logic when destroys organization.
-    class DestroyOrganization < Rectify::Command
+    class DestroyOrganization < Decidim::Command
       # Public: Initializes the command.
       #
       # organization - The organization to destroy.

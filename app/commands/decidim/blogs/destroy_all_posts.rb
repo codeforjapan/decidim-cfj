@@ -3,7 +3,7 @@
 module Decidim
   module Blogs
     # A command with all the business logic when destroys all posts.
-    class DestroyAllPosts < Rectify::Command
+    class DestroyAllPosts < Decidim::Command
       # Public: Initializes the command.
       #
       # organization - The organization to destroy all posts.
