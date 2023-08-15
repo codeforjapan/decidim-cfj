@@ -58,7 +58,7 @@ RUN gem install bundler:${BUNDLER_VERSION} \
     && bundle config --global jobs ${BUNDLER_JOBS} \
     && if [ "${RAILS_ENV}" = "production" ];then \
             bundle install --without development test \
-            && apk del --purge build-dependencies \
+            && apt-get clean \
         ;else \
             bundle install \
         ;fi
