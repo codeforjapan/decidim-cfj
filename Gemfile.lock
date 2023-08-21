@@ -120,14 +120,8 @@ GEM
       aws-sdk-core (~> 3, >= 3.177.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.6)
-    aws-sdk-xray (1.4.0)
-      aws-sdk-core (~> 3)
-      aws-sigv4 (~> 1.0)
     aws-sigv4 (1.6.0)
       aws-eventstream (~> 1, >= 1.0.2)
-    aws-xray-sdk (0.14.0)
-      aws-sdk-xray (~> 1.4.0)
-      multi_json (~> 1)
     axe-core-api (4.7.0)
       dumb_delegator
       virtus
@@ -614,7 +608,6 @@ GEM
       rack (>= 1.2, < 4)
       snaky_hash (~> 2.0)
       version_gem (~> 1.1)
-    oj (3.15.0)
     omniauth (2.1.1)
       hashie (>= 3.4.6)
       rack (>= 2.2.3)
@@ -908,7 +901,6 @@ PLATFORMS
 
 DEPENDENCIES
   aws-sdk-s3
-  aws-xray-sdk
   bootsnap
   byebug (~> 11.0)
   decidim (= 0.27.4)
@@ -928,7 +920,6 @@ DEPENDENCIES
   letter_opener_web (~> 2.0)
   listen (~> 3.1)
   newrelic_rpm
-  oj
   omniauth-line_login!
   omniauth-rails_csrf_protection
   puma (>= 5.6.2)

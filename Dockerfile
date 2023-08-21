@@ -8,6 +8,8 @@ RUN  apt-get update && \
         libpq-dev \
         postgresql-client \
         libicu-dev \
+        libpng-dev \
+        libjpeg-dev \
         git \
         curl \
         wget && \
