@@ -2,27 +2,35 @@ FROM node:16.13.0-bullseye-slim as node
 
 FROM ruby:3.0.6-slim-bullseye
 
+# for build-dep
+RUN echo "deb-src http://deb.debian.org/debian bullseye main" >> /etc/apt/sources.list
+RUN echo "deb-src http://deb.debian.org/debian-security bullseye-security main" >> /etc/apt/sources.list
+RUN echo "deb-src http://deb.debian.org/debian bullseye-updates main" >> /etc/apt/sources.list
+
 RUN  apt-get update && \
      apt-get install -y --no-install-recommends \
         build-essential \
         libpq-dev \
         postgresql-client \
         libicu-dev \
-        libpng-dev \
-        libjpeg-dev \
+        libwebp-dev \
+        libopenjp2-7-dev \
+        librsvg2-dev \
+        libde265-dev \
         git \
         curl \
         wget && \
     apt-get clean && \
     apt-get autoremove
 
-RUN wget https://github.com/ImageMagick/ImageMagick/archive/refs/tags/7.1.1-15.tar.gz && \
-    tar xzf 7.1.1-15.tar.gz && \
-    rm 7.1.1-15.tar.gz
-
-RUN sh ./ImageMagick-7.1.1-15/configure --prefix=/usr/local --with-bzlib=yes --with-fontconfig=yes --with-freetype=yes --with-gslib=yes --with-gvc=yes --with-jpeg=yes --with-jp2=yes --with-png=yes --with-tiff=yes --with-xml=yes --with-gs-font-dir=yes && \
-    make -j && make install && ldconfig /usr/local/lib/
-
+RUN apt build-dep -y imagemagick && \
+    wget https://github.com/ImageMagick/ImageMagick/archive/refs/tags/7.1.1-15.tar.gz && \
+    tar xf 7.1.1-15.tar.gz && \
+    cd ImageMagick-7*  && \
+    ./configure  && \
+    make && \
+    make install  && \
+    ldconfig
 
 ENV YARN_VERSION=v1.22.15
 
