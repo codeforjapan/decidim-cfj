@@ -302,7 +302,7 @@ GEM
     decidim-debates (0.27.4)
       decidim-comments (= 0.27.4)
       decidim-core (= 0.27.4)
-    decidim-decidim_awesome (0.9.1)
+    decidim-decidim_awesome (0.9.3)
       decidim-admin (>= 0.26.0, < 0.28)
       decidim-core (>= 0.26.0, < 0.28)
       sassc (~> 2.3)
@@ -905,7 +905,7 @@ DEPENDENCIES
   byebug (~> 11.0)
   decidim (= 0.27.4)
   decidim-comments!
-  decidim-decidim_awesome
+  decidim-decidim_awesome (>= 0.9.3)
   decidim-dev (= 0.27.4)
   decidim-polis!
   decidim-term_customizer!
