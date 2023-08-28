@@ -2,10 +2,14 @@
 
 <% add_decidim_meta_tags({
   title: translated_attribute(post.title),
-  description: translated_attribute(post.body),
+  description: translated_attribute(post.body).truncate(Rails.application.config.default_blog_ogp_description_limit),
   url: post_url(post.id)
 }) %>
-
+<%
+  doc = Nokogiri::HTML(translated_attribute(post.body))
+  img = doc.css('img')&.first
+  add_decidim_meta_image_url(img['src']) if img
+  %>
 <%
   edit_link(
     resource_locator(post).edit,
