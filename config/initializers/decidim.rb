@@ -225,7 +225,7 @@ Decidim.configure do |config|
   #   end
   # end
   #
-  config.sms_gateway_service = 'Decidim::Verifications::Sms::ExampleGateway'
+  config.sms_gateway_service = "Decidim::Verifications::Sms::ExampleGateway"
 
   # Timestamp service configuration
   #
@@ -335,7 +335,7 @@ Decidim.configure do |config|
   #   end
   # end
   #
-  config.machine_translation_service = 'Decidim::Dev::DummyTranslator'
+  config.machine_translation_service = "Decidim::Dev::DummyTranslator"
 
   # Defines the name of the cookie used to check if the user allows Decidim to
   # set cookies.
@@ -487,8 +487,6 @@ Rails.application.config.i18n.default_locale = Decidim.default_locale
 
 # Inform Decidim about the assets folder
 Decidim.register_assets_path File.expand_path("app/packs", Rails.application.root)
-
-
 
 require "decidim/map/provider/static_map/cfj_osm"
 
