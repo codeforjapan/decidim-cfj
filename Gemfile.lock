@@ -1,4 +1,14 @@
 GIT
+  remote: https://github.com/codeforjapan/decidim-module-decidim_awesome.git
+  revision: 30f39e79c65c6de3e9c569d8233e586113bff020
+  branch: v0.9.3-2023-08-31
+  specs:
+    decidim-decidim_awesome (0.9.3)
+      decidim-admin (>= 0.26.0, < 0.28)
+      decidim-core (>= 0.26.0, < 0.28)
+      sassc (~> 2.3)
+
+GIT
   remote: https://github.com/codeforjapan/decidim-module-term_customizer.git
   revision: b54c2f2daeab5b371717f706515982629b3cd0dd
   branch: 027-ja
@@ -302,10 +312,6 @@ GEM
     decidim-debates (0.27.4)
       decidim-comments (= 0.27.4)
       decidim-core (= 0.27.4)
-    decidim-decidim_awesome (0.9.3)
-      decidim-admin (>= 0.26.0, < 0.28)
-      decidim-core (>= 0.26.0, < 0.28)
-      sassc (~> 2.3)
     decidim-dev (0.27.4)
       axe-core-rspec (~> 4.1.0)
       byebug (~> 11.0)
@@ -905,7 +911,7 @@ DEPENDENCIES
   byebug (~> 11.0)
   decidim (= 0.27.4)
   decidim-comments!
-  decidim-decidim_awesome (>= 0.9.3)
+  decidim-decidim_awesome!
   decidim-dev (= 0.27.4)
   decidim-polis!
   decidim-term_customizer!
