@@ -54,3 +54,4 @@ yarn-debug.log*
 .yarn-integrity
 public/sw.js
 public/sw.js.map
+app/views/static/api/*
