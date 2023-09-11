@@ -3,7 +3,7 @@
 module Decidim
   module Budgets
     # A command with all the business logic when destroys all budgets.
-    class DestroyAllBudgets < Rectify::Command
+    class DestroyAllBudgets < Decidim::Command
       # Public: Initializes the command.
       #
       # organization - The organization to destroy all budgets.

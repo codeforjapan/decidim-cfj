@@ -6,11 +6,11 @@
 Dockerで環境を構築する際は、1.環境構築と2. 実行（ローカルバージョン）は不要です。
 直接、3. 実行（Dockerバージョン）から開始してください。
 
-| アプリケーション名                                 | バージョン  |
-|-------------------------------------------|--------|
-| [Ruby](https://www.ruby-lang.org/ja/)     | 2.7.4  |
-| [Bundler](https://bundler.io/)            | 2.2.18 |
-| [PostgreSQL](https://www.postgresql.org/) | 13     |
+| アプリケーション名                                 | バージョン |
+|-------------------------------------------|------|
+| [Ruby](https://www.ruby-lang.org/ja/)     | 3.0.6 |
+| [Bundler](https://bundler.io/)            | 2.2.33 |
+| [PostgreSQL](https://www.postgresql.org/) | 13   |
 
 ### 1-1. 事前準備
 - rbenvのインストール（macOSならhomebrew経由）
@@ -20,7 +20,7 @@ Dockerで環境を構築する際は、1.環境構築と2. 実行（ローカル
 ## 2. 実行（ローカルバージョン）
 ### 2.1 Rubyのインストール
 ```
-rbenv install 2.7.4
+rbenv install 3.0.6
 ```
 ### 2.2 リポジトリをクローン
 ```
@@ -109,7 +109,7 @@ http://localhost:3000 にアクセス
 ## 4. テスト用アカウント情報
 
 テストデータとして用意されているアカウントです。
-※ いずれもパスワードは`decidim123456`です
+※ いずれもパスワードは`decidim123456789`です
 
 * 管理画面 (http://localhost:3000/system)
   * system@example.org

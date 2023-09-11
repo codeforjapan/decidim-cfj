@@ -1,3 +1,4 @@
+---
 tr:
   activemodel:
     models:
@@ -35,7 +36,6 @@ tr:
             label: Yorum
             placeholder: Bunun hakkında ne düşünüyorsun?
           form_error: Metin zorunludur ve %{length} karakterden uzun olamaz.
-          submit: Gönder
           user_group_id:
             label: Olarak yorum yap
         opinion:
@@ -61,7 +61,6 @@ tr:
             offensive: Irkçılık, cinsiyetçilik, hakaretler, kişisel saldırılar, ölüm tehditleri, intihar talepleri veya herhangi bir nefret söylemi içerir.
             spam: Clickbait, reklam, dolandırıcılık veya script botları içerir.
           title: Uygunsuz içerik bildir
-        show_replies: '%{replies_count} yanıtı göster'
       comment_order_selector:
         order:
           best_rated: En çok oy alan

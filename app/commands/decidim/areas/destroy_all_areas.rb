@@ -3,7 +3,7 @@
 module Decidim
   module Areas
     # A command with all the business logic when destroys all areas.
-    class DestroyAllAreas < Rectify::Command
+    class DestroyAllAreas < Decidim::Command
       # Public: Initializes the command.
       #
       # organization - The organization to destroy all areas.

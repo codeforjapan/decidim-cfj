@@ -3,7 +3,7 @@
 module Decidim
   module Gamifications
     # A command with all the business logic when destroys all meetings.
-    class DestroyAllBadges < Rectify::Command
+    class DestroyAllBadges < Decidim::Command
       # Public: Initializes the command.
       #
       # organization - The organization to destroy all meetings.

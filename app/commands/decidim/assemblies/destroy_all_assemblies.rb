@@ -3,7 +3,7 @@
 module Decidim
   module Assemblies
     # A command with all the business logic when destroys all assemblies.
-    class DestroyAllAssemblies < Rectify::Command
+    class DestroyAllAssemblies < Decidim::Command
       # Public: Initializes the command.
       #
       # organization - The organization to destroy all assemblies.

@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
   spec.summary = "A exntesional attributes component for decidim's User model."
   spec.description = "A exntesional attributes component for decidim's User model."
   spec.license = "AGPL-3.0"
-  spec.required_ruby_version = ">= 2.7.4"
+  spec.required_ruby_version = ">= 3.0.6"
 
   spec.files = Dir[
     "{app,config,db,lib}/**/*",
@@ -27,4 +27,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency "rails"
 
   spec.add_development_dependency "decidim-dev"
+  spec.metadata["rubygems_mfa_required"] = "true"
 end

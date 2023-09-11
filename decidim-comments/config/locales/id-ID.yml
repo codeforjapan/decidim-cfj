@@ -1,3 +1,4 @@
+---
 id:
   activemodel:
     models:
@@ -14,6 +15,7 @@ id:
         other: Voting
   decidim:
     comments:
+      comments_title: Komentar
       last_activity:
         new_comment_at_html: "<span>Komentar baru di %{link}</span>"
       votes:
@@ -27,7 +29,6 @@ id:
             label: Komentar
             placeholder: Apa yang Anda pikirkan tentang ini?
           form_error: Teks diperlukan dan tidak boleh lebih dari %{length} karakter.
-          submit: Kirim
           user_group_id:
             label: Beri komentar sebagai
         opinion:

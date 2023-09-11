@@ -3,7 +3,7 @@
 module Decidim
   module Debates
     # A command with all the business logic when destroys all debates.
-    class DestroyAllDebates < Rectify::Command
+    class DestroyAllDebates < Decidim::Command
       # Public: Initializes the command.
       #
       # organization - The organization to destroy all debates.
