@@ -1,6 +1,6 @@
 # CDK の使い方
 
-AWS の code as a infrastructureサービスCloud Formationで、インフラストラクチャを構築しています。
+AWS の code as a infrastructureフレームワークCloud Development Kit(CDK)で、インフラストラクチャを構築しています。
 
 コードに落とすことで、レビューやバージョン管理が可能。またAWSコンソール上で、手動での変更検知などAWSに最適化されています。
 
