@@ -5,6 +5,7 @@
   description: translated_attribute(post.body).truncate(Rails.application.config.default_blog_ogp_description_limit),
   url: post_url(post.id)
 }) %>
+
 <%
   doc = Nokogiri::HTML(translated_attribute(post.body))
   img = doc.css('img')&.first
@@ -27,7 +28,9 @@
     <% end %>
   </div>
   <h2 class="heading2"><%= translated_attribute post.title %></h2>
-  <%= cell "decidim/author", present(post.author), from: post %>
+
+  <% post_presenter = Decidim::Blogs::PostPresenter.new(post) %>
+  <%= cell "decidim/author", post_presenter.author, from: post %>
 </div>
 <div class="row">
   <% if show_endorsements_card? %>
@@ -54,10 +57,11 @@
   <% end %>
   <div class="columns mediumlarge-8 <%= "mediumlarge-pull-4" if show_endorsements_card? %>">
     <div class="section">
-      <%= decidim_sanitize_editor translated_attribute post.body %>
+      <%= decidim_sanitize_editor_admin translated_attribute(post.body) %>
     </div>
     <%= cell "decidim/endorsers_list", post %>
   </div>
 </div>
 <%= attachments_for post %>
 <%= comments_for post %>
+<%= cell("decidim/flag_modal", post) %>
