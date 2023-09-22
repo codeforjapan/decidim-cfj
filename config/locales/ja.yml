@@ -23,6 +23,7 @@ ja:
       user:
         name: 表示名
         nickname: アカウントID
+        avatar: アバター
       user_extension:
         address: 住所
         birth_year: 生年(西暦)
