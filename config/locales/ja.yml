@@ -21,8 +21,6 @@ ja:
         origin_title: 起案者
         origin_url: 元のURL
       user:
-        name: 表示名
-        nickname: アカウントID
         avatar: アバター
       user_extension:
         address: 住所
@@ -30,9 +28,6 @@ ja:
         gender: 性別
         occupation: 職業
         real_name: 本名
-      organization:
-        primary_color: プライマリ
-        secondary_color: セカンダリ
       minutes:
         visible: 表示する
   activerecord:
@@ -40,13 +35,6 @@ ja:
       decidim/proposals/proposal:
         title: タイトル
         body: 本文
-  date:
-    formats:
-      decidim_short: "%Y/%m/%d"
-      decidim_short_with_month_name_short: "%Y %b %d"
-      decidim_with_day_and_month_name: "%Y %b %d %A"
-      decidim_with_month_name: "%Y %B %d"
-      decidim_with_month_name_short: "%b %d"
   decidim:
     admin:
       actions:
@@ -54,9 +42,6 @@ ja:
       admin_terms_of_use:
         actions:
           refuse: 同意しない
-      dashboard:
-        show:
-          welcome: Decidim 管理画面へようこそ。
       filters:
         admin_accountability:
           admin_role_type:
@@ -940,24 +925,11 @@ ja:
       - 鳴り出した
       - 黄いろ
       - 黒く
-  layouts:
-    decidim:
-      notifications_dashboard:
-        mark_all_as_read: すべての通知を削除する
   time:
     formats:
-      day_of_month: "%b %d"
-      day_of_week: "%a"
-      day_of_week_long: "%e %a"
-      day_of_year: "%y.%m.%d"
-      decidim_day_of_year: "%Y %B %d"
-      decidim_short: "%Y/%m/%d %H:%M"
       default: "%Y %b %d (%a) %H:%M:%S %z"
       devise:
         mailer:
           invitation_instructions:
             accept_until_format: "%Y/%m/%d %I:%M %p"
       long: "%Y/%m/%d %H:%M"
-      long_dashed: "%Y-%m-%d %H:%M:%S"
-      short: "%Y/%m/%d %H:%M"
-      time_of_day: "%H:%M"
