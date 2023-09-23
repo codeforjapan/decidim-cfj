@@ -20,6 +20,8 @@ ja:
       question:
         origin_title: 起案者
         origin_url: 元のURL
+      user:
+        avatar: アバター
       user_extension:
         address: 住所
         birth_year: 生年(西暦)
