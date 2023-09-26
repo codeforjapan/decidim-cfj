@@ -8,7 +8,7 @@ describe Decidim::Comments::UserGroupMentionedEvent do
   let(:event_name) { "decidim.events.comments.user_group_mentioned" }
   let(:ca_comment_content) { "<div><p>Un commentaire pour #{author_link}</p></div>" }
   let(:en_comment_content) { "<div><p>Comment mentioning some user group, #{author_link}</p></div>" }
-  let(:author_link) { "<a class=\"user-mention\" href=\"http://#{organization.host}/profiles/#{group.nickname}\">@#{group.nickname}</a>" }
+  let(:author_link) { "<a class=\"user-mention\" href=\"http://#{organization.host}:#{Capybara.server_port}/profiles/#{group.nickname}\">@#{group.nickname}</a>" }
 
   let(:extra) do
     {
@@ -23,7 +23,7 @@ describe Decidim::Comments::UserGroupMentionedEvent do
 
   let(:parsed_body) { Decidim::ContentProcessor.parse("Comment mentioning some user group, @#{group.nickname}", current_organization: organization) }
   let(:parsed_ca_body) { Decidim::ContentProcessor.parse("Un commentaire pour @#{group.nickname}", current_organization: organization) }
-  let(:body) { { en: parsed_body.rewrite, "machine_translations": { "ca": parsed_ca_body.rewrite } } }
+  let(:body) { { en: parsed_body.rewrite, machine_translations: { ca: parsed_ca_body.rewrite } } }
 
   it_behaves_like "a comment event"
 
@@ -74,7 +74,7 @@ describe Decidim::Comments::UserGroupMentionedEvent do
   describe "translated notifications" do
     let(:en_body) { parsed_body.rewrite }
 
-    let(:body) { { en: en_body, "machine_translations": { "ca": parsed_ca_body.rewrite } } }
+    let(:body) { { en: en_body, machine_translations: { ca: parsed_ca_body.rewrite } } }
     let(:participatory_process) { create :participatory_process, organization: organization }
     let(:component) { create(:component, participatory_space: participatory_process) }
     let(:commentable) { create(:dummy_resource, component: component) }
