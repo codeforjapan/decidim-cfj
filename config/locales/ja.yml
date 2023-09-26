@@ -37,32 +37,13 @@ ja:
         body: 本文
   decidim:
     admin:
-      actions:
-        duplicate: 複製
       admin_terms_of_use:
         actions:
           refuse: 同意しない
       filters:
-        admin_accountability:
-          admin_role_type:
-            label: ロールの種別
-          participatory_space_type_eq:
-            label: 参加型スペース種別
-          role:
-            label: ロール
-          role_type_eq:
-            label: ロールの種別
-        label:
-          search_field_end_date: '終了日:'
-          search_field_start_date: '開始日:'
         officializations:
           index:
             nickname: アカウントID
-        search_placeholder:
-          user_name_or_user_email_cont: ユーザー名、メールアドレスで検索する
-          name_or_nickname_or_email_cont: "%{collection} をメール、表示名、アカウントIDで検索します。"
-      menu:
-        admin_accountability: 管理者のアカウンタビリティ
       officializations:
         show_email_modal:
           hidden: 非表示
@@ -72,35 +53,19 @@ ja:
           last_month: 直近1ヶ月
           last_week: 直近1週間
     authorization_handlers:
-      csv_census:
-        name: 組織のセンサス
       user_extension_authorization_handler:
         explanation: 'ユーザー拡張属性保持用'
         name: 'ユーザー拡張属性'
     components:
-      add_comment_form:
-        account_message: <a href="%{sign_in_url}">ログイン</a> または <a href="%{sign_up_url}">新規登録</a> することでコメントできます。
-      comment:
-        deleted_user: 退会者
-        report:
-          reasons:
-            does_not_belong: 違法行為、個人情報、または %{organization_name} に属していないと思われる内容が含まれています。
-            offensive: 差別的な内容、誹謗中傷などの不適切な内容が含まれています。
-            spam: 本来の内容に関係が無い広告、詐欺や悪意のある処理などが含まれています。
       comment_order_selector:
         order:
           best_rated: 評価の高い順
           most_discussed: 議論数の多い順
           older: 古い順
           recent: 新しい順
-      down_vote_button:
-        text: このコメントに同意しません
     debates:
       debates:
         filters:
-          activity: 参加したもの
-          citizens: 一般参加者
-          official: 事務局
           origin: 起案者
         versions:
           too_large_changeset: 履歴のサイズが大きすぎるため表示できません
@@ -117,34 +82,11 @@ ja:
           subtitle: 参加するにはユーザ登録をしてください。
           terms: 利用規約
           username_placeholder: 共創 歩
-    doorkeeper:
-      authorizations:
-        new:
-          connect_your_account_html: "<strong>%{organization}</strong> にログインしてアカウントに接続します"
-    errors:
-      not_found:
-        content_doesnt_exist: このアドレスは正しくないか削除されています。
     events:
       comments:
-        comment_by_followed_user:
-          email_subject: "%{author_name} から %{resource_title} に対して新しいコメントがあります"
-        comment_by_followed_user_group:
-          email_subject: "%{author_name} から %{resource_title} に対して新しいコメントがあります"
         comment_created:
           email_intro: "%{resource_title}  にコメントがありました。このページでコメントを読むことができます："
-          email_outro: '"%{resource_title}" 、またはその参加者をフォローしているためこの通知を受け取りました。前のリンクからフォローを解除することができます。'
-          email_subject: "%{author_name} から %{resource_title} に対して新しいコメントがあります"
-          notification_title: <a href="%{author_path}">%{author_name} %{author_nickname}</a> から <a href="%{resource_path}">%{resource_title} に対して新しいコメントがあります</a>
-      debates:
-        debate_closed:
-          follower:
-            email_intro: '「%{resource_title}」のディベートは終了しました。そのページから結論を読むことができます。'
-            email_outro: '%{resource_title} をフォローしているため、この通知を受け取りました。前のリンクから通知の受信を停止することができます。'
-            email_subject: '「%{resource_title}」のディベートは終了しました'
-            notification_title: <a href="%{resource_path}">%{resource_title}</a> のディベートは終了しました。
       gamification:
-        badge_earned:
-          email_outro: サイトでの活動によって、この通知を受け取りました。
         level_up:
           email_intro: おめでとうございます！ あなたは <a href="%{resource_url}">%{badge_name} バッジ</a> のレベル %{current_level} に到達しました！
           email_outro: サイトでの活動によって、この通知を受け取りました。
@@ -173,17 +115,6 @@ ja:
           email_outro: <a href="%{conflicts_path}">検証の競合リスト</a> を確認し、参加者に連絡して詳細を調査し、問題を解決してください。
           email_subject: 管理対象参加者に対する検証の試みに失敗しました
           notification_title: 参加者 <a href="%{resource_path}">%{resource_title}</a> が管理対象参加者 <a href="%{managed_user_path}">%{managed_user_name}</a>のデータで自身を検証しようとしました。
-    filters:
-      linked_classes:
-        collaborative_draft: 共同草案
-    fingerprint:
-      check: フィンガープリントを確認
-    following:
-      non_public_followings: フォローしているリソースのいくつかは公開されていません。
-    initiatives:
-      initiatives:
-        vote_cabin:
-          votes_blocked: ログインが無効になっています
     forms:
       file_help:
         image:
@@ -193,7 +124,6 @@ ja:
         filters:
           origin: 起案者
           origin_values:
-            citizens: 一般参加者
             official: 事務局
             user_groups: グループ
         show:
