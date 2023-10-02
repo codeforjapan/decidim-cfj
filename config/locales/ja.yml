@@ -855,8 +855,14 @@ ja:
       - 鳴り出した
       - 黄いろ
       - 黒く
+  date:
+    formats:
+      decidim_short_with_month_name_short: "%Y年%-m月%-d日"
+      decidim_with_month_name: "%Y年%-m月%-d日"
+      decidim_with_month_name_short: "%-m月%-d日"
   time:
     formats:
+      decidim_day_of_year: "%Y年%-m月%-d日"
       default: "%Y %b %d (%a) %H:%M:%S %z"
       devise:
         mailer:
