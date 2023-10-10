@@ -109,15 +109,16 @@ Decidim.configure do |config|
   #   cache_prefix: "..."
   # }
   if Rails.application.secrets.maps.present? && Rails.application.secrets.maps[:static_provider].present?
+    provider = Rails.application.secrets.maps[:provider]
     static_provider = Rails.application.secrets.maps[:static_provider]
     dynamic_provider = Rails.application.secrets.maps[:dynamic_provider]
     dynamic_url = Rails.application.secrets.maps[:dynamic_url]
     static_url = Rails.application.secrets.maps[:static_url]
     static_url = "https://image.maps.ls.hereapi.com/mia/1.6/mapview" if static_provider == "here" && static_url.blank?
     config.maps = {
-      provider: static_provider,
+      provider: provider,
       api_key: Rails.application.secrets.maps[:static_api_key],
-      static: { url: static_url },
+      static: { provider: static_provider, url: static_url },
       dynamic: {
         provider: dynamic_provider,
         api_key: Rails.application.secrets.maps[:dynamic_api_key]
