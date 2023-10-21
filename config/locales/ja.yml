@@ -17,6 +17,9 @@ ja:
         name: アカウントID
       group:
         nickname: アカウントID
+      participatory_process:
+        copy_steps: フェーズをコピー
+        import_steps: フェーズをインポート
       question:
         origin_title: 起案者
         origin_url: 元のURL
