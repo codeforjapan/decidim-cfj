@@ -17,6 +17,9 @@ ja:
         name: アカウントID
       group:
         nickname: アカウントID
+      participatory_process:
+        copy_steps: フェーズをコピー
+        import_steps: フェーズをインポート
       question:
         origin_title: 起案者
         origin_url: 元のURL
@@ -36,6 +39,12 @@ ja:
         title: タイトル
         body: 本文
   decidim:
+    accountability:
+      results:
+        home_header:
+          global_status: 全体の実行状況
+        nav_breadcrumb:
+          global: 全体
     admin:
       admin_terms_of_use:
         actions:
