@@ -3,7 +3,7 @@
 module Decidim
   module Comments
     # A class used to find comments for a commentable resource
-    class SortedComments < Rectify::Query
+    class SortedComments < Decidim::Query
       COMMENTS_LIMIT = 100
 
       attr_reader :commentable

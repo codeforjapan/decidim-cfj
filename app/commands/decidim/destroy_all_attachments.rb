@@ -2,7 +2,7 @@
 
 module Decidim
   # A command with all the business logic when destroys all proposals.
-  class DestroyAllAttachments < Rectify::Command
+  class DestroyAllAttachments < Decidim::Command
     # Public: Initializes the command.
     #
     # organization - The organization to destroy all results.

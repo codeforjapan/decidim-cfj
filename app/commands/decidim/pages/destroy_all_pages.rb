@@ -3,7 +3,7 @@
 module Decidim
   module Pages
     # A command with all the business logic when destroys all pages.
-    class DestroyAllPages < Rectify::Command
+    class DestroyAllPages < Decidim::Command
       # Public: Initializes the command.
       #
       # organization - The organization to destroy all pages.

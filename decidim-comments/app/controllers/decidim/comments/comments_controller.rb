@@ -13,7 +13,7 @@ module Decidim
       before_action :set_commentable, except: [:destroy, :update]
       before_action :ensure_commentable!, except: [:destroy, :update]
 
-      helper_method :root_depth, :commentable, :order, :limit, :reply?, :reload?
+      helper_method :root_depth, :commentable, :order, :reply?, :reload?, :root_comment
 
       def index
         enforce_permission_to :read, :comment, commentable: commentable
@@ -21,9 +21,14 @@ module Decidim
         @comments = SortedComments.for(
           commentable,
           order_by: order,
-          limit: limit,
           after: params.fetch(:after, 0).to_i
         )
+        @comments = @comments.reject do |comment|
+          next if comment.depth < 1
+          next if !comment.deleted? && !comment.hidden?
+
+          comment.commentable.descendants.where(decidim_commentable_type: "Decidim::Comments::Comment").not_hidden.not_deleted.blank?
+        end
         @comments_count = commentable.comments_count
 
         respond_to do |format|
@@ -136,14 +141,20 @@ module Decidim
       end
 
       def handle_success(comment)
-        @comment = comment
-        @comments_count = begin
-          case commentable
-          when Decidim::Comments::Comment
-            commentable.root_commentable.comments_count
-          else
-            commentable.comments_count
-          end
+        @comment = comment.reload
+        @comments_count = case commentable
+                          when Decidim::Comments::Comment
+                            commentable.root_commentable.comments_count
+                          else
+                            commentable.comments_count
+                          end
+      end
+
+      def root_comment
+        @root_comment ||= begin
+          root_comment = comment
+          root_comment = root_comment.commentable while root_comment.commentable.is_a?(Decidim::Comments::Comment)
+          root_comment
         end
       end
 
@@ -174,10 +185,6 @@ module Decidim
         end
       end
 
-      def limit
-        params.fetch(:limit, nil)
-      end
-
       def reload?
         params.fetch(:reload, 0).to_i == 1
       end
@@ -187,7 +194,7 @@ module Decidim
       end
 
       def commentable_path
-        return commentable.polymorphic_resource_path({}) if commentable&.respond_to?(:polymorphic_resource_path)
+        return commentable.polymorphic_resource_path({}) if commentable.respond_to?(:polymorphic_resource_path)
 
         resource_locator(commentable).path
       end

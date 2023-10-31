@@ -91,3 +91,9 @@ Rails/SkipsModelValidations:
 Rails/Validation:
   Include:
     - decidim-*/app/models/**/*.rb
+
+Rails/I18nLocaleAssignment:
+  Enabled: false
+
+Lint/EmptyBlock:
+  Enabled: false

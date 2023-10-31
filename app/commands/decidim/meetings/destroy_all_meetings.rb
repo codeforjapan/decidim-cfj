@@ -3,7 +3,7 @@
 module Decidim
   module Meetings
     # A command with all the business logic when destroys all meetings.
-    class DestroyAllMeetings < Rectify::Command
+    class DestroyAllMeetings < Decidim::Command
       # Public: Initializes the command.
       #
       # organization - The organization to destroy all meetings.

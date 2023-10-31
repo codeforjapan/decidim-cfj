@@ -30,7 +30,7 @@ before_fork do
     config.rolling_restart_frequency = 24 * 60 * 60
     config.reaper_status_logs = true
     config.pre_term = lambda do |worker|
-      SlackChatMessenger.notify(channel: ENV['SLACK_MESSAGE_CHANNEL'], message: "[#{Rails.env}] Worker #{worker.index}(#{worker.pid}) being killed") # rubocop:disable Style/StringLiterals
+      SlackChatMessenger.notify(channel: ENV.fetch('SLACK_MESSAGE_CHANNEL', nil), message: "[#{Rails.env}] Worker #{worker.index}(#{worker.pid}) being killed") # rubocop:disable Style/StringLiterals
       puts "Worker #{worker.index}(#{worker.pid}) being killed"
     end
   end
@@ -43,7 +43,7 @@ end
 # Workers do not work on JRuby or Windows (both of which do not support
 # processes).
 #
-workers ENV.fetch("WEB_CONCURRENCY", 2)
+workers ENV.fetch("WEB_CONCURRENCY", 2) unless Rails.env.development?
 
 # Use the `preload_app!` method when specifying a `workers` number.
 # This directive tells Puma to first boot the application and load code

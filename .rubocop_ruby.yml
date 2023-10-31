@@ -19,6 +19,8 @@ AllCops:
     - "node_modules/**/*"
     - "bin/setup"
     - "bin/update"
+    - "bin/webpack"
+    - "bin/webpack-dev-server"
     - "db/migrate/*"
     - "db/schema.rb"
     - "decidim-comments/**/*"
@@ -73,7 +75,7 @@ AllCops:
   # If a value is specified for TargetRubyVersion then it is used.
   # Else if .ruby-version exists and it contains an MRI version it is used.
   # Otherwise we fallback to the oldest officially supported Ruby version (2.0).
-  TargetRubyVersion: 2.7
+  TargetRubyVersion: 3.0.6
 
   RSpec:
     Patterns:

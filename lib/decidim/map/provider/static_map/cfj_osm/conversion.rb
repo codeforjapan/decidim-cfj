@@ -14,18 +14,18 @@ module Decidim
 
             def self.x_to_lng(x, zoom) # rubocop:disable Naming/MethodParameterName
               n = 2.0**zoom
-              x / n * 360.0 - 180.0
+              (x / n * 360.0) - 180.0
             end
 
             def self.lat_to_y(lat, zoom)
               n = 2**zoom
               lat_rad = (lat / 180) * Math::PI
-              (1 - Math.log(Math.tan(lat_rad) + (1 / Math.cos(lat_rad))) / Math::PI) / 2 * n
+              (1 - (Math.log(Math.tan(lat_rad) + (1 / Math.cos(lat_rad))) / Math::PI)) / 2 * n
             end
 
             def self.y_to_lat(y, zoom) # rubocop:disable Naming/MethodParameterName
               n = 2.0**zoom
-              lat_rad = Math.atan(Math.sinh(Math::PI * (1 - 2 * y / n)))
+              lat_rad = Math.atan(Math.sinh(Math::PI * (1 - (2 * y / n))))
               lat_rad / (Math::PI / 180.0)
             end
           end

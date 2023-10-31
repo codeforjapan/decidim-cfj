@@ -1,22 +1,38 @@
-FROM node:16.9.1-alpine as node
+FROM node:16.13.0-bullseye-slim as node
 
-FROM ruby:2.7.4-alpine
+FROM ruby:3.0.6-slim-bullseye
 
-RUN apk update \
-    && apk add --no-cache --virtual build-dependencies \
-        build-base \
-        curl-dev \
+# for build-dep
+RUN echo "deb-src http://deb.debian.org/debian bullseye main" >> /etc/apt/sources.list
+RUN echo "deb-src http://deb.debian.org/debian-security bullseye-security main" >> /etc/apt/sources.list
+RUN echo "deb-src http://deb.debian.org/debian bullseye-updates main" >> /etc/apt/sources.list
+
+RUN  apt-get update && \
+     apt-get install -y --no-install-recommends \
+        build-essential \
+        libpq-dev \
+        postgresql-client \
+        libicu-dev \
+        libwebp-dev \
+        libopenjp2-7-dev \
+        librsvg2-dev \
+        libde265-dev \
         git \
-    && apk add --no-cache \
-        imagemagick \
-        postgresql-dev \
-        tzdata \
-        zip \
         curl \
-        gcompat\
-    && cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
+        wget && \
+    apt-get clean && \
+    apt-get autoremove
 
-ENV YARN_VERSION=v1.22.5
+RUN apt build-dep -y imagemagick && \
+    wget https://github.com/ImageMagick/ImageMagick/archive/refs/tags/7.1.1-15.tar.gz && \
+    tar xf 7.1.1-15.tar.gz && \
+    cd ImageMagick-7*  && \
+    ./configure  && \
+    make && \
+    make install  && \
+    ldconfig
+
+ENV YARN_VERSION=v1.22.15
 
 # node install
 COPY --from=node /usr/local/bin/node /usr/local/bin/node
@@ -32,7 +48,7 @@ ARG RAILS_ENV="production"
 ENV LANG=C.UTF-8 \
     LC_ALL=C.UTF-8 \
     BUNDLER_JOBS=4 \
-    BUNDLER_VERSION=2.2.18 \
+    BUNDLER_VERSION=2.2.33 \
     APP_HOME=/app \
     RAILS_ENV=${RAILS_ENV} \
     RAILS_LOG_TO_STDOUT=true \
@@ -53,7 +69,6 @@ RUN gem install bundler:${BUNDLER_VERSION} \
     && bundle config --global jobs ${BUNDLER_JOBS} \
     && if [ "${RAILS_ENV}" = "production" ];then \
             bundle install --without development test \
-            && apk del --purge build-dependencies \
         ;else \
             bundle install \
         ;fi

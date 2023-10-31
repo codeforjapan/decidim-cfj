@@ -3,7 +3,7 @@
 module Decidim
   module Comments
     # A command with all the business logic to destroy a comment
-    class DestroyAllComments < Rectify::Command
+    class DestroyAllComments < Decidim::Command
       # Public: Initializes the command.
       #
       # organization - The organization to destroy all comments.

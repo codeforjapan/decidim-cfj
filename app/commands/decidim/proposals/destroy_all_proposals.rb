@@ -3,7 +3,7 @@
 module Decidim
   module Proposals
     # A command with all the business logic when destroys all proposals.
-    class DestroyAllProposals < Rectify::Command
+    class DestroyAllProposals < Decidim::Command
       # Public: Initializes the command.
       #
       # organization - The organization to destroy all proposals.

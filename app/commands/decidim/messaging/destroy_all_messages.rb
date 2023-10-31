@@ -3,7 +3,7 @@
 module Decidim
   module Messaging
     # A command with all the business logic when destroys all meetings.
-    class DestroyAllMessages < Rectify::Command
+    class DestroyAllMessages < Decidim::Command
       # Executes the command. Broadcasts these events:
       #
       # - :ok when everything is valid and the message is deleted.

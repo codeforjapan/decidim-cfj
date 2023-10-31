@@ -3,7 +3,7 @@
 module Decidim
   module Accountability
     # A command with all the business logic when destroys all proposals.
-    class DestroyAllResults < Rectify::Command
+    class DestroyAllResults < Decidim::Command
       # Public: Initializes the command.
       #
       # organization - The organization to destroy all results.

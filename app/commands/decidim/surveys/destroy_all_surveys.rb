@@ -3,7 +3,7 @@
 module Decidim
   module Surveys
     # A command with all the business logic when destroys all surveys.
-    class DestroyAllSurveys < Rectify::Command
+    class DestroyAllSurveys < Decidim::Command
       # Public: Initializes the command.
       #
       # organization - The organization to destroy all surveys.

@@ -3,7 +3,7 @@
 module Decidim
   module ParticipatoryProcesses
     # A command with all the business logic when destroys all participatory_processes.
-    class DestroyAllParticipatoryProcesses < Rectify::Command
+    class DestroyAllParticipatoryProcesses < Decidim::Command
       # Public: Initializes the command.
       #
       # organization - The organization to destroy all participatory_processes.
