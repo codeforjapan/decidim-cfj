@@ -8,11 +8,13 @@ on:
         required: false
         default: 3.0.6
 
-permissions: write-all
-
 jobs:
   rubocop:
     name: Rubocop
+    permissions:
+      actions: write
+      contents: read
+      id-token: write
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
