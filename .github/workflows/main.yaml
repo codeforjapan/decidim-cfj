@@ -1,0 +1,73 @@
+name: Main
+
+permissions: write-all
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  check:
+    name: Check
+    uses: ./.github/workflows/_check.yaml
+
+  release:
+    uses: ./.github/workflows/_release.yaml
+    needs:
+      - check
+
+  create-deploy-env:
+    runs-on: ubuntu-latest
+    outputs:
+      deploy-env: ${{ steps.output-app-env.outputs.deploy-env }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set env to staging
+        id: set-env-staging
+        if: endsWith(github.ref, 'heads/main')
+        run: |
+          echo "DEPLOY_ENV=staging" >> $GITHUB_ENV
+
+      - name: Set env to production
+        id: set-env-production
+        if: ${{ needs.release.outputs.created }}
+        run: |
+          echo "DEPLOY_ENV=prd-v0274" >> $GITHUB_ENV
+
+      - name: Output App Env
+        id: output-deploy-env
+        run: |
+          echo "deploy_env=${DEPLOY_ENV}" >> $GITHUB_OUTPUT
+
+  build:
+    needs:
+      - release
+      - create-deploy-env
+    uses: ./.github/workflows/_build.yaml
+    with:
+      image-tags: "${{ needs.release.outputs.tag_name }}"
+      deploy-env: "${{ needs.create-deploy-env.outputs.deploy-env }}"
+
+  stg:
+    needs:
+      - release
+      - build
+    uses: ./.github/workflows/_deploy.yaml
+    with:
+      image-tag: ${{ needs.release.outputs.tag_name }}
+      deploy-env: ${{ needs.create-deploy-env.outputs.deploy-env }}
+    secrets: inherit
+
+  prod:
+    if: ${{ needs.release.outputs.created }}
+    needs:
+      - release
+      - stg
+    uses: ./.github/workflows/_deploy.yaml
+    with:
+      image-tag: ${{ needs.release.outputs.tag_name }}
+      deploy-env: ${{ needs.create-deploy-env.outputs.deploy-env }}
+    secrets: inherit
