@@ -66,6 +66,11 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v3
 
+      - name: apt-get
+        run: |
+          sudo apt-get update -y
+          sudo apt-get -yqq install libpq-dev postgresql-client libfuse2  
+
       - name: check imagemagick
         run: |
           export PATH=${GITHUB_WORKSPACE}/vendor/imagemagick7/bin:${PATH}
