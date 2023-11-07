@@ -1,0 +1,115 @@
+name: Check
+
+on:
+  workflow_call:
+    inputs:
+      ruby-version:
+        type: string
+        required: false
+        default: 3.0.6
+
+env:
+  DB_HOSTNAME: 127.0.0.1
+  DATABASE_PORT: 5432
+  DB_USERNAME: postgres
+  DB_PASSWORD: postgres
+  RAILS_ENV: test
+  IMAGEMAGICK_SRC: 7.1.0-50.tar.gz
+  SLACK_API_TOKEN: xoxb-dummy
+  SLACK_MESSAGE_CHANNEL: '#test'
+
+jobs:
+  rubocop:
+    name: Rubocop
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ inputs.ruby-version }}
+          bundler-cache: true
+
+      - name: rubocop
+        uses: reviewdog/action-rubocop@v2.3.1
+        with:
+          rubocop_version: gemfile
+          rubocop_extensions: rubocop-rails:gemfile rubocop-rspec:gemfile rubocop-faker:gemfile
+          reporter: github-pr-check
+          fail_on_error: true
+
+  unittest:
+    name: Unit Test
+    runs-on: ubuntu-latest
+    services:
+      db:
+        image: postgres:12.14
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      redis:
+        image: redis
+        ports:
+          - 6379/tcp
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: check imagemagick
+        run: |
+          export PATH=${GITHUB_WORKSPACE}/vendor/imagemagick7/bin:${PATH}
+          which convert
+          convert -version
+
+      - name: Set up Ruby 3.0.6
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0.6
+          bundler-cache: true
+
+      - name: setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.13.0
+          cache: 'yarn'
+
+      - name: install yarn
+        run: |
+          npm i -g yarn@1.22.15
+          yarn install --frozen-lockfile
+
+      - name: create assets precompile cache key
+        run: |
+          # use newest commit hash of precompile target files
+          git rev-parse $(git log --oneline -n 1 app/packs lib/assets Gemfile.lock yarn.lock | awk '{print $1}') > ASSETS_VERSION
+
+      - name: asset cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            public/packs
+            public/assets
+            tmp/cache/assets
+            public/packs-test
+          key: asset-precompile-cache-${{ hashFiles('ASSETS_VERSION') }}
+          restore-keys: |
+            asset-precompile-cache-${{ hashFiles('ASSETS_VERSION') }}
+            asset-precompile-cache-
+
+      - name: Migrate DB
+        run: |
+          bundle exec rails db:create db:migrate
+
+      - name: Precompile assets
+        run: bundle exec rails assets:precompile
+      - name: Test with RSpec
+        run: |
+          bundle exec rails spec
