@@ -7,19 +7,8 @@ on:
         type: string
         required: false
         default: 3.0.6
-    secrets:
-      github-token:
-        required: true
 
-env:
-  DB_HOSTNAME: 127.0.0.1
-  DATABASE_PORT: 5432
-  DB_USERNAME: postgres
-  DB_PASSWORD: postgres
-  RAILS_ENV: test
-  IMAGEMAGICK_SRC: 7.1.0-50.tar.gz
-  SLACK_API_TOKEN: xoxb-dummy
-  SLACK_MESSAGE_CHANNEL: '#test'
+permissions: write-all
 
 jobs:
   rubocop:
@@ -45,6 +34,15 @@ jobs:
   unittest:
     name: Unit Test
     runs-on: ubuntu-latest
+    env:
+      DB_HOSTNAME: 127.0.0.1
+      DATABASE_PORT: 5432
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      RAILS_ENV: test
+      IMAGEMAGICK_SRC: 7.1.0-50.tar.gz
+      SLACK_API_TOKEN: xoxb-dummy
+      SLACK_MESSAGE_CHANNEL: '#test'
     services:
       db:
         image: postgres:12.14
