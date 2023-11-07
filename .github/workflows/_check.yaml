@@ -7,6 +7,9 @@ on:
         type: string
         required: false
         default: 3.0.6
+    secrets:
+      github-token:
+        required: true
 
 env:
   DB_HOSTNAME: 127.0.0.1

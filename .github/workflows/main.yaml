@@ -11,6 +11,8 @@ jobs:
   check:
     name: Check
     uses: ./.github/workflows/_check.yaml
+    secrets:
+      github-token: ${{ secrets.GITHUB_TOKEN }}
 
   release:
     uses: ./.github/workflows/_release.yaml
