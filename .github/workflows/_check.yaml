@@ -25,12 +25,9 @@ jobs:
           ruby-version: ${{ inputs.ruby-version }}
           bundler-cache: true
 
-      - name: rubocop
-        uses: reviewdog/action-rubocop@v2.3.1
-        with:
-          rubocop_version: gemfile
-          rubocop_extensions: rubocop-rails:gemfile rubocop-rspec:gemfile rubocop-faker:gemfile
-          fail_on_error: true
+      - name: Lint by RuboCop
+        run: |
+          bundle exec rubocop --parallel
 
   unittest:
     name: Unit Test
