@@ -40,7 +40,7 @@ jobs:
       - name: Output App Env
         id: output-deploy-env
         run: |
-          echo "deploy_env=${DEPLOY_ENV}" >> $GITHUB_OUTPUT
+          echo "deploy-env=${DEPLOY_ENV}" >> $GITHUB_OUTPUT
 
   build:
     needs:
