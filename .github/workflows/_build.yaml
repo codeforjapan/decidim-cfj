@@ -17,6 +17,9 @@ on:
         required: false
         description: "target environment"
         default: staging
+    secrets:
+      aws-ecr-repo-name:
+        required: true
 
 jobs:
   build:
@@ -46,7 +49,7 @@ jobs:
         with:
           push: true
           builder: ${{ steps.buildx.outputs.name }}
-          tags: ${{ steps.login-ecr.outputs.registry }}/${{ secrets.AWS_ECR_REPO_NAME }}:${{ inputs.deploy-env }}-${{ inputs.image-tags }}
+          tags: ${{ steps.login-ecr.outputs.registry }}/${{ secrets.aws-ecr-repo-name }}:${{ inputs.deploy-env }}-${{ inputs.image-tags }}
           file: ./Dockerfile
           context: ./
           cache-from: type=gha

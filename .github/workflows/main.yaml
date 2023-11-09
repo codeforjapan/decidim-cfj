@@ -50,6 +50,8 @@ jobs:
     with:
       image-tags: "${{ needs.release.outputs.tag_name }}"
       deploy-env: "${{ needs.create-deploy-env.outputs.deploy-env }}"
+    secrets:
+      aws-ecr-repo-name: ${{ secrets.AWS_ECR_REPO_NAME }}
 
   stg:
     needs:
