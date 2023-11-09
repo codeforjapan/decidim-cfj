@@ -1,0 +1,56 @@
+name: build image
+
+on:
+  workflow_call:
+    inputs:
+      image-tags:
+        type: string
+        required: true
+        description: "comma separated container image tags"
+      role-to-assume:
+        description: "role arn to be assumed"
+        default: 'arn:aws:iam::887442827229:role/GithubActions_decidim-cfj-cdk-deploy'
+        type: string
+        required: false
+      deploy-env:
+        type: string
+        required: false
+        description: "target environment"
+        default: staging
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: "ap-northeast-1"
+          role-duration-seconds: 1200
+          role-to-assume: "${{ inputs.role-to-assume }}"
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Docker Build
+        uses: docker/build-push-action@v3
+        with:
+          push: true
+          builder: ${{ steps.buildx.outputs.name }}
+          tags: ${{ steps.login-ecr.outputs.registry }}/${{ secrets.AWS_ECR_REPO_NAME }}:${{ inputs.deploy-env }}-${{ inputs.image-tags }}
+          file: ./Dockerfile
+          context: ./
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+
+

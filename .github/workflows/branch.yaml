@@ -1,0 +1,12 @@
+name: Pull request Check & test
+
+permissions: write-all
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  check:
+    name: Check
+    uses: ./.github/workflows/_check.yaml

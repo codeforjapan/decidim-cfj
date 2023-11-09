@@ -1,0 +1,35 @@
+name: Release
+
+permissions: write-all
+
+on:
+  workflow_call:
+    outputs:
+      tag_name:
+        description: image tag name
+        value: ${{ jobs.release.outputs.tag_name }}
+      created:
+        description: whether release is created or not
+        value: ${{ jobs.release.outputs.created }}
+
+jobs:
+  release:
+    name: Release Please
+    runs-on: ubuntu-latest
+    outputs:
+      created: ${{ steps.release.outputs.release_created }}
+      tag_name: ${{ env.IMAGE_TAG }}
+    steps:
+      - uses: google-github-actions/release-please-action@v3
+        id: release
+        with:
+          release-type: ruby
+      - name: Export Released Version for Image Tag
+        if: ${{ steps.release.outputs.release_created }}
+        run: |
+          echo "IMAGE_TAG=${{ steps.release.outputs.tag_name }}" >> $GITHUB_ENV
+      - name: Export Commit SHA for Image Tag
+        if: ${{ !steps.release.outputs.release_created }}
+        run: |
+          sha=$(echo "${{ github.sha }}" | cut -c1-7)
+          echo "IMAGE_TAG=$sha" >> $GITHUB_ENV
