@@ -20,7 +20,7 @@ jobs:
   create-deploy-env:
     runs-on: ubuntu-latest
     outputs:
-      deploy-env: ${{ steps.output-app-env.outputs.deploy-env }}
+      deploy-env: ${{ steps.output-deploy-env.outputs.deploy-env }}
 
     steps:
       - uses: actions/checkout@v3
