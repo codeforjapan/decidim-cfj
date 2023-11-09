@@ -76,7 +76,7 @@ jobs:
       - name: Set up Ruby 3.0.6
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.0.6
+          ruby-version: ${{ inputs.ruby-version }}
           bundler-cache: true
 
       - name: setup Node
