@@ -48,13 +48,14 @@ jobs:
       - create-deploy-env
     uses: ./.github/workflows/_build.yaml
     with:
-      image-tags: "${{ needs.release.outputs.tag_name }}"
-      deploy-env: "${{ needs.create-deploy-env.outputs.deploy-env }}"
+      image-tags: ${{ needs.release.outputs.tag_name }}
+      deploy-env: ${{ needs.create-deploy-env.outputs.deploy-env }}
     secrets:
       aws-ecr-repo-name: ${{ secrets.AWS_ECR_REPO_NAME }}
 
   stg:
     needs:
+      - create-deploy-env
       - release
       - build
     uses: ./.github/workflows/_deploy.yaml
@@ -66,6 +67,7 @@ jobs:
   prod:
     if: ${{ needs.release.outputs.created }}
     needs:
+      - create-deploy-env
       - release
       - stg
     uses: ./.github/workflows/_deploy.yaml
