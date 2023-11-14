@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.0.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.0.0...v1.0.1) (2023-11-14)
+
+
+### Bug Fixes
+
+* deploy action ([1c7ba82](https://github.com/codeforjapan/decidim-cfj/commit/1c7ba8231272f26a251c8fe6413b8856c9a73b7c))
+
 ## 1.0.0 (2023-11-13)
 
 
