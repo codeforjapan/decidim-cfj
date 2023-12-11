@@ -37,29 +37,23 @@ Dockerイメージのタグ例: staging-dfasfste
 
 ### production
 
-切り戻しを早くするため、masterマージの際、Dockerイメージは毎回buildします。
-
-パイプラインが通ったのを確認後、Git上でデプロイしたいコミットに、v○○とタグを打ちます。
-タグはvから始まる必要があります。すぐにeb deployが実行されます。
-
-例: v1.0.0
+mainブランチに新しい `feat:` もしくは、`fix:`のprefixがついたcommitが追加された際に
+release pleaseがリリース用のPRを作成します。
+このリリース用のPRをマージすると、リリースタグが自動で採番され、リリースされます
 
 ### staging
 
-developブランチにpushすると自動でデプロイされます。
+mainブランチにpushすると自動でデプロイされます。
 
 ## 切り戻し
 
-### production
-
-普通にデプロイするのと同様に戻したい先commitに対してタグを打ちます。
-バグの場合、バグが発生したcommitの1つ前のcommitにたいしてタグを打ちます。
-
-コンテナイメージはbuild済みなので、すぐにcdk deployが実行されます。
-
 ### staging
 
-revetしてdevelopブランチにpushしてください。
+revertしてmainブランチにpushしてください。
+
+### production
+
+deploy同様の手順
 
 # CfJ Decidim AWS への Install（cdk 編）
 
@@ -109,6 +103,7 @@ AWS Systems Manager のパラメータストアで以下のようなパラメー
   /decidim-cfj/${props.stage}/NEW_RELIC_LICENSE_KEY
   /decidim-cfj/${props.stage}/SMTP_ADDRESS
   /decidim-cfj/${props.stage}/SMTP_USERNAME
+  /decidim-cfj/${props.stage}/SLACK_API_TOKEN
 ```
 
 # 4. ECRの準備
@@ -121,8 +116,11 @@ AWS Systems Manager のパラメータストアで以下のようなパラメー
 [Docker イメージをプッシュする](https://docs.aws.amazon.com/ja_jp/AmazonECR/latest/userguide/docker-push-ecr-image.html)を参考に
 buildしたdocker imageを用意したリポジトリにpushする。
 
-# 4-3 [dev.json](https://github.com/codeforjapan/decidim-cfj-cdk/blob/main//config/dev.json) を編集する
-[dev.json](https://github.com/codeforjapan/decidim-cfj-cdk/blob/main//config/dev.json)の’repository’部分に用意したECRリポジトリ名、’tag’部分にpushした際のtagに書き換える。
+# 4-3 tagをexportする
+4-2でpushしたdockerイメージのタグをexportする
+```console
+$ export IMAGE_TAG=先ほどpushしたimage tag
+```
 
 # 5. 証明書の準備
 
@@ -139,7 +137,7 @@ buildしたdocker imageを用意したリポジトリにpushする。
 使用するリージョンごとに一回実行する必要がある。2回目以降は不要。
 
 ```console
-$ npx cdk --context stage=dev --profile decidim bootstrap
+$ npx cdk --context stage=dev tag=${IMAGE_TAG} --profile decidim bootstrap
 ```
 
 ## 6-2. デプロイ前の差分確認
@@ -147,13 +145,13 @@ $ npx cdk --context stage=dev --profile decidim bootstrap
 どんなリソースが作成されるのかを確認できる。
 
 ```console
-$ npx cdk --context stage=dev --profile decidim diff  
+$ npx cdk --context stage=dev tag=${IMAGE_TAG} --profile decidim diff  
 ```
 
 ## 6-3. デプロイ実行
 
 ```console
-$ npx cdk --context stage=dev --profile decidim deploy --all  --require-approval never
+$ npx cdk --context stage=dev tag=${IMAGE_TAG} --profile decidim deploy --all  --require-approval never
 ```
 
 上記コマンドが成功すれば、デプロイは成功です。
@@ -166,7 +164,7 @@ $ npx cdk --context stage=dev --profile decidim deploy --all  --require-approval
 
 ## 7.1 環境へのアクセス
 ```console
-$ aws ecs execute-command --region ap-northeast-1 --cluster devDecidimCluster --task ${タスク名} --container appContainer --interactive --command "/bin/ash" --profile decidim
+$ aws ecs execute-command --region ap-northeast-1 --cluster devDecidimCluster --task ${タスク名} --container appContainer --interactive --command "/bin/bash" --profile decidim
 ```
 
 ## 7.2 migrateとseedの実行

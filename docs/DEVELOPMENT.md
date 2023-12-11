@@ -27,11 +27,11 @@ rbenv install 3.0.6
 git clone git@github.com:codeforjapan/decidim-cfj.git
 
 ```
-### 2.3 masterブランチへチェックアウト
+### 2.3 mainブランチへチェックアウト
 ```
 cd decidim-cfj
-# masterブランチが最新
-git checkout -b master origin/master
+# mainブランチが最新
+git checkout -b main origin/main
 ```
 ### 2.4 bundlerのインストール
 ```
@@ -75,11 +75,11 @@ http://localhost:3000 にアクセス
 git clone git@github.com:codeforjapan/decidim-cfj.git
 
 ```
-### 3.2 masterブランチへチェックアウト
+### 3.2 mainブランチへチェックアウト
 ```
 cd decidim-cfj
-# masterブランチが最新
-git checkout -b master origin/master
+# mainブランチが最新
+git checkout -b main origin/main
 ```
 
 ### 3.3 docker build
