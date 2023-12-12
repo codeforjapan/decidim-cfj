@@ -72,6 +72,10 @@ ja:
           most_discussed: 議論数の多い順
           older: 古い順
           recent: 新しい順
+    content_blocks:
+      last_activity:
+        name: 最近のアクティビティ
+        title: 最近のアクティビティ
     debates:
       debates:
         filters:
@@ -128,6 +132,9 @@ ja:
       file_help:
         image:
           message_1: "テキストを含まない風景画像が適しています（推奨サイズ: 縦横どちらも3800ピクセル以下程度）"
+    last_activities:
+      index:
+        last_activity: 最近のアクティビティ
     meetings:
       meetings:
         filters:
