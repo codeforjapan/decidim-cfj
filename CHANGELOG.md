@@ -1,5 +1,13 @@
 # Change Log
 
+## [1.0.2](https://github.com/codeforjapan/decidim-cfj/compare/v1.0.1...v1.0.2) (2023-12-15)
+
+
+### Bug Fixes
+
+* skip test ([31c6ada](https://github.com/codeforjapan/decidim-cfj/commit/31c6ada4798f79d2c295f5f77d00417fd2b75675))
+* update docs ([4115fa6](https://github.com/codeforjapan/decidim-cfj/commit/4115fa65d4346e7f57456f1c4f0f3820754bbbf9))
+
 ## [1.0.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.0.0...v1.0.1) (2023-11-14)
 
 
