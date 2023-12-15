@@ -113,3 +113,8 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 
 `Decidim::Map::Provider::StaticMap::CfjOsm`という独自のstatic map providerを定義するためのものです。
 `config/initializers/decidim.rb`のconfig.maps以下のstaticのところで導入されています。
+
+* `spec/system`以下
+
+`decidim-dev (0.27.4)`のgemが依存しているパッケージ(capybara, selenium-webdriver)が古く、testの本質とは関係ない部分で落ちてしまうので、一旦スキップする対応をしています。
+次期バージョンではこの辺りは更新されそうなので、要確認

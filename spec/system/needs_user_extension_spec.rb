@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe "Need user extension", type: :system do
+xdescribe "Need user extension", type: :system do
   let(:organization) { create(:organization) }
   let(:user) { create(:user, :confirmed, organization: organization) }
 
