@@ -6,11 +6,11 @@
 Dockerで環境を構築する際は、1.環境構築と2. 実行（ローカルバージョン）は不要です。
 直接、3. 実行（Dockerバージョン）から開始してください。
 
-| アプリケーション名                                 | バージョン |
-|-------------------------------------------|------|
-| [Ruby](https://www.ruby-lang.org/ja/)     | 3.0.6 |
+| アプリケーション名                                 | バージョン  |
+|-------------------------------------------|--------|
+| [Ruby](https://www.ruby-lang.org/ja/)     | 3.0.6  |
 | [Bundler](https://bundler.io/)            | 2.2.33 |
-| [PostgreSQL](https://www.postgresql.org/) | 13   |
+| [PostgreSQL](https://www.postgresql.org/) | 12     |
 
 ### 1-1. 事前準備
 - rbenvのインストール（macOSならhomebrew経由）
@@ -25,20 +25,14 @@ rbenv install 3.0.6
 ### 2.2 リポジトリをクローン
 ```
 git clone git@github.com:codeforjapan/decidim-cfj.git
-
-```
-### 2.3 mainブランチへチェックアウト
-```
-cd decidim-cfj
-# mainブランチが最新
-git checkout -b main origin/main
-```
-### 2.4 bundlerのインストール
-```
-gem install bundler:2.2.18
 ```
 
-### 2.5 DBのユーザーとパスワードの設定
+### 2.3 bundlerのインストール
+```
+gem install bundler:2.2.33
+```
+
+### 2.4 DBのユーザーとパスワードの設定
 ```
 export DATABASE_USERNAME=<yourname>
 export DATABASE_PASSWORD=<yourpassword>
@@ -52,19 +46,19 @@ export DATABASE_PORT=<yourport>
 export DATABASE_DBNAME_DEV=<yourdbname>
 ```
 
-### 2.6 bundle install
+### 2.5 bundle install
 ```
 bundle install
 ```
-### 2.7 DB作成からシードまで
+### 2.6 DB作成からシードまで
 ```
 bin/rails db:create db:migrate
 bin/rails db:seed
 ```
-### 2.8 サーバー起動
+### 2.7 サーバー起動
 bin/rails s
 
-### 2.9 お疲れさまでした
+### 2.8 お疲れさまでした
 http://localhost:3000 にアクセス
 
 ## 3. 実行（Dockerバージョン）
@@ -73,37 +67,30 @@ http://localhost:3000 にアクセス
 ### 3.1 リポジトリをクローン
 ```
 git clone git@github.com:codeforjapan/decidim-cfj.git
-
-```
-### 3.2 mainブランチへチェックアウト
-```
-cd decidim-cfj
-# mainブランチが最新
-git checkout -b main origin/main
 ```
 
-### 3.3 docker build
+### 3.2 docker build
 ```
 docker compose build
 ```
 
-### 3.4 DB作成からシードまで
+### 3.3 DB作成からシードまで
 ```
-docker compose run --rm app ./bin/rails db:create db:migrate
-docker compose run --rm app ./bin/rails db:seed
+docker compose run --rm app rails db:create db:migrate
+docker compose run --rm app rails db:seed
 ```
 
 `db:seed`でエラーが起きた場合、ダミーのデータ作成に失敗している可能性があります。以下を実行し、DBを再作成してみてください。
 
 ```
-docker compose run --rm app ./bin/rails db:reset
+docker compose run --rm app rails db:reset
 ```
 
-### 3.5 サーバー起動
+### 3.4 サーバー起動
 ```
 docker compose up -d
 ```
-### 3.6 お疲れさまでした
+### 3.5 お疲れさまでした
 http://localhost:3000 にアクセス
 
 ## 4. テスト用アカウント情報
