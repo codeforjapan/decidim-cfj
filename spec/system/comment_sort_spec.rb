@@ -32,8 +32,10 @@ describe "Comments", type: :system, perform_enqueued: true do
 
     within ".comments" do
       within ".order-by__dropdown" do
-        click_link "古い順" # Opens the dropdown
-        click_link "評価の高い順"
+        # click_link "古い順" # Opens the dropdown
+        # click_link "評価の高い順"
+        page.find("#comments-order-menu-control").click # Opens the dropdown
+        page.find("#comments-order-chooser-menu li:first-of-type a").click
       end
     end
 
