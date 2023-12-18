@@ -49,6 +49,7 @@ describe "Comments", type: :system, perform_enqueued: true do
 
     expect(page).to have_css(".comment", minimum: 1)
     page.find(".order-by .dropdown.menu .is-dropdown-submenu-parent").hover
-    expect(page).to have_css("#comments-order-menu-control", text: "評価の高い順")
+    # expect(page).to have_css("#comments-order-menu-control", text: "評価の高い順")
+    expect(page).to have_css("#comments-order-menu-control", text: "Best rated")
   end
 end
