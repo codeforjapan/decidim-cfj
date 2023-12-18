@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-xdescribe "Comments", type: :system, perform_enqueued: true do
+describe "Comments", type: :system, perform_enqueued: true do
   let!(:component) { create(:debates_component, organization: organization) }
   let!(:commentable) { create(:debate, :open_ama, component: component) }
 
