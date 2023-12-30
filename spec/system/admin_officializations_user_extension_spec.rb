@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-xdescribe "Admin manages officializations", type: :system do
+describe "Admin manages officializations", type: :system do
   let(:model_name) { Decidim::User.model_name }
   let(:filterable_concern) { Decidim::Admin::Officializations::Filterable }
 

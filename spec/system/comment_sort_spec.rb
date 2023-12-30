@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-xdescribe "Comments", type: :system, perform_enqueued: true do
+describe "Comments", type: :system, perform_enqueued: true do
   let!(:component) { create(:debates_component, organization: organization) }
   let!(:commentable) { create(:debate, :open_ama, component: component) }
 
@@ -32,8 +32,10 @@ xdescribe "Comments", type: :system, perform_enqueued: true do
 
     within ".comments" do
       within ".order-by__dropdown" do
-        click_link "古い順" # Opens the dropdown
-        click_link "評価の高い順"
+        # click_link "古い順" # Opens the dropdown
+        # click_link "評価の高い順"
+        page.find("#comments-order-menu-control").click # Opens the dropdown
+        page.find("#comments-order-chooser-menu li:first-of-type a").click
       end
     end
 
@@ -47,6 +49,7 @@ xdescribe "Comments", type: :system, perform_enqueued: true do
 
     expect(page).to have_css(".comment", minimum: 1)
     page.find(".order-by .dropdown.menu .is-dropdown-submenu-parent").hover
-    expect(page).to have_css("#comments-order-menu-control", text: "評価の高い順")
+    # expect(page).to have_css("#comments-order-menu-control", text: "評価の高い順")
+    expect(page).to have_css("#comments-order-menu-control", text: "Best rated")
   end
 end
