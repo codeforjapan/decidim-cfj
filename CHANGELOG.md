@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.0.3](https://github.com/codeforjapan/decidim-cfj/compare/v1.0.2...v1.0.3) (2024-01-16)
+
+
+### Bug Fixes
+
+* options of Capybara driver ([e17316d](https://github.com/codeforjapan/decidim-cfj/commit/e17316dcfab231e3d451ef3d60eae516a53b9b03))
+
 ## [1.0.2](https://github.com/codeforjapan/decidim-cfj/compare/v1.0.1...v1.0.2) (2023-12-15)
 
 
