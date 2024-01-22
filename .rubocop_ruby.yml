@@ -23,7 +23,6 @@ AllCops:
     - "bin/webpack-dev-server"
     - "db/migrate/*"
     - "db/schema.rb"
-    - "decidim-comments/**/*"
     - "tmp/**/*"
   # Default formatter will be used if no -f/--format option is given.
   DefaultFormatter: progress
