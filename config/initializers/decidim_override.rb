@@ -31,6 +31,11 @@ Rails.application.config.to_prepare do
     end
   end
 
+  # load default definitions
+  Decidim::Comments::SortedComments # rubocop:disable Lint/Void
+  Decidim::Comments::CommentsController # rubocop:disable Lint/Void
+  Decidim::Comments::CommentsHelper # rubocop:disable Lint/Void
+
   module Decidim
     module Comments
       class SortedComments < Decidim::Query
