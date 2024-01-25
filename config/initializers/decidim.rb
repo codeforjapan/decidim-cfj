@@ -491,9 +491,6 @@ Decidim.register_assets_path File.expand_path("app/packs", Rails.application.roo
 
 require "decidim/map/provider/static_map/cfj_osm"
 
-## Set default comments limit. It's used in Decidim::Comments component. Default value is 100.
-Rails.application.config.default_comments_limit = ENV.fetch("DECIDIM_COMMENTS_LIMIT", 100).to_i
-
 ## Set default OGP description length limit. It's used in Decidim::Blogs components
 Rails.application.config.default_blog_ogp_description_limit = ENV.fetch("DECIDIM_BLOG_OGP_DESCRIPTION_LIMIT", 150).to_i
 

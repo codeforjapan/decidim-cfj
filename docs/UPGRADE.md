@@ -70,13 +70,6 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 
   https://github.com/codeforjapan/decidim-cfj/pull/415 で追加されたファイル。ディベートでconclusionsに空文字列を許すための修正。
 
-* `decidim-comments`
-
-  https://github.com/codeforjapan/decidim-cfj/issues/319 などの対応のために追加されたディレクトリ(gem)。
-
-  本家の https://github.com/decidim/decidim/tree/develop/decidim-comments から切り出して修正を加えたもの。
-  バージョンアップ時には注意しつつ、変更点を適宜修正する必要があります。
-
 * `app/uploaders/decidim/cw/application_uploader.rb`
 
   https://github.com/decidim/decidim/issues/6720 や https://github.com/codeforjapan/decidim-cfj/issues/101 などの対応のために導入。
