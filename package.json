@@ -6,6 +6,7 @@
     "@decidim/core": "^0.27.4",
     "@decidim/elections": "^0.27.4",
     "@decidim/webpacker": "^0.27.4",
+    "@geoman-io/leaflet-geoman-free": "^2.15.0",
     "@rails/webpacker": "^6.0.0-rc.6",
     "codemirror": "^5.65.9",
     "europa": "^4.0.0",
@@ -14,8 +15,10 @@
     "highlight.js": "^11.6.0",
     "inline-attachment": "^2.0.3",
     "inscrybmde": "^1.11.6",
+    "jquery-form": "^4.3.0",
     "jquery-ui": "^1.13.2",
     "jsrender": "^1.0.12",
+    "jsviews": "^1.0.13",
     "leaflet.featuregroup.subgroup": "^1.0.2",
     "select2": "^4.1.0-rc.0"
   },
@@ -33,9 +36,9 @@
     "@decidim/eslint-config": "^0.27.4",
     "@decidim/stylelint-config": "^0.27.4",
     "eslint": "^7.32.0",
-    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-prettier": "^8.10.0",
     "eslint-config-standard": "^11.0.0",
-    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-import": "^2.29.1",
     "stylelint": "^13.11.0"
   }
 }
