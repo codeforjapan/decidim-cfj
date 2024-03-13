@@ -4,14 +4,14 @@ source "https://rubygems.org"
 
 ruby RUBY_VERSION
 
-gem "decidim", "0.27.4"
+gem "decidim", "0.28.0"
 
-gem "decidim-decidim_awesome", git: "https://github.com/codeforjapan/decidim-module-decidim_awesome.git", branch: "v0.9.3-2023-08-31"
-
-gem "decidim-term_customizer", git: "https://github.com/codeforjapan/decidim-module-term_customizer.git", branch: "027-ja"
-
-gem "decidim-navigation_maps", git: "https://github.com/codeforjapan/decidim-module-navigation_maps.git", branch: "v1.3.4-2024-01-28"
-gem "decidim-polis", git: "https://github.com/codeforjapan/decidim-polis.git", branch: "update-0-27-4"
+gem "decidim-decidim_awesome", git: "https://github.com/codeforjapan/decidim-module-decidim_awesome.git", branch: "develop"
+#
+# gem "decidim-term_customizer", git: "https://github.com/codeforjapan/decidim-module-term_customizer.git", branch: "027-ja"
+#
+# gem "decidim-navigation_maps", git: "https://github.com/codeforjapan/decidim-module-navigation_maps.git", branch: "v1.3.4-2024-01-28"
+# gem "decidim-polis", git: "https://github.com/codeforjapan/decidim-polis.git", branch: "update-0-27-4"
 
 gem "bootsnap"
 
@@ -31,7 +31,7 @@ gem "newrelic_rpm"
 gem "omniauth-line_login", path: "omniauth-line_login"
 gem "omniauth-rails_csrf_protection"
 
-gem "decidim-user_extension", path: "decidim-user_extension"
+# gem "decidim-user_extension", path: "decidim-user_extension"
 
 gem "slack-ruby-client"
 
@@ -39,18 +39,18 @@ group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
   gem "figaro"
 
-  gem "decidim-dev", "0.27.4"
+  gem "decidim-dev", "0.28.0"
   gem "dotenv-rails"
   gem "factory_bot_rails"
   gem "rspec-rails"
 end
 
 group :development do
-  gem "letter_opener_web", "~> 2.0"
+  gem "letter_opener_web"
   gem "listen", "~> 3.1"
   gem "rubocop-faker"
-  gem "spring", "~> 2.0"
-  gem "spring-watcher-listen", "~> 2.0"
+  gem "spring"
+  gem "spring-watcher-listen"
   gem "web-console", "~> 4.2"
 end
 

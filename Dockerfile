@@ -1,6 +1,6 @@
-FROM node:16.13.0-bullseye-slim as node
+FROM node:18.17.1-bullseye-slim as node
 
-FROM ruby:3.0.6-slim-bullseye
+FROM ruby:3.1.1-slim-bullseye
 
 # for build-dep
 RUN echo "deb-src http://deb.debian.org/debian bullseye main" >> /etc/apt/sources.list
@@ -32,12 +32,10 @@ RUN apt build-dep -y imagemagick && \
     make install  && \
     ldconfig
 
-ENV YARN_VERSION=v1.22.15
-
 # node install
 COPY --from=node /usr/local/bin/node /usr/local/bin/node
 COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
-COPY --from=node /opt/yarn-${YARN_VERSION} /opt/yarn
+COPY --from=node /opt/yarn-* /opt/yarn
 RUN ln -s /opt/yarn/bin/yarn /usr/local/bin/yarn \
   && ln -s /opt/yarn/bin/yarn /usr/local/bin/yarnpkg \
   && ln -s /usr/local/bin/node /usr/local/bin/nodejs \
