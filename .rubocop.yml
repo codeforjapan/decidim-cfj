@@ -5,3 +5,21 @@ AllCops:
   Exclude:
     - "db/migrate/*"
     - "db/schema.rb"
+    - "bin/setup"
+    - "bin/update"
+    - "node_modules/*"
+
+Gemspec/RequiredRubyVersion:
+  Enabled: false
+
+Rails/Output:
+  Enabled: false
+
+Capybara/ClickLinkOrButtonStyle:
+  Enabled: false
+
+RSpec/DescribeClass:
+  Enabled: false
+
+Rails/I18nLocaleAssignment:
+  Enabled: false
