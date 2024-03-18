@@ -55,43 +55,43 @@ module Decidim
     context "when the email is a disposable account" do
       let(:email) { "user@mailbox92.biz" }
 
-      it { is_expected.to be_invalid }
+      it { is_expected.not_to be_valid }
     end
 
     context "when the name is not present" do
       let(:name) { nil }
 
-      it { is_expected.to be_invalid }
+      it { is_expected.not_to be_valid }
     end
 
     context "when the nickname is not present" do
       let(:nickname) { nil }
 
-      it { is_expected.to be_invalid }
+      it { is_expected.not_to be_valid }
     end
 
     context "when the email is not present" do
       let(:email) { nil }
 
-      it { is_expected.to be_invalid }
+      it { is_expected.not_to be_valid }
     end
 
     context "when the email already exists" do
       let!(:user) { create(:user, organization: organization, email: email) }
 
-      it { is_expected.to be_invalid }
+      it { is_expected.not_to be_valid }
 
       context "and is pending to accept the invitation" do
         let!(:user) { create(:user, organization: organization, email: email, invitation_token: "foo", invitation_accepted_at: nil) }
 
-        it { is_expected.to be_invalid }
+        it { is_expected.not_to be_valid }
       end
     end
 
     context "when the nickname already exists" do
       let!(:user) { create(:user, organization: organization, nickname: nickname) }
 
-      it { is_expected.to be_invalid }
+      it { is_expected.not_to be_valid }
 
       context "and is pending to accept the invitation" do
         let!(:user) { create(:user, organization: organization, nickname: nickname, invitation_token: "foo", invitation_accepted_at: nil) }
@@ -103,43 +103,43 @@ module Decidim
     context "when the nickname is too long" do
       let(:nickname) { "verylongnicknamethatcreatesanerror" }
 
-      it { is_expected.to be_invalid }
+      it { is_expected.not_to be_valid }
     end
 
     context "when the password is not present" do
       let(:password) { nil }
 
-      it { is_expected.to be_invalid }
+      it { is_expected.not_to be_valid }
     end
 
     context "when the password is weak" do
       let(:password) { "aaaabbbbcccc" }
 
-      it { is_expected.to be_invalid }
+      it { is_expected.not_to be_valid }
     end
 
     context "when the password confirmation is not present" do
       let(:password_confirmation) { nil }
 
-      it { is_expected.to be_invalid }
+      it { is_expected.not_to be_valid }
     end
 
     context "when the password confirmation is different from password" do
       let(:password_confirmation) { "invalid" }
 
-      it { is_expected.to be_invalid }
+      it { is_expected.not_to be_valid }
     end
 
     context "when the tos_agreement is not accepted" do
       let(:tos_agreement) { "0" }
 
-      it { is_expected.to be_invalid }
+      it { is_expected.not_to be_valid }
     end
 
     context "when the user_extension is not present" do
       let(:user_extension) { {} }
 
-      it { is_expected.to be_invalid }
+      it { is_expected.not_to be_valid }
     end
   end
 end

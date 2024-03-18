@@ -2,3 +2,5 @@
 User-agent: *
 Disallow: /profiles/
 Disallow: /search
+Disallow: /*/versions
+Disallow: /sitemap.xml

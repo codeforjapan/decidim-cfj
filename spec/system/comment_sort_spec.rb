@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe "Comments", type: :system, perform_enqueued: true do
+describe "Comments", :perform_enqueued do
   let!(:component) { create(:debates_component, organization: organization) }
   let!(:commentable) { create(:debate, :open_ama, component: component) }
 
@@ -34,7 +34,7 @@ describe "Comments", type: :system, perform_enqueued: true do
       within ".order-by__dropdown" do
         # click_link "古い順" # Opens the dropdown
         # click_link "評価の高い順"
-        page.find("#comments-order-menu-control").click # Opens the dropdown
+        page.find_by_id("comments-order-menu-control").click # Opens the dropdown
         page.find("#comments-order-chooser-menu li:first-of-type a").click
       end
     end

@@ -71,7 +71,7 @@ shared_examples "a proposal form" do |options|
   context "when there's no title" do
     let(:title) { nil }
 
-    it { is_expected.to be_invalid }
+    it { is_expected.not_to be_valid }
 
     it "only adds errors to this field" do
       subject.valid?
@@ -92,7 +92,7 @@ shared_examples "a proposal form" do |options|
       end
     end
 
-    it { is_expected.to be_invalid }
+    it { is_expected.not_to be_valid }
   end
 
   context "when the title is the minimum length" do
@@ -117,14 +117,14 @@ shared_examples "a proposal form" do |options|
         end
       end
 
-      it { is_expected.to be_invalid }
+      it { is_expected.not_to be_valid }
     end
   end
 
   context "when there's no body" do
     let(:body) { nil }
 
-    it { is_expected.to be_invalid }
+    it { is_expected.not_to be_valid }
   end
 
   context "when no category_id" do
@@ -142,7 +142,7 @@ shared_examples "a proposal form" do |options|
   context "with invalid category_id" do
     let(:category_id) { 987 }
 
-    it { is_expected.to be_invalid }
+    it { is_expected.not_to be_valid }
   end
 
   context "when geocoding is enabled" do
@@ -234,7 +234,7 @@ shared_examples "a proposal form" do |options|
     subject { form.category }
 
     context "when the category exists" do
-      it { is_expected.to be_kind_of(Decidim::Category) }
+      it { is_expected.to be_a(Decidim::Category) }
     end
 
     context "when the category does not exist" do
@@ -289,11 +289,11 @@ shared_examples "a proposal form" do |options|
         expect(subject).not_to be_valid
 
         if options[:i18n]
-          expect(subject.errors.full_messages).to match_array(["Title en can't be blank", "Add photos Needs to be reattached"])
-          expect(subject.errors.attribute_names).to match_array([:title_en, :add_photos])
+          expect(subject.errors.full_messages).to contain_exactly("Title en can't be blank", "Add photos Needs to be reattached")
+          expect(subject.errors.attribute_names).to contain_exactly(:title_en, :add_photos)
         else
-          expect(subject.errors.full_messages).to match_array(["Title can't be blank", "Title is too short (under 15 characters)", "Add photos Needs to be reattached"])
-          expect(subject.errors.attribute_names).to match_array([:title, :add_photos])
+          expect(subject.errors.full_messages).to contain_exactly("Title can't be blank", "Title is too short (under 15 characters)", "Add photos Needs to be reattached")
+          expect(subject.errors.attribute_names).to contain_exactly(:title, :add_photos)
         end
       end
     end
@@ -384,7 +384,7 @@ shared_examples "a proposal form with meeting as author" do |options|
   context "when there's no title" do
     let(:title) { nil }
 
-    it { is_expected.to be_invalid }
+    it { is_expected.not_to be_valid }
   end
 
   context "when the title is too long" do
@@ -396,7 +396,7 @@ shared_examples "a proposal form with meeting as author" do |options|
       end
     end
 
-    it { is_expected.to be_invalid }
+    it { is_expected.not_to be_valid }
   end
 
   unless options[:skip_etiquette_validation]
@@ -409,14 +409,14 @@ shared_examples "a proposal form with meeting as author" do |options|
         end
       end
 
-      it { is_expected.to be_invalid }
+      it { is_expected.not_to be_valid }
     end
   end
 
   context "when there's no body" do
     let(:body) { nil }
 
-    it { is_expected.to be_invalid }
+    it { is_expected.not_to be_valid }
   end
 
   context "when proposals comes from a meeting" do

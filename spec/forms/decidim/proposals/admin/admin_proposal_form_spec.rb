@@ -55,7 +55,7 @@ module Decidim
           context "when title is too short" do
             let(:title) { { ja: "提案のテスト１" } }
 
-            it { is_expected.to be_invalid }
+            it { is_expected.not_to be_valid }
 
             it "only adds errors to this field" do
               subject.valid?

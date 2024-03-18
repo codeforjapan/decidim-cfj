@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe "Profile", type: :system do
+describe "Profile" do
   let(:user) { create(:user, :confirmed) }
 
   before do
@@ -48,7 +48,7 @@ describe "Profile", type: :system do
     end
 
     it "shows user name in the header, its nickname and a contact link" do
-      expect(page).to have_selector("h1", text: user.name)
+      expect(page).to have_css("h1", text: user.name)
       expect(page).to have_content(user.nickname)
       expect(page).to have_link("Contact")
     end
@@ -104,7 +104,7 @@ describe "Profile", type: :system do
         visit decidim.profile_path(user.nickname)
         click_link "Follows"
 
-        expect(page).not_to have_content("Some of the resources followed are not public.")
+        expect(page).to have_no_content("Some of the resources followed are not public.")
         expect(page).to have_content(translated(other_user.name))
         expect(page).to have_content(translated(user_to_follow.name))
         expect(page).to have_content(translated(public_resource.title))
@@ -126,7 +126,7 @@ describe "Profile", type: :system do
           expect(page).to have_content(translated(other_user.name))
           expect(page).to have_content(translated(user_to_follow.name))
           expect(page).to have_content(translated(public_resource.title))
-          expect(page).not_to have_content(translated(non_public_resource.title))
+          expect(page).to have_no_content(translated(non_public_resource.title))
         end
       end
     end
@@ -157,21 +157,21 @@ describe "Profile", type: :system do
         end
 
         it "shows a badges tab" do
-          expect(page).not_to have_link("Badges")
+          expect(page).to have_no_link("Badges")
         end
 
         it "doesn't have a badges section on the sidebar" do
           within ".profile--sidebar" do
-            expect(page).not_to have_content("Badges")
+            expect(page).to have_no_content("Badges")
           end
         end
       end
     end
 
     context "when belonging to user groups" do
-      let!(:accepted_user_group) { create :user_group, users: [user], organization: user.organization }
-      let!(:pending_user_group) { create :user_group, users: [], organization: user.organization }
-      let!(:pending_membership) { create :user_group_membership, user_group: pending_user_group, user: user, role: "requested" }
+      let!(:accepted_user_group) { create(:user_group, users: [user], organization: user.organization) }
+      let!(:pending_user_group) { create(:user_group, users: [], organization: user.organization) }
+      let!(:pending_membership) { create(:user_group_membership, user_group: pending_user_group, user: user, role: "requested") }
 
       before do
         visit decidim.profile_path(user.nickname)

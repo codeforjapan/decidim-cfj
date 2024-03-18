@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe "Admin manages officializations", type: :system do
+describe "Admin manages officializations" do
   let(:model_name) { Decidim::User.model_name }
   let(:filterable_concern) { Decidim::Admin::Officializations::Filterable }
 
@@ -93,7 +93,7 @@ describe "Admin manages officializations", type: :system do
 
           within "#show-user-modal" do
             expect(page).to have_content("参加者の属性情報を表示")
-            expect(page).not_to have_content("本名")
+            expect(page).to have_no_content("本名")
 
             click_button "表示"
 

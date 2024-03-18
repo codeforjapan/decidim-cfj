@@ -53,7 +53,7 @@ pgadmin
 yarn-debug.log*
 .yarn-integrity
 public/sw.js
-public/sw.js.map
+public/sw.js.*
 app/views/static/api/*
 tailwind.config.js
 app/views/static/docs/*

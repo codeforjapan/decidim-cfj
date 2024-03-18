@@ -40,7 +40,7 @@ module Decidim
       context "when there's no title" do
         let(:title) { nil }
 
-        it { is_expected.to be_invalid }
+        it { is_expected.not_to be_valid }
 
         it "only adds errors to this field" do
           subject.valid?
@@ -60,7 +60,7 @@ module Decidim
       context "when there's no body" do
         let(:body) { nil }
 
-        it { is_expected.to be_invalid }
+        it { is_expected.not_to be_valid }
       end
 
       context "when the body exceeds the permited length" do
@@ -68,7 +68,7 @@ module Decidim
         let(:allowed_length) { 15 }
         let(:body) { "A body longer than the permitted" }
 
-        it { is_expected.to be_invalid }
+        it { is_expected.not_to be_valid }
 
         context "with carriage return characters that cause it to exceed" do
           let(:allowed_length) { 80 }
@@ -86,7 +86,7 @@ module Decidim
         context "when the template and the body are the same" do
           let(:body) { body_template }
 
-          it { is_expected.to be_invalid }
+          it { is_expected.not_to be_valid }
         end
       end
     end

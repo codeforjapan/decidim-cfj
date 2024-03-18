@@ -12,7 +12,7 @@ namespace :download do
       puts "[ERROR] please specify org_id"
       puts "example: rake download:users[1]"
       puts "*********************"
-      Decidim::Organization.all.order(:id).each do |org|
+      Decidim::Organization.order(:id).each do |org|
         puts "#{org.id}:#{org.name}"
       end
     end

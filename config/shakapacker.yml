@@ -49,7 +49,7 @@ development:
     # there will be at least two webpack servers running
     port: 3035
     # Hot Module Replacement updates modules while the application is running without a full reload
-    hmr: false
+    hmr: true
     # mini-css-extract-plugin is a required dependency in both cases.
     inline_css: true
     client:
