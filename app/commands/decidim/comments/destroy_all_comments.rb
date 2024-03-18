@@ -32,7 +32,7 @@ module Decidim
             Decidim::Comments::Comment.where(id: ids).order(id: :desc).each do |comment|
               puts "destroy comment id: #{comment.id}, for #{comment.decidim_root_commentable_type}:#{comment.decidim_root_commentable_id}"
               # force to delete (ignore validation)
-              Decidim::Comments::CommentVote.where(comment: comment).delete_all
+              Decidim::Comments::CommentVote.where(comment:).delete_all
               comment.delete
             end
           end

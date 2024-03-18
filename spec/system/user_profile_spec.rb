@@ -81,10 +81,10 @@ describe "Profile" do
       let(:public_resource) { create(:dummy_resource, :published) }
 
       before do
-        create(:follow, user: user, followable: other_user)
-        create(:follow, user: user, followable: user_to_follow)
+        create(:follow, user:, followable: other_user)
+        create(:follow, user:, followable: user_to_follow)
         create(:follow, user: other_user, followable: user)
-        create(:follow, user: user, followable: public_resource)
+        create(:follow, user:, followable: public_resource)
       end
 
       it "shows the number of followers and following" do
@@ -114,7 +114,7 @@ describe "Profile" do
         let(:non_public_resource) { create(:dummy_resource) }
 
         before do
-          create(:follow, user: user, followable: non_public_resource)
+          create(:follow, user:, followable: non_public_resource)
         end
 
         it "lists only the public followings" do
@@ -173,7 +173,7 @@ describe "Profile" do
     context "when belonging to user groups" do
       let!(:accepted_user_group) { create(:user_group, users: [user], organization: user.organization) }
       let!(:pending_user_group) { create(:user_group, users: [], organization: user.organization) }
-      let!(:pending_membership) { create(:user_group_membership, user_group: pending_user_group, user: user, role: "requested") }
+      let!(:pending_membership) { create(:user_group_membership, user_group: pending_user_group, user:, role: "requested") }
 
       before do
         visit decidim.profile_path(user.nickname)
@@ -188,7 +188,7 @@ describe "Profile" do
 
       context "when user groups are disabled" do
         let(:organization) { create(:organization, user_groups_enabled: false) }
-        let(:user) { create(:user, :confirmed, organization: organization) }
+        let(:user) { create(:user, :confirmed, organization:) }
 
         it { is_expected.to have_no_content("Groups") }
       end

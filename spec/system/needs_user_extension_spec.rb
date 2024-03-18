@@ -4,7 +4,7 @@ require "rails_helper"
 
 describe "Need user extension" do
   let(:organization) { create(:organization) }
-  let(:user) { create(:user, :confirmed, organization: organization) }
+  let(:user) { create(:user, :confirmed, organization:) }
 
   context "when user_extension is enable" do
     let(:organization) { create(:organization, available_authorizations: ["user_extension"]) }
@@ -37,7 +37,7 @@ describe "Need user extension" do
             birth_year: (1990..2010).to_a.shuffle,
             occupation: "会社員"
           }
-          create(:authorization, user: user, name: "user_extension", metadata: user_extension)
+          create(:authorization, user:, name: "user_extension", metadata: user_extension)
         end
 
         it "not redirect in notifications page" do
@@ -82,7 +82,7 @@ describe "Need user extension" do
             birth_year: (1990..2010).to_a.shuffle,
             occupation: "会社員"
           }
-          create(:authorization, user: user, name: "user_extension", metadata: user_extension)
+          create(:authorization, user:, name: "user_extension", metadata: user_extension)
         end
 
         it "not redirect in notifications page" do

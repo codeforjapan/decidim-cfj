@@ -29,8 +29,8 @@ namespace :download do
     headers = %w(id created_at sign_in_count last_sign_in nickname name email real_name gender address birth_year occupation)
     organization = Decidim::Organization.find(id)
     Time.zone = organization.time_zone
-    CSV.open(file, "w", write_headers: true, headers: headers, force_quotes: true) do |writer|
-      Decidim::User.where(organization: organization).not_deleted.in_batches do |users|
+    CSV.open(file, "w", write_headers: true, headers:, force_quotes: true) do |writer|
+      Decidim::User.where(organization:).not_deleted.in_batches do |users|
         metadata_hash = {}
         Decidim::Authorization.where(decidim_user_id: users).find_each do |auth|
           metadata_hash[auth.decidim_user_id] = auth.metadata

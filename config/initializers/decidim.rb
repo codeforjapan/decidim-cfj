@@ -116,7 +116,7 @@ Decidim.configure do |config|
     static_url = Rails.application.secrets.maps[:static_url]
     static_url = "https://image.maps.ls.hereapi.com/mia/1.6/mapview" if static_provider == "here" && static_url.blank?
     config.maps = {
-      provider: provider,
+      provider:,
       api_key: Rails.application.secrets.maps[:static_api_key],
       static: { provider: static_provider, url: static_url },
       dynamic: {

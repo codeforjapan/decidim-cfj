@@ -5,7 +5,7 @@ require "rails_helper"
 describe HeicPreviewer do
   it "previews a heic image" do
     content_type = "image/heic"
-    blob = create_file_blob(filename: "heic-image-file.heic", content_type: content_type)
+    blob = create_file_blob(filename: "heic-image-file.heic", content_type:)
 
     expect(blob).not_to be_nil
     expect(HeicPreviewer.accept?(blob)).to be_truthy # rubocop:disable RSpec/PredicateMatcher
