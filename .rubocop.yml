@@ -1,2 +1,7 @@
 inherit_gem:
   decidim-dev: rubocop-decidim.yml
+
+AllCops:
+  Exclude:
+    - "db/migrate/*"
+    - "db/schema.rb"
