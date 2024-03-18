@@ -27,7 +27,7 @@ GIT
       decidim-core (~> 0.27.0)
 
 GIT
-  remote: https://github.com/takahashim/decidim-polis.git
+  remote: https://github.com/codeforjapan/decidim-polis.git
   revision: b55273473b0d958a3d318c1bba5e84f938d124f1
   branch: update-0-27-5
   specs:
