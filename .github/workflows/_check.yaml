@@ -6,7 +6,7 @@ on:
       ruby-version:
         type: string
         required: false
-        default: 3.0.6
+        default: 3.1.1
 
 jobs:
   rubocop:
@@ -43,7 +43,7 @@ jobs:
       SLACK_MESSAGE_CHANNEL: '#test'
     services:
       db:
-        image: postgres:12.14
+        image: postgres:12.17
         ports:
           - 5432:5432
         env:
@@ -73,7 +73,7 @@ jobs:
           which convert
           convert -version
 
-      - name: Set up Ruby 3.0.6
+      - name: Set up Ruby 3.1.1
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ inputs.ruby-version }}
@@ -82,26 +82,27 @@ jobs:
       - name: setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 16.13.0
+          node-version: 18.17.1
           cache: 'yarn'
 
       - name: install yarn
         run: |
-          npm i -g yarn@1.22.15
+          npm i -g yarn@1.22.19
           yarn install --frozen-lockfile
 
       - name: create assets precompile cache key
         run: |
           # use newest commit hash of precompile target files
-          git rev-parse $(git log --oneline -n 1 app/packs lib/assets Gemfile.lock yarn.lock | awk '{print $1}') > ASSETS_VERSION
+          git rev-parse $(git log --oneline -n 1 app/decidim-packs tmp/shakapacker.lock lib/assets Gemfile.lock yarn.lock | awk '{print $1}') > ASSETS_VERSION
 
       - name: asset cache
         uses: actions/cache@v3
         with:
           path: |
-            public/packs
+            public/decidim-packs
             public/assets
             tmp/cache/assets
+            tmp/shakapacker.lock
             public/packs-test
           key: asset-precompile-cache-${{ hashFiles('ASSETS_VERSION') }}
           restore-keys: |
