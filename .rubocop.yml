@@ -8,6 +8,7 @@ AllCops:
     - "bin/setup"
     - "bin/update"
     - "node_modules/*"
+    - "vendor/bundle/**/*"
 
 Gemspec/RequiredRubyVersion:
   Enabled: false
