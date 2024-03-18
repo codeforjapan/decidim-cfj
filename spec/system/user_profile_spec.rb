@@ -139,11 +139,13 @@ describe "Profile" do
           visit decidim.profile_path(user.nickname)
         end
 
-        xit "shows a badges tab" do
+        it "shows a badges tab" do
+          penfing "badges not use"
           expect(page).to have_link("Badges")
         end
 
-        xit "shows a badges section on the sidebar" do
+        it "shows a badges section on the sidebar" do
+          penfing "badges not use"
           within ".profile--sidebar" do
             expect(page).to have_css(".badge-container img[title^='Tests']")
           end

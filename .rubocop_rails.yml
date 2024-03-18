@@ -97,3 +97,6 @@ Rails/I18nLocaleAssignment:
 
 Lint/EmptyBlock:
   Enabled: false
+
+Capybara/ClickLinkOrButtonStyle:
+  EnforcedStyle: strict
