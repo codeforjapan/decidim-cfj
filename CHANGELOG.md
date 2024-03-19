@@ -1,5 +1,20 @@
 # Change Log
 
+## [1.1.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.0.3...v1.1.0) (2024-03-19)
+
+
+### Features
+
+* add decidim-navigation-maps ([55c318b](https://github.com/codeforjapan/decidim-cfj/commit/55c318b35364b026f6bc97aa53cbeba567ed2a54))
+* update decidim-polis ([d3911c8](https://github.com/codeforjapan/decidim-cfj/commit/d3911c8e51cefbac9388be94042a28cfbceaccc3))
+
+
+### Bug Fixes
+
+* refactor update Gemfile.lock ([b131005](https://github.com/codeforjapan/decidim-cfj/commit/b1310055bb8fca478d7f85e3bde4557310d92ab2))
+* remove decidim comments from Dockerfile ([c41c69d](https://github.com/codeforjapan/decidim-cfj/commit/c41c69d3657dd1c220fdf5ae7d18ee943d55d23e))
+* remove original decidim-comments; use default one ([51f8354](https://github.com/codeforjapan/decidim-cfj/commit/51f83547d5a739430254b49fc3c29713b04d4ad5))
+
 ## [1.0.3](https://github.com/codeforjapan/decidim-cfj/compare/v1.0.2...v1.0.3) (2024-01-16)
 
 
