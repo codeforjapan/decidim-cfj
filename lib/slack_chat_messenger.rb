@@ -7,6 +7,6 @@ class SlackChatMessenger
       return
     end
     client = Slack::Web::Client.new
-    client.chat_postMessage(channel: channel, text: message, as_user: true)
+    client.chat_postMessage(channel:, text: message, as_user: true)
   end
 end

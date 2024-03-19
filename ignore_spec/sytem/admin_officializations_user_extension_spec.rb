@@ -8,8 +8,8 @@ describe "Admin manages officializations", type: :system do
 
   let(:organization) { create(:organization) }
 
-  let!(:admin) { create(:user, :admin, :confirmed, organization: organization) }
-  let!(:user) { create(:user, :confirmed, organization: organization) }
+  let!(:admin) { create(:user, :admin, :confirmed, organization:) }
+  let!(:user) { create(:user, :confirmed, organization:) }
 
   let!(:admin_authorization) do
     admin_metadata = { real_name: "admin", address: "admin address", gender: 1, birth_year: 2000, occupation: "administrator" }
@@ -43,7 +43,7 @@ describe "Admin manages officializations", type: :system do
     end
 
     describe "listing officializations" do
-      let!(:not_officialized) { create(:user, organization: organization) }
+      let!(:not_officialized) { create(:user, organization:) }
 
       before do
         within ".secondary-nav" do
@@ -66,7 +66,7 @@ describe "Admin manages officializations", type: :system do
     end
 
     describe "retrieving the user extensional information" do
-      let!(:users) { create_list(:user, 3, organization: organization) }
+      let!(:users) { create_list(:user, 3, organization:) }
 
       before do
         users.each do |user|
@@ -77,7 +77,7 @@ describe "Admin manages officializations", type: :system do
             birth_year: (1990..2010).to_a.sample,
             occupation: "会社員"
           }
-          create(:authorization, user: user, name: "user_extension", metadata: user_extension)
+          create(:authorization, user:, name: "user_extension", metadata: user_extension)
         end
 
         within ".secondary-nav" do

@@ -32,13 +32,13 @@ module Decidim
 
     let(:attributes) do
       {
-        name: name,
-        nickname: nickname,
-        email: email,
-        password: password,
-        password_confirmation: password_confirmation,
-        tos_agreement: tos_agreement,
-        user_extension: user_extension
+        name:,
+        nickname:,
+        email:,
+        password:,
+        password_confirmation:,
+        tos_agreement:,
+        user_extension:
       }
     end
 
@@ -77,24 +77,24 @@ module Decidim
     end
 
     context "when the email already exists" do
-      let!(:user) { create(:user, organization: organization, email: email) }
+      let!(:user) { create(:user, organization:, email:) }
 
       it { is_expected.not_to be_valid }
 
       context "and is pending to accept the invitation" do
-        let!(:user) { create(:user, organization: organization, email: email, invitation_token: "foo", invitation_accepted_at: nil) }
+        let!(:user) { create(:user, organization:, email:, invitation_token: "foo", invitation_accepted_at: nil) }
 
         it { is_expected.not_to be_valid }
       end
     end
 
     context "when the nickname already exists" do
-      let!(:user) { create(:user, organization: organization, nickname: nickname) }
+      let!(:user) { create(:user, organization:, nickname:) }
 
       it { is_expected.not_to be_valid }
 
       context "and is pending to accept the invitation" do
-        let!(:user) { create(:user, organization: organization, nickname: nickname, invitation_token: "foo", invitation_accepted_at: nil) }
+        let!(:user) { create(:user, organization:, nickname:, invitation_token: "foo", invitation_accepted_at: nil) }
 
         it { is_expected.to be_valid }
       end

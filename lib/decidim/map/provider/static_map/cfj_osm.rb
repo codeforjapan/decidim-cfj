@@ -14,13 +14,13 @@ module Decidim
             height = options[:height] || 120
 
             map = ::Decidim::Map::Provider::StaticMap::CfjOsm::Map.new(
-              zoom: zoom,
+              zoom:,
               lat: latitude,
               lng: longitude,
-              width: width,
-              height: height,
+              width:,
+              height:,
               provider: "http://tile.openstreetmap.jp/{z}/{x}/{y}.png",
-              organization: organization
+              organization:
             )
 
             map.render_as_binary
