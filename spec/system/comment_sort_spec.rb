@@ -2,21 +2,21 @@
 
 require "rails_helper"
 
-describe "Comments", type: :system, perform_enqueued: true do
-  let!(:component) { create(:debates_component, organization: organization) }
-  let!(:commentable) { create(:debate, :open_ama, component: component) }
+describe "Comments", :perform_enqueued do
+  let!(:component) { create(:debates_component, organization:) }
+  let!(:commentable) { create(:debate, :open_ama, component:) }
 
   let(:resource_path) { resource_locator(commentable).path }
 
   let!(:organization) { create(:organization) }
-  let!(:user) { create(:user, :confirmed, organization: organization) }
-  let!(:comments) { create_list(:comment, 3, commentable: commentable) }
+  let!(:user) { create(:user, :confirmed, organization:) }
+  let!(:comments) { create_list(:comment, 3, commentable:) }
 
   before do
     switch_to_host(organization.host)
 
-    comment = create(:comment, commentable: commentable, body: "Most Rated Comment")
-    create(:comment_vote, comment: comment, author: user, weight: 1)
+    comment = create(:comment, commentable:, body: "Most Rated Comment")
+    create(:comment_vote, comment:, author: user, weight: 1)
 
     visit decidim.root_path
   end
@@ -34,7 +34,7 @@ describe "Comments", type: :system, perform_enqueued: true do
       within ".order-by__dropdown" do
         # click_link "古い順" # Opens the dropdown
         # click_link "評価の高い順"
-        page.find("#comments-order-menu-control").click # Opens the dropdown
+        page.find_by_id("comments-order-menu-control").click # Opens the dropdown
         page.find("#comments-order-chooser-menu li:first-of-type a").click
       end
     end
