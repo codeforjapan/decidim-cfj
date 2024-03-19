@@ -6,13 +6,13 @@ describe "Profile" do
   let(:user) { create(:user, :confirmed) }
 
   before do
-    I18n.default_locale = :en
+    Rails.application.config.i18n.default_locale = :en
     Decidim.default_locale = :en
     switch_to_host(user.organization.host)
   end
 
   after do
-    I18n.default_locale = :ja
+    Rails.application.config.i18n.default_locale = :ja
     Decidim.default_locale = :ja
   end
 
@@ -27,14 +27,18 @@ describe "Profile" do
       end
     end
 
+    it "is not indexable by crawlers" do
+      expect(page.find('meta[name="robots"]', visible: false)[:content]).to eq("noindex")
+    end
+
     it "shows the profile page when clicking on the menu" do
-      within ".wrapper" do
+      within "[data-content]" do
         expect(page).to have_content(user.nickname)
       end
     end
 
     it "adds a link to edit the profile" do
-      within ".wrapper" do
+      within "[data-content]" do
         click_link "Edit profile"
       end
 
@@ -47,10 +51,14 @@ describe "Profile" do
       visit decidim.profile_path(user.nickname)
     end
 
+    it "is not indexable by crawlers" do
+      expect(page.find('meta[name="robots"]', visible: false)[:content]).to eq("noindex")
+    end
+
     it "shows user name in the header, its nickname and a contact link" do
-      expect(page).to have_css("h1", text: user.name)
+      expect(page).to have_selector("h1", text: user.name)
       expect(page).to have_content(user.nickname)
-      expect(page).to have_link("Contact")
+      expect(page).to have_link("Message")
     end
 
     it "does not show officialization stuff" do
@@ -61,7 +69,7 @@ describe "Profile" do
       let(:user) { create(:user, :officialized, officialized_as: nil) }
 
       it "shows officialization status" do
-        expect(page).to have_content("This participant is publicly verified")
+        expect(page).to have_content("Official participant")
       end
     end
 
@@ -71,26 +79,36 @@ describe "Profile" do
       end
 
       it "shows officialization status" do
+        click_link "Badges"
         expect(page).to have_content("Major of Barcelona")
+      end
+
+      it "is not indexable by crawlers" do
+        click_link "Badges"
+        expect(page.find('meta[name="robots"]', visible: false)[:content]).to eq("noindex")
       end
     end
 
     context "when displaying followers and following" do
       let(:other_user) { create(:user, organization: user.organization) }
       let(:user_to_follow) { create(:user, organization: user.organization) }
+      let(:user_group) { create(:user_group, organization: user.organization) }
       let(:public_resource) { create(:dummy_resource, :published) }
 
       before do
         create(:follow, user:, followable: other_user)
         create(:follow, user:, followable: user_to_follow)
         create(:follow, user: other_user, followable: user)
+        create(:follow, user:, followable: user_group)
         create(:follow, user:, followable: public_resource)
       end
 
       it "shows the number of followers and following" do
         visit decidim.profile_path(user.nickname)
-        expect(page).to have_link("Followers 1")
-        expect(page).to have_link("Follows 3")
+        within(".profile__details") do
+          expect(page).to have_content("1 follower")
+          expect(page).to have_content("3 follows")
+        end
       end
 
       it "lists the followers" do
@@ -98,6 +116,7 @@ describe "Profile" do
         click_link "Followers"
 
         expect(page).to have_content(other_user.name)
+        expect(page.find('meta[name="robots"]', visible: false)[:content]).to eq("noindex")
       end
 
       it "lists the followings" do
@@ -107,11 +126,13 @@ describe "Profile" do
         expect(page).to have_no_content("Some of the resources followed are not public.")
         expect(page).to have_content(translated(other_user.name))
         expect(page).to have_content(translated(user_to_follow.name))
-        expect(page).to have_content(translated(public_resource.title))
+        expect(page).to have_content(translated(user_group.name))
+        expect(page).to have_no_content(translated(public_resource.title))
+        expect(page.find('meta[name="robots"]', visible: false)[:content]).to eq("noindex")
       end
 
       context "when the user follows non public resources" do
-        let(:non_public_resource) { create(:dummy_resource) }
+        let(:non_public_resource) { create(:user, :blocked) }
 
         before do
           create(:follow, user:, followable: non_public_resource)
@@ -119,14 +140,52 @@ describe "Profile" do
 
         it "lists only the public followings" do
           visit decidim.profile_path(user.nickname)
-          expect(page).to have_link("Follows 4")
+          within(".profile__details") do
+            expect(page).to have_content("4 follows")
+          end
 
           click_link "Follows"
           expect(page).to have_content("Some of the resources followed are not public.")
           expect(page).to have_content(translated(other_user.name))
           expect(page).to have_content(translated(user_to_follow.name))
-          expect(page).to have_content(translated(public_resource.title))
-          expect(page).to have_no_content(translated(non_public_resource.title))
+          expect(page).to have_content(translated(user_group.name))
+          expect(page).to have_no_content(translated(public_resource.title))
+          expect(page).to have_no_content(translated(non_public_resource.name))
+        end
+      end
+
+      context "when the user follows a blocked user" do
+        let(:blocked_user) { create(:user, :blocked) }
+
+        before do
+          create(:follow, user:, followable: blocked_user)
+        end
+
+        it "lists only the unblocked followings" do
+          visit decidim.profile_path(user.nickname)
+
+          click_link "Follows"
+          expect(page).to have_content("Some of the resources followed are not public.")
+          expect(page).to have_content(translated(other_user.name))
+          expect(page).to have_content(translated(user_to_follow.name))
+          expect(page).to have_content(translated(user_group.name))
+          expect(page).to have_no_content(translated(public_resource.title))
+        end
+      end
+
+      context "when the user is followed by a blocked user" do
+        let(:blocked_user) { create(:user, :blocked) }
+
+        before do
+          create(:follow, user: blocked_user, followable: user)
+        end
+
+        it "lists only the unblocked followers" do
+          visit decidim.profile_path(user.nickname)
+
+          click_link "Followers"
+          expect(page).to have_content(translated(other_user.name))
+          expect(page).to have_no_content(translated(blocked_user.name))
         end
       end
     end
@@ -140,15 +199,7 @@ describe "Profile" do
         end
 
         it "shows a badges tab" do
-          penfing "badges not use"
           expect(page).to have_link("Badges")
-        end
-
-        it "shows a badges section on the sidebar" do
-          penfing "badges not use"
-          within ".profile--sidebar" do
-            expect(page).to have_css(".badge-container img[title^='Tests']")
-          end
         end
       end
 
@@ -159,13 +210,7 @@ describe "Profile" do
         end
 
         it "shows a badges tab" do
-          expect(page).to have_no_link("Badges")
-        end
-
-        it "doesn't have a badges section on the sidebar" do
-          within ".profile--sidebar" do
-            expect(page).to have_no_content("Badges")
-          end
+          expect(page).not_to have_link("Badges")
         end
       end
     end
@@ -184,6 +229,7 @@ describe "Profile" do
 
         expect(page).to have_content(accepted_user_group.name)
         expect(page).to have_no_content(pending_user_group.name)
+        expect(page.find('meta[name="robots"]', visible: false)[:content]).to eq("noindex")
       end
 
       context "when user groups are disabled" do
@@ -199,7 +245,7 @@ describe "Profile" do
     before do
       allow(Decidim.view_hooks)
         .to receive(:render)
-        .with(a_kind_of(Symbol), a_kind_of(Decidim::ProfileSidebarCell))
+        .with(a_kind_of(Symbol), a_kind_of(Decidim::ProfileCell))
         .and_return("Rendered from #{view_hook} view hook")
 
       visit decidim.profile_path(user.nickname)
@@ -209,7 +255,7 @@ describe "Profile" do
       let(:view_hook) { :user_profile_bottom }
 
       it "renders the view hook" do
-        expect(Decidim.view_hooks).to have_received(:render).with(:user_profile_bottom, a_kind_of(Decidim::ProfileSidebarCell))
+        expect(Decidim.view_hooks).to have_received(:render).with(:user_profile_bottom, a_kind_of(Decidim::ProfileCell))
         expect(page).to have_content("Rendered from user_profile_bottom view hook")
       end
     end
