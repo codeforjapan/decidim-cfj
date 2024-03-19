@@ -56,7 +56,7 @@ describe "Profile" do
     end
 
     it "shows user name in the header, its nickname and a contact link" do
-      expect(page).to have_selector("h1", text: user.name)
+      expect(page).to have_css("h1", text: user.name)
       expect(page).to have_content(user.nickname)
       expect(page).to have_link("Message")
     end
@@ -210,7 +210,7 @@ describe "Profile" do
         end
 
         it "shows a badges tab" do
-          expect(page).not_to have_link("Badges")
+          expect(page).to have_no_link("Badges")
         end
       end
     end
