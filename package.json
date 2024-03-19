@@ -19,6 +19,7 @@
     "europa": "^4.0.0",
     "form-storage": "^1.3.5",
     "formBuilder": "^3.19.7",
+    "graphql-ws": "^5.15.0",
     "highlight.js": "^11.9.0",
     "inline-attacher": "^0.0.7",
     "inline-attachment": "^2.0.3",
