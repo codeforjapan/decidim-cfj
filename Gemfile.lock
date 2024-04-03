@@ -9,6 +9,24 @@ GIT
       deface (>= 1.5)
       sassc (~> 2.3)
 
+GIT
+  remote: https://github.com/codeforjapan/decidim-module-navigation_maps.git
+  revision: a9411880d1aabe67f791381e324e909d853d38f5
+  branch: upgrade-0.28-2024-04-03
+  specs:
+    decidim-navigation_maps (1.5.0)
+      decidim-admin (>= 0.28, < 0.29)
+      decidim-core (>= 0.28, < 0.29)
+
+GIT
+  remote: https://github.com/codeforjapan/decidim-module-term_customizer.git
+  revision: 510d674153d6ff6146df2cdb6e084a9b513bdfbf
+  branch: 028-ja
+  specs:
+    decidim-term_customizer (0.28.0)
+      decidim-admin (~> 0.28.0)
+      decidim-core (~> 0.28.0)
+
 PATH
   remote: omniauth-line_login
   specs:
@@ -862,6 +880,8 @@ DEPENDENCIES
   decidim (= 0.28.0)
   decidim-decidim_awesome!
   decidim-dev (= 0.28.0)
+  decidim-navigation_maps!
+  decidim-term_customizer!
   deface
   dotenv-rails
   factory_bot_rails
