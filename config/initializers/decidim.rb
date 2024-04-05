@@ -392,6 +392,17 @@ Decidim.configure do |config|
   config.maximum_conversation_message_length = Rails.application.secrets.decidim[:maximum_conversation_message_length].to_i
   config.password_blacklist = Rails.application.secrets.decidim[:password_blacklist] if Rails.application.secrets.decidim[:password_blacklist].present?
   config.allow_open_redirects = Rails.application.secrets.decidim[:allow_open_redirects] if Rails.application.secrets.decidim[:allow_open_redirects].present?
+
+  config.content_security_policies_extra = {
+    "default-src" => '*',
+    "img-src" => '*',
+    "media-src" => '*',
+    "script-src" => '*',
+    "style-src" => '*',
+    "font-src" => '*',
+    "frame-src" => '*',
+    "connect-src" => '*',
+  }
 end
 
 if Decidim.module_installed? :api
