@@ -394,14 +394,14 @@ Decidim.configure do |config|
   config.allow_open_redirects = Rails.application.secrets.decidim[:allow_open_redirects] if Rails.application.secrets.decidim[:allow_open_redirects].present?
 
   config.content_security_policies_extra = {
-    "default-src" => '*',
-    "img-src" => '*',
-    "media-src" => '*',
-    "script-src" => '*',
-    "style-src" => '*',
-    "font-src" => '*',
-    "frame-src" => '*',
-    "connect-src" => '*',
+    "default-src" => "*",
+    "img-src" => "*",
+    "media-src" => "*",
+    "script-src" => "*",
+    "style-src" => "*",
+    "font-src" => "*",
+    "frame-src" => "*",
+    "connect-src" => "*"
   }
 end
 
