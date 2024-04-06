@@ -15,10 +15,8 @@ gem "decidim-navigation_maps", git: "https://github.com/codeforjapan/decidim-mod
 
 gem "bootsnap"
 
-gem "puma", ">= 5.6.2"
+gem "puma", ">= 6.3.1"
 gem "puma_worker_killer"
-
-gem "uglifier", "~> 4.1"
 
 gem "faker", "~> 3.2"
 
