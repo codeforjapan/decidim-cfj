@@ -1,0 +1,44 @@
+.html-edit-overlay {
+    background: #0000007d;
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    justify-content: center;
+    align-items: center;
+}
+.html-edit-box {
+    background: #ddd;
+    padding: 20px;
+    border-radius: 10px;
+}
+.html-edit-textarea {
+    background: #fff;
+    left: 15px;
+    min-width: 600px;
+    min-height: 300px;
+}
+.html-edit-button-group {
+    position: absolute;
+    bottom: 100px;
+    transform: scale(1.5);
+    left: calc(50% - 60px);
+}
+.html-edit-button-cancel {
+    margin-right: 20px;
+    background: #ddd;
+    padding: 10px;
+    border-radius: 10px;
+}
+.html-edit-button-save {
+    margin-right: 20px;
+    background: #ddd;
+    padding: 10px;
+    border-radius: 10px;
+}
+.html-edit-popup-title {
+    margin: 0;
+    display: block;
+}

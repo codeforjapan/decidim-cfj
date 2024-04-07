@@ -235,6 +235,17 @@ export default function createEditorToolbar(editor) {
         }).render(supported.nodes.includes("image"))
       )
     ).
+    append(
+      // Html Tag Edit
+      createEditorToolbarGroup(editor).append(
+        createEditorToolbarToggle(editor, {
+          type: "htmlEdit",
+          icon: "file-text-line",
+          label: "HTML Edit",
+          action: () => editor.commands.openHtmlEditModal()
+        }).render(true)
+      )
+    ).
     render()
   ;
 
