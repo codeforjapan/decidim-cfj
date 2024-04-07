@@ -53,6 +53,8 @@ ja:
         officializations:
           index:
             nickname: アカウントID
+      menu:
+        components: コンポーネント
       officializations:
         show_email_modal:
           hidden: 非表示
