@@ -14,6 +14,19 @@ export default Extension.create({
       cancelText: "キャンセル",
     };
 
+    const noNewlines = (src) => {
+      const replaced = src
+            .replace(/\s+/g, " ") // convert multiple spaces to a single space. This is how HTML treats them
+            .replace(/(<[^\/<>]+>)\s+/g, "$1") // remove spaces after the start of a new tag
+            .replace(/<\/(p|ol|ul)>\s/g, "</$1>") // remove spaces after the end of lists and paragraphs, they tend to break quill
+            .replace(/\s<(p|ol|ul)>/g, "<$1>") // remove spaces before the start of lists and paragraphs, they tend to break quill
+            .replace(/<\/li>\s<li>/g, "</li><li>") // remove spaces between list items, they tend to break quill
+            .replace(/\s<\//g, "</") // remove spaces before the end of tags
+            .replace(/(<[^\/<>]+>)\s(<[^\/<>]+>)/g, "$1$2") // remove space between multiple starting tags
+            .trim();
+      return replaced;
+    };
+
     const createEditorContainer = (options) => {
       const overlayContainer = document.createElement("div");
       overlayContainer.setAttribute("class", "html-edit-overlay");
@@ -45,7 +58,7 @@ export default Extension.create({
       document.body.appendChild(overlayContainer);
 
       buttonOk.addEventListener('click', () => {
-        const updatedHtml = htmlEditTextarea.value;
+        const updatedHtml = noNewlines(htmlEditTextarea.value);
         this.editor.commands.setContent(updatedHtml, { html: true });
         overlayContainer.style.display = 'none';
       });
@@ -123,19 +136,6 @@ export default Extension.create({
           });
           return result;
         }
-
-        const noNewlines = (src) => {
-          const replaced = src
-                .replace(/\s+/g, " ") // convert multiple spaces to a single space. This is how HTML treats them
-                .replace(/(<[^\/<>]+>)\s+/g, "$1") // remove spaces after the start of a new tag
-                .replace(/<\/(p|ol|ul)>\s/g, "</$1>") // remove spaces after the end of lists and paragraphs, they tend to break quill
-                .replace(/\s<(p|ol|ul)>/g, "<$1>") // remove spaces before the start of lists and paragraphs, they tend to break quill
-                .replace(/<\/li>\s<li>/g, "</li><li>") // remove spaces between list items, they tend to break quill
-                .replace(/\s<\//g, "</") // remove spaces before the end of tags
-                .replace(/(<[^\/<>]+>)\s(<[^\/<>]+>)/g, "$1$2") // remove space between multiple starting tags
-                .trim();
-          return replaced;
-        };
 
         const html = editor.getHTML();
         document.querySelector('.html-edit-textarea').value = formatHtml(html);
