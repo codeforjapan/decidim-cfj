@@ -40,7 +40,8 @@ export default Extension.create({
       htmlEditor.appendChild(popupTitle);
       htmlEditor.appendChild(htmlEditTextarea);
       htmlEditor.appendChild(buttonGroup);
-      overlayContainer.appendChild(htmlEditor);
+      popupContainer.appendChild(htmlEditor);
+      overlayContainer.appendChild(popupContainer);
       document.body.appendChild(overlayContainer);
 
       buttonOk.addEventListener('click', () => {
