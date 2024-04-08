@@ -92,7 +92,7 @@ ja:
           nickname_help: 本人を識別するための任意のアルファベットを入力してください。
           nickname_notice: "※ 表示名とアカウントIDが投稿に表示されます。例）共創 歩@ayumi"
           nickname_placeholder: ayumi
-          password_help: 半角英数字%{minimun_characters}文字以上で入力してください。単純すぎてはいけません（例：123456）。アカウントIDやメールアドレスと異なる必要があります。
+          password_help: 半角英数字%{minimum_characters}文字以上で入力してください。単純すぎてはいけません（例：123456）。アカウントIDやメールアドレスと異なる必要があります。
           see_username: アカウントIDを見る
           subtitle: 参加するにはユーザ登録をしてください。
           terms: 利用規約
@@ -303,7 +303,7 @@ ja:
         message: あなたのアカウントはログインに規定回数以上失敗したため、ロックされています。
     passwords:
       edit:
-        password_help: "%{minimun_characters} 半角英数字10文字以上で入力してください。単純すぎてはいけません（例：123456）。アカウントIDやメールアドレスと異なる必要があります。"
+        password_help: "半角英数字%{minimum_characters}文字以上で入力してください。単純すぎてはいけません（例：123456）。アカウントIDやメールアドレスと異なる必要があります。"
     shared:
       links:
         didn_t_receive_confirmation_instructions: ユーザ登録確認メールが届かない方はこちら
