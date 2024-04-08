@@ -38,6 +38,12 @@
       <%= f.email_field :email, autocomplete: "email", placeholder: t("placeholder_email", scope: "decidim.devise.shared") %>
 
       <%= render partial: "decidim/account/password_fields", locals: { form: f, user: :user } %>
+
+      <!-- extension begin -->
+      <% if current_organization.available_authorizations&.include?("user_extension") %>
+      <%= render partial: "user_extension", locals: {f: f} %>
+      <% end %>
+      <!-- extension end -->
     </div>
 
     <div id="card__tos" class="form__wrapper-block">
