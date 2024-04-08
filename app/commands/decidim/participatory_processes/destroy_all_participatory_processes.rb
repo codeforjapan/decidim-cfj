@@ -25,6 +25,8 @@ module Decidim
           puts "destroy participatory_process_group id: #{participatory_process_group.id}"
           participatory_process_group.destroy!
         end
+        Decidim::ParticipatoryProcessType.where(organization: organization).destroy_all
+        Decidim::NavigationMaps::Blueprint.where(organization: organization).destroy_all
         Decidim::ContentBlock.where(organization: organization).destroy_all
         Decidim::Scope.where(organization: organization).destroy_all
         Decidim::ScopeType.where(organization: organization).destroy_all

@@ -225,7 +225,7 @@ namespace :delete do
     organization = decidim_find_organization
     return unless organization
 
-    form = Struct.new(valid?: true, delete_reason: "Testing")
+    form = OpenStruct.new(valid?: true, delete_reason: "Testing")
     Decidim::User.transaction do
       Decidim::User.where(organization: organization).find_each(batch_size: 100) do |user|
         Decidim::Gamifications::DestroyAllBadges.call(organization, user)
