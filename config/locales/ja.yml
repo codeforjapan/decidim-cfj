@@ -94,6 +94,7 @@ ja:
           nickname_placeholder: ayumi
           password_help: 半角英数字%{minimum_characters}文字以上で入力してください。単純すぎてはいけません（例：123456）。アカウントIDやメールアドレスと異なる必要があります。
           see_username: アカウントIDを見る
+          sign_in: ログイン
           subtitle: 参加するにはユーザ登録をしてください。
           terms: 利用規約
           username_placeholder: 共創 歩
