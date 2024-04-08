@@ -97,3 +97,7 @@ Rails/I18nLocaleAssignment:
 
 Lint/EmptyBlock:
   Enabled: false
+
+Style/OpenStructUse:
+  Exclude:
+    - lib/tasks/delete.rake
