@@ -24,7 +24,7 @@ module Decidim
           end
         end
 
-        Decidim::Verifications::CsvDatum.where(organization: organization).delete_all
+        Decidim::Verifications::CsvDatum.where(organization:).delete_all
 
         Decidim::Verifications::Conflict.find_each do |conflict|
           if conflict.current_user.organization == organization || conflict.managed_user.organization == organization
