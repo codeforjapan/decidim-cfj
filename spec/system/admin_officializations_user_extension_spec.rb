@@ -46,7 +46,7 @@ describe "Admin manages officializations" do
       let!(:not_officialized) { create(:user, organization:) }
 
       before do
-        within ".secondary-nav" do
+        within ".sidebar-menu" do
           click_link "参加者"
         end
       end
@@ -60,7 +60,7 @@ describe "Admin manages officializations" do
         expect(page).to have_css(".action-icon--show-user")
 
         anchor = first("a.action-icon--show-user")
-        expect(anchor["data-toggle"]).to eq "show-user-modal"
+        expect(anchor["data-dialog-open"]).to eq "show-user-modal"
         expect(anchor["title"]).to eq "ユーザー属性を表示"
       end
     end
@@ -80,7 +80,7 @@ describe "Admin manages officializations" do
           create(:authorization, user:, name: "user_extension", metadata: user_extension)
         end
 
-        within ".secondary-nav" do
+        within ".sidebar-menu" do
           click_link "参加者"
         end
       end
@@ -100,7 +100,7 @@ describe "Admin manages officializations" do
             expect(page).to have_content("本名")
             expect(page).to have_content("#{user.nickname}_real")
 
-            find("button[data-close]").click
+            find("button[data-dialog-close]").click
           end
         end
 

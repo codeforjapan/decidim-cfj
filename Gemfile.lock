@@ -28,6 +28,14 @@ GIT
       decidim-core (~> 0.28.0)
 
 PATH
+  remote: decidim-user_extension
+  specs:
+    decidim-user_extension (0.4.0)
+      decidim-admin
+      decidim-core
+      rails
+
+PATH
   remote: omniauth-line_login
   specs:
     omniauth-line_login (0.1.0)
@@ -867,6 +875,7 @@ GEM
 
 PLATFORMS
   aarch64-linux
+  arm64-darwin-22
   arm64-darwin-23
   x86_64-linux
 
@@ -879,6 +888,7 @@ DEPENDENCIES
   decidim-dev (= 0.28.0)
   decidim-navigation_maps!
   decidim-term_customizer!
+  decidim-user_extension!
   deface
   dotenv-rails
   factory_bot_rails
