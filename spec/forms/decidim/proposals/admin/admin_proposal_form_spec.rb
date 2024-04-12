@@ -13,8 +13,8 @@ module Decidim
 
           after { Rails.application.config.i18n.default_locale = Decidim.default_locale = :ja }
 
-          it_behaves_like "a proposal form", skip_etiquette_validation: true, i18n: true, address_optional_with_geocoding: true
-          it_behaves_like "a proposal form with meeting as author", skip_etiquette_validation: true, i18n: true
+          it_behaves_like "a proposal form", skip_etiquette_validation: true, i18n: true, admin: true
+          it_behaves_like "a proposal form with meeting as author", skip_etiquette_validation: true, i18n: true, admin: true
         end
 
         describe "minimum title length" do

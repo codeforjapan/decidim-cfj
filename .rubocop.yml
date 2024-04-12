@@ -24,3 +24,7 @@ RSpec/DescribeClass:
 
 Rails/I18nLocaleAssignment:
   Enabled: false
+
+RSpec/Rails/NegationBeValid:
+  Exclude:
+    - spec/shared/proposal_form_examples.rb

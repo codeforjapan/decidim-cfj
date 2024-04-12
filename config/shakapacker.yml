@@ -17,6 +17,7 @@ default: &default
   additional_paths:
     - node_modules
     - app/packs
+    - decidim-user_extension/app/packs
 
   # Reload manifest.json on all requests so we reload latest compiled packs
   cache_manifest: false

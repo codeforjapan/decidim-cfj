@@ -28,18 +28,11 @@ describe "Comments", :perform_enqueued do
     expect(page).to have_no_content("Comments are disabled at this time")
 
     expect(page).to have_css(".comment", minimum: 1)
-    page.find(".order-by .dropdown.menu .is-dropdown-submenu-parent").hover
 
+    # click "評価の高い順"
     within ".comments" do
-      within ".order-by__dropdown" do
-        # click_link "古い順" # Opens the dropdown
-        # click_link "評価の高い順"
-        page.find_by_id("comments-order-menu-control").click # Opens the dropdown
-        page.find("#comments-order-chooser-menu li:first-of-type a").click
-      end
+      click_link "評価の高い順"
     end
-
-    expect(page).to have_css(".comments > div:nth-child(2)", text: "Most Rated Comment")
 
     # show other page
     visit "/"
@@ -48,8 +41,20 @@ describe "Comments", :perform_enqueued do
     visit resource_path
 
     expect(page).to have_css(".comment", minimum: 1)
-    page.find(".order-by .dropdown.menu .is-dropdown-submenu-parent").hover
-    # expect(page).to have_css("#comments-order-menu-control", text: "評価の高い順")
-    expect(page).to have_css("#comments-order-menu-control", text: "Best rated")
+    expect(page).to have_css("div.comment-order-by div a.underline", text: "評価の高い順")
+
+    # click "新しい順"
+    within ".comments" do
+      click_link "新しい順"
+    end
+
+    # show other page
+    visit "/"
+
+    # back to resource page
+    visit resource_path
+
+    expect(page).to have_css(".comment", minimum: 1)
+    expect(page).to have_css("div.comment-order-by div a.underline", text: "新しい順")
   end
 end
