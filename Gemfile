@@ -11,7 +11,7 @@ gem "decidim-decidim_awesome", git: "https://github.com/codeforjapan/decidim-mod
 gem "decidim-term_customizer", git: "https://github.com/codeforjapan/decidim-module-term_customizer.git", branch: "028-ja"
 
 gem "decidim-navigation_maps", git: "https://github.com/codeforjapan/decidim-module-navigation_maps.git", branch: "upgrade-0.28-2024-04-03"
-# gem "decidim-polis", git: "https://github.com/codeforjapan/decidim-polis.git", branch: "update-0-27-4"
+gem "decidim-polis", git: "https://github.com/codeforjapan/decidim-polis.git", branch: "update-0-28-0"
 
 gem "bootsnap"
 
