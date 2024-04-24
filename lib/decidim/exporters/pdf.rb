@@ -19,7 +19,7 @@ module Decidim
           locals: locals
         )
 
-        document = pdf_from_string(html, orientation:)
+        document = pdf_from_string(html, orientation: orientation)
 
         ExportData.new(document, "pdf")
       end
@@ -53,6 +53,8 @@ module Decidim
       private
 
       def pdf_from_string(html, orientation:)
+        document = nil
+
         Dir.mktmpdir do |dir|
           html_path = File.join(dir, "tmp.html")
           File.write(html_path, html)
