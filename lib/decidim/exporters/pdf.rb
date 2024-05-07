@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # To be correctly loaded by Zeitwerk
-Decidim::Forms::Admin::QuestionnaireAnswerPresenter
+Decidim::Forms::Admin::QuestionnaireAnswerPresenter # rubocop:disable Lint/Void
 
 module Decidim
   module Exporters
