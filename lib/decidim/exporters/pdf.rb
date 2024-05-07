@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+# To be correctly loaded by Zeitwerk
+Decidim::Forms::Admin::QuestionnaireAnswerPresenter
+
 module Decidim
   module Exporters
     # Exports a PDF using the provided hash, given a collection and a
