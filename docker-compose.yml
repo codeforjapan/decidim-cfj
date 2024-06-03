@@ -1,5 +1,3 @@
-version: "3.8"
-
 x-custom:
   app:
     - &rails_env "development"
