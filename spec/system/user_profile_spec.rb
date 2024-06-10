@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require "rails_helper"
 
 describe "Profile", type: :system do
   let(:user) { create(:user, :confirmed) }
