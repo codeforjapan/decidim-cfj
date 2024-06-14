@@ -18,14 +18,14 @@ describe "Comments", :perform_enqueued do
     comment = create(:comment, commentable:, body: "Most Rated Comment")
     create(:comment_vote, comment:, author: user, weight: 1)
 
-    visit decidim.root_path
+    visit decidim.root_path(locale: :ja)
   end
 
   it "allows user to store selected comment order in cookies", :slow do
     # click_button "同意します"
     visit resource_path
 
-    expect(page).to have_no_content("Comments are disabled at this time")
+    expect(page).to have_no_content("コメントは現時点で無効になっていますが")
 
     expect(page).to have_css(".comment", minimum: 1)
 
