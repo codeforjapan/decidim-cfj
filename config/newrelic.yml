@@ -25,7 +25,7 @@ common: &default_settings
   # agent_enabled: false
 
   # Logging level
-  log_level: info
+  log_level: error
 
   log_file_path: STDOUT
 
