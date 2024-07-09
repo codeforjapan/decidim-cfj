@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.1.2](https://github.com/codeforjapan/decidim-cfj/compare/v1.1.1...v1.1.2) (2024-07-08)
+
+
+### Bug Fixes
+
+* gem version ([2da0587](https://github.com/codeforjapan/decidim-cfj/commit/2da05875f0e05093286168683af5223f2049548f))
+
 ## [1.1.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.1.0...v1.1.1) (2024-06-25)
 
 
