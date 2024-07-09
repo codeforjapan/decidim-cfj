@@ -18,9 +18,6 @@ module DecidimApp
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
 
-    # TODO: make this setting true
-    config.action_dispatch.use_cookies_with_metadata = false
-
     config.generators do |g|
       # remove some specs
       g.test_framework :rspec,
