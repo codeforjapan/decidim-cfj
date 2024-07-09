@@ -16,7 +16,11 @@ Bundler.require(*Rails.groups)
 module DecidimApp
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 6.0
+    config.load_defaults 6.1
+
+    # TODO: remove these settings
+    config.action_dispatch.cookies_same_site_protection = nil
+    config.action_controller.urlsafe_csrf_tokens = false
 
     config.generators do |g|
       # remove some specs
