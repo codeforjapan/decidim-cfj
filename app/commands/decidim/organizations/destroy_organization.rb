@@ -33,6 +33,10 @@ module Decidim
           end
         end
 
+        Decidim::TermCustomizer::Constraint.where(organization: organization).delete_all
+
+        Decidim::EditorImage.where(organization: organization).delete_all
+
         Decidim::DecidimAwesome::EditorImage.where(organization: organization).delete_all
 
         Decidim::ActionLog.where(organization: organization).delete_all
