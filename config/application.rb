@@ -18,9 +18,6 @@ module DecidimApp
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.1
 
-    # TODO: remove these settings
-    config.action_controller.urlsafe_csrf_tokens = false
-
     config.generators do |g|
       # remove some specs
       g.test_framework :rspec,
