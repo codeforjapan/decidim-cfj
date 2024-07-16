@@ -118,4 +118,10 @@ Rails.application.config.to_prepare do
       end
     end
   end
+
+  # Fix I18n.transliterate()
+  I18n.config.backend.instance_eval do
+    @transliterators[:ja] = I18n::Backend::Transliterator.get(->(string) { string })
+    @transliterators[:en] = I18n::Backend::Transliterator.get(->(string) { string })
+  end
 end

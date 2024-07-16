@@ -16,10 +16,7 @@ Bundler.require(*Rails.groups)
 module DecidimApp
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 6.0
-
-    # TODO: make this setting true
-    config.action_dispatch.use_cookies_with_metadata = false
+    config.load_defaults 6.1
 
     config.generators do |g|
       # remove some specs

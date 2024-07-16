@@ -1,5 +1,24 @@
 # Change Log
 
+## [1.2.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.2.0...v1.2.1) (2024-07-14)
+
+
+### Bug Fixes
+
+* remove `urlsafe_csrf_tokens` ([22c09bb](https://github.com/codeforjapan/decidim-cfj/commit/22c09bbc41047cafe5b78298163636cab6e71428))
+
+## [1.2.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.1.2...v1.2.0) (2024-07-10)
+
+
+### Features
+
+* update destroy organization ([9119ff7](https://github.com/codeforjapan/decidim-cfj/commit/9119ff7416f1ec89463b78354a05323d0479b05a))
+
+
+### Bug Fixes
+
+* make use_cookies_with_metadata true (same as default) ([d52eaea](https://github.com/codeforjapan/decidim-cfj/commit/d52eaea57ea855c005d61ad3ecd339753f2e06ef))
+
 ## [1.1.2](https://github.com/codeforjapan/decidim-cfj/compare/v1.1.1...v1.1.2) (2024-07-08)
 
 
