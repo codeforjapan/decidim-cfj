@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.2.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.2.0...v1.2.1) (2024-07-14)
+
+
+### Bug Fixes
+
+* remove `urlsafe_csrf_tokens` ([22c09bb](https://github.com/codeforjapan/decidim-cfj/commit/22c09bbc41047cafe5b78298163636cab6e71428))
+
 ## [1.2.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.1.2...v1.2.0) (2024-07-10)
 
 
