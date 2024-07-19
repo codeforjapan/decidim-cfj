@@ -28,11 +28,11 @@ module Decidim
     belongs_to :resource, polymorphic: true
     belongs_to :decidim_participatory_space, polymorphic: true, optional: true
 
-    validates :locale, uniqueness: { scope: [:decidim_organization_id, :resource_type, :resource_id] }
+    validates :locale, uniqueness: { scope: [:decidim_organization_id, :resource_type, :resource_id] } # rubocop:disable Rails/UniqueValidationWithoutIndex
 
     pg_search_scope :global_search,
                     against: { content_a: "A", content_b: "B", content_c: "C", content_d: "D" },
-                    ranked_by: ':bigram',
+                    ranked_by: ":bigram",
                     using: :bigram
   end
 end
