@@ -43,7 +43,7 @@ jobs:
       SLACK_MESSAGE_CHANNEL: '#test'
     services:
       db:
-        image: postgres:12.14
+        image: ghcr.io/${{ github.repository_owner }}/postgres_bigm:12-latest
         ports:
           - 5432:5432
         env:
