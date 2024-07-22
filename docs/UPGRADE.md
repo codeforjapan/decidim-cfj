@@ -71,6 +71,10 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 
   https://github.com/codeforjapan/decidim-cfj/pull/415 で追加されたファイル。ディベートでconclusionsに空文字列を許すための修正。
 
+* `app/models/decidim/searchable_resource.rb`
+
+  https://github.com/codeforjapan/decidim-cfj/pull/615 で追加したファイル。pg_searchのfeatureとしてbigram(`pg_bigm`)に対応させるためのもの。
+
 * `app/uploaders/decidim/cw/application_uploader.rb`
 
   https://github.com/decidim/decidim/issues/6720 や https://github.com/codeforjapan/decidim-cfj/issues/101 などの対応のために導入。
