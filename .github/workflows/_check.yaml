@@ -43,7 +43,7 @@ jobs:
       SLACK_MESSAGE_CHANNEL: '#test'
     services:
       db:
-        image: ghcr.io/takahashim/postgresql_bigm:12-latest
+        image: ghcr.io/codeforjapan/postgresql_bigm:12-latest
         ports:
           - 5432:5432
         env:
