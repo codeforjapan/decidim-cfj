@@ -63,8 +63,6 @@ module Decidim
     end
 
     def spaces_to_filter
-      return nil if filters[:with_space_state].blank?
-
       Decidim.participatory_space_manifests.flat_map do |manifest|
         public_spaces = manifest.participatory_spaces.call(organization).public_spaces
         spaces = case filters[:with_space_state]
