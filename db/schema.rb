@@ -10,11 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_01_28_143444) do
+ActiveRecord::Schema.define(version: 2024_07_13_180919) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "ltree"
-  enable_extension "pg_trgm"
+  enable_extension "pg_bigm"
   enable_extension "plpgsql"
 
   create_table "active_storage_attachments", force: :cascade do |t|
