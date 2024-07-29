@@ -925,7 +925,7 @@ GEM
       rubyzip (>= 1.0.0)
 
 PLATFORMS
-  arm64-darwin-22
+  ruby
 
 DEPENDENCIES
   aws-sdk-s3
