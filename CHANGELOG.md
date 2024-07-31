@@ -1,5 +1,19 @@
 # Change Log
 
+## [1.2.3](https://github.com/codeforjapan/decidim-cfj/compare/v1.2.2...v1.2.3) (2024-07-30)
+
+
+### Bug Fixes
+
+* update Decidim v0.27.7 ([fdb0a31](https://github.com/codeforjapan/decidim-cfj/commit/fdb0a31250b1a064ba8e8c7d0ca7c3a87d1c74d1))
+
+## [1.2.2](https://github.com/codeforjapan/decidim-cfj/compare/v1.2.1...v1.2.2) (2024-07-28)
+
+
+### Bug Fixes
+
+* allow to use search with pg_bigm ([698e93e](https://github.com/codeforjapan/decidim-cfj/commit/698e93e7e0c39c2bd63d8d5852b8b9df5cad2f76))
+
 ## [1.2.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.2.0...v1.2.1) (2024-07-14)
 
 

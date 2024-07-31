@@ -18,7 +18,7 @@ gem "bootsnap"
 gem "puma", ">= 6.3.1"
 gem "puma_worker_killer"
 
-gem "faker", "~> 3.2"
+gem "faker"
 
 gem "wicked_pdf", "~> 2.1"
 

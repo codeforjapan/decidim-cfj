@@ -41,9 +41,11 @@ jobs:
       IMAGEMAGICK_SRC: 7.1.0-50.tar.gz
       SLACK_API_TOKEN: xoxb-dummy
       SLACK_MESSAGE_CHANNEL: '#test'
+    permissions:
+      packages: read
     services:
       db:
-        image: postgres:12.17
+        image: ghcr.io/codeforjapan/postgresql_bigm:12-latest
         ports:
           - 5432:5432
         env:
