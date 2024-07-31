@@ -3067,11 +3067,6 @@ big.js@^5.2.2:
   resolved "https://registry.npmjs.org/big.js/-/big.js-5.2.2.tgz"
   integrity sha512-vyL2OymJxmarO8gxMr0mhChsO9QGwhynfuu4+MHTAW6czfq9humCB7rKpUjDd9YUiDPU4mzpyupFSvOClAwbmQ==
 
-bignumber.js@^9.1.0:
-  version "9.1.2"
-  resolved "https://registry.npmjs.org/bignumber.js/-/bignumber.js-9.1.2.tgz"
-  integrity sha512-2/mKyZH9K85bzOEfhXDBFZTGd1CTs+5IHpeFQo9luiBG7hghdC851Pj2WAhb6E3R6b9tZj/XKhbg4fum+Kepug==
-
 binary-extensions@^2.0.0:
   version "2.2.0"
   resolved "https://registry.npmjs.org/binary-extensions/-/binary-extensions-2.2.0.tgz"
@@ -5951,25 +5946,25 @@ launch-editor@^2.6.0:
     picocolors "^1.0.0"
     shell-quote "^1.8.1"
 
-leaflet-tilelayer-here@1.0.2:
-  version "1.0.2"
-  resolved "https://registry.npmjs.org/leaflet-tilelayer-here/-/leaflet-tilelayer-here-1.0.2.tgz"
-  integrity sha512-PQytY0goCZLANGabPCPQJDhCrXrwdVP6F5NEgw/zjunrfFhQ1XwnBUNCWi0irUWQsETNntcwfkomikhlQ7uCRQ==
+leaflet-tilelayer-here@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/leaflet-tilelayer-here/-/leaflet-tilelayer-here-2.0.1.tgz#26e4ce0abe5c12cf8b594f2f08395af98c286613"
+  integrity sha512-lujfnFt7TuEk3bHGsWt/w01XBfrU9zy7B6C8fzJDr8txhNmVNA00kRRrEJPaLaFyVeSwwA5vWS6zDg2W13DCIA==
 
 leaflet.featuregroup.subgroup@^1.0.2:
   version "1.0.2"
   resolved "https://registry.npmjs.org/leaflet.featuregroup.subgroup/-/leaflet.featuregroup.subgroup-1.0.2.tgz"
   integrity sha512-9nCVg8nUe686+BtPbUT7ALOe/IA+8Mum+rkA8pfPpCkH0WvKevRrH+JMcMTjAoNQKVI0uxrWrLV5w298SS3ESA==
 
-leaflet.markercluster@1.4.1:
-  version "1.4.1"
-  resolved "https://registry.npmjs.org/leaflet.markercluster/-/leaflet.markercluster-1.4.1.tgz"
-  integrity sha512-ZSEpE/EFApR0bJ1w/dUGwTSUvWlpalKqIzkaYdYB7jaftQA/Y2Jav+eT4CMtEYFj+ZK4mswP13Q2acnPBnhGOw==
+leaflet.markercluster@^1.5.3:
+  version "1.5.3"
+  resolved "https://registry.yarnpkg.com/leaflet.markercluster/-/leaflet.markercluster-1.5.3.tgz#9cdb52a4eab92671832e1ef9899669e80efc4056"
+  integrity sha512-vPTw/Bndq7eQHjLBVlWpnGeLa3t+3zGiuM7fJwCkiMFq+nmRuG3RI3f7f4N4TDX7T4NpbAXpR2+NTRSEGfCSeA==
 
-leaflet@1.3.1:
-  version "1.3.1"
-  resolved "https://registry.npmjs.org/leaflet/-/leaflet-1.3.1.tgz"
-  integrity sha512-adQOIzh+bfdridLM1xIgJ9VnJbAUY3wqs/ueF+ITla+PLQ1z47USdBKUf+iD9FuUA8RtlT6j6hZBfZoA6mW+XQ==
+leaflet@^1.9.4:
+  version "1.9.4"
+  resolved "https://registry.yarnpkg.com/leaflet/-/leaflet-1.9.4.tgz#23fae724e282fa25745aff82ca4d394748db7d8d"
+  integrity sha512-nxS1ynzJOmOlHp+iL3FyWqK89GtNL8U8rvlMOsQdTTssxZwCXh8N2NB3GDQOL+YR3XnWyZAxwQixURb+FA74PA==
 
 leven@^3.1.0:
   version "3.1.0"
@@ -6912,13 +6907,12 @@ pnp-webpack-plugin@^1.7.0:
   dependencies:
     ts-pnp "^1.1.6"
 
-polyclip-ts@^0.16.5:
-  version "0.16.5"
-  resolved "https://registry.npmjs.org/polyclip-ts/-/polyclip-ts-0.16.5.tgz"
-  integrity sha512-ZchnG0zGZReHgEo3EYzEUi6UmfQFFzNnj6AFU+gBm+IJJ4qG9gL4CwjtCV6oi/PittUPpJLiLJxcn/AgrCBO+g==
+polygon-clipping@0.15.3:
+  version "0.15.3"
+  resolved "https://registry.yarnpkg.com/polygon-clipping/-/polygon-clipping-0.15.3.tgz#0215840438470ba2e9e6593625e4ea5c1087b4b7"
+  integrity sha512-ho0Xx5DLkgxRx/+n4O74XyJ67DcyN3Tu9bGYKsnTukGAW6ssnuak6Mwcyb1wHy9MZc9xsUWqIoiazkZB5weECg==
   dependencies:
-    bignumber.js "^9.1.0"
-    splaytree-ts "^1.0.1"
+    splaytree "^3.1.0"
 
 possible-typed-array-names@^1.0.0:
   version "1.0.0"
@@ -8471,10 +8465,10 @@ spdy@^4.0.2:
     select-hose "^2.0.0"
     spdy-transport "^3.0.0"
 
-splaytree-ts@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.npmjs.org/splaytree-ts/-/splaytree-ts-1.0.1.tgz"
-  integrity sha512-B+VzCm33/KEchi/fzT6/3NRHm8k5+Kf37SBQO3meHHS/tK2xBnIm4ZvusQ1wUpHgKMCCqEWgXnwFXAa1nD289g==
+splaytree@^3.1.0:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/splaytree/-/splaytree-3.1.2.tgz#d1db2691665a3c69d630de98d55145a6546dc166"
+  integrity sha512-4OM2BJgC5UzrhVnnJA4BkHKGtjXNzzUfpQjCO8I05xYPsfS/VuQDwjCGGMi8rYQilHEV4j8NBqTFbls/PZEE7A==
 
 sprintf-js@~1.0.2:
   version "1.0.3"
@@ -8502,6 +8496,7 @@ strict-uri-encode@^2.0.0:
   integrity sha512-QwiXZgpRcKkhTj2Scnn++4PKtWsH0kpzZ62L2R6c/LUVYv7hVnZqcg2+sMuT6R7Jusu1vviK/MFsu6kNJfWlEQ==
 
 "string-width-cjs@npm:string-width@^4.2.0", string-width@^4.1.0, string-width@^4.2.3:
+  name string-width-cjs
   version "4.2.3"
   resolved "https://registry.npmjs.org/string-width/-/string-width-4.2.3.tgz"
   integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
@@ -8589,6 +8584,7 @@ stringify-object@^3.3.0:
     is-regexp "^1.0.0"
 
 "strip-ansi-cjs@npm:strip-ansi@^6.0.1", strip-ansi@^6.0.0, strip-ansi@^6.0.1:
+  name strip-ansi-cjs
   version "6.0.1"
   resolved "https://registry.npmjs.org/strip-ansi/-/strip-ansi-6.0.1.tgz"
   integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
