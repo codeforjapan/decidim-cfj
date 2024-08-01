@@ -10,11 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_07_29_104240) do
+ActiveRecord::Schema.define(version: 2024_07_13_180919) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "ltree"
   enable_extension "pg_bigm"
+  enable_extension "pg_trgm"
   enable_extension "plpgsql"
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -578,56 +579,6 @@ ActiveRecord::Schema.define(version: 2024_07_29_104240) do
     t.index ["decidim_scope_id"], name: "index_decidim_debates_debates_on_decidim_scope_id"
     t.index ["decidim_user_group_id"], name: "index_decidim_debates_debates_on_decidim_user_group_id"
     t.index ["endorsements_count"], name: "idx_decidim_debates_debates_on_endorsemnts_count"
-  end
-
-  create_table "decidim_dev_coauthorable_dummy_resources", force: :cascade do |t|
-    t.jsonb "translatable_text"
-    t.string "title"
-    t.string "body"
-    t.text "address"
-    t.float "latitude"
-    t.float "longitude"
-    t.datetime "published_at"
-    t.integer "coauthorships_count", default: 0, null: false
-    t.integer "endorsements_count", default: 0, null: false
-    t.integer "comments_count", default: 0, null: false
-    t.bigint "decidim_component_id"
-    t.bigint "decidim_category_id"
-    t.bigint "decidim_scope_id"
-    t.string "reference"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "decidim_dev_dummy_resources", force: :cascade do |t|
-    t.jsonb "translatable_text"
-    t.jsonb "title"
-    t.string "body"
-    t.text "address"
-    t.float "latitude"
-    t.float "longitude"
-    t.datetime "published_at"
-    t.integer "coauthorships_count", default: 0, null: false
-    t.integer "endorsements_count", default: 0, null: false
-    t.integer "comments_count", default: 0, null: false
-    t.integer "follows_count", default: 0, null: false
-    t.bigint "decidim_component_id"
-    t.integer "decidim_author_id"
-    t.string "decidim_author_type"
-    t.integer "decidim_user_group_id"
-    t.bigint "decidim_category_id"
-    t.bigint "decidim_scope_id"
-    t.string "reference"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "decidim_dev_nested_dummy_resources", force: :cascade do |t|
-    t.jsonb "translatable_text"
-    t.string "title"
-    t.bigint "dummy_resource_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "decidim_editor_images", force: :cascade do |t|

@@ -43,7 +43,9 @@ services:
     links:
       - pg
   pg:
-    image: postgres:12
+    image: postgres
+    build:
+      context: docker/postgres/.
     volumes:
       - pg-data:/var/lib/postgresql/data
     environment:
