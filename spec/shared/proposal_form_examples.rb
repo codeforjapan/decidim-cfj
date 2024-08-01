@@ -4,8 +4,8 @@ shared_examples "a proposal form" do |options|
   subject { form }
 
   let(:organization) { create(:organization, available_locales: [:en]) }
-  let(:participatory_space) { create(:participatory_process, :with_steps, organization: organization) }
-  let(:component) { create(:proposal_component, participatory_space: participatory_space) }
+  let(:participatory_space) { create(:participatory_process, :with_steps, organization:) }
+  let(:component) { create(:proposal_component, participatory_space:) }
   let(:title) do
     if options[:i18n] == false
       "More sidewalks and less roads!"
@@ -20,33 +20,31 @@ shared_examples "a proposal form" do |options|
       { en: "Everything would be better" }
     end
   end
-  let(:author) { create(:user, organization: organization) }
-  let(:user_group) { create(:user_group, :verified, users: [author], organization: organization) }
+  let(:author) { create(:user, organization:) }
+  let(:user_group) { create(:user_group, :verified, users: [author], organization:) }
   let(:user_group_id) { user_group.id }
-  let(:category) { create(:category, participatory_space: participatory_space) }
-  let(:parent_scope) { create(:scope, organization: organization) }
+  let(:category) { create(:category, participatory_space:) }
+  let(:parent_scope) { create(:scope, organization:) }
   let(:scope) { create(:subscope, parent: parent_scope) }
   let(:category_id) { category.try(:id) }
   let(:scope_id) { scope.try(:id) }
   let(:latitude) { 40.1234 }
   let(:longitude) { 2.1234 }
-  let(:has_address) { false }
   let(:address) { nil }
   let(:suggested_hashtags) { [] }
   let(:attachment_params) { nil }
   let(:meeting_as_author) { false }
   let(:params) do
     {
-      title: title,
-      body: body,
-      author: author,
-      category_id: category_id,
-      scope_id: scope_id,
-      address: address,
-      has_address: has_address,
-      meeting_as_author: meeting_as_author,
+      title:,
+      body:,
+      author:,
+      category_id:,
+      scope_id:,
+      address:,
+      meeting_as_author:,
       attachment: attachment_params,
-      suggested_hashtags: suggested_hashtags
+      suggested_hashtags:
     }
   end
 
@@ -68,7 +66,7 @@ shared_examples "a proposal form" do |options|
     it { is_expected.to be_valid }
   end
 
-  context "when there's no title" do
+  context "when there is no title" do
     let(:title) { nil }
 
     it { is_expected.to be_invalid }
@@ -121,7 +119,7 @@ shared_examples "a proposal form" do |options|
     end
   end
 
-  context "when there's no body" do
+  context "when there is no body" do
     let(:body) { nil }
 
     it { is_expected.to be_invalid }
@@ -146,39 +144,33 @@ shared_examples "a proposal form" do |options|
   end
 
   context "when geocoding is enabled" do
-    let(:component) { create(:proposal_component, :with_geocoding_enabled, participatory_space: participatory_space) }
+    let(:component) { create(:proposal_component, :with_geocoding_enabled, participatory_space:) }
 
-    context "when the has address checkbox is checked" do
-      let(:has_address) { true }
+    context "when the address is not present" do
+      it "does not store the coordinates" do
+        expect(subject).to be_valid
+        expect(subject.address).to be_nil
+        expect(subject.latitude).to be_nil
+        expect(subject.longitude).to be_nil
+      end
+    end
 
-      context "when the address is not present" do
-        it "does not store the coordinates" do
-          expect(subject).to be_valid
-          expect(subject.address).to be_nil
-          expect(subject.latitude).to be_nil
-          expect(subject.longitude).to be_nil
-        end
+    context "when the address is present" do
+      let(:address) { "Some address" }
+
+      before do
+        stub_geocoding(address, [latitude, longitude])
       end
 
-      context "when the address is present" do
-        let(:address) { "Some address" }
-
-        before do
-          stub_geocoding(address, [latitude, longitude])
-        end
-
-        it "validates the address and store its coordinates" do
-          expect(subject).to be_valid
-          expect(subject.latitude).to eq(latitude)
-          expect(subject.longitude).to eq(longitude)
-        end
+      it "validates the address and store its coordinates" do
+        expect(subject).to be_valid
+        expect(subject.latitude).to eq(latitude)
+        expect(subject.longitude).to eq(longitude)
       end
     end
 
     context "when latitude and longitude are manually set" do
       context "when the has address checkbox is unchecked" do
-        let(:has_address) { false }
-
         it "is valid" do
           expect(subject).to be_valid
           expect(subject.latitude).to be_nil
@@ -187,7 +179,7 @@ shared_examples "a proposal form" do |options|
       end
 
       context "when the proposal is unchanged" do
-        let(:previous_proposal) { create(:proposal, address: address) }
+        let(:previous_proposal) { create(:proposal, address:) }
 
         let(:title) do
           if options[:skip_etiquette_validation]
@@ -208,16 +200,15 @@ shared_examples "a proposal form" do |options|
         let(:params) do
           {
             id: previous_proposal.id,
-            title: title,
-            body: body,
+            title:,
+            body:,
             author: previous_proposal.authors.first,
             category_id: previous_proposal.try(:category_id),
             scope_id: previous_proposal.try(:scope_id),
-            has_address: has_address,
-            address: address,
+            address:,
             attachment: previous_proposal.try(:attachment_params),
-            latitude: latitude,
-            longitude: longitude
+            latitude:,
+            longitude:
           }
         end
 
@@ -234,7 +225,7 @@ shared_examples "a proposal form" do |options|
     subject { form.category }
 
     context "when the category exists" do
-      it { is_expected.to be_kind_of(Decidim::Category) }
+      it { is_expected.to be_a(Decidim::Category) }
     end
 
     context "when the category does not exist" do
@@ -251,14 +242,14 @@ shared_examples "a proposal form" do |options|
   end
 
   it "properly maps category id from model" do
-    proposal = create(:proposal, component: component, category: category)
+    proposal = create(:proposal, component:, category:)
 
     expect(described_class.from_model(proposal).category_id).to eq(category_id)
   end
 
   if options && options[:user_group_check]
     it "properly maps user group id from model" do
-      proposal = create(:proposal, component: component, users: [author], user_groups: [user_group])
+      proposal = create(:proposal, component:, users: [author], user_groups: [user_group])
 
       expect(described_class.from_model(proposal).user_group_id).to eq(user_group_id)
     end
@@ -267,18 +258,18 @@ shared_examples "a proposal form" do |options|
   context "when the attachment is present" do
     let(:params) do
       {
-        title: title,
-        body: body,
-        author: author,
-        category_id: category_id,
-        scope_id: scope_id,
-        address: address,
-        has_address: has_address,
-        meeting_as_author: meeting_as_author,
-        suggested_hashtags: suggested_hashtags,
-        add_photos: [Decidim::Dev.test_file("city.jpeg", "image/jpeg")]
+        title:,
+        body:,
+        author:,
+        category_id:,
+        scope_id:,
+        address:,
+        meeting_as_author:,
+        suggested_hashtags:,
+        attachments_key => [Decidim::Dev.test_file("city.jpeg", "image/jpeg")]
       }
     end
+    let(:attachments_key) { options[:admin] ? :add_photos : :add_documents }
 
     it { is_expected.to be_valid }
 
@@ -289,11 +280,11 @@ shared_examples "a proposal form" do |options|
         expect(subject).not_to be_valid
 
         if options[:i18n]
-          expect(subject.errors.full_messages).to match_array(["Title en can't be blank", "Add photos Needs to be reattached"])
-          expect(subject.errors.attribute_names).to match_array([:title_en, :add_photos])
+          expect(subject.errors.full_messages).to contain_exactly("Title en cannot be blank", "Add photos Needs to be reattached")
+          expect(subject.errors.attribute_names).to contain_exactly(:title_en, :add_photos)
         else
-          expect(subject.errors.full_messages).to match_array(["Title can't be blank", "Title is too short (under 15 characters)", "Add photos Needs to be reattached"])
-          expect(subject.errors.attribute_names).to match_array([:title, :add_photos])
+          expect(subject.errors.full_messages).to contain_exactly("Title cannot be blank", "Title is too short (under 15 characters)", "Add documents Needs to be reattached")
+          expect(subject.errors.attribute_names).to contain_exactly(:title, :add_documents)
         end
       end
     end
@@ -306,7 +297,7 @@ shared_examples "a proposal form" do |options|
       create(
         :proposal_component,
         :with_extra_hashtags,
-        participatory_space: participatory_space,
+        participatory_space:,
         suggested_hashtags: component_suggested_hashtags,
         automatic_hashtags: component_automatic_hashtags
       )
@@ -350,20 +341,20 @@ shared_examples "a proposal form with meeting as author" do |options|
   subject { form }
 
   let(:organization) { create(:organization, available_locales: [:en]) }
-  let(:participatory_space) { create(:participatory_process, :with_steps, organization: organization) }
-  let(:component) { create(:proposal_component, participatory_space: participatory_space) }
+  let(:participatory_space) { create(:participatory_process, :with_steps, organization:) }
+  let(:component) { create(:proposal_component, participatory_space:) }
   let(:title) { { en: "More sidewalks and less roads!" } }
   let(:body) { { en: "Everything would be better" } }
   let(:created_in_meeting) { true }
-  let(:meeting_component) { create(:meeting_component, participatory_space: participatory_space) }
+  let(:meeting_component) { create(:meeting_component, participatory_space:) }
   let(:author) { create(:meeting, :published, component: meeting_component) }
   let!(:meeting_as_author) { author }
 
   let(:params) do
     {
-      title: title,
-      body: body,
-      created_in_meeting: created_in_meeting,
+      title:,
+      body:,
+      created_in_meeting:,
       author: meeting_as_author,
       meeting_id: author.id
     }
@@ -381,7 +372,7 @@ shared_examples "a proposal form with meeting as author" do |options|
     it { is_expected.to be_valid }
   end
 
-  context "when there's no title" do
+  context "when there is no title" do
     let(:title) { nil }
 
     it { is_expected.to be_invalid }
@@ -413,7 +404,7 @@ shared_examples "a proposal form with meeting as author" do |options|
     end
   end
 
-  context "when there's no body" do
+  context "when there is no body" do
     let(:body) { nil }
 
     it { is_expected.to be_invalid }
