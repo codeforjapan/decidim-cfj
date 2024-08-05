@@ -103,3 +103,19 @@ http://localhost:3000 にアクセス
 * サービス画面 (http://localhost:3000/users/sign_in?locale=ja)
   * admin@example.org （組織管理者）
   * user@example.org （通常ユーザ）
+
+## 5. キャッシュとRedisについて
+
+Railsのキャッシュはproduction環境ではRedis Cache Store(`ActiveSupport::Cache::RedisCacheStore`)を使うようになっています。
+
+Redisの設定は環境変数 `REDIS_CACHE_URL` を使用しています。
+
+development環境でのRailsの標準機能として、キャッシュのオン・オフをトグルで制御できます。オン・オフを切り替えたい場合、以下のコマンドを実行してください。
+
+```console
+# dockerを使っている場合
+docker compose run app rails dev:cache
+
+# localで動かしている場合
+bin/rails dev:cache
+```
