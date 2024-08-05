@@ -43,9 +43,7 @@ services:
     links:
       - pg
   pg:
-    image: postgres
-    build:
-      context: docker/postgres/.
+    image: "ghcr.io/codeforjapan/postgresql_bigm:12-latest"
     volumes:
       - pg-data:/var/lib/postgresql/data
     environment:
