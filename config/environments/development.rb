@@ -17,10 +17,12 @@ Rails.application.configure do
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
   if Rails.root.join("tmp/caching-dev.txt").exist?
+    # use RedisCacheStore
     config.action_controller.perform_caching = true
 
     if ENV["REDIS_CACHE_URL"] # rubocop:disable Style/ConditionalAssignment
       config.cache_store = :redis_cache_store, { url: ENV.fetch("REDIS_CACHE_URL", nil) }
+      config.session_store(:cache_store, key: "decidim_session")
     else
       config.cache_store = :memory_store
     end
