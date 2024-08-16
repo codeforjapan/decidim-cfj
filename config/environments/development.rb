@@ -20,7 +20,7 @@ Rails.application.configure do
     # use RedisCacheStore
     config.action_controller.perform_caching = true
 
-    if ENV["REDIS_CACHE_URL"] # rubocop:disable Style/ConditionalAssignment
+    if ENV["REDIS_CACHE_URL"]
       config.cache_store = :redis_cache_store, { url: ENV.fetch("REDIS_CACHE_URL", nil) }
       config.session_store(:cache_store, key: "decidim_session")
     else
