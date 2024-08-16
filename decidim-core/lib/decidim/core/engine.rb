@@ -335,7 +335,9 @@ module Decidim
         end
       end
 
-      initializer "Expire sessions" do
+      initializer "Expire sessions" do |app|
+        next if app.config.session_store?
+
         Rails.application.config.session_store :cookie_store, secure: Decidim.config.force_ssl, expire_after: Decidim.config.expire_session_after
         Rails.application.config.action_dispatch.cookies_same_site_protection = :lax
       end
