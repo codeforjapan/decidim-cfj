@@ -1,4 +1,4 @@
-FROM node:18.17.1-bullseye-slim as node
+FROM node:18.17.1-bullseye-slim AS node
 
 FROM ruby:3.1.1-slim-bullseye
 
