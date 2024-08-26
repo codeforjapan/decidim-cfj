@@ -1,4 +1,4 @@
-FROM node:16.13.0-bullseye-slim as node
+FROM node:16.13.0-bullseye-slim AS node
 
 FROM ruby:3.0.6-slim-bullseye
 
