@@ -1,5 +1,14 @@
 # Change Log
 
+## [1.2.4](https://github.com/codeforjapan/decidim-cfj/compare/v1.2.3...v1.2.4) (2024-08-06)
+
+
+### Bug Fixes
+
+* local docker postgres ([287786f](https://github.com/codeforjapan/decidim-cfj/commit/287786f30ab050c9fd32ade9d4e31f8795e4bd16))
+* use `decidim_sanitize_admin` instead of `decidim_escape_translated` ([863bcb7](https://github.com/codeforjapan/decidim-cfj/commit/863bcb756cf9cc4ad9139b84662df8efeb69b28e))
+* Use Redis with docker compose ([a97e0ed](https://github.com/codeforjapan/decidim-cfj/commit/a97e0ed328246933bb8e98f863d350b1bc7e1959))
+
 ## [1.2.3](https://github.com/codeforjapan/decidim-cfj/compare/v1.2.2...v1.2.3) (2024-07-30)
 
 
