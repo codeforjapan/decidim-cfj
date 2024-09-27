@@ -17,11 +17,11 @@ module Decidim
       #
       # Returns nothing.
       def call
-        Decidim::Assembly.where(organization: organization).find_each do |assembly|
+        Decidim::Assembly.where(organization:).find_each do |assembly|
           puts "destroy assembly id: #{assembly.id}"
           assembly.destroy!
         end
-        Decidim::AssembliesType.where(organization: organization).destroy_all
+        Decidim::AssembliesType.where(organization:).destroy_all
 
         broadcast(:ok)
       end

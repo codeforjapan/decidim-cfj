@@ -1,34 +1,33 @@
-<div class="reveal" id="show-user-modal" data-reveal>
-  <div class="reveal__header">
-    <h3 class="reveal__title"><%= t(".title") %></h3>
-    <button class="close-button" data-close aria-label="<%= t(".close_modal") %>"
-      type="button">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-
-  <div class="row">
-    <div class="columns medium-4 medium-centered">
+<%= decidim_modal id: "show-user-modal" do %>
+  <div data-dialog-container>
+    <%= icon "information-line" %>
+    <h3 class="h3" id="dialog-title-show-email-modal" tabindex="-1" data-dialog-title>
+      <%= t(".title") %>
+    </h3>
+    <div id="dialog-desc-show-user-modal" class="my-8">
       <p><%= t(".description") %></p>
 
-      <div class="show_email">
+      <div class="show_user_extension">
         <h4><%= t(".full_name") %></h4>
-        <div><p id="user_full_name2"></p></div>
-        <h4><%= t(".user_extension") %></h4>
+        <div>
+          <p id="user_full_name2"></p>
+        </div>
+        <h4>
+          <%= t(".user_extension") %>
+        </h4>
         <div>
           <p id="user_extension"></p>
           <p><%= t(".hidden") %></p>
         </div>
       </div>
-
-      <div class="button--double form-general-submit">
-        <button class="button" data-open="user_extension" data-open-url="">
-          <%= t(".show") %>
-        </button>
-      </div>
     </div>
   </div>
-</div>
+  <div data-dialog-actions>
+    <button class="button button__sm button__secondary" data-open="user_extension" data-remote-url="">
+      <%= t(".show") %>
+    </button>
+  </div>
+<% end %>
 <script type="text/javascript">
 $(() => {
   const $modal = $("#show-user-modal");
@@ -41,26 +40,31 @@ $(() => {
   const $userExtension = $("#user_extension", $modal);
   const $fullName = $("#user_full_name2", $modal);
 
-  $("[data-toggle=show-user-modal]").on("click", (event) => {
+  $("[data-dialog-open=show-user-modal]").on("click", (event) => {
     event.preventDefault()
 
     $button.show()
-    $button.attr("data-open-url", event.currentTarget.href)
+    $button.attr("data-remote-url", event.currentTarget.href)
     $fullName.text($(event.currentTarget).data("full-name"))
     $userExtension.html("")
   })
-})
-$(() => {
-  function appendStyleElement(text) {
-    var style = document.createElement('style');
-    style.media = 'screen';
-    style.type = 'text/css';
-    var rule = document.createTextNode(text);
-    style.appendChild(rule);
-    var head = document.getElementsByTagName('head').item(0);
-    head.appendChild(style);
+
+  /* eslint-disable */
+  async function getUserExtension(url) {
+    let response = await fetch(url);
+    if (response.ok) {
+      let userExtension = await response.text();
+      $("#user_extension").html(userExtension);
+      $button.hide()
+    } else {
+      console.log(`Error-HTTP: " + ${response.status}`);
+    }
   }
-  appendStyleElement('.show_email #user_extension + p{display:none;color:#999;font-style: italic;}' +
-                     '.show_email #user_extension:empty + p{display:block;}');
-});
+  /* eslint-enable */
+
+  $("[data-open=user_extension]").on("click", (event) => {
+    getUserExtension(event.currentTarget.dataset.remoteUrl);
+  })
+
+})
 </script>
