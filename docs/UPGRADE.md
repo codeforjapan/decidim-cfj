@@ -15,6 +15,10 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 このDecidimアプリ内で、Decidim本体やライブラリに含まれる元ファイルを上書きしているファイルがいくつかあります。
 これらのファイルについては、Decidim本体のファイルがバージョンアップ時に更新された場合、その更新内容をファイルに反映させなければアプリケーションが壊れる可能性があります。そのため、本体の更新時には確認が必要です。
 
+* `decidim-core`
+
+  https://github.com/codeforjapan/decidim-cfj/pull/630 で追加されたもので、 https://github.com/codeforjapan/decidim-cfj/issues/629 の解決用にv0.28での変更をbackportしたものです。v0.28.xにアップデートできれば削除可能です。
+
 * `app/commands/decidim/accountability/destroy_all_results.rb`,
   `app/commands/decidim/areas/destroy_all_areas.rb`,
   `app/commands/decidim/assemblies/destroy_all_assemblies.rb`,

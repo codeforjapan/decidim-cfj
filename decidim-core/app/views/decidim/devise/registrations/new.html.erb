@@ -1,0 +1,97 @@
+<% add_decidim_page_title(t(".sign_up")) %>
+
+<% content_for :devise_links do %>
+  <%= render "decidim/devise/shared/links" %>
+<% end %>
+
+<div class="wrapper">
+<div class="row collapse">
+  <div class="row collapse">
+    <div class="columns large-8 large-centered text-center page-title">
+      <h1><%= t(".sign_up") %></h1>
+      <p>
+        <%= t(".subtitle") %>
+      </p>
+      <p>
+        <%= t(".already_have_an_account?") %>
+        <%= link_to t(".sign_in"), new_user_session_path %>
+      </p>
+    </div>
+  </div>
+
+  <% cache current_organization do %>
+    <%= render "decidim/devise/shared/omniauth_buttons" %>
+  <% end %>
+
+  <div class="row">
+    <div class="columns large-6 medium-10 medium-centered">
+
+      <%= decidim_form_for(@form, namespace: "registration", as: resource_name, url: registration_path(resource_name), html: { class: "register-form new_user", id: "register-form" }) do |f| %>
+        <%= invisible_captcha %>
+        <div class="card">
+          <div class="card__content">
+            <%= form_required_explanation %>
+
+            <div class="user-person">
+              <div class="field">
+                <%= f.text_field :name, help_text: t(".username_help"), autocomplete: "name" %>
+              </div>
+            </div>
+
+            <div class="user-nickname">
+              <div class="field">
+                <%= f.text_field :nickname, help_text: t(".nickname_help", organization: current_organization.name), prefix: { value: "@", small: 1, large: 1 }, autocomplete: "nickname" %>
+              </div>
+            </div>
+
+            <div class="field">
+              <%= f.email_field :email, autocomplete: "email" %>
+            </div>
+
+            <div class="field">
+              <%= f.password_field :password, password_field_options_for(:user) %>
+            </div>
+
+            <div class="field">
+              <%= f.password_field :password_confirmation, password_field_options_for(:user).except(:help_text) %>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" id="card__tos">
+          <div class="card__content">
+            <h2><%= t(".tos_title") %></h2>
+
+            <p class="tos-text">
+              <%= strip_tags(translated_attribute(terms_and_conditions_page.content)) %>
+            </p>
+
+            <div class="field">
+              <%= f.check_box :tos_agreement, label: t(".tos_agreement", link: link_to(t(".terms"), page_path("terms-and-conditions"))) %>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" id="card__newsletter">
+          <div class="card__content">
+            <h2><%= t(".newsletter_title") %></h2>
+              <div class="field">
+                <%= f.check_box :newsletter, label: t(".newsletter"), checked: @form.newsletter %>
+              </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card__content">
+            <div class="actions">
+              <%= f.submit t("devise.registrations.new.sign_up"), class: "button expanded" %>
+            </div>
+            <%= yield :devise_links %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+</div>
+<%= render "decidim/devise/shared/newsletter_modal" %>

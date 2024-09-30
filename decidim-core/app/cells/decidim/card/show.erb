@@ -1,0 +1,19 @@
+<div class="column">
+  <div class="card">
+    <div class="card__content">
+      <% if title.present? %>
+        <div class="card__header">
+          <span class="card__title">
+            <%= title %>
+          </span>
+        </div>
+      <% end %>
+
+      <% if body.present? %>
+        <p>
+         <%= body %>
+        </p>
+      <% end %>
+    </div>
+  </div>
+</div>

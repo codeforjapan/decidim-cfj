@@ -1,0 +1,30 @@
+<label class="text-medium mb-s"><%= t(".jump_to") %></label>
+<% if params.dig(:filter, :with_resource_type).present? %>
+  <p class="text-secondary">
+    <%= link_to main_search_path do %>
+      <%= icon "caret-left", class: "icon--small", role: "img", "aria-hidden": true %>&nbsp;<%= t(".back") %>
+    <% end %>
+  </p>
+<% end %>
+<%= render partial: "resources_filter_block", locals: { sections: @sections, types: Decidim::Searchable.searchable_resources_of_type_participant } %>
+<%= render partial: "resources_filter_block", locals: { sections: @sections, types: Decidim::Searchable.searchable_resources_of_type_participatory_space } %>
+<%= render partial: "resources_filter_block", locals: { sections: @sections, types: Decidim::Searchable.searchable_resources_of_type_component } %>
+<%= render partial: "resources_filter_block", locals: { sections: @sections, types: Decidim::Searchable.searchable_resources_of_type_comment } %>
+<div class="card card--secondary">
+  <%= filter_form_for filter do |form| %>
+    <%= scopes_picker_filter form, :decidim_scope_id_in %>
+    <%= form.hidden_field :term %>
+    <%= form.hidden_field :with_space_state %>
+    <%= form.hidden_field :with_resource_type %>
+  <% end %>
+</div>
+<div class="row collapse order-by">
+  <div class="text-right">
+    <span class="order-by__tabs">
+      <%= search_path_by_state_link(:past) %>
+      <%= search_path_by_state_link(:future) %>
+      <%= search_path_by_state_link(:active) %>
+      <%= search_path_by_state_link(nil) %>
+    </span>
+  </div>
+</div>

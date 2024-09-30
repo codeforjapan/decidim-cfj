@@ -1,0 +1,63 @@
+<p class="email-greeting"><%= t(".hello", name: @user.name) %></p>
+
+<p class="email-instructions">
+  <%= t(".report_html", url: reported_content_url) %>
+</p>
+
+<br>
+
+<p><b><%= t(".date") %></b></p>
+<p><%= l @report.created_at, format: :short %></p>
+
+<p><b><%= t(".participatory_space") %></b></p>
+<p><%= link_to translated_attribute(@participatory_space.title), resource_locator(@participatory_space).url %></p>
+
+<p><b><%= t(".reason") %></b></p>
+<p><%= t(@report.reason, organization_name: @participatory_space.organization.name, scope: "decidim.shared.flag_modal") %></p>
+
+<% if @report.details.present? %>
+  <p><b><%= t(".details") %></b></p>
+  <blockquote>
+    <%= @report.details %>
+  </blockquote>
+<% end %>
+
+<% if @original_language.present? %>
+  <p><b><%= t(".content_original_language") %></b></p>
+  <p><%= I18n.t("locale.name", locale: @original_language) %></p>
+<% end %>
+
+<p><b><%= t(".content") %></b> (<%= t(".id") %>: <%= @reportable.id %>)</p>
+<%= reported_content_cell %>
+
+<% if @author.present? %>
+  <p><b><%= t(".authors") %></b></p>
+  <% if author_profile_url.present? %>
+    <p><%= link_to @author.name, author_profile_url, target: :blank %></p>
+  <% else %>
+    <p>
+      <%=
+        if @author.respond_to?(:name)
+          @author.name
+        elsif @author.respond_to?(:title)
+          translated_attribute(@author.title)
+        end
+      %>
+    </p>
+  <% end %>
+<% end %>
+<br>
+
+<table class="button radius" style="margin: 16px auto;">
+  <tr>
+    <td>
+      <table>
+        <tr>
+          <td>
+            <%= link_to t(".see_report"), report_url, class: "button email-button email-button__cta",  target: "_blank" %>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>

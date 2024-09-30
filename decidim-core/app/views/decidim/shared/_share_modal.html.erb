@@ -1,0 +1,49 @@
+<div class="text-center">
+  <button class="share-link link text-center" data-open="socialShare">
+    <%= t(".share") %>
+    <% if try(:resource) %>
+      <span class="show-for-sr"><%= resource_title(resource) %></span>
+    <% end %>
+    <%= icon "share", class: "icon--after", role: "img", "aria-hidden": true %>
+  </button>
+</div>
+<div class="reveal" id="socialShare" data-reveal>
+  <div class="reveal__header">
+    <h3 class="reveal__title"><%= t(".share") %>:</h3>
+    <button class="close-button" data-close aria-label="<%= t(".close_window") %>" type="button">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="button-group text-center">
+  <%= social_share_button_tag(decidim_page_title,
+        url: decidim_meta_url,
+        image: decidim_meta_image_url,
+        desc: h(decidim_meta_description),
+        via: decidim_meta_twitter_handler).sub(%(data-site="x"), %(data-site="twitter")).html_safe %>
+    <a href="#" class="button" data-open="urlShare">
+      <%= icon "link-intact", role: "img", "aria-hidden": true %>
+      <%= t(".share_link") %>
+    </a>
+  </div>
+</div>
+<div class="reveal" id="urlShare" data-reveal>
+  <div class="reveal__header">
+    <h3 class="reveal__title"><%= t(".share_link") %>:</h3>
+    <button class="close-button" data-close aria-label="<%= t(".close_window") %>" type="button">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="input-group">
+    <input id="urlShareLink" class="input-group-field" type="text" title="<%= t(".share_link") %>" value="<%= "#{decidim_meta_url}" %>" readonly>
+    <div class="input-group-button">
+      <button class="button primary"
+        data-clipboard-copy="#urlShareLink"
+        data-clipboard-copy-label="<%= t(".copy_share_link_copied") %>"
+        data-clipboard-copy-message="<%= t(".copy_share_link_message") %>"
+        aria-label="<%= t(".copy_share_link_clarification") %>">
+          <%= icon "clipboard", role: "img", "aria-hidden": true %>
+          <%= t(".copy_share_link") %>
+      </button>
+    </div>
+  </div>
+</div>
