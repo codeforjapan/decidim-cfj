@@ -4,7 +4,7 @@ source "https://rubygems.org"
 
 ruby RUBY_VERSION
 
-gem "decidim", "0.27.7"
+gem "decidim", "0.27.9"
 
 gem "decidim-decidim_awesome", git: "https://github.com/codeforjapan/decidim-module-decidim_awesome.git", branch: "v0.9.3-2023-08-31"
 
@@ -39,7 +39,7 @@ group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
   gem "figaro"
 
-  gem "decidim-dev", "0.27.7"
+  gem "decidim-dev", "0.27.9"
   gem "dotenv-rails"
   gem "factory_bot_rails"
   gem "rspec-rails"
