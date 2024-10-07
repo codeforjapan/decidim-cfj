@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.3.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.2.4...v1.3.0) (2024-10-07)
+
+
+### Features
+
+* update decidim v0.27.9 ([6cdfdee](https://github.com/codeforjapan/decidim-cfj/commit/6cdfdee7aea10154d72b355337bc3085f935a3d9))
+
 ## [1.2.4](https://github.com/codeforjapan/decidim-cfj/compare/v1.2.3...v1.2.4) (2024-08-06)
 
 
