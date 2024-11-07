@@ -1,5 +1,13 @@
 # Change Log
 
+## [1.3.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.3.0...v1.3.1) (2024-11-07)
+
+
+### Bug Fixes
+
+* ignore session_store defined in Decidim::Core::Engine ([52a14e8](https://github.com/codeforjapan/decidim-cfj/commit/52a14e80bccf1763ff67c88c553a2764afd722f7))
+* refactor session ([0b81968](https://github.com/codeforjapan/decidim-cfj/commit/0b81968e84e0f83366f43426cdd85b8d80b301d5))
+
 ## [1.3.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.2.4...v1.3.0) (2024-10-07)
 
 
