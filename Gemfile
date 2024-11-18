@@ -46,7 +46,9 @@ end
 group :development do
   gem "letter_opener_web"
   gem "listen", "~> 3.1"
+  gem "rubocop-factory_bot", "~> 2.25.0", require: false
   gem "rubocop-faker"
+  gem "rubocop-rspec_rails", "~> 2.28.0", require: false
   gem "web-console", "~> 4.2"
 end
 
