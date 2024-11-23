@@ -1,5 +1,13 @@
 # Change Log
 
+## [1.3.2](https://github.com/codeforjapan/decidim-cfj/compare/v1.3.1...v1.3.2) (2024-11-23)
+
+
+### Bug Fixes
+
+* drop bot request ([51d6d51](https://github.com/codeforjapan/decidim-cfj/commit/51d6d51555cda68430245872ee5e312335da7cac))
+* drop gptbot access ([b0504db](https://github.com/codeforjapan/decidim-cfj/commit/b0504dba9a6bb378b257a1ba2f02760bd85e87d2))
+
 ## [1.3.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.3.0...v1.3.1) (2024-11-07)
 
 
