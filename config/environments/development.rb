@@ -20,8 +20,11 @@ Rails.application.configure do
     config.action_controller.perform_caching = true
 
     if ENV["REDIS_CACHE_URL"]
-      config.cache_store = :redis_cache_store, { url: ENV.fetch("REDIS_CACHE_URL", nil) }
-      config.session_store(:cache_store, key: "decidim_session")
+      config.cache_store = :redis_cache_store, {
+        url: ENV.fetch("REDIS_CACHE_URL", nil),
+        expires_in: ENV.fetch("REDIS_CACHE_EXPIRES_IN", 60.minutes).to_i
+      }
+      config.session_store(:cache_store, key: "decidim_session", expire_after: Decidim.config.expire_session_after)
     else
       config.cache_store = :memory_store
     end
