@@ -1,6 +1,4 @@
 User-agent: *
 Disallow: /*/versions
 Disallow: /sitemap.xml
-
-User-agent: GPTBot
 Disallow: /
