@@ -1,3 +1,4 @@
 User-agent: *
 Disallow: /*/versions
 Disallow: /sitemap.xml
+Disallow: /
