@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.3.3](https://github.com/codeforjapan/decidim-cfj/compare/v1.3.2...v1.3.3) (2024-11-23)
+
+
+### Bug Fixes
+
+* Use expire_session_after for session, REDIS_CACHE_EXPIRES_IN for cache ([7f5eb63](https://github.com/codeforjapan/decidim-cfj/commit/7f5eb63188ff1956b99ccb8fa0c8ffa4af2eb770))
+
 ## [1.3.2](https://github.com/codeforjapan/decidim-cfj/compare/v1.3.1...v1.3.2) (2024-11-23)
 
 
