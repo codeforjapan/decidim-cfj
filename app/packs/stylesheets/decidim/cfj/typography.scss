@@ -1,0 +1,166 @@
+// Override default typography(CSS variables)
+body, body *,
+#content *, #content > .h1, #content > .h2, #content > .h3, #content > .h4, #content > .h5, #content > .h6,
+.editor-content *, .editor-content h1, .editor-content h2, .editor-content h3, .editor-content h4, .editor-content h5, .editor-content h6,
+.title-decorator {
+  font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+#content {
+  .h1, .h2, .h3, .h4, .h5, .h6,
+  h2.home__section-title {
+    font-weight: 600;
+    color: var(--tw-prose-headings);
+  }
+
+  .h1,
+  h1.title-decorator {
+    font-size: 2.25rem; 
+    line-height: 1.4;
+
+    @media (min-width: 768px) {
+      font-size: 2.75rem;
+      line-height: 1.4;
+    } 
+  }
+
+  .h2,
+  h2.home__section-title {
+    font-size: 1.75rem;
+    line-height: 1.5;
+    letter-spacing: .1;
+
+    @media (min-width: 768px) {
+      font-size: 2rem;
+      line-height: 1.5;
+      letter-spacing: .1;
+    }
+  }
+
+  .h3 {
+    font-size: 1.5rem;
+    line-height: 1.5;
+    letter-spacing: .2;
+
+    @media (min-width: 768px) {
+      font-size: 1.6rem;
+      line-height: 1.5;
+      letter-spacing: .2;
+    }
+  }
+
+  .h4 {
+    font-size: 1.25rem;
+    line-height: 1.5;
+    letter-spacing: .2;
+
+    @media (min-width: 768px) {
+      font-size: 1.35rem;
+      line-height: 1.5;
+      letter-spacing: .2;
+    }
+  }
+
+  .h5 {
+    font-size: 1.06rem;
+    line-height: 1.7;
+    letter-spacing: .2;
+
+    @media (min-width: 768px) {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      letter-spacing: .2;
+    }
+  }
+
+  .h6 {
+    font-size: 1rem;
+    line-height: 1.7;
+    letter-spacing: .2;
+
+    @media (min-width: 768px) {
+      font-size: 1rem;
+      line-height: 1.7;
+      letter-spacing: .2;
+    }
+  }
+}
+
+
+.editor-content {
+  h2,h3,h4,h5,h6 {
+    margin-bottom: inherit;
+    font-weight: 600;
+    color: var(--tw-prose-headings);
+  }
+
+  h2 {
+    font-size: 1.6rem;
+    line-height: 1.5;
+    letter-spacing: .2;
+
+    @media (min-width: 768px) {
+      font-size: 1.75rem;
+      line-height: 1.5;
+      letter-spacing: .1;
+    }
+  }
+  h3 {
+    font-size: 1.5rem;
+    line-height: 1.5;
+    letter-spacing: .2;
+
+    @media (min-width: 768px) {
+      font-size: 1.6rem;
+      line-height: 1.5;
+      letter-spacing: .2;
+    }
+  }
+  h4 {
+    font-size: 1.25rem;
+    line-height: 1.5;
+    letter-spacing: .2;
+
+    @media (min-width: 768px) {
+      font-size: 1.35rem;
+      line-height: 1.5;
+      letter-spacing: .2;
+    }
+  }
+  h5 {
+    font-size: 1.06rem;
+    line-height: 1.7;
+    letter-spacing: .2;
+
+    @media (min-width: 768px) {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      letter-spacing: .2;
+    }
+  }
+  h6 {
+    font-size: 1rem;
+    line-height: 1.7;
+    letter-spacing: .2;
+
+    @media (min-width: 768px) {
+      font-size: 1rem;
+      line-height: 1.7;
+      letter-spacing: .2;
+    }
+  }
+
+  p {
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.75;
+    letter-spacing: .2;
+    color: var(--tw-prose-body);
+
+    @media (min-width: 768px) {
+      font-size: 1rem;
+      line-height: 1.75;
+      letter-spacing: .2;
+    }
+  }
+}
