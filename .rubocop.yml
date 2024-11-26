@@ -25,6 +25,9 @@ RSpec/DescribeClass:
 Rails/I18nLocaleAssignment:
   Enabled: false
 
-RSpec/Rails/NegationBeValid:
+RSpecRails/NegationBeValid:
   Exclude:
     - spec/shared/proposal_form_examples.rb
+
+RSpec/IndexedLet:
+  Enabled: false

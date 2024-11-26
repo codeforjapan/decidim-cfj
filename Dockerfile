@@ -19,6 +19,7 @@ RUN  apt-get update && \
         libde265-dev \
         git \
         curl \
+        p7zip \
         wget && \
     apt-get clean && \
     apt-get autoremove
