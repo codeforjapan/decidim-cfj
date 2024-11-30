@@ -514,3 +514,4 @@ Rails.application.config.to_prepare do
 end
 
 Decidim.icons.register(name: "line-fill", icon: "line-fill", category: "system", description: "", engine: :core)
+Decidim.icons.register(name: "facebook", icon: "facebook", category: "system", description: "", engine: :core)
