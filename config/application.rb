@@ -33,5 +33,15 @@ module DecidimApp
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
+
+    # skip `session_store` initializer in Decidim::Core::Engine
+    config.before_initialize do
+      Rails.application.initializers.each do |initializer|
+        if initializer.name == "Expire sessions"
+          initializer.instance_eval { @options[:group] = :force_skip }
+          Rails.logger.info "XXX: Skip initializer '#{initializer.name}'"
+        end
+      end
+    end
   end
 end
