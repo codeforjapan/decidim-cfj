@@ -512,3 +512,4 @@ Devise.allow_unconfirmed_access_for = Decidim.unconfirmed_access_for
 Rails.application.config.to_prepare do
   Decidim::Api::Schema.max_complexity = 100_000
 end
+Decidim.icons.register(name: "line", icon: "line", category: "system", description: "", engine: :core)
