@@ -1,4 +1,13 @@
 GIT
+  remote: https://github.com/TheDesignium/omniauth-cityos-dcp.git
+  revision: ae135dc3f01f06a13ec4d24c8327e19b10cf701f
+  tag: v1.2.2
+  specs:
+    omniauth-cityos-dcp (0.1.0)
+      decidim (>= 0.28.0)
+      omniauth-oauth2
+
+GIT
   remote: https://github.com/codeforjapan/decidim-module-decidim_awesome.git
   revision: 84374037d34a3ac80dc18406834169c65869f11b
   branch: v0.11.2-2024-12-03
@@ -924,6 +933,7 @@ DEPENDENCIES
   letter_opener_web
   listen (~> 3.1)
   newrelic_rpm
+  omniauth-cityos-dcp!
   omniauth-line_login!
   omniauth-rails_csrf_protection
   puma (>= 6.3.1)
