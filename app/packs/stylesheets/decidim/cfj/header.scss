@@ -1,0 +1,36 @@
+// Override default header(CSS variables)
+header {
+	.main-bar {
+		&__links-desktop {
+			&__item {
+				@apply px-1 gap-1;
+			}
+
+      // overwrite default dropdown styles
+      [data-target*="dropdown"] > span:only-of-type {
+        @apply gap-1;
+      }
+		}
+
+
+		&__links-mobile {
+			@apply px-2 gap-1;
+
+			&__item {
+				@apply gap-1 justify-between;
+
+				svg + span {
+          @apply text-center text-xs block font-medium;
+        }
+
+        // overwrite default dropdown styles 
+        &[data-target*="dropdown"] {
+
+          > span {
+          	@apply text-center text-xs block font-medium;
+          }
+        }
+			}
+		}
+	}
+}

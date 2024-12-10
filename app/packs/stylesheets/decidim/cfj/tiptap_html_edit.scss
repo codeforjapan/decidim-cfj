@@ -1,0 +1,57 @@
+/*
+ * for TipTap HTML Edit extension
+ */
+.html-edit-overlay {
+    background: #0000007d;
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    justify-content: center;
+    align-items: center;
+}
+.html-edit-popup-container {
+  position: relative;
+  background: #ddd;
+  margin-left: 120px;
+  width: calc(100% - 160px);
+  height: calc(100% - 40px);
+  padding: 20px;
+}
+.html-edit-box {
+  background: #ddd;
+  position: absolute;
+  width: calc(100% - 40px);
+  height: calc(100% - 40px);
+  padding: 20px;
+}
+.html-edit-textarea {
+    background: #fff;
+    width: calc(100% - 20px);
+    height: calc(100% - 80px);
+    min-width: 600px;
+    min-height: 300px;
+}
+.html-edit-button-group {
+    position: absolute;
+    bottom: 20px;
+    transform: scale(1.5);
+    left: calc(50% - 60px);
+}
+.html-edit-button-cancel {
+    margin-right: 20px;
+    background: #ccc;
+    padding: 5px 20px;
+    border-radius: 10px;
+}
+.html-edit-button-save {
+    background: #ccc;
+    padding: 5px 20px;
+    border-radius: 10px;
+}
+.html-edit-popup-title {
+    margin: 0;
+    display: block;
+}

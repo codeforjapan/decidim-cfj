@@ -16,6 +16,7 @@ storage/*
 test
 tmp
 vendor
+/public/decidim-packs
 
 Dockerfile
 docker-compose*
