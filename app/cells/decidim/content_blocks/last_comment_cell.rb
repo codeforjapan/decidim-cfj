@@ -56,7 +56,10 @@ module Decidim
       end
 
       def comments
-        @comments ||= Decidim::LastActivity.new(current_organization, current_user: current_user).query.where(resource_type: 'Decidim::Comments::Comment').limit(comments_to_show * 6)
+        @comments ||= Decidim::LastActivity.new(
+          current_organization,
+          current_user:
+        ).query.where(resource_type: "Decidim::Comments::Comment").limit(comments_to_show * 6)
       end
 
       def comments_to_show
