@@ -72,8 +72,8 @@ jobs:
       - name: check imagemagick
         run: |
           export PATH=${GITHUB_WORKSPACE}/vendor/imagemagick7/bin:${PATH}
-          which convert
-          convert -version
+          which mogrify
+          mogrify -version
 
       - name: Set up Ruby 3.1.1
         uses: ruby/setup-ruby@v1
@@ -120,4 +120,5 @@ jobs:
 
       - name: Test with RSpec
         run: |
+          export PATH=${GITHUB_WORKSPACE}/vendor/imagemagick7/bin:${PATH}
           bundle exec rails spec
