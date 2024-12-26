@@ -236,13 +236,13 @@ export default function createEditorToolbar(editor) {
       )
     ).
     append(
-      // Html Tag Edit
+      // Tag Edit
       createEditorToolbarGroup(editor).append(
         createEditorToolbarToggle(editor, {
-          type: "htmlEdit",
+          type: "tagEdit",
           icon: "file-text-line",
-          label: "HTML Edit",
-          action: () => editor.commands.openHtmlEditModal()
+          label: "New HTML Edit",
+          action: () => editor.commands.tagEditDialog()
         }).render(true)
       )
     ).

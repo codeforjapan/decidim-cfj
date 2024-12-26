@@ -16,7 +16,8 @@ import Link from "src/decidim/editor/extensions/link";
 import Mention from "src/decidim/editor/extensions/mention";
 import VideoEmbed from "src/decidim/editor/extensions/video_embed";
 import Emoji from "src/decidim/editor/extensions/emoji";
-import HtmlEdit from "src/decidim/cfj/editor/extensions/html_edit";
+import TagEdit from "src/decidim/cfj/editor/extensions/tag_edit";
+import Iframe from "src/decidim/cfj/editor/extensions/iframe";
 
 export default Extension.create({
   name: "decidimKit",
@@ -53,7 +54,8 @@ export default Extension.create({
       Indent,
       OrderedList,
       CodeBlock,
-      HtmlEdit,
+      TagEdit,
+      Iframe,
       Underline
     ];
 

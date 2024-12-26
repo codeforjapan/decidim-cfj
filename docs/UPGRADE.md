@@ -34,11 +34,6 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 
   `delete:destroy_all`タスクで不要なレコードを消せるように追加されたファイル。 https://github.com/codeforjapan/decidim-cfj/pull/501 で追加されたものです。
 
-* `app/packs/src/decidim/decidim_awesome/editors/editor.js`
-* `app/packs/src/decidim/decidim_awesome/awesome_admin.js`
-
-  QuillエディタでHTML編集ができるようにするために追加されたファイル。現在はDecidim Awesome対応になっています(decidim_awesome内の`app/packs/src/decidim/decidim_awesome/editors/editor.js`がベースになっています)。
-
 * `app/packs/stylesheets/decidim/cfj/buttons.scss`
 
   `https://github.com/codeforjapan/decidim-cfj/issues/46` の対応で `https://github.com/codeforjapan/decidim-cfj/pull/96` で追加しています。
