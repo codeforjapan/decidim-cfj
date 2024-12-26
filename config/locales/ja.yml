@@ -172,7 +172,13 @@ ja:
         new_message:
           greeting: "%{recipient}さん、こんにちは。"
           outro: ''
-
+    metrics:
+      blocked_users:
+        description: ブロックされたユーザ数
+      user_reports:
+        description: ユーザーからの報告数
+      reported_users:
+        description: 報告を受けたユーザー数
     moderations:
       actions:
         hidden: 非表示
@@ -211,6 +217,9 @@ ja:
       content_blocks:
         metadata:
           developer_group: 制作グループ
+    participatory_spaces:
+      highlighted_meetings:
+        see_all: すべてのミーティングを見る
     proposals:
       application_helper:
         filter_origin_values:
