@@ -9,6 +9,6 @@
       <% end %>
   </div>
   <% valid_comments.each_slice(4) do |column_activities| %>
-    <%= cell "decidim/activities", column_activities %>
+    <%= cell "decidim/last_comment_activities", column_activities %>
   <% end %>
 </section>
