@@ -19,7 +19,7 @@ export default Node.create({
             rows: 10,
             cols: 80,
            });
-          let tagsrc = this.editor.getHTML();
+          const tagsrc = this.editor.getHTML();
 
           const dialogState = await tagEditDialog.toggle({ tagsrc });
           if (dialogState !== "save") {
@@ -27,8 +27,7 @@ export default Node.create({
           }
 
           const newTagsrc = tagEditDialog.getValue("tagsrc");
-          this.editor.commands.setContent(newTagsrc);
-
+          this.editor.commands.setContent(newTagsrc, true);
           this.editor.commands.focus(null, { scrollIntoView: false });
           return false;
         }
