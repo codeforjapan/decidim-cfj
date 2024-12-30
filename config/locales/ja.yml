@@ -15,8 +15,6 @@ ja:
         instructions: 参加方法
       decidim/user:
         name: アカウントID
-      group:
-        nickname: アカウントID
       participatory_process:
         copy_steps: フェーズをコピー
         import_steps: フェーズをインポート
@@ -46,34 +44,16 @@ ja:
         nav_breadcrumb:
           global: 全体
     admin:
-      admin_terms_of_use:
-        actions:
-          refuse: 同意しない
-      filters:
-        officializations:
-          index:
-            nickname: アカウントID
-      menu:
-        components: コンポーネント
       officializations:
         show_email_modal:
           hidden: 非表示
-      users_statistics:
-        users_count:
-          last_day: 直近24時間
-          last_month: 直近1ヶ月
-          last_week: 直近1週間
+    amendments:
+      amendable:
+        button: '修正'
     authorization_handlers:
       user_extension_authorization_handler:
         explanation: 'ユーザー拡張属性保持用'
         name: 'ユーザー拡張属性'
-    components:
-      comment_order_selector:
-        order:
-          best_rated: 評価の高い順
-          most_discussed: 議論数の多い順
-          older: 古い順
-          recent: 新しい順
     content_blocks:
       last_activity:
         name: 最近のアクティビティ
@@ -84,42 +64,24 @@ ja:
         view_all: すべて表示
     debates:
       debates:
-        filters:
-          origin: 起案者
         versions:
           too_large_changeset: 履歴のサイズが大きすぎるため表示できません
     devise:
       registrations:
         new:
-          newsletter: 関連するお知らせを受け取る
-          newsletter_title: ニュースレターを受け取る
           nickname_help: 本人を識別するための任意のアルファベットを入力してください。
           nickname_notice: "※ 表示名とアカウントIDが投稿に表示されます。例）共創 歩@ayumi"
           nickname_placeholder: ayumi
           password_help: 半角英数字%{minimum_characters}文字以上で入力してください。単純すぎてはいけません（例：123456）。アカウントIDやメールアドレスと異なる必要があります。
           see_username: アカウントIDを見る
           sign_in: ログイン
-          subtitle: 参加するにはユーザ登録をしてください。
-          terms: 利用規約
           username_placeholder: 共創 歩
     events:
-      comments:
-        comment_created:
-          email_intro: "%{resource_title}  にコメントがありました。このページでコメントを読むことができます："
       gamification:
         level_up:
-          email_intro: おめでとうございます！ あなたは <a href="%{resource_url}">%{badge_name} バッジ</a> のレベル %{current_level} に到達しました！
-          email_outro: サイトでの活動によって、この通知を受け取りました。
           email_subject: "%{badge_name} のバッジがレベル %{current_level} に達しました！"
-          notification_title: おめでとうございます！ あなたは <a href="%{resource_path}">%{badge_name} バッジ</a> のレベル %{current_level} に到達しました！
       proposals:
-        collaborative_draft_access_accepted:
-          email_intro: '%{requester_name} は、 <a href="%{resource_path}">%{resource_title}</a> の共同草案のコントリビューターとして承認されました。'
-          notification_title: <a href="%{requester_path}">%{requester_name} %{requester_nickname}</a> は、 <strong>コントリビューターとして</strong> <a href="%{resource_path}">%{resource_title}</a> 共同草案のコントリビューターとしてアクセスできるようになりました。
         collaborative_draft_access_rejected:
-          email_intro: '%{requester_name} は、 <a href="%{resource_path}">%{resource_title}</a> の共同草案のコントリビューターとしてアクセスするために拒否されました。'
-          email_outro: <a href="%{resource_path}">%{resource_title}</a> のコラボレーターであるため、この通知を受け取りました。
-          email_subject: "%{requester_name} は、 %{resource_title} の共同草案の貢献者としてアクセスするために拒否されました。"
           notification_title: <a href="%{requester_path}">%{requester_name} %{requester_nickname}</a> は、 <a href="%{resource_path}">%{resource_title}</a> の共同草案にアクセスをリクエストしました。 <strong>リクエストを承認または拒否してください</strong>。
         collaborative_draft_access_requester_accepted:
           email_intro: <a href="%{resource_path}">%{resource_title}</a> の共同草案の投稿者としてアクセスすることを承認されました。
@@ -142,35 +104,19 @@ ja:
     last_activities:
       index:
         last_activity: 最近のアクティビティ
-    meetings:
-      meetings:
-        filters:
-          origin: 起案者
-          origin_values:
-            official: 事務局
-            user_groups: グループ
-        show:
-          edit_close_meeting: ミーティングレポートを編集
-          join: ミーティングに参加
     messaging:
       conversation_mailer:
         comanagers_new_conversation:
-          greeting: "%{recipient}さん、こんにちは。"
           outro: ''
         comanagers_new_message:
-          greeting: "%{recipient}さん、こんにちは。"
           outro: ''
         new_conversation:
-          greeting: "%{recipient}さん、こんにちは。"
           outro: ''
         new_group_conversation:
-          greeting: "%{recipient}さん、こんにちは。"
           outro: ''
         new_group_message:
-          greeting: "%{recipient}さん、こんにちは。"
           outro: ''
         new_message:
-          greeting: "%{recipient}さん、こんにちは。"
           outro: ''
     metrics:
       blocked_users:
@@ -181,21 +127,17 @@ ja:
         description: 報告を受けたユーザー数
     moderations:
       actions:
-        hidden: 非表示
         hide: 非表示にする
-        not_hidden: 表示
     notifications_settings:
       show:
-        allow_public_contact: フォローしていない人からもダイレクトメッセージを受信する
+        allow_public_contact: フォローしていない人からのダイレクトメッセージを受信する
+        allow_push_notifications: プラットフォーム上にいないときに何が起きているかを知るためにプッシュ通知を受け取る。いつでもオフにできます。
         direct_messages: ダイレクトメッセージを受信する
-        email_on_notification: 通知を毎回メールで受け取る
-        send_notifications_by_email: 電子メールで通知を受け取る
-    pages:
-      terms_and_conditions:
-        accept:
-          success: 利用規約に同意しました。
-        refuse:
-          modal_button: 同意しない
+        email_on_moderations: モデレーションの報告がなされたたびに毎回メールを受け取りたい
+        notification_settings:
+          close_meeting_reminder: レポートを未公開で閉じたミーティングのリマインドメールを受信したい
+        own_activity: 誰かが私の提案にコメントしたり、私に言及したりした時など、自分自身の活動
+        receive_notifications_about: 受け取りたい通知
     participatory_processes:
       pages:
         home:
@@ -207,10 +149,6 @@ ja:
             participate: 参加する
             participate_in: 参加型プロセス %{resource_name}　に参加する
             processes_button_title: すべてのプロセスを表示する
-      participatory_processes:
-        filters:
-          explanations:
-            no_active_nor_upcoming_callout: アクティブな参加型プロセスも今後の参加型プロセスもありません。ここでは過去の参加型プロセスのリストを示します。
       show:
         local_area: 組織エリア
     participatory_process_groups:
@@ -224,76 +162,28 @@ ja:
       application_helper:
         filter_origin_values:
           citizens: 一般参加者
-          official: 事務局
       models:
-        requests:
-          access_requested:
-            error: リクエストを完了できませんでした。後でもう一度お試しください。
-            success: 共同草案のリクエストが正常に送信されました
         show:
           back: 戻る
-          edit: 共同草案を編集
-          final_proposal_help_text: この草案は終了しました。最終提案を確認してください。
           info-message: これは提案のための <strong>共同草案</strong> です。 これは、以下のコメントセクションを使用して提案を作成したり、編集するためのアクセスを要求することで、提案を改善したりすることができることを意味します。 作成者がアクセスを許可すると、この草案を変更することができます。
-          withdraw: 草案を撤回する
-        update:
-          error: 共同草案を保存する際に問題が発生しました。
-          success: 共同草案が正常に更新されました。
-      create:
-        success: 提案は正常に作成されました。草案として保存されました。
       proposals:
         edit:
           add_documents: 添付ファイル
           add_images: 画像
-          attachment_legend: "(オプション) 添付ファイルを追加"
-          back: 戻る
           delete_document: 添付ファイルの削除
           delete_image: 画像の削除
           gallery_legend: "(オプション) 提案カードに画像を追加"
           select_a_category: カテゴリーを選択
-          send: 送信
-          title: 提案の編集
-        orders:
-          label: '提案の並び順：'
-          most_commented: コメントの多い順
-          most_endorsed: オススメの多い順
-          most_followed: フォローの多い順
-          most_voted: サポートの多い順
-          random: ランダム
-          recent: 新しい順
-          with_more_authors: 起案者の多い順
     verifications:
       authorizations:
         first_login:
           actions:
             user_extension_authorization_handler: ユーザー拡張属性対応用
-      csv_census:
-        admin:
-          census:
-            destroy_all:
-              success: すべてのセンサスデータが削除されました
-          destroy:
-            confirm: センサスをすべて削除することはできません。続行してもよろしいですか？
-            title: センサスデータをすべて削除する
-          index:
-            empty: センサスデータがありません。CSVファイルを使用してインポートするには、以下のフォームを使用してください。
-            title: 現在のセンサスデータ
-          new:
-            title: 新しいセンサスをアップロード
-      postal_letter:
-        admin:
-          pending_authorizations:
-            index:
-              username: アカウントID
-    versions:
-      resource_version:
-        of_versions: / %{number}
     welcome_notification:
-      default_body: <p>こんにちは {{name}} さん, {{organization}} へご参加いただきありがとうございます。</p><ul><li>もし、このサイトの使い方は、 <a href="{{help_url}}">ヘルプ</a> セクションをご参照ください。</li><li>目を通していただけると、最初のバッジを獲得できます。<a href="{{badges_url}}">全てのバッジの一覧</a> から、この {{organization}} への参加で獲得できるバッジを見ることができます。</li><li>他の人と一緒に参加し、この {{organization}} へ参加した経験をシェアしましょう。 提案を作り、コメントし、議論し、共通善への貢献の仕方について考え、議論に説得力をもたせ、主張を聞いたり読んだりしながら納得し、具体的かつ直接的な方法であなたの考えを表明し、忍耐と決断を持って対応し、 自らの考えを守り、他人の考えを取り入れて協力し合いましょう。</li></ul>
+      default_body: <p>こんにちは {{name}} さん, {{organization}} へご参加いただきありがとうございます。</p><ul><li>このサイトの使い方は、 <a href="{{help_url}}">ヘルプ</a> セクションをご参照ください。</li><li>目を通していただけると、最初のバッジを獲得できます。<a href="{{badges_url}}">全てのバッジの一覧</a> から、この {{organization}} への参加で獲得できるバッジを見ることができます。</li><li>他の人と一緒に参加し、この {{organization}} へ参加した経験をシェアしましょう。提案を作り、コメントし、議論を行い、共通の利益に貢献する方法を考え、議論に説得力をもたせ、主張を聞いたり読んだりしながら納得し、具体的かつ直接的な方法であなたの考えを表明し、忍耐と決断を持って対応し、自らの考えを守り、他人の考えを取り入れて協力し合いましょう。</li></ul>
   devise:
     failure:
-      already_authenticated: 既にログイン済です。
-      unauthenticated: 続行する前にログインまたはユーザ登録する必要があります。
+      unauthenticated: 続行するにはログインするか、またはアカウントを作成する必要があります。
     invitations:
       edit:
         nickname_help: "%{organization} のニックネーム。"
@@ -301,27 +191,9 @@ ja:
           招待を受け入れたくない場合は、このメールを無視してください。<br />
           上記のリンクにアクセスし、アカウントIDとパスワードを設定するまで、あなたのアカウントは作成されません。
       updated: パスワードは正常に設定され、ログイン完了しました。
-    mailer:
-      invitation_instructions:
-        ignore: |-
-          招待を受け入れたくない場合は、このメールを無視してください。<br />
-          上記のリンクにアクセスし、アカウントIDとパスワードを設定するまで、あなたのアカウントは作成されません。
-        someone_invited_you: "%{application}にあなたを招待しました。以下のリンクから受け入れることができます。"
-        someone_invited_you_as_admin: "%{application}の管理者としてあなたを招待しました。以下のリンクから承認できます。"
-      password_change:
-        greeting: こんにちは、 %{recipient} さん!
-      reset_password_instructions:
-        greeting: こんにちは、 %{recipient} さん!
-      unlock_instructions:
-        greeting: こんにちは、 %{recipient} さん!
-        message: あなたのアカウントはログインに規定回数以上失敗したため、ロックされています。
     passwords:
       edit:
         password_help: "半角英数字%{minimum_characters}文字以上で入力してください。単純すぎてはいけません（例：123456）。アカウントIDやメールアドレスと異なる必要があります。"
-    shared:
-      links:
-        didn_t_receive_confirmation_instructions: ユーザ登録確認メールが届かない方はこちら
-        didn_t_receive_unlock_instructions: ロック解除の手順を送信したい方はこちら
   errors:
     messages:
       needs_user_extension: 登録されていないユーザー属性情報が見つかりました。
