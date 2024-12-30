@@ -1,0 +1,28 @@
+<div class="activity" data-activity>
+  <div class="activity__time">
+    <%= created_at %>
+  </div>
+  <div class="activity__content">
+    <span>
+      <% if title.present? %>
+        <span>
+          <%= title_icon %>
+          <%= title %>
+        </span>
+      <% end %>
+      <a href="<%= resource_link_path %>">
+        <%= html_truncate decidim_sanitize(resource_link_text, strip_tags: true), length: max_comment_length %>
+      </a>
+    </span>
+    <% unless hide_participatory_space? %>
+      <span>
+        <%= participatory_space_link %>
+      </span>
+    <% end %>
+  </div>
+  <% if show_author? %>
+    <div class="activity__author">
+      <%= author %>
+    </div>
+  <% end %>
+</div>
