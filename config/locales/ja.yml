@@ -104,6 +104,7 @@ ja:
     last_activities:
       index:
         last_activity: 最近のアクティビティ
+      name: 最近のアクティビティ
     messaging:
       conversation_mailer:
         comanagers_new_conversation:
