@@ -53,6 +53,7 @@ Rails.application.configure do
   # config.cache_store = :mem_cache_store
   config.cache_store = :redis_cache_store, { url: ENV.fetch("REDIS_CACHE_URL", nil) }
   config.session_store(:cache_store, key: "decidim_session")
+  config.active_storage.urls_expire_in = 60
 
   # Use a real queuing backend for Active Job (and separate queues per environment)
   # config.active_job.queue_adapter     = :resque
