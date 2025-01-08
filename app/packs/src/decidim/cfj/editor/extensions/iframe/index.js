@@ -1,6 +1,6 @@
 import { Node } from "@tiptap/core"
 
-const iframeAllowedDomains = ["youtube.com", "vimeo.com", "docs.google.com"];
+const iframeAllowedDomains = ["www.youtube.com", "vimeo.com", "docs.google.com"];
 
 const isAllowedDomain = (src) => {
   if (!src) return false;
