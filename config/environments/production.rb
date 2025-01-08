@@ -51,8 +51,11 @@ Rails.application.configure do
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
-  config.cache_store = :redis_cache_store, { url: ENV.fetch("REDIS_CACHE_URL", nil) }
-  config.session_store(:cache_store, key: "decidim_session")
+  config.cache_store = :redis_cache_store, {
+    url: ENV.fetch("REDIS_CACHE_URL", nil),
+    expires_in: ENV.fetch("REDIS_CACHE_EXPIRES_IN", 60.minutes).to_i
+  }
+  config.session_store(:cache_store, key: "decidim_session", expire_after: Decidim.config.expire_session_after)
   config.active_storage.urls_expire_in = 60
 
   # Use a real queuing backend for Active Job (and separate queues per environment)
