@@ -28,7 +28,7 @@ module Decidim::DecidimAwesome
     end
 
     it "do not show the title" do
-      expect(subject).not_to have_css("h3.section-heading")
+      expect(subject).to have_no_css("h3.section-heading")
     end
 
     it "uses default height" do
@@ -82,7 +82,7 @@ module Decidim::DecidimAwesome
       end
 
       it "uses default height" do
-        expect(subject).not_to have_content("height: 500px;")
+        expect(subject).to have_no_content("height: 500px;")
         expect(subject).to have_content("height: 734px;")
       end
     end
