@@ -9,8 +9,8 @@ GIT
 
 GIT
   remote: https://github.com/codeforjapan/decidim-module-decidim_awesome.git
-  revision: 84374037d34a3ac80dc18406834169c65869f11b
-  branch: v0.11.2-2024-12-03
+  revision: 6c885e397a5cbe7f9fd6ccbc8c564083a18fa304
+  branch: main-2025-01-15
   specs:
     decidim-decidim_awesome (0.11.2)
       decidim-admin (>= 0.28.0, < 0.29)
