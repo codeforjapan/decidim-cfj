@@ -124,7 +124,7 @@ Rails.application.config.to_prepare do
           "hide-controls" => settings_source.try(:hide_controls),
           "collapsed" => global_settings.collapse,
           "truncate" => global_settings.truncate || 255,
-          "map-center" => global_settings.map_center.present? ? global_settings.map_center.to_json : "",
+          "map-center" => global_settings.map_center.presence&.to_json || "",
           "map-zoom" => global_settings.map_zoom || 8,
           "menu-merge-components" => global_settings.menu_merge_components,
           "menu-amendments" => global_settings.menu_amendments,
