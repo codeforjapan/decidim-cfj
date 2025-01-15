@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require "rails_helper"
 
 module Decidim::DecidimAwesome
   describe ContentBlocks::MapCell, type: :cell do
@@ -105,7 +105,7 @@ module Decidim::DecidimAwesome
 
       it "uses default data-options" do
         expect(subject.to_s).to include('data-truncate="123"')
-        expect(subject.to_s).to include('data-map-center="41.1,2.3"')
+        expect(subject.to_s).to include('data-map-center=\'"41.1,2.3"\'')
         expect(subject.to_s).to include('data-map-zoom="12"')
         expect(subject.to_s).to include('data-menu-amendments="false"')
         expect(subject.to_s).to include('data-menu-meetings="false"')
