@@ -94,6 +94,69 @@ Rails.application.config.to_prepare do
     end
   end
 
+  ## load MapHelper in decidim_awesome
+  Decidim::DecidimAwesome::MapHelper # rubocop:disable Lint/Void
+
+  module DecidimAwesomeMapHelperPatch
+    # rubocop:disable Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/PerceivedComplexity:
+    def awesome_map_for(components, &)
+      return unless map_utility_dynamic
+
+      map = awesome_builder.map_element({ class: "dynamic-map", id: "awesome-map-container" }, &)
+      help = content_tag(:div, class: "map__skip-container") do
+        content_tag(:p, t("screen_reader_explanation", scope: "decidim.map.dynamic"), class: "sr-only")
+      end
+
+      html_options = {
+        class: "awesome-map",
+        id: "awesome-map",
+        data: {
+          "components" => components.map do |component|
+            {
+              id: component.id,
+              type: component.manifest.name,
+              name: translated_attribute(component.name),
+              url: Decidim::EngineRouter.main_proxy(component).root_path,
+              amendments: component.manifest.name == :proposals ? Decidim::Proposals::Proposal.where(component:).only_emendations.count : 0
+            }
+          end.to_json,
+          "hide-controls" => settings_source.try(:hide_controls),
+          "collapsed" => global_settings.collapse,
+          "truncate" => global_settings.truncate || 255,
+          "map-center" => global_settings.map_center.present? ? global_settings.map_center.to_json : "",
+          "map-zoom" => global_settings.map_zoom || 8,
+          "menu-merge-components" => global_settings.menu_merge_components,
+          "menu-amendments" => global_settings.menu_amendments,
+          "menu-meetings" => global_settings.menu_meetings,
+          "menu-categories" => global_settings.menu_categories,
+          "menu-hashtags" => global_settings.menu_hashtags,
+          "show-not-answered" => step_settings&.show_not_answered,
+          "show-accepted" => step_settings&.show_accepted,
+          "show-withdrawn" => step_settings&.show_withdrawn,
+          "show-evaluating" => step_settings&.show_evaluating,
+          "show-rejected" => step_settings&.show_rejected
+        }
+      }
+
+      content_tag(:div, html_options) do
+        content_tag :div, class: "w-full" do
+          help + map
+        end
+      end
+    end
+    # rubocop:enable Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/PerceivedComplexity:
+  end
+
+  module Decidim
+    module DecidimAwesome
+      module MapHelper
+        prepend DecidimAwesomeMapHelperPatch
+      end
+    end
+  end
+
   # Fix I18n.transliterate()
   I18n.config.backend.instance_eval do
     @transliterators[:ja] = I18n::Backend::Transliterator.get(->(string) { string })
