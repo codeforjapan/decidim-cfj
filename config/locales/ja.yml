@@ -68,6 +68,8 @@ ja:
           too_large_changeset: 履歴のサイズが大きすぎるため表示できません
     devise:
       registrations:
+        user_extension:
+          address_help: 例) 兵庫県加古川市加古川町2
         new:
           nickname_help: 本人を識別するための任意のアルファベットを入力してください。
           nickname_notice: "※ 表示名とアカウントIDが投稿に表示されます。例）共創 歩@ayumi"
