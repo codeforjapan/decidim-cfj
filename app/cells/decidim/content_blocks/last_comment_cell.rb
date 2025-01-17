@@ -63,7 +63,7 @@ module Decidim
       end
 
       def comments_to_show
-        options[:comments_count] || 16
+        options[:comments_count] || 3
       end
     end
   end
