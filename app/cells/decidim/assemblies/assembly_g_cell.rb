@@ -12,9 +12,7 @@ module Decidim
       end
 
       def resource_image_url
-        if model.respond_to?(:hero_image) && model.hero_image.attached?
-          return rails_blob_path(model.hero_image, only_path: false)
-        end
+        return rails_blob_path(model.hero_image, only_path: false) if model.respond_to?(:hero_image) && model.hero_image.attached?
 
         nil
       end
