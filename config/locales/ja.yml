@@ -162,6 +162,10 @@ ja:
     participatory_spaces:
       highlighted_meetings:
         see_all: すべてのミーティングを見る
+      highlighted_proposals:
+        see_all: すべての提案を見る
+      highlighted_results:
+        see_all: すべての結果を見る
     proposals:
       application_helper:
         filter_origin_values:
