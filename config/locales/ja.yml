@@ -61,6 +61,10 @@ ja:
           last_day: 直近24時間
           last_month: 直近1ヶ月
           last_week: 直近1週間
+    assemblies:
+      content_blocks:
+        highlighted_assemblies:
+          name: 注目の参加スペース
     authorization_handlers:
       user_extension_authorization_handler:
         explanation: 'ユーザー拡張属性保持用'
@@ -184,6 +188,9 @@ ja:
         refuse:
           modal_button: 同意しない
     participatory_processes:
+      content_blocks:
+        highlighted_processes:
+          name: 注目の参加型プロセス
       pages:
         home:
           highlighted_processes:
@@ -871,6 +878,14 @@ ja:
       - 鳴り出した
       - 黄いろ
       - 黒く
+  layouts:
+    decidim:
+      assemblies:
+        index:
+          promoted_assemblies: 注目の参加スペース
+      participatory_processes:
+        index:
+          promoted_processes: 注目の参加型プロセス
   date:
     formats:
       decidim_short_with_month_name_short: "%Y年%-m月%-d日"
