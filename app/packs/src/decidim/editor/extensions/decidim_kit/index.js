@@ -35,6 +35,7 @@ export default Extension.create({
       },
       hashtag: false,
       mention: false,
+      iframe: true,
       emoji: false
     };
   },
@@ -55,7 +56,6 @@ export default Extension.create({
       OrderedList,
       CodeBlock,
       TagEdit,
-      Iframe,
       Underline
     ];
 
@@ -81,6 +81,10 @@ export default Extension.create({
 
     if (this.options.emoji !== false) {
       extensions.push(Emoji.configure(this.options.emoji));
+    }
+
+    if (this.options.iframe !== false) {
+      extensions.push(Iframe.configure(this.options.iframe));
     }
 
     return extensions;

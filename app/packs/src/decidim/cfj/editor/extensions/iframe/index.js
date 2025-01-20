@@ -1,6 +1,6 @@
 import { Node } from "@tiptap/core"
 
-const iframeAllowedDomains = ["www.youtube.com", "vimeo.com", "docs.google.com"];
+const iframeAllowedDomains = ["www.youtube.com", "www.youtube-nocookie.com", "vimeo.com", "docs.google.com", "www.slideshare.net"];
 
 const isAllowedDomain = (src) => {
   if (!src) return false;
@@ -40,6 +40,18 @@ export default Node.create({
       },
       frameborder: {
         default: 0,
+      },
+      width: {
+        default: null,
+      },
+      height: {
+        default: null,
+      },
+      style: {
+        default: null,
+      },
+      scrolling: {
+        default: null,
       },
       allowfullscreen: {
         default: this.options.allowFullscreen,
