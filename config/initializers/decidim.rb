@@ -518,3 +518,13 @@ Rails.application.config.to_prepare do
   end
 end
 Decidim.icons.register(name: "line", icon: "line-fill", category: "system", description: "", engine: :core)
+
+## Register LINE as SNS
+Decidim.register_social_share_service("LINE") do |service|
+  service.icon = "line-fill"
+  service.icon_color = "#06C755"
+  service.share_uri = "https://social-plugins.line.me/lineit/share?url=%{url}&text=%{title}"
+end
+
+## Share buttons on SNS
+Decidim.social_share_services = %w(X Facebook LINE)
