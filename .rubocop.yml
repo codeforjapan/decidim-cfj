@@ -7,7 +7,7 @@ AllCops:
     - "db/schema.rb"
     - "bin/setup"
     - "bin/update"
-    - "node_modules/*"
+    - "node_modules/**/*"
     - "vendor/bundle/**/*"
 
 Gemspec/RequiredRubyVersion:
