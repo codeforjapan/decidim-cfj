@@ -519,6 +519,12 @@ Rails.application.config.to_prepare do
 end
 Decidim.icons.register(name: "line", icon: "line-fill", category: "system", description: "", engine: :core)
 
+Rails.application.config.to_prepare do
+  # make some content_blocks as default
+  Decidim.content_blocks.for(:assembly_homepage).find { |block| block.name == :announcement }.default!
+  Decidim.content_blocks.for(:participatory_process_homepage).find { |block| block.name == :announcement }.default!
+end
+
 ## Register LINE as SNS
 Decidim.register_social_share_service("LINE") do |service|
   service.icon = "line-fill"
