@@ -50,6 +50,10 @@ ja:
     amendments:
       amendable:
         button: '修正'
+    assemblies:
+      content_blocks:
+        highlighted_assemblies:
+          name: 注目の参加スペース
     authorization_handlers:
       user_extension_authorization_handler:
         explanation: 'ユーザー拡張属性保持用'
@@ -69,7 +73,7 @@ ja:
     devise:
       registrations:
         user_extension:
-          address_help: 例) 兵庫県加古川市加古川町2
+          address_help: 例) 兵庫県加古川市加古川町
         new:
           nickname_help: 本人を識別するための任意のアルファベットを入力してください。
           nickname_notice: "※ 表示名とアカウントIDが投稿に表示されます。例）共創 歩@ayumi"
@@ -78,7 +82,7 @@ ja:
           see_username: アカウントIDを見る
           sign_in: ログイン
           username_placeholder: 共創 歩
-          address_help: 例) 兵庫県加古川市加古川町2
+          address_help: 例) 兵庫県加古川市加古川町
     events:
       gamification:
         level_up:
@@ -143,6 +147,9 @@ ja:
         own_activity: 誰かが私の提案にコメントしたり、私に言及したりした時など、自分自身の活動
         receive_notifications_about: 受け取りたい通知
     participatory_processes:
+      content_blocks:
+        highlighted_processes:
+          name: 注目の参加型プロセス
       pages:
         home:
           highlighted_processes:
@@ -162,6 +169,10 @@ ja:
     participatory_spaces:
       highlighted_meetings:
         see_all: すべてのミーティングを見る
+      highlighted_proposals:
+        see_all: すべての提案を見る
+      highlighted_results:
+        see_all: すべての結果を見る
     proposals:
       application_helper:
         filter_origin_values:
@@ -763,6 +774,14 @@ ja:
       - 鳴り出した
       - 黄いろ
       - 黒く
+  layouts:
+    decidim:
+      assemblies:
+        index:
+          promoted_assemblies: 注目の参加スペース
+      participatory_processes:
+        index:
+          promoted_processes: 注目の参加型プロセス
   date:
     formats:
       decidim_short_with_month_name_short: "%Y年%-m月%-d日"
