@@ -19,6 +19,8 @@ module Decidim
       metadata: "card__highlight-metadata"
     }.freeze
 
+    DESCRIPTION_MAX_LENGTH = 150
+
     include Decidim::ApplicationHelper
     include Decidim::SanitizeHelper
 
@@ -95,7 +97,7 @@ module Decidim
       attribute = resource.try(:short_description) || resource.try(:body) || resource.description
       text = translated_attribute(attribute)
 
-      strip_tags(html_truncate(text, length: 300))
+      strip_tags(html_truncate(text, length: DESCRIPTION_MAX_LENGTH))
     end
 
     def has_authors?
