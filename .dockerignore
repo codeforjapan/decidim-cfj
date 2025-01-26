@@ -19,5 +19,6 @@ vendor
 /public/decidim-packs
 
 Dockerfile
-docker-compose*
+docker-compose.yml
+compose.override.yml
 LICENSE-AGPLv3.txt
