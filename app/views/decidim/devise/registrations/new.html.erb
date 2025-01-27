@@ -33,7 +33,7 @@
     <%= invisible_captcha %>
 
     <div class="form__wrapper">
-      <%= f.text_field :name, help_text: t("decidim.devise.registrations.new.username_help"), autocomplete: "name", placeholder: "John Doe" %>
+      <%= f.text_field :name, help_text: t("decidim.devise.registrations.new.username_help"), autocomplete: "name", placeholder: t("decidim.devise.registrations.new.username_placeholder") %>
 
       <%= f.email_field :email, autocomplete: "email", placeholder: t("placeholder_email", scope: "decidim.devise.shared") %>
 

@@ -83,6 +83,8 @@ ja:
           sign_in: ログイン
           username_placeholder: 共創 歩
           address_help: 例) 兵庫県加古川市加古川町
+      shared:
+        placeholder_email: ''
     events:
       gamification:
         level_up:
