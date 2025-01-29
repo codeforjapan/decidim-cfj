@@ -512,9 +512,9 @@ Devise.allow_unconfirmed_access_for = Decidim.unconfirmed_access_for
 Rails.application.config.to_prepare do
   Decidim::Api::Schema.max_complexity = 100_000
   if Decidim.config.content_security_policies_extra["frame-src"].blank?
-    Decidim.config.content_security_policies_extra["frame-src"] = %w(www.youtube.com docs.google.com www.slideshare.net)
+    Decidim.config.content_security_policies_extra["frame-src"] = %w(www.youtube.com docs.google.com www.slideshare.net www.loom.com)
   else
-    Decidim.config.content_security_policies_extra["frame-src"].push("www.youtube.com", "docs.google.com", "www.slideshare.net")
+    Decidim.config.content_security_policies_extra["frame-src"].push("www.youtube.com", "docs.google.com", "www.slideshare.net", "www.loom.com")
   end
 end
 Decidim.icons.register(name: "line", icon: "line-fill", category: "system", description: "", engine: :core)
