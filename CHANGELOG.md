@@ -1,5 +1,33 @@
 # Change Log
 
+## [1.4.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.3.3...v1.4.0) (2025-01-30)
+
+
+### Features
+
+* add LINE as SNS ([b587977](https://github.com/codeforjapan/decidim-cfj/commit/b587977137b04ee629684abd269d8d53e5c707e7))
+
+
+### Bug Fixes
+
+* `process_types` ([67df526](https://github.com/codeforjapan/decidim-cfj/commit/67df526eb375902094f002a6b6a8f6baeb5df29b))
+* address help ([fb05693](https://github.com/codeforjapan/decidim-cfj/commit/fb05693442ce8e31027e3f0972ea6a598991dc0d))
+* do not add comment_counts if already registered ([cf6a568](https://github.com/codeforjapan/decidim-cfj/commit/cf6a5686b93f2e1c64c46dc1d654579a99167b2d))
+* do not show process_types in other organizations ([5662638](https://github.com/codeforjapan/decidim-cfj/commit/56626381cb88420fd43ba5412d2924d258fb090d))
+* iframe extension ([ad0bc90](https://github.com/codeforjapan/decidim-cfj/commit/ad0bc90df36bd60df18690ed9255c9a3b77a4c6e))
+* ignore files in node_modeles ([e74e579](https://github.com/codeforjapan/decidim-cfj/commit/e74e579d5459d19d52e4196fbb2bdc552c059708))
+* link to last comments ([7e0b18c](https://github.com/codeforjapan/decidim-cfj/commit/7e0b18c8c9edd7587bc0f42cd69fc9f471966eec))
+* make announcement content_block as default ([78265ec](https://github.com/codeforjapan/decidim-cfj/commit/78265ec2a775e4e5b3be395f94b872a82155a0b9))
+* make auto_save_forms disable ([cc82360](https://github.com/codeforjapan/decidim-cfj/commit/cc82360f8fb9cf060dac1b80f1fe2001c906d585))
+* make comments_count 3 ([45665e6](https://github.com/codeforjapan/decidim-cfj/commit/45665e65cc5cc9a0fcc7a14b721342a1b310b4ed))
+* MapHelper#awesome_map_for returns valid map_center ([b22c400](https://github.com/codeforjapan/decidim-cfj/commit/b22c400e810febd1d08cbc1481ff3df2cdb7d5b3))
+* max length of description should be defined in a constant ([50189e6](https://github.com/codeforjapan/decidim-cfj/commit/50189e6c6208f1010bf57660daa5f36ff7c6e6df))
+* placeholder for name and email ([b8fdcc4](https://github.com/codeforjapan/decidim-cfj/commit/b8fdcc47fc892cf54bb3dffee3fd03a09d2f94b0))
+* remove invalid characters in file_type ([6ee63df](https://github.com/codeforjapan/decidim-cfj/commit/6ee63df691f5cff61bd760ea078e59b96773dc94))
+* revert [#69](https://github.com/codeforjapan/decidim-cfj/issues/69) ([89512ac](https://github.com/codeforjapan/decidim-cfj/commit/89512acd05cf7662559e64ea31c0a3f246f1338b))
+* rubocop ([07f18ce](https://github.com/codeforjapan/decidim-cfj/commit/07f18ce9243d50c1d7b2cf64a454db8a78059a9f))
+* show only visible processes ([687b97f](https://github.com/codeforjapan/decidim-cfj/commit/687b97f1a20af8ea6867406873af021d1339c74e))
+
 ## [1.3.3](https://github.com/codeforjapan/decidim-cfj/compare/v1.3.2...v1.3.3) (2024-11-23)
 
 
