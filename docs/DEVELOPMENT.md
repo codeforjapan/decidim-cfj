@@ -9,7 +9,7 @@ Dockerで環境を構築する際は、1.環境構築と2. 実行（ローカル
 | アプリケーション名                                 | バージョン  |
 |-------------------------------------------|--------|
 | [Ruby](https://www.ruby-lang.org/ja/)     | 3.1.1  |
-| [Bundler](https://bundler.io/)            | 2.3.7  |
+| [Bundler](https://bundler.io/)            | 2.4.21 |
 | [PostgreSQL](https://www.postgresql.org/) | 12     |
 
 ### 1-1. 事前準備
