@@ -80,7 +80,7 @@ module Decidim
       end
 
       def process_types
-        @process_types ||= Decidim::ParticipatoryProcessType.joins(:processes).distinct
+        @process_types ||= Decidim::ParticipatoryProcessType.joins(:processes).where(decidim_organization_id: current_organization.id).distinct
       end
 
       def filter_types_values
