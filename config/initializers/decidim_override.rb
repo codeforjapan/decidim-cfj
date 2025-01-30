@@ -94,27 +94,101 @@ Rails.application.config.to_prepare do
     end
   end
 
-  module Decidim
-    module Map
-      class DynamicMap < Map::Frontend
-        class Builder < Decidim::Map::Frontend::Builder
-          # Override
-          def map_element(html_options = {})
-            opts = view_options
-            opts["markers"] = opts["markers"].reject { |item| item[:latitude].nil? || item[:latitude].nan? } if opts["markers"].present?
-            map_html_options = {
-              "data-decidim-map" => opts.to_json,
-              # The data-markers-data is kept for backwards compatibility
-              "data-markers-data" => opts.fetch(:markers, []).to_json
-            }.merge(html_options)
+  ## load MapHelper in decidim_awesome
+  Decidim::DecidimAwesome::MapHelper # rubocop:disable Lint/Void
 
-            content = template.capture { yield }.html_safe if block_given?
+  module DecidimAwesomeMapHelperPatch
+    # rubocop:disable Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/PerceivedComplexity:
+    def awesome_map_for(components, &)
+      return unless map_utility_dynamic
 
-            template.content_tag(:div, map_html_options) do
-              (content || "")
-            end
-          end
+      map = awesome_builder.map_element({ class: "dynamic-map", id: "awesome-map-container" }, &)
+      help = content_tag(:div, class: "map__skip-container") do
+        content_tag(:p, t("screen_reader_explanation", scope: "decidim.map.dynamic"), class: "sr-only")
+      end
+
+      html_options = {
+        class: "awesome-map",
+        id: "awesome-map",
+        data: {
+          "components" => components.map do |component|
+            {
+              id: component.id,
+              type: component.manifest.name,
+              name: translated_attribute(component.name),
+              url: Decidim::EngineRouter.main_proxy(component).root_path,
+              amendments: component.manifest.name == :proposals ? Decidim::Proposals::Proposal.where(component:).only_emendations.count : 0
+            }
+          end.to_json,
+          "hide-controls" => settings_source.try(:hide_controls),
+          "collapsed" => global_settings.collapse,
+          "truncate" => global_settings.truncate || 255,
+          "map-center" => global_settings.map_center.presence&.to_json || "",
+          "map-zoom" => global_settings.map_zoom || 8,
+          "menu-merge-components" => global_settings.menu_merge_components,
+          "menu-amendments" => global_settings.menu_amendments,
+          "menu-meetings" => global_settings.menu_meetings,
+          "menu-categories" => global_settings.menu_categories,
+          "menu-hashtags" => global_settings.menu_hashtags,
+          "show-not-answered" => step_settings&.show_not_answered,
+          "show-accepted" => step_settings&.show_accepted,
+          "show-withdrawn" => step_settings&.show_withdrawn,
+          "show-evaluating" => step_settings&.show_evaluating,
+          "show-rejected" => step_settings&.show_rejected
+        }
+      }
+
+      content_tag(:div, html_options) do
+        content_tag :div, class: "w-full" do
+          help + map
         end
+      end
+    end
+    # rubocop:enable Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/PerceivedComplexity:
+  end
+
+  module Decidim
+    module DecidimAwesome
+      module MapHelper
+        prepend DecidimAwesomeMapHelperPatch
+      end
+    end
+  end
+
+  ## fix `Decidim::Attachment#file_type`
+  module DecidimAttachmentFiletypePatch
+    def file_type
+      url&.split(".")&.last&.downcase&.gsub(/[^A-Za-z0-9].*/, "")
+    end
+  end
+
+  # force to autoload `` in decidim-core
+  Decidim::Attachment # rubocop:disable Lint/Void
+
+  # override `UserAnswersSerializer#hash_for`
+  module Decidim
+    class Attachment
+      prepend DecidimAttachmentFiletypePatch
+    end
+  end
+
+  ## fix `Decidim::ParticipatoryProcesses::ParticipatoryProcessHelper#process_types`
+  module DecidimParticipatoryProcessesProcessTypesPatch
+    def process_types
+      @process_types ||= Decidim::ParticipatoryProcessType.joins(:processes).where(decidim_organization_id: current_organization.id).distinct
+    end
+  end
+
+  # force to autoload `ParticipatoryProcessHelper` in decidim-participatry_process
+  Decidim::ParticipatoryProcesses::ParticipatoryProcessHelper # rubocop:disable Lint/Void
+
+  # override `process_types`
+  module Decidim
+    module ParticipatoryProcesses
+      module ParticipatoryProcessHelper
+        prepend DecidimParticipatoryProcessesProcessTypesPatch
       end
     end
   end

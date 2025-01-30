@@ -17,23 +17,23 @@ module Decidim
       #
       # Returns nothing.
       def call
-        Decidim::ParticipatoryProcess.where(organization: organization).find_each do |participatory_process|
+        Decidim::ParticipatoryProcess.where(organization:).find_each do |participatory_process|
           puts "destroy participatory_process id: #{participatory_process.id}"
           participatory_process.destroy!
         end
-        Decidim::ParticipatoryProcessGroup.where(organization: organization).find_each do |participatory_process_group|
+        Decidim::ParticipatoryProcessGroup.where(organization:).find_each do |participatory_process_group|
           puts "destroy participatory_process_group id: #{participatory_process_group.id}"
           participatory_process_group.destroy!
         end
-        Decidim::ParticipatoryProcessType.where(organization: organization).destroy_all
-        Decidim::NavigationMaps::Blueprint.where(organization: organization).destroy_all
-        Decidim::ContentBlock.where(organization: organization).destroy_all
-        Decidim::Scope.where(organization: organization).destroy_all
-        Decidim::ScopeType.where(organization: organization).destroy_all
-        Decidim::StaticPage.where(organization: organization).delete_all ## some static_pages are not removed by `destroy_all`
-        Decidim::StaticPageTopic.where(organization: organization).destroy_all
-        Decidim::SearchableResource.where(organization: organization).destroy_all
-        Decidim::ContextualHelpSection.where(organization: organization).destroy_all
+        Decidim::ParticipatoryProcessType.where(organization:).destroy_all
+        Decidim::NavigationMaps::Blueprint.where(organization:).destroy_all
+        Decidim::ContentBlock.where(organization:).destroy_all
+        Decidim::Scope.where(organization:).destroy_all
+        Decidim::ScopeType.where(organization:).destroy_all
+        Decidim::StaticPage.where(organization:).delete_all ## some static_pages are not removed by `destroy_all`
+        Decidim::StaticPageTopic.where(organization:).destroy_all
+        Decidim::SearchableResource.where(organization:).destroy_all
+        Decidim::ContextualHelpSection.where(organization:).destroy_all
 
         broadcast(:ok)
       end

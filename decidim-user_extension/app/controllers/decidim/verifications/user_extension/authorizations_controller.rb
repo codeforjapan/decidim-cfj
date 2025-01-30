@@ -60,7 +60,6 @@ module Decidim
 
         private
 
-        # rubocop:disable Naming/MemoizedInstanceVariableName
         def authorization
           @authorization_presenter ||= AuthorizationPresenter.new(@authorization)
         end

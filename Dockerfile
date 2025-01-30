@@ -1,6 +1,6 @@
-FROM node:16.13.0-bullseye-slim AS node
+FROM node:18.17.1-bullseye-slim AS node
 
-FROM ruby:3.0.6-slim-bullseye
+FROM ruby:3.1.1-slim-bullseye
 
 # for build-dep
 RUN echo "deb-src http://deb.debian.org/debian bullseye main" >> /etc/apt/sources.list
@@ -19,6 +19,7 @@ RUN  apt-get update && \
         libde265-dev \
         git \
         curl \
+        p7zip \
         wget && \
     apt-get clean && \
     apt-get autoremove
@@ -32,12 +33,10 @@ RUN apt build-dep -y imagemagick && \
     make install  && \
     ldconfig
 
-ENV YARN_VERSION=v1.22.15
-
 # node install
 COPY --from=node /usr/local/bin/node /usr/local/bin/node
 COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
-COPY --from=node /opt/yarn-${YARN_VERSION} /opt/yarn
+COPY --from=node /opt/yarn-* /opt/yarn
 RUN ln -s /opt/yarn/bin/yarn /usr/local/bin/yarn \
   && ln -s /opt/yarn/bin/yarn /usr/local/bin/yarnpkg \
   && ln -s /usr/local/bin/node /usr/local/bin/nodejs \
@@ -48,7 +47,7 @@ ARG RAILS_ENV="production"
 ENV LANG=C.UTF-8 \
     LC_ALL=C.UTF-8 \
     BUNDLER_JOBS=4 \
-    BUNDLER_VERSION=2.2.33 \
+    BUNDLER_VERSION=2.4.21 \
     APP_HOME=/app \
     RAILS_ENV=${RAILS_ENV} \
     RAILS_LOG_TO_STDOUT=true \

@@ -29,7 +29,7 @@
 // $color-removal: #ffeef0;
 
 //@import "decidim/application";
-
+@import "settings";
 
 // Replace ^ v icons with thumbs to make their action more clear
 .comment__votes--up {
@@ -94,9 +94,6 @@
 
     background: $headline;
 
-    @include breakpoint(smallmedium down) {
-      border-top: 2.125rem solid darken($point-color, 15%);
-    }
   }
 
   .tool-bar {
@@ -112,7 +109,7 @@
       color: $bgcolor;
 
       &:hover {
-        background-color: lighten($medium-gray, 30%);
+        background-color: lighten(#e8e8e8, 30%);
       }
     }
   }

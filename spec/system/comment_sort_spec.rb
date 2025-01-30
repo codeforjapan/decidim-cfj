@@ -2,44 +2,37 @@
 
 require "rails_helper"
 
-describe "Comments", type: :system, perform_enqueued: true do
-  let!(:component) { create(:debates_component, organization: organization) }
-  let!(:commentable) { create(:debate, :open_ama, component: component) }
+describe "Comments", :perform_enqueued do
+  let!(:component) { create(:debates_component, organization:) }
+  let!(:commentable) { create(:debate, :open_ama, component:) }
 
   let(:resource_path) { resource_locator(commentable).path }
 
   let!(:organization) { create(:organization) }
-  let!(:user) { create(:user, :confirmed, organization: organization) }
-  let!(:comments) { create_list(:comment, 3, commentable: commentable) }
+  let!(:user) { create(:user, :confirmed, organization:) }
+  let!(:comments) { create_list(:comment, 3, commentable:) }
 
   before do
     switch_to_host(organization.host)
 
-    comment = create(:comment, commentable: commentable, body: "Most Rated Comment")
-    create(:comment_vote, comment: comment, author: user, weight: 1)
+    comment = create(:comment, commentable:, body: "Most Rated Comment")
+    create(:comment_vote, comment:, author: user, weight: 1)
 
-    visit decidim.root_path
+    visit decidim.root_path(locale: :ja)
   end
 
   it "allows user to store selected comment order in cookies", :slow do
     # click_button "同意します"
     visit resource_path
 
-    expect(page).to have_no_content("Comments are disabled at this time")
+    expect(page).to have_no_content("コメントは現時点で無効になっていますが")
 
     expect(page).to have_css(".comment", minimum: 1)
-    page.find(".order-by .dropdown.menu .is-dropdown-submenu-parent").hover
 
+    # click "評価の高い順"
     within ".comments" do
-      within ".order-by__dropdown" do
-        # click_link "古い順" # Opens the dropdown
-        # click_link "評価の高い順"
-        page.find("#comments-order-menu-control").click # Opens the dropdown
-        page.find("#comments-order-chooser-menu li:first-of-type a").click
-      end
+      click_link "評価の高い順"
     end
-
-    expect(page).to have_css(".comments > div:nth-child(2)", text: "Most Rated Comment")
 
     # show other page
     visit "/"
@@ -48,8 +41,20 @@ describe "Comments", type: :system, perform_enqueued: true do
     visit resource_path
 
     expect(page).to have_css(".comment", minimum: 1)
-    page.find(".order-by .dropdown.menu .is-dropdown-submenu-parent").hover
-    # expect(page).to have_css("#comments-order-menu-control", text: "評価の高い順")
-    expect(page).to have_css("#comments-order-menu-control", text: "Best rated")
+    expect(page).to have_css("div.comment-order-by div a.underline", text: "評価の高い順")
+
+    # click "新しい順"
+    within ".comments" do
+      click_link "新しい順"
+    end
+
+    # show other page
+    visit "/"
+
+    # back to resource page
+    visit resource_path
+
+    expect(page).to have_css(".comment", minimum: 1)
+    expect(page).to have_css("div.comment-order-by div a.underline", text: "新しい順")
   end
 end
