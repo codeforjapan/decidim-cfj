@@ -516,6 +516,11 @@ Rails.application.config.to_prepare do
   else
     Decidim.config.content_security_policies_extra["frame-src"].push("www.youtube.com", "docs.google.com", "www.slideshare.net", "www.loom.com")
   end
+  if Decidim.config.content_security_policies_extra["script-src"].blank?
+    Decidim.config.content_security_policies_extra["script-src"] = %w(js-agent.newrelic.com)
+  else
+    Decidim.config.content_security_policies_extra["script-src"].push("js-agent.newrelic.com")
+  end
 end
 Decidim.icons.register(name: "line", icon: "line-fill", category: "system", description: "", engine: :core)
 

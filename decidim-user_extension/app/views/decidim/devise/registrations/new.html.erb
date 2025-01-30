@@ -33,7 +33,7 @@
     <%= invisible_captcha %>
 
     <div class="form__wrapper">
-      <%= f.text_field :name, help_text: t("decidim.devise.registrations.new.username_help"), autocomplete: "name", placeholder: "John Doe" %>
+      <%= f.text_field :name, help_text: t("decidim.devise.registrations.new.username_help"), autocomplete: "name", placeholder: t("decidim.devise.registrations.new.username_placeholder") %>
 
       <%= f.email_field :email, autocomplete: "email", placeholder: t("placeholder_email", scope: "decidim.devise.shared") %>
 
@@ -47,7 +47,7 @@
     </div>
 
     <div id="card__tos" class="form__wrapper-block">
-      <h4 class="h4"><%= t("decidim.devise.registrations.new.tos_title") %></h4>
+      <h2 class="h4"><%= t("decidim.devise.registrations.new.tos_title") %></h2>
 
       <div class="tos-text">
         <% terms_of_service_summary_content_blocks.each do |content_block| %>
@@ -59,7 +59,7 @@
     </div>
 
     <div id="card__newsletter" class="form__wrapper-block">
-      <h4 class="h4"><%= t("decidim.devise.registrations.new.newsletter_title") %></h4>
+      <h2 class="h4"><%= t("decidim.devise.registrations.new.newsletter_title") %></h2>
       <%= f.check_box :newsletter, label: t("decidim.devise.registrations.new.newsletter"), checked: @form.newsletter, label_options: { class: "form__wrapper-checkbox-label" } %>
     </div>
 
