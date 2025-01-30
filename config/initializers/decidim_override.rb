@@ -174,6 +174,25 @@ Rails.application.config.to_prepare do
     end
   end
 
+  ## fix `Decidim::ParticipatoryProcesses::ParticipatoryProcessHelper#process_types`
+  module DecidimParticipatoryProcessesProcessTypesPatch
+    def process_types
+      @process_types ||= Decidim::ParticipatoryProcessType.joins(:processes).where(decidim_organization_id: current_organization.id).distinct
+    end
+  end
+
+  # force to autoload `ParticipatoryProcessHelper` in decidim-participatry_process
+  Decidim::ParticipatoryProcesses::ParticipatoryProcessHelper # rubocop:disable Lint/Void
+
+  # override `process_types`
+  module Decidim
+    module ParticipatoryProcesses
+      module ParticipatoryProcessHelper
+        prepend DecidimParticipatoryProcessesProcessTypesPatch
+      end
+    end
+  end
+
   # Fix I18n.transliterate()
   I18n.config.backend.instance_eval do
     @transliterators[:ja] = I18n::Backend::Transliterator.get(->(string) { string })
