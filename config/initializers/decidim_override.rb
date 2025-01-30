@@ -157,6 +157,23 @@ Rails.application.config.to_prepare do
     end
   end
 
+  ## fix `Decidim::Attachment#file_type`
+  module DecidimAttachmentFiletypePatch
+    def file_type
+      url&.split(".")&.last&.downcase&.gsub(/[^A-Za-z0-9].*/, "")
+    end
+  end
+
+  # force to autoload `` in decidim-core
+  Decidim::Attachment # rubocop:disable Lint/Void
+
+  # override `UserAnswersSerializer#hash_for`
+  module Decidim
+    class Attachment
+      prepend DecidimAttachmentFiletypePatch
+    end
+  end
+
   # Fix I18n.transliterate()
   I18n.config.backend.instance_eval do
     @transliterators[:ja] = I18n::Backend::Transliterator.get(->(string) { string })
