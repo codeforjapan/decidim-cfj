@@ -1,5 +1,13 @@
 # Change Log
 
+## [1.4.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.4.0...v1.4.1) (2025-01-30)
+
+
+### Bug Fixes
+
+* initializer ([d218cdf](https://github.com/codeforjapan/decidim-cfj/commit/d218cdf27899139d90c64e845c80018899043d59))
+* user registration ([e13eef7](https://github.com/codeforjapan/decidim-cfj/commit/e13eef73bc1fb0fab9fec72a71f7a361524f490c))
+
 ## [1.4.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.3.3...v1.4.0) (2025-01-30)
 
 
