@@ -4,7 +4,7 @@ source "https://rubygems.org"
 
 ruby RUBY_VERSION
 
-gem "decidim", "0.28.3"
+gem "decidim", "0.28.4"
 
 gem "decidim-decidim_awesome", git: "https://github.com/codeforjapan/decidim-module-decidim_awesome.git", branch: "main-2025-01-15"
 
@@ -25,6 +25,7 @@ gem "wicked_pdf", "~> 2.1"
 gem "deface"
 gem "image_processing"
 gem "newrelic_rpm"
+gem 'concurrent-ruby', '1.3.4'
 
 gem "omniauth-cityos-dcp", git: "https://github.com/TheDesignium/omniauth-cityos-dcp.git", tag: "v1.3.0"
 gem "omniauth-line_login", path: "omniauth-line_login"
@@ -38,7 +39,7 @@ group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
   gem "figaro"
 
-  gem "decidim-dev", "0.28.3"
+  gem "decidim-dev", "0.28.4"
   gem "dotenv-rails"
   gem "factory_bot_rails"
   gem "rspec-rails"
