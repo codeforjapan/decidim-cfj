@@ -106,6 +106,9 @@ ja:
           email_outro: <a href="%{conflicts_path}">検証の競合リスト</a> を確認し、参加者に連絡して詳細を調査し、問題を解決してください。
           email_subject: 管理対象参加者に対する検証の試みに失敗しました
           notification_title: 参加者 <a href="%{resource_path}">%{resource_title}</a> が管理対象参加者 <a href="%{managed_user_path}">%{managed_user_name}</a>のデータで自身を検証しようとしました。
+    following:
+      following_count:
+        other: "%{count} 人をフォロー中"
     forms:
       file_help:
         image:
