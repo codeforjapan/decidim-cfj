@@ -62,4 +62,19 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 
   config.include ActiveStorageHelpers
+
+  config.append_before do
+    ## XXX: Override CSP settings
+    # cf. https://github.com/decidim/decidim/blob/a1768d7c19c0c80b19f5a1be6d888668f121a6be/decidim-dev/lib/decidim/dev/test/spec_helper.rb#L43-L46
+    Decidim.config.content_security_policies_extra = {
+      "default-src" => ["*"],
+      "img-src" => ["*"],
+      "media-src" => ["*"],
+      "script-src" => ["*"],
+      "style-src" => ["*", "fonts.googleapis.com"],
+      "font-src" => ["*"],
+      "frame-src" => ["*"],
+      "connect-src" => ["*"]
+    }
+  end
 end
