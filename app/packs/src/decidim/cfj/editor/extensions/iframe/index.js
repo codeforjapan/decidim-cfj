@@ -17,10 +17,12 @@ export default Node.create({
   name: "iframe",
   group: "block",
   atom: true,
-  defaultOptions: {
-    allowFullscreen: true,
-    HTMLAttributes: {
-      class: "iframe-wrapper"
+  defaultOptions() {
+    return {
+      allowFullscreen: true,
+      HTMLAttributes: {
+        class: "iframe-wrapper"
+      }
     }
   },
   addAttributes() {
