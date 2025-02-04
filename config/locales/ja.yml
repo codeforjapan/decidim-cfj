@@ -85,6 +85,8 @@ ja:
           address_help: 例) 兵庫県加古川市加古川町
       shared:
         placeholder_email: ''
+    endorsement_buttons_cell:
+      endorse: オススメする
     events:
       gamification:
         level_up:
