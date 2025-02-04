@@ -64,7 +64,8 @@ Rails.application.config.to_prepare do
     end
   end
 
-  ## override `PgSearch::ScopeOptions::FEATURE_CLASSES`
+  ## XXX: override `PgSearch::ScopeOptions::FEATURE_CLASSES`
+  PgSearch::ScopeOptions.send(:remove_const, :FEATURE_CLASSES) if PgSearch::ScopeOptions.const_defined?(:FEATURE_CLASSES)
   PgSearch::ScopeOptions::FEATURE_CLASSES = {
     dmetaphone: PgSearch::Features::DMetaphone,
     tsearch: PgSearch::Features::TSearch,
