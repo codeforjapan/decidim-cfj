@@ -59,8 +59,7 @@ module Decidim
 
       @menu_highlighted_participatory_process ||= (
         # The queries already include the order by weight
-        Decidim::ParticipatoryProcesses::OrganizationParticipatoryProcesses.new(current_organization).query.visible_for(current_user) |
-        Decidim::ParticipatoryProcesses::PromotedParticipatoryProcesses.new.query.visible_for(current_user)
+        Decidim::ParticipatoryProcesses::OrganizationParticipatoryProcesses.new(current_organization).query.visible_for(current_user)
       ).first
     end
 
