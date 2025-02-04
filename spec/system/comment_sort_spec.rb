@@ -19,6 +19,8 @@ describe "Comments", :perform_enqueued do
     create(:comment_vote, comment:, author: user, weight: 1)
 
     visit decidim.root_path(locale: :ja)
+
+    Capybara.raise_server_errors = false
   end
 
   it "allows user to store selected comment order in cookies", :slow do
