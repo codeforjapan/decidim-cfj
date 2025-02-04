@@ -1,5 +1,25 @@
 # Change Log
 
+## [1.5.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.4.1...v1.5.0) (2025-02-04)
+
+
+### Features
+
+* add rake task `i18n_yaml:dump_all` ([de9701b](https://github.com/codeforjapan/decidim-cfj/commit/de9701b47a962af4282e94466f543260b09069cf))
+* update decidim 0.28.4 ([982bc86](https://github.com/codeforjapan/decidim-cfj/commit/982bc86c8a4b8017a7e73aecca7ec3b8a2c63140))
+
+
+### Bug Fixes
+
+* Add translation for following count ([f8ef737](https://github.com/codeforjapan/decidim-cfj/commit/f8ef7373881fe188d86bb5ecfa1ed1f5eb9adb4c))
+* decidim.endorsement_buttons_cell.endorse ([fee2a70](https://github.com/codeforjapan/decidim-cfj/commit/fee2a70979b0aed3d3020dbaf1949fc9bbef84d4))
+* lint ([1fc7c63](https://github.com/codeforjapan/decidim-cfj/commit/1fc7c6348c708e1a0c3530df079928e504e18a41))
+* override CSP settings in all specs ([1e6869f](https://github.com/codeforjapan/decidim-cfj/commit/1e6869fe1fa84fbd4c4e37df80ff5c33c1a369d2))
+* suppress warnings in iframe ([e14a309](https://github.com/codeforjapan/decidim-cfj/commit/e14a309f1ace1a321c33a7f4b268fa45823934aa))
+* Suppress warnings in server ([8a532d8](https://github.com/codeforjapan/decidim-cfj/commit/8a532d8b8c0178a9fd76f76b140328dd539c11f0))
+* Suppress warnings in server ([d32189e](https://github.com/codeforjapan/decidim-cfj/commit/d32189ec83aa68d9084c3442a9de13c36f0d18cc))
+* Suppress warnings in server ([bfc1774](https://github.com/codeforjapan/decidim-cfj/commit/bfc177436865ef2e6d42a1a569dbb9f4041faa53))
+
 ## [1.4.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.4.0...v1.4.1) (2025-01-30)
 
 
