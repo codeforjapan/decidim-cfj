@@ -217,6 +217,10 @@ Rails.application.config.to_prepare do
     module Admin
       class Permissions < Decidim::DefaultPermissions
         prepend DecidimAdminPermissionsPatch
+      end
+    end
+  end
+
   # ----------------------------------------
 
   # fix editing the assembly content block
