@@ -193,6 +193,34 @@ Rails.application.config.to_prepare do
     end
   end
 
+  module DecidimAdminPermissionsPatch
+    def permissions
+      if user &&
+         permission_action.scope == :admin &&
+         permission_action.subject == :editor_image && (
+           user.admin? ||
+           user.roles.any? ||
+           Decidim::ParticipatoryProcessUserRole.exists?(user:) ||
+           Decidim::AssemblyUserRole.exists?(user:) ||
+           Decidim::ConferenceUserRole.exists?(user:)
+         )
+        allow!
+      end
+
+      super
+    end
+  end
+
+  Decidim::Admin::Permissions # rubocop:disable Lint/Void
+
+  module Decidim
+    module Admin
+      class Permissions < Decidim::DefaultPermissions
+        prepend DecidimAdminPermissionsPatch
+      end
+    end
+  end
+
   # ----------------------------------------
 
   # fix editing the assembly content block
@@ -218,9 +246,6 @@ Rails.application.config.to_prepare do
       end
     end
   end
-
-  # ----------------------------------------
-
   # Fix I18n.transliterate()
   I18n.config.backend.instance_eval do
     @transliterators[:ja] = I18n::Backend::Transliterator.get(->(string) { string })
