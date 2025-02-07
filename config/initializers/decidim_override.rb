@@ -217,10 +217,31 @@ Rails.application.config.to_prepare do
     module Admin
       class Permissions < Decidim::DefaultPermissions
         prepend DecidimAdminPermissionsPatch
-      end
+  # ----------------------------------------
+
+  # fix editing the assembly content block
+  # cf. https://github.com/decidim/decidim/pull/13544
+  module DecidimAssembliesAdminAssemblyLandingPageContentBlocksControllerForV0283Patch
+    def parent_assembly
+      scoped_resource.parent
     end
   end
 
+  # force to autoload original controller
+  Decidim::Assemblies::Admin::AssemblyLandingPageContentBlocksController # rubocop:disable Lint/Void
+
+  # add helper `parent_assembly` as helper
+  module Decidim
+    module Assemblies
+      module Admin
+        class AssemblyLandingPageContentBlocksController
+          prepend DecidimAssembliesAdminAssemblyLandingPageContentBlocksControllerForV0283Patch
+
+          helper_method :parent_assembly
+        end
+      end
+    end
+  end
   # Fix I18n.transliterate()
   I18n.config.backend.instance_eval do
     @transliterators[:ja] = I18n::Backend::Transliterator.get(->(string) { string })
