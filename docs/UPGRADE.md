@@ -50,13 +50,9 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 
   https://github.com/codeforjapan/decidim-cfj/pull/460 で追加されたファイル。印刷用のCSSファイル。
 
-* `app/packs/stylesheets/decidim/cfj/ql_html_editor.scss`
+* `app/packs/stylesheets/decidim/cfj/tiptap_html_editor.scss`
 
-  https://github.com/codeforjapan/decidim-cfj/pull/469 で追加されたファイル。Quill HTML Editor用のCSSファイル。
-
-* `app/packs/stylesheets/decidim/cfj/search.scss`
-
-  https://github.com/codeforjapan/decidim-cfj/pull/348 で追加されたファイル。グローバル検索が日本語では機能していないため削除したもの。
+  https://github.com/ayuki-joto/decidim-cfj/pull/30 https://github.com/codeforjapan/decidim-cfj/pull/596 で追加されたファイル。TipTap Editor用のCSSファイル。
 
 * `app/controllers/decidim/debates/versions_controller.rb`
 
