@@ -34,6 +34,22 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 
   `delete:destroy_all`タスクで不要なレコードを消せるように追加されたファイル。 https://github.com/codeforjapan/decidim-cfj/pull/501 で追加されたものです。
 
+* `app/cells/decidim/assemblies/assembly_g_cell.rb`,
+  `app/cells/decidim/participatory_processes/process_g_cell.rb`
+
+  `resource_image_url`を`rails_blob_path()`を使ったものに差し替え
+
+* `app/cells/decidim/comments/last_comment_activity/show.erb`
+  `app/cells/decidim/comments/last_comment_activity_cell.rb`
+  `app/cells/decidim/content_blocks/last_comment/show.erb`
+  `app/cells/decidim/content_blocks/last_comment_cell.rb`
+  `app/cells/decidim/last_comment_activities/show.erb`
+  `app/cells/decidim/last_comment_activities_cell.rb`
+
+  `https://github.com/ayuki-joto/decidim-cfj/pull/45` `https://github.com/ayuki-joto/decidim-cfj/pull/65` コメントに限定したLast Activityをcontent_blocksとして追加しています。
+
+* ``
+
 * `app/packs/stylesheets/decidim/cfj/buttons.scss`
 
   `https://github.com/codeforjapan/decidim-cfj/issues/46` の対応で `https://github.com/codeforjapan/decidim-cfj/pull/96` で追加しています。
