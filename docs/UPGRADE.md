@@ -48,8 +48,6 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 
   `https://github.com/ayuki-joto/decidim-cfj/pull/45` `https://github.com/ayuki-joto/decidim-cfj/pull/65` コメントに限定したLast Activityをcontent_blocksとして追加しています。
 
-* ``
-
 * `app/packs/stylesheets/decidim/cfj/buttons.scss`
 
   `https://github.com/codeforjapan/decidim-cfj/issues/46` の対応で `https://github.com/codeforjapan/decidim-cfj/pull/96` で追加しています。
@@ -89,6 +87,14 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 * `app/uploaders/decidim/image_uploader.rb`
 
   https://github.com/codeforjapan/decidim-cfj/pull/455 で追加したもの。ピクセル数の大きい画像に対応するため、max_image_height_or_widthの値を変更している。
+
+* `app/views/layouts/decidim/footer/_main_links.html.erb`
+
+  https://github.com/ayuki-joto/decidim-cfj/pull/57 で追加したもの。footerのうち「リソース」欄を表示させないようにする。
+
+* `app/views/decidim/blogs/posts/show.html.erb`
+
+  https://github.com/codeforjapan/decidim-cfj/pull/550 metaとOGPのdescriptionの長さ制限とOGP画像追加の修正。
 
 * `config/application.rb`
 
