@@ -1,5 +1,15 @@
 # Change Log
 
+## [1.5.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.5.0...v1.5.1) (2025-02-11)
+
+
+### Bug Fixes
+
+* `hello` with name ([0548566](https://github.com/codeforjapan/decidim-cfj/commit/0548566058f2660fe6df5929248379b64b462ca7))
+* editor_image permissions for process admin ([74d3dbc](https://github.com/codeforjapan/decidim-cfj/commit/74d3dbcf0a15c0f7e23dfbb446b849c2f1317757))
+* error ([85bb24d](https://github.com/codeforjapan/decidim-cfj/commit/85bb24da21f8392e039c6c8ab7a5fbfe8b9d4cc5))
+* remove Decidim::Amendable::AmendButtonCardCell ([1097032](https://github.com/codeforjapan/decidim-cfj/commit/1097032a31e1974eb9e083e4a0aa9105578cfcc0))
+
 ## [1.5.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.4.1...v1.5.0) (2025-02-04)
 
 
