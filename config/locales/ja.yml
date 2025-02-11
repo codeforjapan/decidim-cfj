@@ -31,11 +31,6 @@ ja:
         real_name: 本名
       minutes:
         visible: 表示する
-  activerecord:
-    attributes:
-      decidim/proposals/proposal:
-        title: タイトル
-        body: 本文
   decidim:
     accountability:
       results:
