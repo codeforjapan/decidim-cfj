@@ -786,6 +786,8 @@ ja:
       assemblies:
         index:
           promoted_assemblies: 注目の参加スペース
+      header:
+        hello: こんにちは、 %{name} さん
       participatory_processes:
         index:
           promoted_processes: 注目の参加型プロセス
