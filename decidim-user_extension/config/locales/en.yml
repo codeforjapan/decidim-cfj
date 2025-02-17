@@ -8,11 +8,29 @@ en:
         gender: Gender
         occupation: Occupation
         real_name: Real name
+      user:
+        user_extension_address: Address
+        user_extension_birth_year: Birth year
+        user_extension_gender: Gender
+        user_extension_occupation: Occupation
+        user_extension_real_name: Real name
   decidim:
     admin:
       officializations:
         index:
           show_user_extension: Show user extension
+    authorization_handlers:
+      admin:
+        user_extension:
+          help:
+            - (help)
+      user_extension:
+        explanation: 'for user extension'
+        name: 'user extention'
+    devise:
+      registrations:
+        user_extension:
+          birth_year_help: Please enter a 4-digit number. e.g. 1997
     user_extension:
       admin:
         officializations:
