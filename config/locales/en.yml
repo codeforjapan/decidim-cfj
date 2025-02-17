@@ -23,6 +23,21 @@ en:
       registrations:
         new:
           username_placeholder: Ayumu Kyoso
+    devise:
+      registrations:
+        user_extension:
+          address_help: 'e.g. "Kakogawa-cho, Kakogawa, Hyogo"'
+        new:
+          nickname_help: Enter any optional alphabetic characters for personal identification.
+          nickname_notice: "Note: Your display name and account ID will be shown in posts. e.g., Ayumi Kyoso @ayumi"
+          nickname_placeholder: ayumi
+          password_help: "%{minimum_characters} characters minimum, must not be too common (e.g. 123456) and must be different from your nickname and your email."
+          see_username: See your nickname
+          sign_in: Sign in
+          username_placeholder: Ayumu Kyoso
+          address_help: 'e.g. "Kakogawa-cho, Kakogawa, Hyogo"'
+      shared:
+        placeholder_email: ''
     debates:
       debates:
         versions:
