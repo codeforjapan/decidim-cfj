@@ -251,4 +251,10 @@ Rails.application.config.to_prepare do
     @transliterators[:ja] = I18n::Backend::Transliterator.get(->(string) { string })
     @transliterators[:en] = I18n::Backend::Transliterator.get(->(string) { string })
   end
+
+  module Decidim
+    config_accessor :max_results_options
+  end
+
+  Decidim.max_results_options = [6, 9, 12, 15]
 end
