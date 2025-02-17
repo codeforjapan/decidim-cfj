@@ -16,9 +16,9 @@ en:
   decidim:
     content_blocks:
       last_comment:
-        name: 最近のコメント
-        title: 最近のコメント
-        view_all: すべて表示
+        name: Last comments
+        title: Last comments
+        view_all: View all
     devise:
       registrations:
         new:
