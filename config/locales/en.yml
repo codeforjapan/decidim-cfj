@@ -19,6 +19,10 @@ en:
         name: 最近のコメント
         title: 最近のコメント
         view_all: すべて表示
+    devise:
+      registrations:
+        new:
+          username_placeholder: Ayumu Kyoso
     debates:
       debates:
         versions:
