@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.5.2](https://github.com/codeforjapan/decidim-cfj/compare/v1.5.1...v1.5.2) (2025-02-17)
+
+
+### Bug Fixes
+
+* locale for devise and user_extension ([09c0c32](https://github.com/codeforjapan/decidim-cfj/commit/09c0c327c495f262747685a87c1e24d919cbbc15))
+
 ## [1.5.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.5.0...v1.5.1) (2025-02-11)
 
 
