@@ -3,28 +3,16 @@
 
 body {
   font-family: "Noto Sans JP", -apple-system, blinkmacsystemfont, "Segoe UI", meiryo, sans-serif;
+
+  &.text-black { color: #1A1A1C; }
 }
 
-#content, 
-#content > h1, #content > h2, #content > h3, #content > h4, #content > h5, #content > h6,
-.editor-content, 
-.editor-content h1, .editor-content h2, .editor-content h3, .editor-content h4, .editor-content h5, .editor-content h6,
-.title-decorator, .content-block {
-  font-family: "Noto Sans JP", -apple-system, blinkmacsystemfont, "Segoe UI", meiryo, sans-serif;
-}
+.layout-container, #content {
+  font-weight: 400;
 
-:root {
-  --orgcolor: #1A1A1C;
-}
-
-#content {
   .h1, .h2, .h3, .h4, .h5, .h6,
   h2.home__section-title {
     font-weight: 600;
-  }
-  .h2, .h3, .h4, .h5, .h6,
-  h2.home__section-title {
-    color: var(--orgcolor);
   }
 
   .h1,
@@ -36,11 +24,6 @@ body {
       font-size: 2.75rem;
       line-height: 1.4;
     } 
-  }
-
-  h1 {
-    &:not(.h1) { color: var(--orgcolor); }
-    &.h1 { color: #FFF; }
   }
 
   .h2,
@@ -112,7 +95,6 @@ body {
   h2,h3,h4,h5,h6 {
     margin-bottom: inherit;
     font-weight: 600;
-    color: var(--orgcolor);
   }
 
   h2 {
@@ -176,7 +158,6 @@ body {
     font-weight: 500;
     line-height: 1.75;
     letter-spacing: .2px;
-    color: var(--orgcolor);
 
     @media (min-width: 768px) {
       font-size: 1rem;
