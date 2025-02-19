@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.6.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.5.2...v1.6.0) (2025-02-19)
+
+
+### Features
+
+* add .env.sample ([c84325a](https://github.com/codeforjapan/decidim-cfj/commit/c84325a5116ec4db5bbbb3c7c2abb96e4b6c8c0b))
+
 ## [1.5.2](https://github.com/codeforjapan/decidim-cfj/compare/v1.5.1...v1.5.2) (2025-02-18)
 
 
