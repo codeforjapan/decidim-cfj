@@ -18,6 +18,7 @@ import VideoEmbed from "src/decidim/editor/extensions/video_embed";
 import Emoji from "src/decidim/editor/extensions/emoji";
 import TagEdit from "src/decidim/cfj/editor/extensions/tag_edit";
 import Iframe from "src/decidim/cfj/editor/extensions/iframe";
+import { SimpleImage } from "src/decidim/cfj/editor/extensions/simple_image";
 
 export default Extension.create({
   name: "decidimKit",
@@ -86,6 +87,8 @@ export default Extension.create({
     if (this.options.iframe !== false) {
       extensions.push(Iframe.configure(this.options.iframe));
     }
+
+    extensions.push(SimpleImage.configure(true));
 
     return extensions;
   }
