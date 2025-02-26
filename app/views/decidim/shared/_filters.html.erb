@@ -32,7 +32,9 @@
       <% end %>
 
       <% filter_sections.each do |f| %>
-        <%= form.collection_filter(**f) %>
+        <% unless f[:collection].is_a?(Decidim::CheckBoxesTreeHelper::TreeNode) && f[:collection].node.count == 1 && f[:collection].node[0].is_a?(Decidim::CheckBoxesTreeHelper::TreePoint) %>
+          <%= form.collection_filter(**f) %>
+        <% end %>
       <% end %>
 
       <%= yield %>
