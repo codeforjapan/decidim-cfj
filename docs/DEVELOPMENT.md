@@ -10,7 +10,7 @@ Dockerで環境を構築する際は、1.環境構築と2. 実行（ローカル
 |-------------------------------------------|--------|
 | [Ruby](https://www.ruby-lang.org/ja/)     | 3.1.1  |
 | [Bundler](https://bundler.io/)            | 2.4.21 |
-| [PostgreSQL](https://www.postgresql.org/) | 12     |
+| [PostgreSQL](https://www.postgresql.org/) | 14     |
 
 ### 1-1. 事前準備
 - rbenvのインストール（macOSならhomebrew経由）
