@@ -20,6 +20,7 @@ RUN  apt-get update && \
         git \
         curl \
         p7zip \
+        wkhtmltopdf \
         wget && \
     apt-get clean && \
     apt-get autoremove

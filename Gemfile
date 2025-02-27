@@ -4,7 +4,7 @@ source "https://rubygems.org"
 
 ruby RUBY_VERSION
 
-gem "decidim", "0.28.4"
+gem "decidim", "0.28.5"
 
 gem "decidim-decidim_awesome", git: "https://github.com/codeforjapan/decidim-module-decidim_awesome.git", branch: "main-2025-01-15"
 
@@ -22,7 +22,6 @@ gem "faker"
 
 gem "wicked_pdf", "~> 2.1"
 
-gem "concurrent-ruby", "1.3.4"
 gem "deface"
 gem "image_processing"
 gem "newrelic_rpm"
@@ -39,7 +38,7 @@ group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
   gem "figaro"
 
-  gem "decidim-dev", "0.28.4"
+  gem "decidim-dev", "0.28.5"
   gem "dotenv-rails"
   gem "factory_bot_rails"
   gem "rspec-rails"
