@@ -45,7 +45,7 @@ jobs:
       packages: read
     services:
       db:
-        image: ghcr.io/codeforjapan/postgresql_bigm:12-latest
+        image: ghcr.io/codeforjapan/postgresql_bigm:14-latest
         ports:
           - 5432:5432
         env:
