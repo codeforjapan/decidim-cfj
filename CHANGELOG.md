@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.6.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.6.0...v1.6.1) (2025-03-03)
+
+
+### Bug Fixes
+
+* Hide filter if only a single TreePoint node is present ([b01c7bd](https://github.com/codeforjapan/decidim-cfj/commit/b01c7bd629d75aed62dac6b1a901362c8170d3ce))
+
 ## [1.6.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.5.2...v1.6.0) (2025-02-19)
 
 
