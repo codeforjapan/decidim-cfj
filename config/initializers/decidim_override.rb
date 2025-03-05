@@ -265,12 +265,11 @@ Rails.application.config.to_prepare do
 
   # add helper `escape_url` as helper
   module Decidim
+    class LinksController
+      prepend DecidimEscapeUriPatch
 
-        class LinksController
-          prepend DecidimEscapeUriPatch
-
-          helper_method :escape_url
-        end
+      helper_method :escape_url
+    end
   end
 
   # Fix I18n.transliterate()
