@@ -914,6 +914,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  addressable
   aws-sdk-s3
   bootsnap
   byebug (~> 11.0)

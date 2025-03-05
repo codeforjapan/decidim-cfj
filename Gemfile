@@ -26,6 +26,7 @@ gem "concurrent-ruby", "1.3.4"
 gem "deface"
 gem "image_processing"
 gem "newrelic_rpm"
+gem 'addressable'
 
 gem "omniauth-cityos-dcp", git: "https://github.com/TheDesignium/omniauth-cityos-dcp.git", tag: "v1.3.0"
 gem "omniauth-line_login", path: "omniauth-line_login"
