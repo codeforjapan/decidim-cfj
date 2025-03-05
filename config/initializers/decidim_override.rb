@@ -246,6 +246,32 @@ Rails.application.config.to_prepare do
       end
     end
   end
+
+  # ----------------------------------------
+
+  # override `escape_url`
+  module DecidimEscapeUriPatch
+    def escape_url(external_url)
+      uri = Addressable::URI.parse(external_url)
+      original_query = uri.query
+      normalized_uri = uri.normalize
+      normalized_uri.query = original_query
+      normalized_uri.to_s
+    end
+  end
+
+  # force to autoload original controller
+  Decidim::LinksController # rubocop:disable Lint/Void
+
+  # add helper `escape_url` as helper
+  module Decidim
+    class LinksController
+      prepend DecidimEscapeUriPatch
+
+      helper_method :escape_url
+    end
+  end
+
   # Fix I18n.transliterate()
   I18n.config.backend.instance_eval do
     @transliterators[:ja] = I18n::Backend::Transliterator.get(->(string) { string })
