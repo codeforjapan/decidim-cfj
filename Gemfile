@@ -22,7 +22,6 @@ gem "faker"
 
 gem "wicked_pdf", "~> 2.1"
 
-gem "addressable"
 gem "concurrent-ruby", "1.3.4"
 gem "deface"
 gem "image_processing"
