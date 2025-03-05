@@ -1,5 +1,19 @@
 # Change Log
 
+## [1.7.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.6.1...v1.7.0) (2025-03-05)
+
+
+### Features
+
+* OmniAuth::Logging and subscribe hook ([d764a07](https://github.com/codeforjapan/decidim-cfj/commit/d764a07b2e67466cf30b50b25026f92d32d9411c))
+
+
+### Bug Fixes
+
+* lint ([47d9880](https://github.com/codeforjapan/decidim-cfj/commit/47d9880becec44d93056e3f4fc3c8fd1542d43a6))
+* override links controller escape_url ([de52eb1](https://github.com/codeforjapan/decidim-cfj/commit/de52eb1b7eca6a2d6c1271014d03bd407fac76aa))
+* remove installed gem ([aae2dac](https://github.com/codeforjapan/decidim-cfj/commit/aae2dac59a50c868e07f1f40ecf75a34fc2eb767))
+
 ## [1.6.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.6.0...v1.6.1) (2025-03-03)
 
 
