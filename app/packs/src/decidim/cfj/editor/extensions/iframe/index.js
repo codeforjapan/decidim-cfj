@@ -1,14 +1,10 @@
 import { Node } from "@tiptap/core"
 
-const iframeAllowedDomains = ["www.youtube.com", "www.youtube-nocookie.com", "vimeo.com", "docs.google.com", "www.slideshare.net"];
-
 const isAllowedDomain = (src) => {
   if (!src) return false;
-  for (const domain of iframeAllowedDomains) {
-    const domainPattern = new RegExp(`^https://${domain}/`);
-    if (domainPattern.test(src)) {
-      return true;
-    }
+  const domainPattern = new RegExp(`^https://.*/`);
+  if (domainPattern.test(src)) {
+    return true;
   }
   return false;
 };
