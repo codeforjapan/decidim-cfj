@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.7.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.7.0...v1.7.1) (2025-03-11)
+
+
+### Bug Fixes
+
+* iframe: allow any domains ([78054c5](https://github.com/codeforjapan/decidim-cfj/commit/78054c51f3175094e8d9458b9f5ce06c81a5f736))
+
 ## [1.7.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.6.1...v1.7.0) (2025-03-05)
 
 
