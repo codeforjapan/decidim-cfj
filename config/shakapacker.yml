@@ -23,12 +23,12 @@ default: &default
   cache_manifest: false
 
   # Select loader to use, available options are 'babel' (default), 'swc' or 'esbuild'
-  webpack_loader: 'babel'
+  webpack_loader: 'esbuild'
 
   # Set to true to enable check for matching versions of shakapacker gem and NPM package - will raise an error if there is a mismatch or wildcard versioning is used
   ensure_consistent_versioning: true
 
-  # Select whether the compiler will use SHA digest ('digest' option) or most most recent modified timestamp ('mtime') to determine freshness
+  # Select whether the compiler will use SHA digest ('digest' option) or most recent modified timestamp ('mtime') to determine freshness
   compiler_strategy: digest
 
   # Select whether the compiler will always use a content hash and not just in production
@@ -50,7 +50,7 @@ development:
     # there will be at least two webpack servers running
     port: 3035
     # Hot Module Replacement updates modules while the application is running without a full reload
-    hmr: true
+    hmr: false
     # mini-css-extract-plugin is a required dependency in both cases.
     inline_css: true
     client:
