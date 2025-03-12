@@ -31,10 +31,10 @@ module Decidim
 
             def tile_url(tile)
               url
-                .gsub(/\{x\}/, tile.x.to_s)
-                .gsub(/\{y\}/, tile.y.to_s)
-                .gsub(/\{z\}/, tile.zoom.to_s)
-                .gsub(/\{s\}/, subdomain_for_tile(tile))
+                .gsub("{x}", tile.x.to_s)
+                .gsub("{y}", tile.y.to_s)
+                .gsub("{z}", tile.zoom.to_s)
+                .gsub("{s}", subdomain_for_tile(tile))
             end
 
             def subdomain_for_tile(tile)

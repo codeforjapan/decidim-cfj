@@ -11,8 +11,8 @@ module Decidim
       routes do
         namespace :officializations do
           get "user_extensions/:user_id" => "user_extensions#show",
-              constraints: (->(request) { Decidim::Admin::OrganizationDashboardConstraint.new(request).matches? }),
-              as: "show_user_extension"
+              :constraints => (->(request) { Decidim::Admin::OrganizationDashboardConstraint.new(request).matches? }),
+              :as => "show_user_extension"
         end
       end
 
