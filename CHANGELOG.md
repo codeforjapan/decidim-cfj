@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.7.2](https://github.com/codeforjapan/decidim-cfj/compare/v1.7.1...v1.7.2) (2025-03-15)
+
+
+### Bug Fixes
+
+* add chromium-driver ([a207b4d](https://github.com/codeforjapan/decidim-cfj/commit/a207b4d3cbf9eb696eb400320e3ddfaa972824c6))
+
 ## [1.7.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.7.0...v1.7.1) (2025-03-11)
 
 
