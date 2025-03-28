@@ -52,10 +52,10 @@ module Decidim
     def legacy_favicon
       return unless current_organization.favicon.attached?
 
-      image = if current_organization.favicon.content_type != "image/vnd.microsoft.icon"
-                current_organization.favicon.variant(resize: "32x32!")
-              else
+      image = if current_organization.favicon.content_type == "image/vnd.microsoft.icon"
                 current_organization.favicon
+              else
+                current_organization.favicon.variant(resize: "32x32!")
               end
 
       icon_image = Rails.application.routes.url_helpers.rails_representation_path(image, only_path: true)
