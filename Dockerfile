@@ -21,6 +21,7 @@ RUN  apt-get update && \
         curl \
         p7zip \
         wkhtmltopdf \
+        chromium-driver \
         wget && \
     apt-get clean && \
     apt-get autoremove
