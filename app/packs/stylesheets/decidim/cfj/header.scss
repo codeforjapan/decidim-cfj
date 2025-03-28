@@ -1,6 +1,11 @@
 // Override default header(CSS variables)
 header {
 	.main-bar {
+		.main-bar__logo {
+			.main-bar__logo-mobile {
+				@apply lg:hidden;
+			}
+		}
 		&__links-desktop {
 			&__item {
 				@apply px-1 gap-1;
