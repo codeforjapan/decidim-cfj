@@ -1,5 +1,13 @@
 # Change Log
 
+## [1.7.3](https://github.com/codeforjapan/decidim-cfj/compare/v1.7.2...v1.7.3) (2025-03-28)
+
+
+### Bug Fixes
+
+* apply 0.28.5 update for mailer ([e00c3db](https://github.com/codeforjapan/decidim-cfj/commit/e00c3db19eaac1d2b28ec7eb1eee7fe91958133e))
+* use mail default template ([d23a167](https://github.com/codeforjapan/decidim-cfj/commit/d23a167cffdba937a5c1c7d3ec7c1a170fbdfde3))
+
 ## [1.7.2](https://github.com/codeforjapan/decidim-cfj/compare/v1.7.1...v1.7.2) (2025-03-15)
 
 
