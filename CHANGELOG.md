@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.7.4](https://github.com/codeforjapan/decidim-cfj/compare/v1.7.3...v1.7.4) (2025-03-31)
+
+
+### Bug Fixes
+
+* disable external link ([3bd6b46](https://github.com/codeforjapan/decidim-cfj/commit/3bd6b46467f40097195262f54d92a02489695ccf))
+
 ## [1.7.3](https://github.com/codeforjapan/decidim-cfj/compare/v1.7.2...v1.7.3) (2025-03-28)
 
 
