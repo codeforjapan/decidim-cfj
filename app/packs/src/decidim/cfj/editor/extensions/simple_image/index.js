@@ -48,15 +48,4 @@ export const SimpleImage = Node.create({
   renderHTML({ HTMLAttributes }) {
     return ['img', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes)]
   },
-
-  addCommands() {
-    return {
-      setImage: options => ({ commands }) => {
-        return commands.insertContent({
-          type: this.name,
-          attrs: options,
-        })
-      },
-    }
-  },
 })
