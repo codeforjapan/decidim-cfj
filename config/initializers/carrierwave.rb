@@ -25,7 +25,7 @@ if Rails.application.secrets.aws_access_key_id.present?
     config.fog_attributes = {
       "Cache-Control" => "max-age=#{365.days.to_i}",
       "X-Content-Type-Options" => "nosniff",
-      expires: 1.year.from_now.httpdate,
+      expires: 1.year.from_now.httpdate
     }
   end
 end
