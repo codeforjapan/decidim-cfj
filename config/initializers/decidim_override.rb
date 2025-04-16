@@ -295,4 +295,7 @@ Rails.application.config.to_prepare do
   end
 
   Decidim.max_results_options = [6, 9, 12, 15]
+
+  # Insert `app/views` into Cell::ViewModel.view_paths to load application's views
+  Cell::ViewModel.view_paths.insert(1, Rails.root.join("app/views"))
 end

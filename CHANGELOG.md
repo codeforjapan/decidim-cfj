@@ -1,5 +1,31 @@
 # Change Log
 
+## [1.7.5](https://github.com/codeforjapan/decidim-cfj/compare/v1.7.4...v1.7.5) (2025-04-15)
+
+
+### Bug Fixes
+
+* change expire ([12f49aa](https://github.com/codeforjapan/decidim-cfj/commit/12f49aa790644db65fbef18a549bb3f0e908be9b))
+* lint ([dd28f3e](https://github.com/codeforjapan/decidim-cfj/commit/dd28f3eeff410841c2ed0eb7c87ccd0051ed5331))
+* mail logo url ([05a2e6a](https://github.com/codeforjapan/decidim-cfj/commit/05a2e6ad58031fa8c746127a96d5af75863c5b5c))
+* mail template ([6b26ee7](https://github.com/codeforjapan/decidim-cfj/commit/6b26ee75064574003c5096537331cab2dc6046f7))
+* urls_expire_in to nil ([78b625e](https://github.com/codeforjapan/decidim-cfj/commit/78b625e7b56321300902273ebe1a8e3d10147afa))
+
+## [1.7.4](https://github.com/codeforjapan/decidim-cfj/compare/v1.7.3...v1.7.4) (2025-03-31)
+
+
+### Bug Fixes
+
+* disable external link ([3bd6b46](https://github.com/codeforjapan/decidim-cfj/commit/3bd6b46467f40097195262f54d92a02489695ccf))
+
+## [1.7.3](https://github.com/codeforjapan/decidim-cfj/compare/v1.7.2...v1.7.3) (2025-03-28)
+
+
+### Bug Fixes
+
+* apply 0.28.5 update for mailer ([e00c3db](https://github.com/codeforjapan/decidim-cfj/commit/e00c3db19eaac1d2b28ec7eb1eee7fe91958133e))
+* use mail default template ([d23a167](https://github.com/codeforjapan/decidim-cfj/commit/d23a167cffdba937a5c1c7d3ec7c1a170fbdfde3))
+
 ## [1.7.2](https://github.com/codeforjapan/decidim-cfj/compare/v1.7.1...v1.7.2) (2025-03-15)
 
 

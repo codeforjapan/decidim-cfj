@@ -16,6 +16,7 @@ module Decidim
     delegate :resource_url, to: :event
     delegate :email_intro, to: :event
     delegate :resource_path, to: :event
+    delegate :safe_resource_text, to: :event
 
     def date_time
       created_at_in_time_zone = created_at.in_time_zone(resource.organization.time_zone)
