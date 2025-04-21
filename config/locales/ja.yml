@@ -138,6 +138,10 @@ ja:
     moderations:
       actions:
         hide: 非表示にする
+    navigation_maps:
+      content_blocks:
+        navigation_map:
+          view: 表示
     notifications_settings:
       show:
         allow_public_contact: フォローしていない人からのダイレクトメッセージを受信する
