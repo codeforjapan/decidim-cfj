@@ -59,21 +59,6 @@
   background-position: center left;
 }
 
-.logo-wrapper {
-  width: 20%;
-}
-
-.user-nickname {
-  .small-11.large-11.columns {
-    width: 88%;
-    float: left;
-  }
-
-  #registration_user_nickname_characters {
-    display: inline-block;
-  }
-}
-
 // overide existing styles
 .navbar {
   background: $menu;
