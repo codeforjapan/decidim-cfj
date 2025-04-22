@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.7.6](https://github.com/codeforjapan/decidim-cfj/compare/v1.7.5...v1.7.6) (2025-04-22)
+
+
+### Bug Fixes
+
+* default_locale should be `ja` ([6a8c8a8](https://github.com/codeforjapan/decidim-cfj/commit/6a8c8a8dd6530babc372ba8806f5bc29de7e3d4a))
+
 ## [1.7.5](https://github.com/codeforjapan/decidim-cfj/compare/v1.7.4...v1.7.5) (2025-04-15)
 
 
