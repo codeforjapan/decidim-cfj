@@ -33,7 +33,6 @@ module Decidim
 
         it "includes the report's reason" do
           I18n.with_locale(:ja) do
-            # pp [:body, email_body(mail), I18n.t(report.reason, scope: "decidim.shared.flag_modal")]
             expect(email_body(mail)).to match(I18n.t(report.reason, scope: "decidim.shared.flag_modal"))
           end
         end
