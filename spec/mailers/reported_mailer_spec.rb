@@ -5,7 +5,7 @@ require "rails_helper"
 module Decidim
   describe ReportedMailer do
     let(:organization) { create(:organization, name: "Test Organization") }
-    let(:user) { create(:user, :admin, organization:, locale: 'ja') }
+    let(:user) { create(:user, :admin, organization:, locale: "ja") }
     let(:component) { create(:component, organization:) }
     let(:reportable) { create(:proposal, title: Decidim::Faker::Localized.sentence, body: Decidim::Faker::Localized.paragraph(sentence_count: 3)) }
     let(:moderation) { create(:moderation, reportable:, participatory_space: component.participatory_space, report_count: 1) }
@@ -17,7 +17,7 @@ module Decidim
       reportable.coauthorships.first.author.update!(name: "O.Higgins")
     end
 
-    around(:example) do |example|
+    around do |example|
       I18n.with_locale(:ja) do
         example.run
       end
@@ -63,8 +63,8 @@ module Decidim
             organization.logo = organization_logo
           end
 
-          it 'includes logo URL' do
-            url_pattern = %r(src="http://#{organization.host}[^/]*/rails/active_storage/blobs/redirect/.*/city.jpeg)
+          it "includes logo URL" do
+            url_pattern = %r{src="http://#{organization.host}[^/]*/rails/active_storage/blobs/redirect/.*/city.jpeg}
             expect(email_body(mail)).to match(url_pattern)
           end
         end
@@ -83,7 +83,7 @@ module Decidim
           end
 
           it "includes the name of the author but no link to their profile" do
-            expect(mail).not_to have_link(author.name)
+            expect(mail).to have_no_link(author.name)
           end
         end
 
@@ -108,6 +108,5 @@ module Decidim
         end
       end
     end
-
   end
 end
