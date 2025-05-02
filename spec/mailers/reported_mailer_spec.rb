@@ -56,6 +56,19 @@ module Decidim
           expect(email_body(mail)).to match("日本語")
         end
 
+        context "when logo is attached" do
+          let(:organization_logo) { Decidim::Dev.test_file("city.jpeg", "image/jpeg") }
+
+          before do
+            organization.logo = organization_logo
+          end
+
+          it 'includes logo URL' do
+            url_pattern = %r(src="http://#{organization.host}[^/]*/rails/active_storage/blobs/redirect/.*/city.jpeg)
+            expect(email_body(mail)).to match(url_pattern)
+          end
+        end
+
         context "when the author is a user" do
           it "includes the name of the author and a link to their profile" do
             expect(email_body(mail)).to have_link(author.name, href: decidim.profile_url(author.nickname, host: organization.host))
