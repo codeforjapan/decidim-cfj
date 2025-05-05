@@ -142,6 +142,11 @@ ja:
       content_blocks:
         navigation_map:
           view: 表示
+    notifications_digest_mailer:
+      header:
+        real_time: リアルタイム
+      intro:
+        real_time: 'あなたがフォローしているアクティビティに基づいた通知です:'
     notifications_settings:
       show:
         allow_public_contact: フォローしていない人からのダイレクトメッセージを受信する
