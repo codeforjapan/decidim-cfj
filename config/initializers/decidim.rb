@@ -523,6 +523,7 @@ Rails.application.config.to_prepare do
   end
 end
 Decidim.icons.register(name: "line", icon: "line-fill", category: "system", description: "", engine: :core)
+Decidim.icons.register(name: "line-fill", icon: "line-fill", category: "system", description: "", engine: :core)
 
 Rails.application.config.to_prepare do
   # make some content_blocks as default

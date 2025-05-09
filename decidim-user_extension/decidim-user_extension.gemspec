@@ -26,6 +26,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency "decidim-core"
   spec.add_dependency "rails"
 
-  spec.add_development_dependency "decidim-dev", ">= 0.27.0"
   spec.metadata["rubygems_mfa_required"] = "true"
 end
