@@ -8,6 +8,17 @@ GIT
       omniauth-oauth2
 
 GIT
+  remote: https://github.com/codeforjapan/decidim-module-decidim_awesome.git
+  revision: 37bd4cdf839ac455e8fa0dce0503a4f50509a96a
+  branch: main-2025-05-12
+  specs:
+    decidim-decidim_awesome (0.12.1)
+      decidim-admin (>= 0.29.1, < 0.30)
+      decidim-core (>= 0.29.1, < 0.30)
+      deface (>= 1.5)
+      sassc (~> 2.3)
+
+GIT
   remote: https://github.com/codeforjapan/decidim-module-navigation_maps.git
   revision: 349e4e37360639f396f7228d9ecbad614e340535
   branch: upgrade-0.29-2025-03-12
@@ -290,11 +301,6 @@ GEM
     decidim-debates (0.29.2)
       decidim-comments (= 0.29.2)
       decidim-core (= 0.29.2)
-    decidim-decidim_awesome (0.12.0)
-      decidim-admin (>= 0.29.1, < 0.30)
-      decidim-core (>= 0.29.1, < 0.30)
-      deface (>= 1.5)
-      sassc (~> 2.3)
     decidim-dev (0.29.2)
       bullet (~> 7.1.6)
       byebug (~> 11.0)
@@ -906,7 +912,7 @@ DEPENDENCIES
   bootsnap
   byebug (~> 11.0)
   decidim (= 0.29.2)
-  decidim-decidim_awesome (= 0.12.0)
+  decidim-decidim_awesome!
   decidim-dev (= 0.29.2)
   decidim-navigation_maps!
   decidim-polis!

@@ -6,7 +6,7 @@ ruby RUBY_VERSION
 
 gem "decidim", "0.29.2"
 
-gem "decidim-decidim_awesome", "0.12.0"
+gem "decidim-decidim_awesome", git: "https://github.com/codeforjapan/decidim-module-decidim_awesome.git", branch: "main-2025-05-12"
 
 # gem "decidim-term_customizer", git: "https://github.com/codeforjapan/decidim-module-term_customizer.git", branch: "028-ja"
 #
