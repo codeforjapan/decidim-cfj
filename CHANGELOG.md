@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.7.8](https://github.com/codeforjapan/decidim-cfj/compare/v1.7.7...v1.7.8) (2025-05-12)
+
+
+### Bug Fixes
+
+* update decidim-module-decidim_awesome ([0f66711](https://github.com/codeforjapan/decidim-cfj/commit/0f667116cfc53be1692f1746d567c563f82079e2))
+
 ## [1.7.7](https://github.com/codeforjapan/decidim-cfj/compare/v1.7.6...v1.7.7) (2025-05-02)
 
 
