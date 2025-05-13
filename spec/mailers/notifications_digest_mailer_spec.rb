@@ -4,7 +4,7 @@ require "rails_helper"
 
 module Decidim
   describe NotificationsDigestMailer do
-    let(:organization) { create(:organization, name: "Test Organization") }
+    let(:organization) { create(:organization) }
     let(:user) { create(:user, :admin, organization:, locale: "ja", notifications_sending_frequency: "real_time") }
     let(:decidim) { Decidim::Core::Engine.routes.url_helpers }
 
