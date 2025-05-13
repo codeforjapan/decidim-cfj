@@ -44,12 +44,6 @@ RUN set -eux; \
       > /etc/apt/preferences.d/99-imagemagick-backports; \
     apt-get update; \
     apt-get install -y -t bullseye-backports imagemagick; \
-    apt-get install -y --no-install-recommends \
-      libpq5 \
-      postgresql-client \
-      wkhtmltopdf \
-      chromium-driver \
-      ca-certificates; \
     rm -rf /var/lib/apt/lists/*
 
 # node install
