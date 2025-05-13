@@ -1,5 +1,13 @@
 # Change Log
 
+## [1.7.7](https://github.com/codeforjapan/decidim-cfj/compare/v1.7.6...v1.7.7) (2025-05-02)
+
+
+### Bug Fixes
+
+* mail logo bug ([676e0b4](https://github.com/codeforjapan/decidim-cfj/commit/676e0b46b429a8dbb20d56d0fc172879f9df64db))
+* remove decidim.scss and settings.scss ([141b166](https://github.com/codeforjapan/decidim-cfj/commit/141b166b52f1b48c9bab3591dd58c9b4ad1704d6))
+
 ## [1.7.6](https://github.com/codeforjapan/decidim-cfj/compare/v1.7.5...v1.7.6) (2025-04-22)
 
 
