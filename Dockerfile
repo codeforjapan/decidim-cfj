@@ -26,14 +26,25 @@ RUN  apt-get update && \
     apt-get clean && \
     apt-get autoremove
 
-RUN apt build-dep -y imagemagick && \
-    wget https://github.com/ImageMagick/ImageMagick/archive/refs/tags/7.1.1-15.tar.gz && \
-    tar xf 7.1.1-15.tar.gz && \
-    cd ImageMagick-7*  && \
-    ./configure  && \
-    make && \
-    make install  && \
-    ldconfig
+RUN set -eux; \
+    echo "deb http://deb.debian.org/debian bullseye-backports main" \
+      > /etc/apt/sources.list.d/bullseye-backports.list; \
+    printf '%s\n' \
+      'Package: imagemagick*' \
+      'Pin: release a=bullseye-backports' \
+      'Pin-Priority: 990' \
+      '' \
+      'Package: libmagickcore-7*' \
+      'Pin: release a=bullseye-backports' \
+      'Pin-Priority: 990' \
+      '' \
+      'Package: libmagickwand-7*' \
+      'Pin: release a=bullseye-backports' \
+      'Pin-Priority: 990' \
+      > /etc/apt/preferences.d/99-imagemagick-backports; \
+    apt-get update; \
+    apt-get install -y -t bullseye-backports imagemagick; \
+    rm -rf /var/lib/apt/lists/*
 
 # node install
 COPY --from=node /usr/local/bin/node /usr/local/bin/node
