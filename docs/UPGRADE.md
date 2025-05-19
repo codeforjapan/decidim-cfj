@@ -48,9 +48,19 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 
   `https://github.com/ayuki-joto/decidim-cfj/pull/45` `https://github.com/ayuki-joto/decidim-cfj/pull/65` コメントに限定したLast Activityをcontent_blocksとして追加しています。
 
-* `app/packs/stylesheets/decidim/cfj/buttons.scss`
+* `app/cells/decidim/assemblies/content_blocks/highlighted_assemblies_settings_form/show.erb`,
+  `app/cells/decidim/conferences/content_blocks/highlighted_conferences_settings_form/show.erb`,
+  `app/cells/decidim/participatory_processes/content_blocks/highlighted_processes_settings_form/show.erb`
 
-  `https://github.com/codeforjapan/decidim-cfj/issues/46` の対応で `https://github.com/codeforjapan/decidim-cfj/pull/96` で追加しています。
+  https://github.com/codeforjapan/decidim-cfj/pull/669 で追加されたもので、表示する要素の最大数のドロップダウンの数を変更するものです。
+
+* `app/helpers/decidim/menu_helper.rb`
+
+  https://github.com/ayuki-joto/decidim-cfj/pull/70 で追加されたもので、注目のプロセスで表示されるプロセスを制限します
+
+* `app/packs/src/decidim/cfj/accordion-scroll.js`
+
+  https://github.com/ayuki-joto/decidim-cfj/pull/66 で追加されたもので、「一部のみ表示」ボタンを押した際の挙動を変更します
 
 * `app/packs/stylesheets/decidim/cfj/comment_content.scss`
 
@@ -92,9 +102,17 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 
   https://github.com/ayuki-joto/decidim-cfj/pull/57 で追加したもの。footerのうち「リソース」欄を表示させないようにする。
 
+* `app/views/decidim/application/_document.html.erb`
+
+  https://github.com/codeforjapan/decidim-cfj/pull/692 で追加したもの。ミーティングの添付ファイルを外部リンクにしないようにする
+
 * `app/views/decidim/blogs/posts/show.html.erb`
 
   https://github.com/codeforjapan/decidim-cfj/pull/550 metaとOGPのdescriptionの長さ制限とOGP画像追加の修正。
+
+* `app/views/decidim/shared/_filters.html.erb`
+
+  https://github.com/codeforjapan/decidim-cfj/pull/675 で追加したもの。候補が一つしかないフィルタを表示しないようにする
 
 * `config/application.rb`
 
