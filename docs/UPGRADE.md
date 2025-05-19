@@ -64,7 +64,7 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 
   https://github.com/codeforjapan/decidim-cfj/pull/460 で追加されたファイル。印刷用のCSSファイル。
 
-* `app/packs/stylesheets/decidim/cfj/tiptap_html_editor.scss`
+* `app/packs/stylesheets/decidim/cfj/tiptap_html_edit.scss`
 
   https://github.com/ayuki-joto/decidim-cfj/pull/30 https://github.com/codeforjapan/decidim-cfj/pull/596 で追加されたファイル。TipTap Editor用のCSSファイル。
 
