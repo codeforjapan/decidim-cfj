@@ -38,7 +38,6 @@ jobs:
       DATABASE_USERNAME: postgres
       DATABASE_PASSWORD: postgres
       RAILS_ENV: test
-      IMAGEMAGICK_SRC: 7.1.0-50.tar.gz
       SLACK_API_TOKEN: xoxb-dummy
       SLACK_MESSAGE_CHANNEL: '#test'
     permissions:
