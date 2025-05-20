@@ -78,13 +78,6 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 
   https://github.com/codeforjapan/decidim-cfj/pull/455 で追加したもの。ピクセル数の大きい画像に対応するため、max_image_height_or_widthの値を変更している。
 
-* `config/application.rb`
-
-  https://github.com/codeforjapan/decidim-cfj/pull/638 で追加したものです。
-  `config.before_initialize`ブロックで、`Decidim::Core::Engine`内のinitializerのうち`"Expire sessions"`というinitializerをスキップするよう修正しています。
-  これは`session_store`を`cookie_store`に強制していたものを無効化するものです。
-  Decidim v0.28では本体に修正が入っており、アプリ側でsession_storeを指定している場合には自動で無効化されるため、このブロックは不要になります（削除するべきです）。
-
 * `lib/tasks/delete.rake`
 
   `delete:destroy_all`タスク。https://github.com/codeforjapan/decidim-cfj/pull/501 で追加されたものです。
