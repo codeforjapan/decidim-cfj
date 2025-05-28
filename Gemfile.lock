@@ -28,6 +28,15 @@ GIT
       decidim-core (>= 0.29, < 0.30)
 
 GIT
+  remote: https://github.com/codeforjapan/decidim-module-term_customizer.git
+  revision: a628767f6c24e8399a017470934cdaafecf7be87
+  branch: 029-ja
+  specs:
+    decidim-term_customizer (0.29.0)
+      decidim-admin (~> 0.29.2)
+      decidim-core (~> 0.29.2)
+
+GIT
   remote: https://github.com/codeforjapan/decidim-polis.git
   revision: 80a42fdd199d7822d3b17b3d4b2f882d262b7a24
   branch: update-0-29-2
@@ -195,7 +204,7 @@ GEM
     crass (1.0.6)
     css_parser (1.21.1)
       addressable
-    csv (3.3.2)
+    csv (3.3.4)
     dartsass (1.49.8)
     date (3.4.1)
     date_validator (0.12.0)
@@ -388,7 +397,7 @@ GEM
       warden (~> 1.2.3)
     devise-i18n (1.11.0)
       devise (>= 4.9.0)
-    devise_invitable (2.0.9)
+    devise_invitable (2.0.11)
       actionmailer (>= 5.0)
       devise (>= 4.6)
     diff-lcs (1.6.0)
@@ -397,7 +406,7 @@ GEM
       nokogiri (>= 1.18.2)
       rubyzip (~> 2.3.0)
     docile (1.4.1)
-    doorkeeper (5.8.1)
+    doorkeeper (5.8.2)
       railties (>= 5)
     doorkeeper-i18n (4.0.1)
     dotenv (3.1.7)
@@ -415,7 +424,7 @@ GEM
       temple
     erubi (1.13.1)
     escape_utils (1.3.0)
-    excon (1.2.5)
+    excon (1.2.7)
       logger
     extended-markdown-filter (0.7.0)
       html-pipeline (~> 2.9)
@@ -426,7 +435,7 @@ GEM
       railties (>= 5.0.0)
     faker (3.5.1)
       i18n (>= 1.8.11, < 2)
-    faraday (2.12.2)
+    faraday (2.13.1)
       faraday-net_http (>= 2.0, < 3.5)
       json
       logger
@@ -437,8 +446,8 @@ GEM
       multipart-post (~> 2.0)
     faraday-net_http (3.4.0)
       net-http (>= 0.5.0)
-    ffi (1.17.1-aarch64-linux-gnu)
-    ffi (1.17.1-x86_64-linux-gnu)
+    ffi (1.17.2-aarch64-linux-gnu)
+    ffi (1.17.2-x86_64-linux-gnu)
     figaro (1.2.0)
       thor (>= 0.14.0, < 2)
     file_validators (3.0.0)
@@ -457,7 +466,7 @@ GEM
     fog-json (1.2.0)
       fog-core
       multi_json (~> 1.10)
-    fog-local (0.8.0)
+    fog-local (0.9.0)
       fog-core (>= 1.27, < 3.0)
     fog-xml (0.1.5)
       fog-core
@@ -489,7 +498,7 @@ GEM
       gemoji (~> 3.0)
       graphql (~> 2.0)
       html-pipeline (~> 2.14, >= 2.14.3)
-    hashdiff (1.1.2)
+    hashdiff (1.2.0)
     hashie (5.0.0)
     highline (3.1.2)
       reline
@@ -521,7 +530,7 @@ GEM
       rails (>= 3.2.0)
     io-console (0.8.0)
     jmespath (1.6.2)
-    json (2.10.1)
+    json (2.12.2)
     jwt (2.10.1)
       base64
     kaminari (1.2.2)
@@ -551,8 +560,8 @@ GEM
     listen (3.9.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
-    logger (1.6.6)
-    loofah (2.24.0)
+    logger (1.7.0)
+    loofah (2.24.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
     mail (2.8.1)
@@ -563,21 +572,21 @@ GEM
     marcel (1.0.4)
     matrix (0.4.2)
     method_source (1.1.0)
-    mime-types (3.6.0)
+    mime-types (3.7.0)
       logger
-      mime-types-data (~> 3.2015)
-    mime-types-data (3.2025.0304)
+      mime-types-data (~> 3.2025, >= 3.2025.0507)
+    mime-types-data (3.2025.0527)
     mini_magick (4.13.2)
     mini_mime (1.1.5)
-    minitest (5.25.4)
+    minitest (5.25.5)
     msgpack (1.8.0)
     multi_json (1.15.0)
-    multi_xml (0.7.1)
+    multi_xml (0.7.2)
       bigdecimal (~> 3.1)
     multipart-post (2.4.1)
     net-http (0.6.0)
       uri
-    net-imap (0.5.6)
+    net-imap (0.5.8)
       date
       net-protocol
     net-pop (0.1.2)
@@ -588,9 +597,9 @@ GEM
       net-protocol
     newrelic_rpm (9.17.0)
     nio4r (2.7.4)
-    nokogiri (1.18.3-aarch64-linux-gnu)
+    nokogiri (1.18.8-aarch64-linux-gnu)
       racc (~> 1.4)
-    nokogiri (1.18.3-x86_64-linux-gnu)
+    nokogiri (1.18.8-x86_64-linux-gnu)
       racc (~> 1.4)
     oauth (1.1.0)
       oauth-tty (~> 1.0, >= 1.0.1)
@@ -598,13 +607,14 @@ GEM
       version_gem (~> 1.1)
     oauth-tty (1.0.5)
       version_gem (~> 1.1, >= 1.1.1)
-    oauth2 (2.0.9)
-      faraday (>= 0.17.3, < 3.0)
-      jwt (>= 1.0, < 3.0)
+    oauth2 (2.0.11)
+      faraday (>= 0.17.3, < 4.0)
+      jwt (>= 1.0, < 4.0)
+      logger (~> 1.2)
       multi_xml (~> 0.5)
       rack (>= 1.2, < 4)
-      snaky_hash (~> 2.0)
-      version_gem (~> 1.1)
+      snaky_hash (~> 2.0, >= 2.0.3)
+      version_gem (>= 1.1.8, < 3)
     omniauth (2.1.3)
       hashie (>= 3.4.6)
       rack (>= 2.2.3)
@@ -656,7 +666,7 @@ GEM
       premailer (~> 1.7, >= 1.7.9)
     psych (4.0.6)
       stringio
-    public_suffix (6.0.1)
+    public_suffix (6.0.2)
     puma (6.6.0)
       nio4r (~> 2.0)
     puma_worker_killer (1.0.0)
@@ -664,7 +674,7 @@ GEM
       get_process_mem (>= 0.2)
       puma (>= 2.7)
     racc (1.8.1)
-    rack (2.2.13)
+    rack (2.2.16)
     rack-attack (6.7.0)
       rack (>= 1.0, < 4)
     rack-cors (1.1.1)
@@ -694,7 +704,7 @@ GEM
       actionpack (>= 5.0.1.rc1)
       actionview (>= 5.0.1.rc1)
       activesupport (>= 5.0.1.rc1)
-    rails-dom-testing (2.2.0)
+    rails-dom-testing (2.3.0)
       activesupport (>= 5.0.0)
       minitest
       nokogiri (>= 1.6)
@@ -840,14 +850,14 @@ GEM
       hashie
       logger
     smart_properties (1.17.0)
-    snaky_hash (2.0.1)
-      hashie
-      version_gem (~> 1.1, >= 1.1.1)
+    snaky_hash (2.0.3)
+      hashie (>= 0.1.0, < 6)
+      version_gem (>= 1.1.8, < 3)
     spring (4.2.1)
     spring-watcher-listen (2.1.0)
       listen (>= 2.7, < 4.0)
       spring (>= 4)
-    stringio (3.1.5)
+    stringio (3.1.7)
     temple (0.10.3)
     terminal-table (4.0.0)
       unicode-display_width (>= 1.1.1, < 4)
@@ -864,7 +874,7 @@ GEM
     valid_email2 (4.0.6)
       activemodel (>= 3.2)
       mail (~> 2.5)
-    version_gem (1.1.6)
+    version_gem (1.1.8)
     w3c_rspec_validators (0.3.0)
       rails
       rspec
@@ -888,7 +898,7 @@ GEM
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
     websocket (1.2.11)
-    websocket-driver (0.7.7)
+    websocket-driver (0.8.0)
       base64
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -899,7 +909,7 @@ GEM
     wisper-rspec (1.1.0)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.7.2)
+    zeitwerk (2.7.3)
     zip-zip (0.3)
       rubyzip (>= 1.0.0)
 
@@ -916,6 +926,7 @@ DEPENDENCIES
   decidim-dev (= 0.29.2)
   decidim-navigation_maps!
   decidim-polis!
+  decidim-term_customizer!
   decidim-user_extension!
   deface
   dotenv-rails
