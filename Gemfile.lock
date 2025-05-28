@@ -28,21 +28,21 @@ GIT
       decidim-core (>= 0.29, < 0.30)
 
 GIT
-  remote: https://github.com/codeforjapan/decidim-polis.git
-  revision: 80a42fdd199d7822d3b17b3d4b2f882d262b7a24
-  branch: update-0-29-2
-  specs:
-    decidim-polis (0.29.2)
-      decidim-core (= 0.29.2)
-
-GIT
-  remote: https://github.com/takahashim/decidim-module-term_customizer.git
+  remote: https://github.com/codeforjapan/decidim-module-term_customizer.git
   revision: a628767f6c24e8399a017470934cdaafecf7be87
   branch: 029-ja
   specs:
     decidim-term_customizer (0.29.0)
       decidim-admin (~> 0.29.2)
       decidim-core (~> 0.29.2)
+
+GIT
+  remote: https://github.com/codeforjapan/decidim-polis.git
+  revision: 80a42fdd199d7822d3b17b3d4b2f882d262b7a24
+  branch: update-0-29-2
+  specs:
+    decidim-polis (0.29.2)
+      decidim-core (= 0.29.2)
 
 PATH
   remote: decidim-user_extension
