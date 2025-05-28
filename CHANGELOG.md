@@ -1,5 +1,18 @@
 # Change Log
 
+## [1.8.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.7.8...v1.8.0) (2025-05-28)
+
+
+### Features
+
+* change imagemagick binary ([faae0a4](https://github.com/codeforjapan/decidim-cfj/commit/faae0a4e494f5950c006804d51a590c12d8e989a))
+
+
+### Bug Fixes
+
+* GA: remove unused envvar ([cf2f484](https://github.com/codeforjapan/decidim-cfj/commit/cf2f484d15eaab658dafb8a9090dcf3e749059c4))
+* remove unused packages ([356366a](https://github.com/codeforjapan/decidim-cfj/commit/356366a5c100071579c1132846387b578a25f15f))
+
 ## [1.7.8](https://github.com/codeforjapan/decidim-cfj/compare/v1.7.7...v1.7.8) (2025-05-12)
 
 
