@@ -51,6 +51,12 @@ Rails.application.configure do
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
+  config.cache_store = :redis_cache_store, {
+    url: ENV.fetch("REDIS_CACHE_URL", nil),
+    expires_in: ENV.fetch("REDIS_CACHE_EXPIRES_IN", 60.minutes).to_i
+  }
+  config.session_store(:cache_store, key: "decidim_session", expire_after: Decidim.config.expire_session_after)
+  config.active_storage.resolve_model_to_route = :rails_storage_proxy
 
   # Use a real queuing backend for Active Job (and separate queues per environment)
   # config.active_job.queue_adapter     = :resque
@@ -70,7 +76,7 @@ Rails.application.configure do
   config.active_support.deprecation = :notify
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
-  config.log_formatter = ::Logger::Formatter.new
+  config.log_formatter = Logger::Formatter.new
   config.action_mailer.smtp_settings = {
     address: Rails.application.secrets.smtp_address,
     port: Rails.application.secrets.smtp_port,

@@ -116,7 +116,7 @@ Decidim.configure do |config|
     static_url = Rails.application.secrets.maps[:static_url]
     static_url = "https://image.maps.ls.hereapi.com/mia/1.6/mapview" if static_provider == "here" && static_url.blank?
     config.maps = {
-      provider: provider,
+      provider:,
       api_key: Rails.application.secrets.maps[:static_api_key],
       static: { provider: static_provider, url: static_url },
       dynamic: {
@@ -392,6 +392,17 @@ Decidim.configure do |config|
   config.maximum_conversation_message_length = Rails.application.secrets.decidim[:maximum_conversation_message_length].to_i
   config.password_blacklist = Rails.application.secrets.decidim[:password_blacklist] if Rails.application.secrets.decidim[:password_blacklist].present?
   config.allow_open_redirects = Rails.application.secrets.decidim[:allow_open_redirects] if Rails.application.secrets.decidim[:allow_open_redirects].present?
+
+  config.content_security_policies_extra = {
+    "default-src" => ["*"],
+    "img-src" => ["*"],
+    "media-src" => ["*"],
+    "script-src" => ["*"],
+    "style-src" => ["*"],
+    "font-src" => ["*"],
+    "frame-src" => ["*"],
+    "connect-src" => ["*"]
+  }
 end
 
 if Decidim.module_installed? :api
@@ -501,4 +512,31 @@ Devise.allow_unconfirmed_access_for = Decidim.unconfirmed_access_for
 # Set max_complexity of GraphQL::Schema
 Rails.application.config.to_prepare do
   Decidim::Api::Schema.max_complexity = 100_000
+  if Decidim.config.content_security_policies_extra["frame-src"].blank?
+    Decidim.config.content_security_policies_extra["frame-src"] = %w(www.youtube.com docs.google.com www.slideshare.net www.loom.com)
+  else
+    Decidim.config.content_security_policies_extra["frame-src"].push("www.youtube.com", "docs.google.com", "www.slideshare.net", "www.loom.com")
+  end
+  if Decidim.config.content_security_policies_extra["script-src"].blank?
+    Decidim.config.content_security_policies_extra["script-src"] = %w(js-agent.newrelic.com)
+  else
+    Decidim.config.content_security_policies_extra["script-src"].push("js-agent.newrelic.com")
+  end
 end
+Decidim.icons.register(name: "line", icon: "line-fill", category: "system", description: "", engine: :core)
+
+Rails.application.config.to_prepare do
+  # make some content_blocks as default
+  Decidim.content_blocks.for(:assembly_homepage).find { |block| block.name == :announcement }.default!
+  Decidim.content_blocks.for(:participatory_process_homepage).find { |block| block.name == :announcement }.default!
+end
+
+## Register LINE as SNS
+Decidim.register_social_share_service("LINE") do |service|
+  service.icon = "line-fill"
+  service.icon_color = "#06C755"
+  service.share_uri = "https://social-plugins.line.me/lineit/share?url=%{url}&text=%{title}"
+end
+
+## Share buttons on SNS
+Decidim.social_share_services = %w(X Facebook LINE)

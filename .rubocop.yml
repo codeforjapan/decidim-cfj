@@ -1,3 +1,33 @@
-inherit_from:
-  - .rubocop_ruby.yml
-  - .rubocop_rails.yml
+inherit_gem:
+  decidim-dev: rubocop-decidim.yml
+
+AllCops:
+  Exclude:
+    - "db/migrate/*"
+    - "db/schema.rb"
+    - "bin/setup"
+    - "bin/update"
+    - "node_modules/**/*"
+    - "vendor/bundle/**/*"
+
+Gemspec/RequiredRubyVersion:
+  Enabled: false
+
+Rails/Output:
+  Enabled: false
+
+Capybara/ClickLinkOrButtonStyle:
+  Enabled: false
+
+RSpec/DescribeClass:
+  Enabled: false
+
+Rails/I18nLocaleAssignment:
+  Enabled: false
+
+RSpecRails/NegationBeValid:
+  Exclude:
+    - spec/shared/proposal_form_examples.rb
+
+RSpec/IndexedLet:
+  Enabled: false

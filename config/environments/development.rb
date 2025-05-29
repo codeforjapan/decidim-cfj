@@ -19,7 +19,15 @@ Rails.application.configure do
   if Rails.root.join("tmp/caching-dev.txt").exist?
     config.action_controller.perform_caching = true
 
-    config.cache_store = :memory_store
+    if ENV["REDIS_CACHE_URL"]
+      config.cache_store = :redis_cache_store, {
+        url: ENV.fetch("REDIS_CACHE_URL", nil),
+        expires_in: ENV.fetch("REDIS_CACHE_EXPIRES_IN", 60.minutes).to_i
+      }
+      config.session_store(:cache_store, key: "decidim_session", expire_after: Decidim.config.expire_session_after)
+    else
+      config.cache_store = :memory_store
+    end
     config.public_file_server.headers = {
       "Cache-Control" => "public, max-age=#{2.days.to_i}"
     }
@@ -52,6 +60,7 @@ Rails.application.configure do
 
   # Highlight code that triggered database queries in logs.
   config.active_record.verbose_query_logs = true
+  config.active_storage.urls_expire_in = 60
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true

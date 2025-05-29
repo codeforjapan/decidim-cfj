@@ -24,7 +24,7 @@ module Decidim
           end
         end
 
-        Decidim::Verifications::CsvDatum.where(organization: organization).delete_all
+        Decidim::Verifications::CsvDatum.where(organization:).delete_all
 
         Decidim::Verifications::Conflict.find_each do |conflict|
           if conflict.current_user.organization == organization || conflict.managed_user.organization == organization
@@ -33,11 +33,15 @@ module Decidim
           end
         end
 
-        Decidim::DecidimAwesome::EditorImage.where(organization: organization).delete_all
+        Decidim::TermCustomizer::Constraint.where(organization:).delete_all
 
-        Decidim::ActionLog.where(organization: organization).delete_all
+        Decidim::EditorImage.where(organization:).delete_all
 
-        Decidim::AssembliesSetting.where(organization: organization).delete_all
+        Decidim::DecidimAwesome::EditorImage.where(organization:).delete_all
+
+        Decidim::ActionLog.where(organization:).delete_all
+
+        Decidim::AssembliesSetting.where(organization:).delete_all
 
         organization.destroy!
 

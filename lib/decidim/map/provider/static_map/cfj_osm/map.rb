@@ -53,7 +53,7 @@ module Decidim
                 bbox: bounding_box.to_s,
                 width: width.to_i,
                 height: height.to_i,
-                zoom: zoom,
+                zoom:,
                 number_of_tiles: required_tiles.length
               }
             end
@@ -65,7 +65,7 @@ module Decidim
             end
 
             def bounding_box
-              @bounding_box ||= BoundingBox.new(lng: lng, lat: lat, width: width, height: height, zoom: zoom)
+              @bounding_box ||= BoundingBox.new(lng:, lat:, width:, height:, zoom:)
             end
 
             def required_x_tiles
@@ -78,7 +78,7 @@ module Decidim
 
             def required_tiles
               required_y_tiles.map do |y|
-                required_x_tiles.map { |x| Tile.new(x: x.floor, y: y.floor, zoom: zoom) }
+                required_x_tiles.map { |x| Tile.new(x: x.floor, y: y.floor, zoom:) }
               end.flatten
             end
 

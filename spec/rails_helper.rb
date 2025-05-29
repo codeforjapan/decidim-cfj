@@ -32,23 +32,6 @@ rescue ActiveRecord::PendingMigrationError => e
   exit 1
 end
 
-Capybara.register_driver :headless_chrome do |app|
-  options = ::Selenium::WebDriver::Chrome::Options.new
-  options.args << "--headless=new"
-  options.args << "--no-sandbox"
-  options.args << if ENV["BIG_SCREEN_SIZE"].present?
-                    "--window-size=1920,3000"
-                  else
-                    "--window-size=1920,1080"
-                  end
-  options.args << "--ignore-certificate-errors" if ENV["TEST_SSL"]
-  Capybara::Selenium::Driver.new(
-    app,
-    browser: :chrome,
-    capabilities: [options]
-  )
-end
-
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   # config.fixture_path = "#{::Rails.root}/spec/fixtures"
@@ -79,4 +62,19 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 
   config.include ActiveStorageHelpers
+
+  config.append_before do
+    ## XXX: Override CSP settings
+    # cf. https://github.com/decidim/decidim/blob/a1768d7c19c0c80b19f5a1be6d888668f121a6be/decidim-dev/lib/decidim/dev/test/spec_helper.rb#L43-L46
+    Decidim.config.content_security_policies_extra = {
+      "default-src" => ["*"],
+      "img-src" => ["*"],
+      "media-src" => ["*"],
+      "script-src" => ["*"],
+      "style-src" => ["*", "fonts.googleapis.com"],
+      "font-src" => ["*"],
+      "frame-src" => ["*"],
+      "connect-src" => ["*"]
+    }
+  end
 end

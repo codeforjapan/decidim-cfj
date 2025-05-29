@@ -7,11 +7,16 @@ module Decidim
   class NotificationToMailerPresenter < SimpleDelegator
     include Decidim::TranslatableAttributes
 
+    EXTENDED_NOTIFICATIONS_CLASSES = [
+      "Decidim::Comments::CommentCreatedEvent"
+    ].freeze
+
     delegate :url_helpers, to: "Decidim::Core::Engine.routes"
     delegate :resource_title, to: :event
     delegate :resource_url, to: :event
     delegate :email_intro, to: :event
     delegate :resource_path, to: :event
+    delegate :safe_resource_text, to: :event
 
     def date_time
       created_at_in_time_zone = created_at.in_time_zone(resource.organization.time_zone)
@@ -22,15 +27,19 @@ module Decidim
       end
     end
 
+    def show_extended_information?
+      EXTENDED_NOTIFICATIONS_CLASSES.include?(event_class)
+    end
+
     private
 
     def event
       @event ||= event_class.constantize.new(
-        resource: resource,
-        user: user,
-        user_role: user_role,
-        event_name: event_name,
-        extra: extra
+        resource:,
+        user:,
+        user_role:,
+        event_name:,
+        extra:
       )
     end
 

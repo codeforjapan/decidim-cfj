@@ -94,28 +94,196 @@ Rails.application.config.to_prepare do
     end
   end
 
+  ## load MapHelper in decidim_awesome
+  Decidim::DecidimAwesome::MapHelper # rubocop:disable Lint/Void
+
+  module DecidimAwesomeMapHelperPatch
+    # rubocop:disable Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/PerceivedComplexity:
+    def awesome_map_for(components, &)
+      return unless map_utility_dynamic
+
+      map = awesome_builder.map_element({ class: "dynamic-map", id: "awesome-map-container" }, &)
+      help = content_tag(:div, class: "map__skip-container") do
+        content_tag(:p, t("screen_reader_explanation", scope: "decidim.map.dynamic"), class: "sr-only")
+      end
+
+      html_options = {
+        class: "awesome-map",
+        id: "awesome-map",
+        data: {
+          "components" => components.map do |component|
+            {
+              id: component.id,
+              type: component.manifest.name,
+              name: translated_attribute(component.name),
+              url: Decidim::EngineRouter.main_proxy(component).root_path,
+              amendments: component.manifest.name == :proposals ? Decidim::Proposals::Proposal.where(component:).only_emendations.count : 0
+            }
+          end.to_json,
+          "hide-controls" => settings_source.try(:hide_controls),
+          "collapsed" => global_settings.collapse,
+          "truncate" => global_settings.truncate || 255,
+          "map-center" => global_settings.map_center.presence&.to_json || "",
+          "map-zoom" => global_settings.map_zoom || 8,
+          "menu-merge-components" => global_settings.menu_merge_components,
+          "menu-amendments" => global_settings.menu_amendments,
+          "menu-meetings" => global_settings.menu_meetings,
+          "menu-categories" => global_settings.menu_categories,
+          "menu-hashtags" => global_settings.menu_hashtags,
+          "show-not-answered" => step_settings&.show_not_answered,
+          "show-accepted" => step_settings&.show_accepted,
+          "show-withdrawn" => step_settings&.show_withdrawn,
+          "show-evaluating" => step_settings&.show_evaluating,
+          "show-rejected" => step_settings&.show_rejected
+        }
+      }
+
+      content_tag(:div, html_options) do
+        content_tag :div, class: "w-full" do
+          help + map
+        end
+      end
+    end
+    # rubocop:enable Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/PerceivedComplexity:
+  end
+
   module Decidim
-    module Map
-      class DynamicMap < Map::Frontend
-        class Builder < Decidim::Map::Frontend::Builder
-          # Override
-          def map_element(html_options = {})
-            opts = view_options
-            opts["markers"] = opts["markers"].reject { |item| item[:latitude].nil? || item[:latitude].nan? } if opts["markers"].present?
-            map_html_options = {
-              "data-decidim-map" => opts.to_json,
-              # The data-markers-data is kept for backwards compatibility
-              "data-markers-data" => opts.fetch(:markers, []).to_json
-            }.merge(html_options)
+    module DecidimAwesome
+      module MapHelper
+        prepend DecidimAwesomeMapHelperPatch
+      end
+    end
+  end
 
-            content = template.capture { yield }.html_safe if block_given?
+  ## fix `Decidim::Attachment#file_type`
+  module DecidimAttachmentFiletypePatch
+    def file_type
+      url&.split(".")&.last&.downcase&.gsub(/[^A-Za-z0-9].*/, "")
+    end
+  end
 
-            template.content_tag(:div, map_html_options) do
-              (content || "")
-            end
-          end
+  # force to autoload `` in decidim-core
+  Decidim::Attachment # rubocop:disable Lint/Void
+
+  # override `UserAnswersSerializer#hash_for`
+  module Decidim
+    class Attachment
+      prepend DecidimAttachmentFiletypePatch
+    end
+  end
+
+  ## fix `Decidim::ParticipatoryProcesses::ParticipatoryProcessHelper#process_types`
+  module DecidimParticipatoryProcessesProcessTypesPatch
+    def process_types
+      @process_types ||= Decidim::ParticipatoryProcessType.joins(:processes).where(decidim_organization_id: current_organization.id).distinct
+    end
+  end
+
+  # force to autoload `ParticipatoryProcessHelper` in decidim-participatry_process
+  Decidim::ParticipatoryProcesses::ParticipatoryProcessHelper # rubocop:disable Lint/Void
+
+  # override `process_types`
+  module Decidim
+    module ParticipatoryProcesses
+      module ParticipatoryProcessHelper
+        prepend DecidimParticipatoryProcessesProcessTypesPatch
+      end
+    end
+  end
+
+  module DecidimAdminPermissionsPatch
+    def permissions
+      if user &&
+         permission_action.scope == :admin &&
+         permission_action.subject == :editor_image && (
+           user.admin? ||
+           user.roles.any? ||
+           Decidim::ParticipatoryProcessUserRole.exists?(user:) ||
+           Decidim::AssemblyUserRole.exists?(user:) ||
+           Decidim::ConferenceUserRole.exists?(user:)
+         )
+        allow!
+      end
+
+      super
+    end
+  end
+
+  Decidim::Admin::Permissions # rubocop:disable Lint/Void
+
+  module Decidim
+    module Admin
+      class Permissions < Decidim::DefaultPermissions
+        prepend DecidimAdminPermissionsPatch
+      end
+    end
+  end
+
+  # ----------------------------------------
+
+  # fix editing the assembly content block
+  # cf. https://github.com/decidim/decidim/pull/13544
+  module DecidimAssembliesAdminAssemblyLandingPageContentBlocksControllerForV0283Patch
+    def parent_assembly
+      scoped_resource.parent
+    end
+  end
+
+  # force to autoload original controller
+  Decidim::Assemblies::Admin::AssemblyLandingPageContentBlocksController # rubocop:disable Lint/Void
+
+  # add helper `parent_assembly` as helper
+  module Decidim
+    module Assemblies
+      module Admin
+        class AssemblyLandingPageContentBlocksController
+          prepend DecidimAssembliesAdminAssemblyLandingPageContentBlocksControllerForV0283Patch
+
+          helper_method :parent_assembly
         end
       end
     end
   end
+
+  # ----------------------------------------
+
+  # override `escape_url`
+  module DecidimEscapeUriPatch
+    def escape_url(external_url)
+      uri = Addressable::URI.parse(external_url)
+      original_query = uri.query
+      normalized_uri = uri.normalize
+      normalized_uri.query = original_query
+      normalized_uri.to_s
+    end
+  end
+
+  # force to autoload original controller
+  Decidim::LinksController # rubocop:disable Lint/Void
+
+  # add helper `escape_url` as helper
+  module Decidim
+    class LinksController
+      prepend DecidimEscapeUriPatch
+
+      helper_method :escape_url
+    end
+  end
+
+  # Fix I18n.transliterate()
+  I18n.config.backend.instance_eval do
+    @transliterators[:ja] = I18n::Backend::Transliterator.get(->(string) { string })
+    @transliterators[:en] = I18n::Backend::Transliterator.get(->(string) { string })
+  end
+
+  module Decidim
+    config_accessor :max_results_options
+  end
+
+  Decidim.max_results_options = [6, 9, 12, 15]
+
+  # Insert `app/views` into Cell::ViewModel.view_paths to load application's views
+  Cell::ViewModel.view_paths.insert(1, Rails.root.join("app/views"))
 end

@@ -10,7 +10,7 @@ module Decidim
           helper_method :user
 
           def show
-            enforce_permission_to :show_user_extension, :user, user: user
+            enforce_permission_to(:show_user_extension, :user, user:)
 
             Decidim.traceability.perform_action! :show_user_extension, user, current_user
 

@@ -4,7 +4,7 @@
               </div>
 
               <div class="field">
-                <%= f_ext.text_field :address, label: t(:address, scope: "activemodel.attributes.user_extension"), autocomplete: 'street-address' %>
+                <%= f_ext.text_field :address, help_text: t(".address_help"), label: t(:address, scope: "activemodel.attributes.user_extension"), autocomplete: 'street-address' %>
               </div>
 
               <div class="field">
@@ -12,11 +12,17 @@
               </div>
 
               <div class="field">
-                <%= f_ext.label :gender, t(:gender, scope: "activemodel.attributes.user_extension") %>
+                <%= f_ext.label(:gender) do %>
+                <%= t(:gender, scope: "activemodel.attributes.user_extension") %>
+                <span title="必須項目" data-tooltip="true" data-disable-hover="false" data-keep-on-hover="true" class="label-required">
+                  <span aria-hidden="true">*</span>
+                  <span class="sr-only">必須項目</span>
+                </span>
                   <%= field_set_tag nil, class: 'radio-buttons' do %>
                     <%= f_ext.collection_radio_buttons :gender, Decidim::UserExtensionForm::GENDERS, :first, :last do |elem| %>
                     <%= elem.label(class: "radio_button") { elem.radio_button(class: "radio_button") + I18n.t(".#{elem.text}", scope: "enums.user_extension.gender") } %>
                   <% end %>
+                <% end %>
                 <% end %>
               </div>
 

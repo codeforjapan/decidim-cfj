@@ -1,5 +1,270 @@
 # Change Log
 
+## [1.8.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.7.8...v1.8.0) (2025-05-28)
+
+
+### Features
+
+* change imagemagick binary ([faae0a4](https://github.com/codeforjapan/decidim-cfj/commit/faae0a4e494f5950c006804d51a590c12d8e989a))
+
+
+### Bug Fixes
+
+* GA: remove unused envvar ([cf2f484](https://github.com/codeforjapan/decidim-cfj/commit/cf2f484d15eaab658dafb8a9090dcf3e749059c4))
+* remove unused packages ([356366a](https://github.com/codeforjapan/decidim-cfj/commit/356366a5c100071579c1132846387b578a25f15f))
+
+## [1.7.8](https://github.com/codeforjapan/decidim-cfj/compare/v1.7.7...v1.7.8) (2025-05-12)
+
+
+### Bug Fixes
+
+* update decidim-module-decidim_awesome ([0f66711](https://github.com/codeforjapan/decidim-cfj/commit/0f667116cfc53be1692f1746d567c563f82079e2))
+
+## [1.7.7](https://github.com/codeforjapan/decidim-cfj/compare/v1.7.6...v1.7.7) (2025-05-02)
+
+
+### Bug Fixes
+
+* mail logo bug ([676e0b4](https://github.com/codeforjapan/decidim-cfj/commit/676e0b46b429a8dbb20d56d0fc172879f9df64db))
+* remove decidim.scss and settings.scss ([141b166](https://github.com/codeforjapan/decidim-cfj/commit/141b166b52f1b48c9bab3591dd58c9b4ad1704d6))
+
+## [1.7.6](https://github.com/codeforjapan/decidim-cfj/compare/v1.7.5...v1.7.6) (2025-04-22)
+
+
+### Bug Fixes
+
+* default_locale should be `ja` ([6a8c8a8](https://github.com/codeforjapan/decidim-cfj/commit/6a8c8a8dd6530babc372ba8806f5bc29de7e3d4a))
+
+## [1.7.5](https://github.com/codeforjapan/decidim-cfj/compare/v1.7.4...v1.7.5) (2025-04-15)
+
+
+### Bug Fixes
+
+* change expire ([12f49aa](https://github.com/codeforjapan/decidim-cfj/commit/12f49aa790644db65fbef18a549bb3f0e908be9b))
+* lint ([dd28f3e](https://github.com/codeforjapan/decidim-cfj/commit/dd28f3eeff410841c2ed0eb7c87ccd0051ed5331))
+* mail logo url ([05a2e6a](https://github.com/codeforjapan/decidim-cfj/commit/05a2e6ad58031fa8c746127a96d5af75863c5b5c))
+* mail template ([6b26ee7](https://github.com/codeforjapan/decidim-cfj/commit/6b26ee75064574003c5096537331cab2dc6046f7))
+* urls_expire_in to nil ([78b625e](https://github.com/codeforjapan/decidim-cfj/commit/78b625e7b56321300902273ebe1a8e3d10147afa))
+
+## [1.7.4](https://github.com/codeforjapan/decidim-cfj/compare/v1.7.3...v1.7.4) (2025-03-31)
+
+
+### Bug Fixes
+
+* disable external link ([3bd6b46](https://github.com/codeforjapan/decidim-cfj/commit/3bd6b46467f40097195262f54d92a02489695ccf))
+
+## [1.7.3](https://github.com/codeforjapan/decidim-cfj/compare/v1.7.2...v1.7.3) (2025-03-28)
+
+
+### Bug Fixes
+
+* apply 0.28.5 update for mailer ([e00c3db](https://github.com/codeforjapan/decidim-cfj/commit/e00c3db19eaac1d2b28ec7eb1eee7fe91958133e))
+* use mail default template ([d23a167](https://github.com/codeforjapan/decidim-cfj/commit/d23a167cffdba937a5c1c7d3ec7c1a170fbdfde3))
+
+## [1.7.2](https://github.com/codeforjapan/decidim-cfj/compare/v1.7.1...v1.7.2) (2025-03-15)
+
+
+### Bug Fixes
+
+* add chromium-driver ([a207b4d](https://github.com/codeforjapan/decidim-cfj/commit/a207b4d3cbf9eb696eb400320e3ddfaa972824c6))
+
+## [1.7.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.7.0...v1.7.1) (2025-03-11)
+
+
+### Bug Fixes
+
+* iframe: allow any domains ([78054c5](https://github.com/codeforjapan/decidim-cfj/commit/78054c51f3175094e8d9458b9f5ce06c81a5f736))
+
+## [1.7.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.6.1...v1.7.0) (2025-03-05)
+
+
+### Features
+
+* OmniAuth::Logging and subscribe hook ([d764a07](https://github.com/codeforjapan/decidim-cfj/commit/d764a07b2e67466cf30b50b25026f92d32d9411c))
+
+
+### Bug Fixes
+
+* lint ([47d9880](https://github.com/codeforjapan/decidim-cfj/commit/47d9880becec44d93056e3f4fc3c8fd1542d43a6))
+* override links controller escape_url ([de52eb1](https://github.com/codeforjapan/decidim-cfj/commit/de52eb1b7eca6a2d6c1271014d03bd407fac76aa))
+* remove installed gem ([aae2dac](https://github.com/codeforjapan/decidim-cfj/commit/aae2dac59a50c868e07f1f40ecf75a34fc2eb767))
+
+## [1.6.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.6.0...v1.6.1) (2025-03-03)
+
+
+### Bug Fixes
+
+* Hide filter if only a single TreePoint node is present ([b01c7bd](https://github.com/codeforjapan/decidim-cfj/commit/b01c7bd629d75aed62dac6b1a901362c8170d3ce))
+
+## [1.6.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.5.2...v1.6.0) (2025-02-19)
+
+
+### Features
+
+* add .env.sample ([c84325a](https://github.com/codeforjapan/decidim-cfj/commit/c84325a5116ec4db5bbbb3c7c2abb96e4b6c8c0b))
+
+## [1.5.2](https://github.com/codeforjapan/decidim-cfj/compare/v1.5.1...v1.5.2) (2025-02-18)
+
+
+### Bug Fixes
+
+* locale for devise and user_extension ([09c0c32](https://github.com/codeforjapan/decidim-cfj/commit/09c0c327c495f262747685a87c1e24d919cbbc15))
+* update max_results in highlighted settings ([3215f28](https://github.com/codeforjapan/decidim-cfj/commit/3215f28f5d9e5ad356cb9b73b04bcc2e68d0b4de))
+
+## [1.5.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.5.0...v1.5.1) (2025-02-11)
+
+
+### Bug Fixes
+
+* `hello` with name ([0548566](https://github.com/codeforjapan/decidim-cfj/commit/0548566058f2660fe6df5929248379b64b462ca7))
+* editor_image permissions for process admin ([74d3dbc](https://github.com/codeforjapan/decidim-cfj/commit/74d3dbcf0a15c0f7e23dfbb446b849c2f1317757))
+* error ([85bb24d](https://github.com/codeforjapan/decidim-cfj/commit/85bb24da21f8392e039c6c8ab7a5fbfe8b9d4cc5))
+* remove Decidim::Amendable::AmendButtonCardCell ([1097032](https://github.com/codeforjapan/decidim-cfj/commit/1097032a31e1974eb9e083e4a0aa9105578cfcc0))
+
+## [1.5.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.4.1...v1.5.0) (2025-02-04)
+
+
+### Features
+
+* add rake task `i18n_yaml:dump_all` ([de9701b](https://github.com/codeforjapan/decidim-cfj/commit/de9701b47a962af4282e94466f543260b09069cf))
+* update decidim 0.28.4 ([982bc86](https://github.com/codeforjapan/decidim-cfj/commit/982bc86c8a4b8017a7e73aecca7ec3b8a2c63140))
+
+
+### Bug Fixes
+
+* Add translation for following count ([f8ef737](https://github.com/codeforjapan/decidim-cfj/commit/f8ef7373881fe188d86bb5ecfa1ed1f5eb9adb4c))
+* decidim.endorsement_buttons_cell.endorse ([fee2a70](https://github.com/codeforjapan/decidim-cfj/commit/fee2a70979b0aed3d3020dbaf1949fc9bbef84d4))
+* lint ([1fc7c63](https://github.com/codeforjapan/decidim-cfj/commit/1fc7c6348c708e1a0c3530df079928e504e18a41))
+* override CSP settings in all specs ([1e6869f](https://github.com/codeforjapan/decidim-cfj/commit/1e6869fe1fa84fbd4c4e37df80ff5c33c1a369d2))
+* suppress warnings in iframe ([e14a309](https://github.com/codeforjapan/decidim-cfj/commit/e14a309f1ace1a321c33a7f4b268fa45823934aa))
+* Suppress warnings in server ([8a532d8](https://github.com/codeforjapan/decidim-cfj/commit/8a532d8b8c0178a9fd76f76b140328dd539c11f0))
+* Suppress warnings in server ([d32189e](https://github.com/codeforjapan/decidim-cfj/commit/d32189ec83aa68d9084c3442a9de13c36f0d18cc))
+* Suppress warnings in server ([bfc1774](https://github.com/codeforjapan/decidim-cfj/commit/bfc177436865ef2e6d42a1a569dbb9f4041faa53))
+
+## [1.4.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.4.0...v1.4.1) (2025-01-30)
+
+
+### Bug Fixes
+
+* initializer ([d218cdf](https://github.com/codeforjapan/decidim-cfj/commit/d218cdf27899139d90c64e845c80018899043d59))
+* user registration ([e13eef7](https://github.com/codeforjapan/decidim-cfj/commit/e13eef73bc1fb0fab9fec72a71f7a361524f490c))
+
+## [1.4.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.3.3...v1.4.0) (2025-01-30)
+
+
+### Features
+
+* add LINE as SNS ([b587977](https://github.com/codeforjapan/decidim-cfj/commit/b587977137b04ee629684abd269d8d53e5c707e7))
+
+
+### Bug Fixes
+
+* `process_types` ([67df526](https://github.com/codeforjapan/decidim-cfj/commit/67df526eb375902094f002a6b6a8f6baeb5df29b))
+* address help ([fb05693](https://github.com/codeforjapan/decidim-cfj/commit/fb05693442ce8e31027e3f0972ea6a598991dc0d))
+* do not add comment_counts if already registered ([cf6a568](https://github.com/codeforjapan/decidim-cfj/commit/cf6a5686b93f2e1c64c46dc1d654579a99167b2d))
+* do not show process_types in other organizations ([5662638](https://github.com/codeforjapan/decidim-cfj/commit/56626381cb88420fd43ba5412d2924d258fb090d))
+* iframe extension ([ad0bc90](https://github.com/codeforjapan/decidim-cfj/commit/ad0bc90df36bd60df18690ed9255c9a3b77a4c6e))
+* ignore files in node_modeles ([e74e579](https://github.com/codeforjapan/decidim-cfj/commit/e74e579d5459d19d52e4196fbb2bdc552c059708))
+* link to last comments ([7e0b18c](https://github.com/codeforjapan/decidim-cfj/commit/7e0b18c8c9edd7587bc0f42cd69fc9f471966eec))
+* make announcement content_block as default ([78265ec](https://github.com/codeforjapan/decidim-cfj/commit/78265ec2a775e4e5b3be395f94b872a82155a0b9))
+* make auto_save_forms disable ([cc82360](https://github.com/codeforjapan/decidim-cfj/commit/cc82360f8fb9cf060dac1b80f1fe2001c906d585))
+* make comments_count 3 ([45665e6](https://github.com/codeforjapan/decidim-cfj/commit/45665e65cc5cc9a0fcc7a14b721342a1b310b4ed))
+* MapHelper#awesome_map_for returns valid map_center ([b22c400](https://github.com/codeforjapan/decidim-cfj/commit/b22c400e810febd1d08cbc1481ff3df2cdb7d5b3))
+* max length of description should be defined in a constant ([50189e6](https://github.com/codeforjapan/decidim-cfj/commit/50189e6c6208f1010bf57660daa5f36ff7c6e6df))
+* placeholder for name and email ([b8fdcc4](https://github.com/codeforjapan/decidim-cfj/commit/b8fdcc47fc892cf54bb3dffee3fd03a09d2f94b0))
+* remove invalid characters in file_type ([6ee63df](https://github.com/codeforjapan/decidim-cfj/commit/6ee63df691f5cff61bd760ea078e59b96773dc94))
+* revert [#69](https://github.com/codeforjapan/decidim-cfj/issues/69) ([89512ac](https://github.com/codeforjapan/decidim-cfj/commit/89512acd05cf7662559e64ea31c0a3f246f1338b))
+* rubocop ([07f18ce](https://github.com/codeforjapan/decidim-cfj/commit/07f18ce9243d50c1d7b2cf64a454db8a78059a9f))
+* show only visible processes ([687b97f](https://github.com/codeforjapan/decidim-cfj/commit/687b97f1a20af8ea6867406873af021d1339c74e))
+
+## [1.3.3](https://github.com/codeforjapan/decidim-cfj/compare/v1.3.2...v1.3.3) (2024-11-23)
+
+
+### Bug Fixes
+
+* Use expire_session_after for session, REDIS_CACHE_EXPIRES_IN for cache ([7f5eb63](https://github.com/codeforjapan/decidim-cfj/commit/7f5eb63188ff1956b99ccb8fa0c8ffa4af2eb770))
+
+## [1.3.2](https://github.com/codeforjapan/decidim-cfj/compare/v1.3.1...v1.3.2) (2024-11-23)
+
+
+### Bug Fixes
+
+* drop bot request ([51d6d51](https://github.com/codeforjapan/decidim-cfj/commit/51d6d51555cda68430245872ee5e312335da7cac))
+* drop gptbot access ([b0504db](https://github.com/codeforjapan/decidim-cfj/commit/b0504dba9a6bb378b257a1ba2f02760bd85e87d2))
+
+## [1.3.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.3.0...v1.3.1) (2024-11-07)
+
+
+### Bug Fixes
+
+* ignore session_store defined in Decidim::Core::Engine ([52a14e8](https://github.com/codeforjapan/decidim-cfj/commit/52a14e80bccf1763ff67c88c553a2764afd722f7))
+* refactor session ([0b81968](https://github.com/codeforjapan/decidim-cfj/commit/0b81968e84e0f83366f43426cdd85b8d80b301d5))
+
+## [1.3.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.2.4...v1.3.0) (2024-10-07)
+
+
+### Features
+
+* update decidim v0.27.9 ([6cdfdee](https://github.com/codeforjapan/decidim-cfj/commit/6cdfdee7aea10154d72b355337bc3085f935a3d9))
+
+## [1.2.4](https://github.com/codeforjapan/decidim-cfj/compare/v1.2.3...v1.2.4) (2024-08-06)
+
+
+### Bug Fixes
+
+* local docker postgres ([287786f](https://github.com/codeforjapan/decidim-cfj/commit/287786f30ab050c9fd32ade9d4e31f8795e4bd16))
+* use `decidim_sanitize_admin` instead of `decidim_escape_translated` ([863bcb7](https://github.com/codeforjapan/decidim-cfj/commit/863bcb756cf9cc4ad9139b84662df8efeb69b28e))
+* Use Redis with docker compose ([a97e0ed](https://github.com/codeforjapan/decidim-cfj/commit/a97e0ed328246933bb8e98f863d350b1bc7e1959))
+
+## [1.2.3](https://github.com/codeforjapan/decidim-cfj/compare/v1.2.2...v1.2.3) (2024-07-30)
+
+
+### Bug Fixes
+
+* update Decidim v0.27.7 ([fdb0a31](https://github.com/codeforjapan/decidim-cfj/commit/fdb0a31250b1a064ba8e8c7d0ca7c3a87d1c74d1))
+
+## [1.2.2](https://github.com/codeforjapan/decidim-cfj/compare/v1.2.1...v1.2.2) (2024-07-28)
+
+
+### Bug Fixes
+
+* allow to use search with pg_bigm ([698e93e](https://github.com/codeforjapan/decidim-cfj/commit/698e93e7e0c39c2bd63d8d5852b8b9df5cad2f76))
+
+## [1.2.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.2.0...v1.2.1) (2024-07-14)
+
+
+### Bug Fixes
+
+* remove `urlsafe_csrf_tokens` ([22c09bb](https://github.com/codeforjapan/decidim-cfj/commit/22c09bbc41047cafe5b78298163636cab6e71428))
+
+## [1.2.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.1.2...v1.2.0) (2024-07-10)
+
+
+### Features
+
+* update destroy organization ([9119ff7](https://github.com/codeforjapan/decidim-cfj/commit/9119ff7416f1ec89463b78354a05323d0479b05a))
+
+
+### Bug Fixes
+
+* make use_cookies_with_metadata true (same as default) ([d52eaea](https://github.com/codeforjapan/decidim-cfj/commit/d52eaea57ea855c005d61ad3ecd339753f2e06ef))
+
+## [1.1.2](https://github.com/codeforjapan/decidim-cfj/compare/v1.1.1...v1.1.2) (2024-07-08)
+
+
+### Bug Fixes
+
+* gem version ([2da0587](https://github.com/codeforjapan/decidim-cfj/commit/2da05875f0e05093286168683af5223f2049548f))
+
+## [1.1.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.1.0...v1.1.1) (2024-06-25)
+
+
+### Bug Fixes
+
+* add Decidim::Verifications::CsvDatum ([d5ad85f](https://github.com/codeforjapan/decidim-cfj/commit/d5ad85f979cb292334b0d941ca3c56340fcbf829))
+* delete.rake ([a41ffa2](https://github.com/codeforjapan/decidim-cfj/commit/a41ffa27e7e3e031b48cb67f2fcb209e21474738))
+* rubocop ([fe24dab](https://github.com/codeforjapan/decidim-cfj/commit/fe24dabd91ad8c28f987f65e8ad0e1ca46750d81))
+
 ## [1.1.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.0.3...v1.1.0) (2024-03-19)
 
 

@@ -8,9 +8,9 @@ Dockerで環境を構築する際は、1.環境構築と2. 実行（ローカル
 
 | アプリケーション名                                 | バージョン  |
 |-------------------------------------------|--------|
-| [Ruby](https://www.ruby-lang.org/ja/)     | 3.0.6  |
-| [Bundler](https://bundler.io/)            | 2.2.33 |
-| [PostgreSQL](https://www.postgresql.org/) | 12     |
+| [Ruby](https://www.ruby-lang.org/ja/)     | 3.1.1  |
+| [Bundler](https://bundler.io/)            | 2.4.21 |
+| [PostgreSQL](https://www.postgresql.org/) | 14     |
 
 ### 1-1. 事前準備
 - rbenvのインストール（macOSならhomebrew経由）
@@ -20,7 +20,7 @@ Dockerで環境を構築する際は、1.環境構築と2. 実行（ローカル
 ## 2. 実行（ローカルバージョン）
 ### 2.1 Rubyのインストール
 ```
-rbenv install 3.0.6
+rbenv install 3.1.1
 ```
 ### 2.2 リポジトリをクローン
 ```
@@ -28,8 +28,11 @@ git clone git@github.com:codeforjapan/decidim-cfj.git
 ```
 
 ### 2.3 bundlerのインストール
+
+通常、Ruby 3.1.1ではbundler 2.3.7が標準でインストールされているはずですが、何かしらの事情でインストールされていない場合は改めてインストールしてください。
+
 ```
-gem install bundler:2.2.33
+gem install bundler:2.3.7
 ```
 
 ### 2.4 DBのユーザーとパスワードの設定
@@ -103,3 +106,19 @@ http://localhost:3000 にアクセス
 * サービス画面 (http://localhost:3000/users/sign_in?locale=ja)
   * admin@example.org （組織管理者）
   * user@example.org （通常ユーザ）
+
+## 5. キャッシュとRedisについて
+
+Railsのキャッシュはproduction環境ではRedis Cache Store(`ActiveSupport::Cache::RedisCacheStore`)を使うようになっています。
+
+Redisの設定は環境変数 `REDIS_CACHE_URL` を使用しています。
+
+development環境でのRailsの標準機能として、キャッシュのオン・オフをトグルで制御できます。オン・オフを切り替えたい場合、以下のコマンドを実行してください。
+
+```console
+# dockerを使っている場合
+docker compose run app rails dev:cache
+
+# localで動かしている場合
+bin/rails dev:cache
+```

@@ -25,7 +25,7 @@ if !Rails.env.production? || ENV.fetch("SEED")
       occupation: ["会社員", "学生", "公務員", "自営業", "無職", nil].sample
     }
     Decidim::Authorization.create!(
-      user: user,
+      user:,
       name: "user_extension",
       metadata: user_extension
     )

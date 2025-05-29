@@ -1,0 +1,18 @@
+ja:
+  activemodel:
+    attributes:
+      assembly:
+        local_area: 組織
+      participatory_process:
+        local_area: 組織
+      participatory_process_group:
+        local_area: 組織
+  decidim:
+    assemblies:
+      assemblies:
+        description:
+          local_area: 組織
+    participatory_processes:
+      participatory_processes:
+        description:
+          local_area: 組織
