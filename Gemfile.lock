@@ -439,6 +439,11 @@ GEM
       multipart-post (~> 2)
     faraday-net_http (3.4.0)
       net-http (>= 0.5.0)
+    ferrum (0.13)
+      addressable (~> 2.5)
+      concurrent-ruby (~> 1.1)
+      webrick (~> 1.7)
+      websocket-driver (>= 0.6, < 0.8)
     ffi (1.17.1)
     figaro (1.2.0)
       thor (>= 0.14.0, < 2)
@@ -888,6 +893,7 @@ GEM
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
+    webrick (1.8.1)
     websocket (1.2.11)
     websocket-driver (0.7.7)
       base64
@@ -925,6 +931,7 @@ DEPENDENCIES
   dotenv-rails
   factory_bot_rails
   faker
+  ferrum
   figaro
   fog-aws
   image_processing

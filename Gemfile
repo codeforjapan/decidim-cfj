@@ -34,6 +34,8 @@ gem "decidim-user_extension", path: "decidim-user_extension"
 
 gem "slack-ruby-client"
 
+gem "ferrum"
+
 group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
   gem "figaro"
