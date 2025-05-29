@@ -17,12 +17,12 @@ module Decidim
       # Returns an ExportData instance.
       def export
         html = controller.render_to_string(
-          template: template,
-          layout: layout,
-          locals: locals
+          template:,
+          layout:,
+          locals:
         )
 
-        document = pdf_from_string(html, orientation: orientation)
+        document = pdf_from_string(html, orientation:)
 
         ExportData.new(document, "pdf")
       end
@@ -44,7 +44,7 @@ module Decidim
 
       # This method may be overwritten if the template needs more local variables
       def locals
-        { collection: collection }
+        { collection: }
       end
 
       protected
