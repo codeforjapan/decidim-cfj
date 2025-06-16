@@ -7,7 +7,7 @@
   <%= link_to url do %>
     <% if organization.logo.attached? %>
       <%= image_tag(
-            Rails.application.routes.url_helpers.rails_blob_url(organization.logo, host: organization.host, disposition: :attachment),
+            "data:image/png;base64,#{Base64.strict_encode64(organization.logo.download)}",
             style: "max-height: 50px",
             alt: organization_name(organization)
           ) %>
