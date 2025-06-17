@@ -63,7 +63,8 @@ module Decidim
           let(:organization_logo) { Decidim::Dev.test_file("city.jpeg", "image/jpeg") }
 
           before do
-            organization.logo = organization_logo
+            organization.logo.attach(organization_logo)
+            organization.save!
           end
 
           it "includes logo URL" do
