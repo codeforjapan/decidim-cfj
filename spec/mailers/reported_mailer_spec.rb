@@ -67,8 +67,7 @@ module Decidim
           end
 
           it "includes logo URL" do
-            url_pattern = %r{src="http://#{organization.host}[^/]*/rails/active_storage/blobs/redirect/.*/city.jpeg}
-            expect(email_body(mail)).to match(url_pattern)
+            expect(email_body(mail)).to include('src="data:image/jpeg;base64,')
           end
         end
 
