@@ -25,7 +25,14 @@ class CreateDefaultProposalStates < ActiveRecord::Migration[6.1]
         next if proposal.old_state == "not_answered"
 
         token = default_states[proposal.old_state.to_sym][:object]&.token
-        proposal.update!(proposal_state: Decidim::Proposals::ProposalState.where(component:, token:).first!)
+        next unless token
+
+        proposal_state = Decidim::Proposals::ProposalState.where(component:, token:).first
+        if proposal_state
+          proposal.update!(proposal_state: proposal_state)
+        else
+          Rails.logger.warn "ProposalState not found for component #{component.id} with token #{token}. Skipping proposal #{proposal.id}."
+        end
       end
     end
   end
