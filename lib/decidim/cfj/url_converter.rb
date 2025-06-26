@@ -66,7 +66,7 @@ module Decidim
 
           # Search for blobs with matching filename
           begin
-            blobs = ActiveStorage::Blob.where("filename = ?", filename)
+            blobs = ActiveStorage::Blob.where(filename:)
             case blobs.count
             when 0
               Rails.logger.warn "No blob found with filename: #{filename}"
@@ -180,26 +180,12 @@ module Decidim
           return nil unless parts.length >= 6
 
           signed_token = parts[5]
-          token_parts = signed_token.split("--")
-          return nil unless token_parts.length >= 2
-
-          encoded_data = token_parts[0]
 
           begin
-            # Decode Base64
-            decoded_json = Base64.decode64(encoded_data)
-            parsed = JSON.parse(decoded_json)
-
-            # Extract message
-            message = parsed.dig("_rails", "message")
-            return nil unless message
-
-            # Decode Marshal data
-            marshal_data = Base64.decode64(message)
-            blob_id = Marshal.load(marshal_data)
-
-            blob_id.is_a?(Integer) ? blob_id : nil
-          rescue StandardError => e
+            # Use ActiveStorage's built-in method to find blob from signed token
+            blob = ActiveStorage::Blob.find_signed(signed_token)
+            blob&.id
+          rescue ActiveSupport::MessageVerifier::InvalidSignature, ActiveRecord::RecordNotFound => e
             Rails.logger.warn "Failed to extract blob ID from Rails URL: #{e.message}"
             nil
           end

@@ -17,7 +17,6 @@ module Decidim
         subject { described_class.new(content, context).rewrite }
 
         it "creates EditorImage and uses Global ID instead of signed URL" do
-          result = nil
           expect { subject }.to change(EditorImage, :count).by(1)
 
           editor_image = EditorImage.last

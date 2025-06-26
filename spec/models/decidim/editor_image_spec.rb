@@ -3,29 +3,27 @@
 require "rails_helper"
 
 module Decidim
-  describe EditorImage, type: :model do
+  describe EditorImage do
     let(:organization) { create(:organization) }
     let(:user) { create(:user, organization:) }
     let(:editor_image) { create(:editor_image, author: user, organization:) }
 
     describe "#attached_uploader" do
-      context "in test environment" do
-        it "returns Rails blob URL for path method" do
-          uploader = editor_image.attached_uploader(:file)
+      it "returns Rails blob URL for path method" do
+        uploader = editor_image.attached_uploader(:file)
 
-          # In test environment, the override is skipped, so we get Rails URLs
-          path = uploader.path
-          expect(path).to match(%r{rails/active_storage})
-          expect(path).not_to match(/amazonaws\.com/)
-        end
+        # In test environment, the override is skipped, so we get Rails URLs
+        path = uploader.path
+        expect(path).to match(%r{rails/active_storage})
+        expect(path).not_to match(/amazonaws\.com/)
+      end
 
-        it "maintains uploader functionality" do
-          uploader = editor_image.attached_uploader(:file)
+      it "maintains uploader functionality" do
+        uploader = editor_image.attached_uploader(:file)
 
-          # Other methods should still work
-          expect(uploader.attached?).to be true
-          expect(uploader.url).to be_present
-        end
+        # Other methods should still work
+        expect(uploader.attached?).to be true
+        expect(uploader.url).to be_present
       end
     end
 

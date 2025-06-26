@@ -3,7 +3,7 @@
 require "rails_helper"
 require "decidim/blogs/test/factories"
 
-describe "Blog post image handling in admin", type: :system do
+describe "Blog post image handling in admin" do
   let(:organization) { create(:organization) }
   let(:user) { create(:user, :admin, organization:) }
   let(:participatory_process) { create(:participatory_process, organization:) }

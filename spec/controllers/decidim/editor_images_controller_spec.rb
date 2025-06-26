@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module Decidim
-  describe EditorImagesController, type: :controller do
+  describe EditorImagesController do
     routes { Decidim::Core::Engine.routes }
 
     let(:organization) { create(:organization) }
@@ -28,7 +28,7 @@ module Decidim
 
         expect(response).to have_http_status(:ok)
 
-        json_response = JSON.parse(response.body)
+        json_response = response.parsed_body
         expect(json_response).to have_key("url")
         expect(json_response).to have_key("message")
 

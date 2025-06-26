@@ -9,10 +9,8 @@ namespace :decidim do
       puts "Starting signed URL fix task..."
 
       # Pattern to match signed S3 URLs that might be in content
-      signed_url_pattern = %r{https://[^/]+\.s3[^/]*\.amazonaws\.com/[^?]+\?[^"'\s]+}
 
       # Also pattern for blob URLs that might have expired signatures
-      blob_url_pattern = %r{/rails/active_storage/blobs/[^/]+/[^/]+/[^?"'\s]+}
 
       # Counter for tracking changes
       fixed_count = 0
@@ -107,7 +105,7 @@ namespace :decidim do
       # Process other content types that might have rich text
       # Add more models as needed...
 
-      puts "\n" + ("=" * 50)
+      puts "\n#{("=" * 50)}"
       puts "Signed URL fix task completed!"
       puts "Total items checked: #{total_checked}"
       puts "Items fixed: #{fixed_count}"
