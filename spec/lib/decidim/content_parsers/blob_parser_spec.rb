@@ -117,4 +117,93 @@ describe "BlobParser with S3 URL support" do
       end
     end
   end
+
+  # Test integration with actual Decidim models
+  describe "integration with Decidim models" do
+    let(:organization) { create(:organization) }
+    let(:user) { create(:user, organization:) }
+    let(:editor_image) { create(:editor_image, author: user, organization:) }
+    let(:blob) { editor_image.file.blob }
+    let(:s3_url) { "https://test-bucket.s3.amazonaws.com/#{blob.key}?signature=abc123" }
+
+    before do
+      allow(Decidim::Cfj::UrlConverter).to receive(:s3_url_to_global_id)
+        .with(s3_url)
+        .and_return(blob.to_global_id.to_s)
+    end
+
+    context "with blog posts" do
+      let(:participatory_process) { create(:participatory_process, organization:) }
+      let(:component) { create(:component, manifest_name: :blogs, participatory_space: participatory_process) }
+      let(:blog_post_content) { "<p>Blog content with image: <img src=\"#{s3_url}\" alt=\"Test image\"></p>" }
+
+      it "processes S3 URLs in blog post content" do
+        parser = Decidim::ContentParsers::BlobParser.new(blog_post_content, {})
+        result = parser.rewrite
+
+        expect(result).to include(blob.to_global_id.to_s)
+        expect(result).not_to include("s3.amazonaws.com")
+        expect(result).to include("<img src=\"#{blob.to_global_id}\" alt=\"Test image\">")
+      end
+    end
+
+    context "with proposal answers" do
+      let(:participatory_process) { create(:participatory_process, organization:) }
+      let(:component) { create(:component, manifest_name: :proposals, participatory_space: participatory_process) }
+      let(:proposal_answer_content) { "<p>Proposal answer with image: <img src=\"#{s3_url}\" alt=\"Answer image\"></p>" }
+
+      it "processes S3 URLs in proposal answer content" do
+        parser = Decidim::ContentParsers::BlobParser.new(proposal_answer_content, {})
+        result = parser.rewrite
+
+        expect(result).to include(blob.to_global_id.to_s)
+        expect(result).not_to include("s3.amazonaws.com")
+        expect(result).to include("<img src=\"#{blob.to_global_id}\" alt=\"Answer image\">")
+      end
+    end
+
+    context "with multilingual content" do
+      let(:multilingual_content) do
+        {
+          "ja" => "<p>日本語の内容 <img src=\"#{s3_url}\" alt=\"画像\"></p>",
+          "en" => "<p>English content <img src=\"#{s3_url}\" alt=\"image\"></p>"
+        }
+      end
+
+      it "processes S3 URLs in each language version" do
+        multilingual_content.each do |_locale, content|
+          parser = Decidim::ContentParsers::BlobParser.new(content, {})
+          result = parser.rewrite
+
+          expect(result).to include(blob.to_global_id.to_s)
+          expect(result).not_to include("s3.amazonaws.com")
+        end
+      end
+    end
+
+    context "with mixed URL types in same content" do
+      let(:rails_blob_url) { Rails.application.routes.url_helpers.rails_blob_url(blob, only_path: true) }
+      let(:mixed_content) do
+        <<~HTML
+          <p>Content with multiple URL types:</p>
+          <p>S3 URL: <img src="#{s3_url}" alt="S3 image"></p>
+          <p>Rails URL: <img src="#{rails_blob_url}" alt="Rails image"></p>
+          <p>Regular URL: <img src="https://example.com/image.jpg" alt="External image"></p>
+        HTML
+      end
+
+      it "processes only blob URLs and leaves other URLs unchanged" do
+        parser = Decidim::ContentParsers::BlobParser.new(mixed_content, {})
+        result = parser.rewrite
+
+        # Should convert both S3 and Rails URLs to Global IDs
+        expect(result.scan("gid://").count).to eq(2)
+        expect(result).not_to include("s3.amazonaws.com")
+        expect(result).not_to include("/rails/active_storage/blobs/")
+
+        # Should preserve external URL
+        expect(result).to include("https://example.com/image.jpg")
+      end
+    end
+  end
 end
