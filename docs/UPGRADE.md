@@ -34,9 +34,33 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 
   `delete:destroy_all`タスクで不要なレコードを消せるように追加されたファイル。 https://github.com/codeforjapan/decidim-cfj/pull/501 で追加されたものです。
 
-* `app/packs/stylesheets/decidim/cfj/buttons.scss`
+* `app/cells/decidim/assemblies/assembly_g_cell.rb`,
+  `app/cells/decidim/participatory_processes/process_g_cell.rb`
 
-  `https://github.com/codeforjapan/decidim-cfj/issues/46` の対応で `https://github.com/codeforjapan/decidim-cfj/pull/96` で追加しています。
+  `resource_image_url`を`rails_blob_path()`を使ったものに差し替え
+
+* `app/cells/decidim/comments/last_comment_activity/show.erb`
+  `app/cells/decidim/comments/last_comment_activity_cell.rb`
+  `app/cells/decidim/content_blocks/last_comment/show.erb`
+  `app/cells/decidim/content_blocks/last_comment_cell.rb`
+  `app/cells/decidim/last_comment_activities/show.erb`
+  `app/cells/decidim/last_comment_activities_cell.rb`
+
+  `https://github.com/ayuki-joto/decidim-cfj/pull/45` `https://github.com/ayuki-joto/decidim-cfj/pull/65` コメントに限定したLast Activityをcontent_blocksとして追加しています。
+
+* `app/cells/decidim/assemblies/content_blocks/highlighted_assemblies_settings_form/show.erb`,
+  `app/cells/decidim/conferences/content_blocks/highlighted_conferences_settings_form/show.erb`,
+  `app/cells/decidim/participatory_processes/content_blocks/highlighted_processes_settings_form/show.erb`
+
+  https://github.com/codeforjapan/decidim-cfj/pull/669 で追加されたもので、表示する要素の最大数のドロップダウンの数を変更するものです。
+
+* `app/helpers/decidim/menu_helper.rb`
+
+  https://github.com/ayuki-joto/decidim-cfj/pull/70 で追加されたもので、注目のプロセスで表示されるプロセスを制限します
+
+* `app/packs/src/decidim/cfj/accordion-scroll.js`
+
+  https://github.com/ayuki-joto/decidim-cfj/pull/66 で追加されたもので、「一部のみ表示」ボタンを押した際の挙動を変更します
 
 * `app/packs/stylesheets/decidim/cfj/comment_content.scss`
 
@@ -50,13 +74,9 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 
   https://github.com/codeforjapan/decidim-cfj/pull/460 で追加されたファイル。印刷用のCSSファイル。
 
-* `app/packs/stylesheets/decidim/cfj/ql_html_editor.scss`
+* `app/packs/stylesheets/decidim/cfj/tiptap_html_edit.scss`
 
-  https://github.com/codeforjapan/decidim-cfj/pull/469 で追加されたファイル。Quill HTML Editor用のCSSファイル。
-
-* `app/packs/stylesheets/decidim/cfj/search.scss`
-
-  https://github.com/codeforjapan/decidim-cfj/pull/348 で追加されたファイル。グローバル検索が日本語では機能していないため削除したもの。
+  https://github.com/ayuki-joto/decidim-cfj/pull/30 https://github.com/codeforjapan/decidim-cfj/pull/596 で追加されたファイル。TipTap Editor用のCSSファイル。
 
 * `app/controllers/decidim/debates/versions_controller.rb`
 
@@ -77,6 +97,22 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 * `app/uploaders/decidim/image_uploader.rb`
 
   https://github.com/codeforjapan/decidim-cfj/pull/455 で追加したもの。ピクセル数の大きい画像に対応するため、max_image_height_or_widthの値を変更している。
+
+* `app/views/layouts/decidim/footer/_main_links.html.erb`
+
+  https://github.com/ayuki-joto/decidim-cfj/pull/57 で追加したもの。footerのうち「リソース」欄を表示させないようにする。
+
+* `app/views/decidim/application/_document.html.erb`
+
+  https://github.com/codeforjapan/decidim-cfj/pull/692 で追加したもの。ミーティングの添付ファイルを外部リンクにしないようにする
+
+* `app/views/decidim/blogs/posts/show.html.erb`
+
+  https://github.com/codeforjapan/decidim-cfj/pull/550 metaとOGPのdescriptionの長さ制限とOGP画像追加の修正。
+
+* `app/views/decidim/shared/_filters.html.erb`
+
+  https://github.com/codeforjapan/decidim-cfj/pull/675 で追加したもの。候補が一つしかないフィルタを表示しないようにする
 
 * `config/application.rb`
 

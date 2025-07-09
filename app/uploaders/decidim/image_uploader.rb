@@ -8,7 +8,15 @@ module Decidim
     end
 
     def content_type_allowlist
-      extension_allowlist.map { |ext| "image/#{ext}" }
+      extension_allowlist.filter_map do |ext|
+        mime_type = MiniMime.lookup_by_extension(ext)
+        if mime_type
+          mime_type.content_type
+        else
+          Rails.logger.warn "Unknown file extension: #{ext}"
+          nil
+        end
+      end.uniq
     end
 
     # Fetches info about different variants, their processors and dimensions
