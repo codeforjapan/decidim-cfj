@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.8.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.8.0...v1.8.1) (2025-07-09)
+
+
+### Bug Fixes
+
+* content_type not found error ([d673b3b](https://github.com/codeforjapan/decidim-cfj/commit/d673b3b7d757e3e7de67fca2ea8d7283c58a9818))
+
 ## [1.8.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.7.8...v1.8.0) (2025-05-28)
 
 
