@@ -298,4 +298,31 @@ Rails.application.config.to_prepare do
 
   # Insert `app/views` into Cell::ViewModel.view_paths to load application's views
   Cell::ViewModel.view_paths.insert(1, Rails.root.join("app/views"))
+
+  # ----------------------------------------
+
+  # Disable message functionality in profile actions
+  module DecidimProfileActionsDisableMessagePatch
+    private
+
+    # Override to disable message functionality
+    def can_contact_user?
+      false
+    end
+  end
+
+  Decidim::ProfileActionsCell # rubocop:disable Lint/Void
+
+  module Decidim
+    class ProfileActionsCell
+      prepend DecidimProfileActionsDisableMessagePatch
+    end
+  end
+
+  Decidim::ProfileSidebarCell # rubocop:disable Lint/Void
+  module Decidim
+    class ProfileSidebarCell
+      prepend DecidimProfileActionsDisableMessagePatch
+    end
+  end
 end
