@@ -1,21 +1,6 @@
 # frozen_string_literal: true
 
 Rails.application.config.to_prepare do
-  # Decidim::Proposals::ProposalWizardCreateStepForm
-  #
-  # minimum title length should be 8
-  Decidim::Proposals::ProposalWizardCreateStepForm.validators.each do |validator|
-    if validator.instance_of?(ProposalLengthValidator) && # rubocop:disable Style/Next
-       validator.attributes.include?(:title)
-
-      fixed_options = validator.options.dup
-      fixed_options[:minimum] = 8
-      validator.instance_eval do
-        @options = fixed_options.freeze
-      end
-    end
-  end
-
   # Decidim::Proposals::Admin::ProposalForm
   #
   # minimum title length should be 8
@@ -247,6 +232,33 @@ Rails.application.config.to_prepare do
     end
   end
 
+  module DecidimFormsUserAnswersSerializerTimezonePatch
+    private
+
+    def hash_for(answer)
+      timezone = answer.organization&.time_zone || "UTC"
+
+      {
+        answer_translated_attribute_name(:id) => answer&.session_token,
+        answer_translated_attribute_name(:created_at) => answer&.created_at&.in_time_zone(timezone)&.strftime("%Y-%m-%d %H:%M:%S"),
+        answer_translated_attribute_name(:ip_hash) => answer&.ip_hash,
+        answer_translated_attribute_name(:user_status) => answer_translated_attribute_name(answer&.decidim_user_id.present? ? "registered" : "unregistered")
+      }
+    end
+  end
+
+  # force to autoload `UserAnswersSerializer` in decidim-forms gem
+  Decidim::Forms::UserAnswersSerializer # rubocop:disable Lint/Void
+
+  # override `UserAnswersSerializer#hash_for`
+  module Decidim
+    module Forms
+      class UserAnswersSerializer
+        prepend DecidimFormsUserAnswersSerializerTimezonePatch
+      end
+    end
+  end
+
   # ----------------------------------------
 
   # override `escape_url`
@@ -286,4 +298,31 @@ Rails.application.config.to_prepare do
 
   # Insert `app/views` into Cell::ViewModel.view_paths to load application's views
   Cell::ViewModel.view_paths.insert(1, Rails.root.join("app/views"))
+
+  # ----------------------------------------
+
+  # Disable message functionality in profile actions
+  module DecidimProfileActionsDisableMessagePatch
+    private
+
+    # Override to disable message functionality
+    def can_contact_user?
+      false
+    end
+  end
+
+  Decidim::ProfileActionsCell # rubocop:disable Lint/Void
+
+  module Decidim
+    class ProfileActionsCell
+      prepend DecidimProfileActionsDisableMessagePatch
+    end
+  end
+
+  Decidim::ProfileSidebarCell # rubocop:disable Lint/Void
+  module Decidim
+    class ProfileSidebarCell
+      prepend DecidimProfileActionsDisableMessagePatch
+    end
+  end
 end

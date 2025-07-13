@@ -19,7 +19,7 @@ module Decidim
               lng: longitude,
               width:,
               height:,
-              provider: "http://tile.openstreetmap.jp/{z}/{x}/{y}.png",
+              provider: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
               organization:
             )
 

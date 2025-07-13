@@ -1,6 +1,6 @@
-FROM node:18.17.1-bullseye-slim AS node
+FROM node:20.18.3-bullseye-slim AS node
 
-FROM ruby:3.1.1-slim-bullseye
+FROM ruby:3.2.6-slim-bullseye
 
 # for build-dep
 RUN echo "deb-src http://deb.debian.org/debian bullseye main" >> /etc/apt/sources.list

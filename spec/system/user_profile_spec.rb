@@ -58,7 +58,6 @@ describe "Profile" do
     it "shows user name in the header, its nickname and a contact link" do
       expect(page).to have_css("h1", text: user.name)
       expect(page).to have_content(user.nickname)
-      expect(page).to have_link("Message")
     end
 
     it "does not show officialization stuff" do

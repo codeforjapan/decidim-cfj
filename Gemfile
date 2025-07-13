@@ -4,14 +4,14 @@ source "https://rubygems.org"
 
 ruby RUBY_VERSION
 
-gem "decidim", "0.28.5"
+gem "decidim", "0.29.2"
 
-gem "decidim-decidim_awesome", git: "https://github.com/codeforjapan/decidim-module-decidim_awesome.git", branch: "main-2025-01-15"
+gem "decidim-decidim_awesome", git: "https://github.com/codeforjapan/decidim-module-decidim_awesome.git", branch: "main-2025-05-12"
 
-gem "decidim-term_customizer", git: "https://github.com/codeforjapan/decidim-module-term_customizer.git", branch: "028-ja"
+gem "decidim-term_customizer", git: "https://github.com/codeforjapan/decidim-module-term_customizer.git", branch: "029-ja"
 
-gem "decidim-navigation_maps", git: "https://github.com/codeforjapan/decidim-module-navigation_maps.git", branch: "upgrade-0.28-2024-04-03"
-gem "decidim-polis", git: "https://github.com/takahashim/decidim-polis.git", branch: "fix-0-28-0"
+gem "decidim-navigation_maps", git: "https://github.com/codeforjapan/decidim-module-navigation_maps.git", branch: "upgrade-0.29-2025-03-12"
+gem "decidim-polis", git: "https://github.com/codeforjapan/decidim-polis.git", branch: "update-0-29-2"
 
 gem "bootsnap"
 
@@ -38,7 +38,7 @@ group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
   gem "figaro"
 
-  gem "decidim-dev", "0.28.5"
+  gem "decidim-dev", "0.29.2"
   gem "dotenv-rails"
   gem "factory_bot_rails"
   gem "rspec-rails"
@@ -47,9 +47,9 @@ end
 group :development do
   gem "letter_opener_web"
   gem "listen", "~> 3.1"
-  gem "rubocop-factory_bot", "~> 2.25.0", require: false
+  gem "rubocop-factory_bot", "~> 2.26.0", require: false
   gem "rubocop-faker"
-  gem "rubocop-rspec_rails", "~> 2.28.0", require: false
+  gem "rubocop-rspec_rails", "~> 2.30.0", require: false
   gem "web-console", "~> 4.2"
 end
 

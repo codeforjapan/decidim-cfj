@@ -1,0 +1,24 @@
+ja:
+  decidim:
+    term_customizer:
+      admin:
+        translation_sets:
+          index:
+            no_records_html: <p class="ml-2">利用可能な翻訳セットはありません。</p> <p class="ml-2 mb-4">「<a href="%{new_set_link}" class="text-blue-600 underline hover:text-blue-800"> %{button_name} </a>」ボタンから翻訳セットを追加します。</p>
+        translations:
+          edit:
+            help_title: 翻訳キーとは？
+            help_html: <p>翻訳キーは、翻訳される文言の内部的な参照先です。これは、変更したい用語そのものではなく、その用語を参照するための技術的なキーになります。</p><p>たとえば、トップメニューの <em>"Processes"</em> という用語を変更したい場合、キーとしては<em>"decidim.menu.processes"</em>を使用します。</p><p><a href="https://guides.rubyonrails.org/i18n.html" target="_blank"> Railsの国際化についてもっと読む</a></p>
+            term_help_html: <p>カスタマイズされた文言は、元の単語の代わりにUIに表示させたい最終的な文言です。当然ながら、カスタマイズされた文言は、言語ごとに異なる場合があります。</p>
+            term_help_title: カスタマイズされた文言とは?
+          index:
+            no_records_html: <p class="ml-2">このセットで利用できる翻訳はありません。</p> <p class="ml-2 mb-4">このセットに翻訳を追加することから始めてください。最も簡単な方法は、「<a href="%{add_multiple_link}">%{button_name}</a>」ボタンを使って、UIに表示されているものと同じ言葉で翻訳を検索することです。</p>
+          new:
+            title: 翻訳
+            help_html: <p>翻訳キーは、翻訳される文言の内部的な参照先です。これは、変更したい用語そのものではなく、その用語を参照するための技術的なキーになります。</p><p>たとえば、トップメニューの <em>"Processes"</em> という用語を変更したい場合、キーとしては<em>"decidim.menu.processes"</em>を使用します。</p><p><a href="https://guides.rubyonrails.org/i18n.html" target="_blank"> Railsの国際化についてもっと読む</a></p>
+            help_title: 翻訳キーとは？
+            term_help_html: <p>カスタマイズされた文言は、元の単語の代わりにUIに表示させたい最終的な文言です。当然ながら、カスタマイズされた文言は、言語ごとに異なる場合があります。</p>
+            term_help_title: カスタマイズされた文言とは？
+        translations_destroys:
+          new:
+            no_records_html: <p class="ml-2 mb-4">このセットには翻訳がありません。</p>
