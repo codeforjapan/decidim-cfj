@@ -1,5 +1,19 @@
 # Change Log
 
+## [1.9.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.8.1...v1.9.0) (2025-07-13)
+
+
+### Features
+
+* update github workflow ([f990e45](https://github.com/codeforjapan/decidim-cfj/commit/f990e45ea4e6f16582de3fdd26c6676d101e148f))
+
+
+### Bug Fixes
+
+* disable message functionality in profile actions via patch ([8b4dc8f](https://github.com/codeforjapan/decidim-cfj/commit/8b4dc8fb241b5285e781f7f4a76c2b711d06aa3d))
+* ProposalState model with token generation bug fix ([c90528b](https://github.com/codeforjapan/decidim-cfj/commit/c90528ba954556623553b320743c2dc531ce2534))
+* spec ([86136d4](https://github.com/codeforjapan/decidim-cfj/commit/86136d448180968223974b73ba1694df31d4bb28))
+
 ## [1.8.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.8.0...v1.8.1) (2025-07-09)
 
 
