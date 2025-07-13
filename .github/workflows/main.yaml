@@ -37,7 +37,7 @@ jobs:
         id: set-env-production
         if: ${{ needs.release.outputs.created }}
         run: |
-          echo "DEPLOY_ENV=prd-v0283" >> $GITHUB_ENV
+          echo "DEPLOY_ENV=prd-v0292" >> $GITHUB_ENV
 
       - name: Output App Env
         id: output-deploy-env
