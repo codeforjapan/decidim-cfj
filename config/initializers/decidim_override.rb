@@ -318,11 +318,4 @@ Rails.application.config.to_prepare do
       prepend DecidimProfileActionsDisableMessagePatch
     end
   end
-
-  Decidim::ProfileSidebarCell # rubocop:disable Lint/Void
-  module Decidim
-    class ProfileSidebarCell
-      prepend DecidimProfileActionsDisableMessagePatch
-    end
-  end
 end
