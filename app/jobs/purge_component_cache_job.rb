@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PurgeComponentCacheJob < ApplicationJob
   def perform(component_id)
     component = Decidim::Component.find(component_id)
@@ -6,9 +8,9 @@ class PurgeComponentCacheJob < ApplicationJob
 
   private
 
-  def clear_all_related_caches(component)
+  def clear_all_related_caches(_component)
     patterns = [
-      "cells/decidim/comments/comment_form/*",
+      "cells/decidim/comments/comment_form/*"
     ]
 
     patterns.each do |pattern|
