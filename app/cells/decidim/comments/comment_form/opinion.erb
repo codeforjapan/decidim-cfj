@@ -1,4 +1,5 @@
 <div>
+<% if !current_component.settings[:comment_opinion_disabled] || !current_component.settings.comment_opinion_disabled? %>
   <span class="comment__opinion-label"><%= t("decidim.components.add_comment_form.opinion.label") %></span>
   <div data-opinion-toggle class="comment__opinion-container">
     <button type="button" aria-pressed="false" data-toggle-ok="true" data-selected-label="<%= t("decidim.components.add_comment_form.opinion.positive_selected") %>">
@@ -15,4 +16,5 @@
     </button>
     <div role="alert" aria-live="assertive" aria-atomic="true" class="selected-state sr-only"></div>
   </div>
+<% end %>
 </div>

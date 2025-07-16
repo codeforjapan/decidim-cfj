@@ -37,6 +37,8 @@
 
 <section class="layout-aside__section actions__secondary">
   <%= follow_button_for(@proposal) %>
+  <% if !current_component.settings[:share_button_disabled] || !current_component.settings.share_button_disabled? %>
   <%= cell "decidim/share_button", nil %>
+  <% end %>
   <%= cell "decidim/report_button", @proposal %>
 </section>
