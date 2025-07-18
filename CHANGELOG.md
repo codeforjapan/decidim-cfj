@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.10.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.10.0...v1.10.1) (2025-07-18)
+
+
+### Bug Fixes
+
+* add locales in EN ([2c828bd](https://github.com/codeforjapan/decidim-cfj/commit/2c828bd6206fd6721e72443ffb44a1be189f1564))
+
 ## [1.10.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.9.0...v1.10.0) (2025-07-18)
 
 
