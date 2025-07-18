@@ -1,5 +1,19 @@
 # Change Log
 
+## [1.10.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.9.0...v1.10.0) (2025-07-18)
+
+
+### Features
+
+* add settings for components ([730e19c](https://github.com/codeforjapan/decidim-cfj/commit/730e19ce1225f7ba6549ea3f4844c7526d1da8fd))
+* hide parts if settings is disabled ([b36a93d](https://github.com/codeforjapan/decidim-cfj/commit/b36a93d411d156f90938cf2ac20fccdc03259d06))
+
+
+### Bug Fixes
+
+* add locale data ([ece5d10](https://github.com/codeforjapan/decidim-cfj/commit/ece5d10c457a657a3f293ff5719cad41d3f25dc2))
+* rubocop ([1a9e6bd](https://github.com/codeforjapan/decidim-cfj/commit/1a9e6bdcb9fd2f9dd1f27d2cfab07ca0049bac8e))
+
 ## [1.9.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.8.1...v1.9.0) (2025-07-13)
 
 
