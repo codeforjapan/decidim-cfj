@@ -1,5 +1,14 @@
 # Change Log
 
+## [1.10.2](https://github.com/codeforjapan/decidim-cfj/compare/v1.10.1...v1.10.2) (2025-07-22)
+
+
+### Bug Fixes
+
+* add footer_topics in footer ([b17e50f](https://github.com/codeforjapan/decidim-cfj/commit/b17e50fbddb706f80462d4723ed34615b84ffb5c))
+* old locales data ([8f0348a](https://github.com/codeforjapan/decidim-cfj/commit/8f0348a53e047259ee33c06efc60c79e6f2db595))
+* remove aria attribute as v0.29.2 ([ee839bd](https://github.com/codeforjapan/decidim-cfj/commit/ee839bd0039458c56dfb0f5e175f6124028b5dd8))
+
 ## [1.10.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.10.0...v1.10.1) (2025-07-18)
 
 
