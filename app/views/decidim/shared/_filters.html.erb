@@ -12,7 +12,7 @@
       </span>
     </button>
 
-    <div id="dropdown-menu-filters" aria-hidden="true">
+    <div id="dropdown-menu-filters">
       <% if local_assigns.has_key?(:skip_to_id) %>
         <%= link_to t("skip", scope: "decidim.shared.filter_form_help"), "##{skip_to_id}", class: "filter-skip", role: "menuitem" %>
       <% end %>
