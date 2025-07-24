@@ -12,6 +12,10 @@ describe "Comments", :perform_enqueued do
   let!(:user) { create(:user, :confirmed, organization:) }
   let!(:comments) { create_list(:comment, 3, commentable:) }
 
+  around do |example|
+    I18n.with_locale(:ja) { example.run }
+  end
+
   before do
     switch_to_host(organization.host)
 
