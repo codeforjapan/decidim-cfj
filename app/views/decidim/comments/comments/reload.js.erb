@@ -1,0 +1,20 @@
+(function() {
+  var rootCommentableId = <%== "comments-for-#{commentable.commentable_type.demodulize}-#{commentable.id}".to_json %>;
+
+  var $comments = $("#" + rootCommentableId);
+  var component = $comments.data("comments");
+  component.unmountComponent();
+
+  var commentsHtml = '<%== j(inline_comments_for(commentable, order:).inline).strip %>';
+  $(".loading-comments").addClass("hidden");
+  $comments.html(commentsHtml);
+  component.lastCommentId = null;
+
+  // Re-mount the component
+  component.mountComponent();
+
+  // Update the comments count
+  $(".comments-count", $comments).text(<%== t("decidim.components.comments.title", count: @comments_count).to_json %>);
+
+  Decidim.addInputEmoji();
+}());
