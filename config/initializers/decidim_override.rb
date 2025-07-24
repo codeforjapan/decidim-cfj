@@ -320,4 +320,18 @@ Rails.application.config.to_prepare do
       prepend DecidimProfileActionsDisableMessagePatch
     end
   end
+  # ----------------------------------------
+
+  # add settings for comments
+  [:proposals, :debates].each do |component_module|
+    manifest = Decidim.find_component_manifest(component_module)
+    manifest.settings(:global) do |settings|
+      settings.attribute :share_button_disabled, type: :boolean, default: false
+      settings.attribute :comment_opinion_disabled, type: :boolean, default: false
+    end
+
+    manifest.on(:update) do |component|
+      PurgeComponentCacheJob.perform_later(component.id)
+    end
+  end
 end

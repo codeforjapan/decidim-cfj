@@ -1,5 +1,35 @@
 # Change Log
 
+## [1.10.2](https://github.com/codeforjapan/decidim-cfj/compare/v1.10.1...v1.10.2) (2025-07-22)
+
+
+### Bug Fixes
+
+* add footer_topics in footer ([b17e50f](https://github.com/codeforjapan/decidim-cfj/commit/b17e50fbddb706f80462d4723ed34615b84ffb5c))
+* old locales data ([8f0348a](https://github.com/codeforjapan/decidim-cfj/commit/8f0348a53e047259ee33c06efc60c79e6f2db595))
+* remove aria attribute as v0.29.2 ([ee839bd](https://github.com/codeforjapan/decidim-cfj/commit/ee839bd0039458c56dfb0f5e175f6124028b5dd8))
+
+## [1.10.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.10.0...v1.10.1) (2025-07-18)
+
+
+### Bug Fixes
+
+* add locales in EN ([2c828bd](https://github.com/codeforjapan/decidim-cfj/commit/2c828bd6206fd6721e72443ffb44a1be189f1564))
+
+## [1.10.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.9.0...v1.10.0) (2025-07-18)
+
+
+### Features
+
+* add settings for components ([730e19c](https://github.com/codeforjapan/decidim-cfj/commit/730e19ce1225f7ba6549ea3f4844c7526d1da8fd))
+* hide parts if settings is disabled ([b36a93d](https://github.com/codeforjapan/decidim-cfj/commit/b36a93d411d156f90938cf2ac20fccdc03259d06))
+
+
+### Bug Fixes
+
+* add locale data ([ece5d10](https://github.com/codeforjapan/decidim-cfj/commit/ece5d10c457a657a3f293ff5719cad41d3f25dc2))
+* rubocop ([1a9e6bd](https://github.com/codeforjapan/decidim-cfj/commit/1a9e6bdcb9fd2f9dd1f27d2cfab07ca0049bac8e))
+
 ## [1.9.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.8.1...v1.9.0) (2025-07-13)
 
 

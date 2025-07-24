@@ -1,0 +1,13 @@
+ja:
+  decidim:
+    components:
+      proposals:
+        settings:
+          global:
+            share_button_disabled: 共有ボタンを非表示にする
+            comment_opinion_disabled: コメントでのあなたの意見ボタンを非表示にする
+      debates:
+        settings:
+          global:
+            share_button_disabled: 共有ボタンを非表示にする
+            comment_opinion_disabled: コメントでのあなたの意見ボタンを非表示にする

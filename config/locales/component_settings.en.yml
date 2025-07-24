@@ -1,0 +1,13 @@
+en:
+  decidim:
+    components:
+      proposals:
+        settings:
+          global:
+            share_button_disabled: Share button disabled
+            comment_opinion_disabled: Your opinion in comments disabled
+      debates:
+        settings:
+          global:
+            share_button_disabled: Share button disabled
+            comment_opinion_disabled: Your opinion in comments disabled

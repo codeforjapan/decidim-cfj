@@ -11,13 +11,8 @@ ja:
         validate_title_max_marks_together: タイトルで許容される最多連続記号文字数
         validate_title_min_length: タイトルに必要な最小文字数
         validate_title_start_with_caps: タイトルを大文字で始めることを強制する
-      debate:
-        instructions: 参加方法
       decidim/user:
         name: アカウントID
-      participatory_process:
-        copy_steps: フェーズをコピー
-        import_steps: フェーズをインポート
       question:
         origin_title: 起案者
         origin_url: 元のURL
@@ -34,14 +29,8 @@ ja:
   decidim:
     accountability:
       results:
-        home_header:
-          global_status: 全体の実行状況
         nav_breadcrumb:
           global: 全体
-    admin:
-      officializations:
-        show_email_modal:
-          hidden: 非表示
     amendments:
       amendable:
         button: '修正'
@@ -54,9 +43,6 @@ ja:
         explanation: 'ユーザー拡張属性保持用'
         name: 'ユーザー拡張属性'
     content_blocks:
-      last_activity:
-        name: 最近のアクティビティ
-        title: 最近のアクティビティ
       last_comment:
         name: 最近のコメント
         title: 最近のコメント
@@ -87,8 +73,6 @@ ja:
         level_up:
           email_subject: "%{badge_name} のバッジがレベル %{current_level} に達しました！"
       proposals:
-        collaborative_draft_access_rejected:
-          notification_title: <a href="%{requester_path}">%{requester_name} %{requester_nickname}</a> は、 <a href="%{resource_path}">%{resource_title}</a> の共同草案にアクセスをリクエストしました。 <strong>リクエストを承認または拒否してください</strong>。
         collaborative_draft_access_requester_accepted:
           email_intro: <a href="%{resource_path}">%{resource_title}</a> の共同草案の投稿者としてアクセスすることを承認されました。
           notification_title: あなたは <strong></strong> <a href="%{resource_path}">%{resource_title}</a> の共同草案の貢献者としてアクセスすることを受け入れられました。
@@ -96,16 +80,12 @@ ja:
           email_intro: <a href="%{resource_path}">%{resource_title}</a> の共同草案の投稿者としてアクセスが拒否されました。
         collaborative_draft_withdrawn:
           email_intro: <a href="%{author_path}">%{author_name} %{author_nickname}</a> は、 <a href="%{resource_path}">%{resource_title}</a> の共同草案を撤回しました。
-          email_subject: "%{author_name} %{author_nickname} は %{resource_title} の共同草案を撤回しました。"
       verifications:
         verify_with_managed_user:
           email_intro: 参加者 <a href="%{resource_path}">%{resource_title}</a> が管理対象参加者 <a href="%{managed_user_path}">%{managed_user_name}</a>のデータで自身を検証しようとしました。
           email_outro: <a href="%{conflicts_path}">検証の競合リスト</a> を確認し、参加者に連絡して詳細を調査し、問題を解決してください。
           email_subject: 管理対象参加者に対する検証の試みに失敗しました
           notification_title: 参加者 <a href="%{resource_path}">%{resource_title}</a> が管理対象参加者 <a href="%{managed_user_path}">%{managed_user_name}</a>のデータで自身を検証しようとしました。
-    following:
-      following_count:
-        other: "%{count} 人をフォロー中"
     forms:
       file_help:
         image:
@@ -147,16 +127,6 @@ ja:
         real_time: リアルタイム
       intro:
         real_time: 'あなたがフォローしているアクティビティに基づいた通知です:'
-    notifications_settings:
-      show:
-        allow_public_contact: フォローしていない人からのダイレクトメッセージを受信する
-        allow_push_notifications: プラットフォーム上にいないときに何が起きているかを知るためにプッシュ通知を受け取る。いつでもオフにできます。
-        direct_messages: ダイレクトメッセージを受信する
-        email_on_moderations: モデレーションの報告がなされたたびに毎回メールを受け取りたい
-        notification_settings:
-          close_meeting_reminder: レポートを未公開で閉じたミーティングのリマインドメールを受信したい
-        own_activity: 誰かが私の提案にコメントしたり、私に言及したりした時など、自分自身の活動
-        receive_notifications_about: 受け取りたい通知
     participatory_processes:
       content_blocks:
         highlighted_processes:
@@ -178,10 +148,6 @@ ja:
         metadata:
           developer_group: 制作グループ
     participatory_spaces:
-      highlighted_meetings:
-        see_all: すべてのミーティングを見る
-      highlighted_proposals:
-        see_all: すべての提案を見る
       highlighted_results:
         see_all: すべての結果を見る
     proposals:
@@ -208,15 +174,12 @@ ja:
     welcome_notification:
       default_body: <p>こんにちは {{name}} さん, {{organization}} へご参加いただきありがとうございます。</p><ul><li>このサイトの使い方は、 <a href="{{help_url}}">ヘルプ</a> セクションをご参照ください。</li><li>目を通していただけると、最初のバッジを獲得できます。<a href="{{badges_url}}">全てのバッジの一覧</a> から、この {{organization}} への参加で獲得できるバッジを見ることができます。</li><li>他の人と一緒に参加し、この {{organization}} へ参加した経験をシェアしましょう。提案を作り、コメントし、議論を行い、共通の利益に貢献する方法を考え、議論に説得力をもたせ、主張を聞いたり読んだりしながら納得し、具体的かつ直接的な方法であなたの考えを表明し、忍耐と決断を持って対応し、自らの考えを守り、他人の考えを取り入れて協力し合いましょう。</li></ul>
   devise:
-    failure:
-      unauthenticated: 続行するにはログインするか、またはアカウントを作成する必要があります。
     invitations:
       edit:
         nickname_help: "%{organization} のニックネーム。"
         subtitle: |-
           招待を受け入れたくない場合は、このメールを無視してください。<br />
           上記のリンクにアクセスし、アカウントIDとパスワードを設定するまで、あなたのアカウントは作成されません。
-      updated: パスワードは正常に設定され、ログイン完了しました。
     passwords:
       edit:
         password_help: "半角英数字%{minimum_characters}文字以上で入力してください。単純すぎてはいけません（例：123456）。アカウントIDやメールアドレスと異なる必要があります。"
