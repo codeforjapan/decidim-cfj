@@ -8,7 +8,8 @@
   var commentsHtml = '<%== j(inline_comments_for(commentable, order:).inline).strip %>';
   $(".loading-comments").addClass("hidden");
   $comments.html(commentsHtml);
-  component.lastCommentId = null;
+
+  component.order = <%== order.to_json %>;
 
   // Re-mount the component
   component.mountComponent();
