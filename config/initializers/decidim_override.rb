@@ -74,7 +74,7 @@ Rails.application.config.to_prepare do
             resource,
             machine_translations: machine_translations_toggled?,
             single_comment: params.fetch("commentId", nil),
-            order: options[:order] || params["orderable"] || cookies["comment_default_order"],
+            order: options[:order] || cookies["comment_default_order"],
             polymorphic: options[:polymorphic]
           )
         end
