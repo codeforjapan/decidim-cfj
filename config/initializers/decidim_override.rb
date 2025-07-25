@@ -52,7 +52,7 @@ Rails.application.config.to_prepare do
           params_order = params.fetch(:order, nil)
           reload_request = params.fetch(:reload, nil).present?
           if params_order
-            if reload_request && cookies[Decidim.config.consent_cookie_name].present?
+            if reload_request && cookies[Decidim.config.consent_cookie_name].present? # rubocop:disable Style/IfUnlessModifier
               cookies["comment_default_order"] = params_order
             end
             params_order
