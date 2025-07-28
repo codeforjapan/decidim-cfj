@@ -340,4 +340,22 @@ Rails.application.config.to_prepare do
       PurgeComponentCacheJob.perform_later(component.id)
     end
   end
+
+  # ---------------------------------
+  # support logo for mobile
+  Decidim::Organization.class_eval do
+    has_one_attached :mobile_logo
+    validates_upload :mobile_logo, uploader: Decidim::OrganizationMobileLogoUploader
+  end
+
+  Decidim::Admin::UpdateOrganizationAppearance.class_eval do
+    fetch_file_attributes :mobile_logo
+  end
+
+  Decidim::Admin::OrganizationAppearanceForm.class_eval do
+    attribute :mobile_logo
+    attribute :remove_mobile_logo, Decidim::AttributeObject::TypeMap::Boolean, default: false
+
+    validates :mobile_logo, passthru: { to: Decidim::Organization }
+  end
 end
