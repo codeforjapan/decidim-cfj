@@ -2,6 +2,8 @@
 en:
   activemodel:
     attributes:
+      organization:
+        mobile_logo: "Mobile logo"
       user_extension:
         address: Address
         birth_year: Birth year
@@ -14,6 +16,10 @@ en:
         title: Title
         body: Body
   decidim:
+    admin:
+      organization_appearance:
+        form:
+          mobile_logo_help: "Logo image displayed on mobile version. Recommended size: 360x120px"
     content_blocks:
       last_comment:
         name: Last comments

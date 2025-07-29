@@ -4,6 +4,9 @@ ja:
     attributes:
       config:
         validate_body_max_caps_percent: 本文内での大文字の最大許容割合
+      organization:
+        mobile_logo: "モバイル版ロゴ"
+      config:
         validate_body_max_marks_together: 本文で許容される最多連続記号文字数
         validate_body_min_length: 本文に必要な最小文字数
         validate_body_start_with_caps: 本文を大文字で始めることを強制する
@@ -31,6 +34,10 @@ ja:
       results:
         nav_breadcrumb:
           global: 全体
+    admin:
+      organization_appearance:
+        form:
+          mobile_logo_help: "モバイル版で表示されるロゴ画像です。推奨サイズ: 360x120px"
     amendments:
       amendable:
         button: '修正'
