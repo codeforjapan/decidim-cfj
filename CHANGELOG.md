@@ -1,5 +1,18 @@
 # Change Log
 
+## [1.11.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.10.2...v1.11.0) (2025-07-29)
+
+
+### Features
+
+* support mobile logo ([af2bd81](https://github.com/codeforjapan/decidim-cfj/commit/af2bd81f8b08a2e1ac55a2fd3a2eaaab0b224288))
+
+
+### Bug Fixes
+
+* add navigation_maps.ja.yml ([b5ad589](https://github.com/codeforjapan/decidim-cfj/commit/b5ad5899eae73e821c022fcb1618d901d8199da5))
+* content_type and extension ([2c79525](https://github.com/codeforjapan/decidim-cfj/commit/2c795258d860dd553533cb6f22e441e80bc94d31))
+
 ## [1.10.2](https://github.com/codeforjapan/decidim-cfj/compare/v1.10.1...v1.10.2) (2025-07-22)
 
 
