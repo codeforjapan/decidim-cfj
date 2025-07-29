@@ -1230,15 +1230,15 @@
   resolved "https://registry.npmjs.org/@csstools/utilities/-/utilities-1.0.0.tgz"
   integrity sha512-tAgvZQe/t2mlvpNosA4+CkMiZ2azISW5WPAcdSalZlEjQvUfghHxfQcrCiK/7/CrfAWVxyM88kGFYO82heIGDg==
 
-"@decidim/browserslist-config@^0.29.2":
-  version "0.29.2"
-  resolved "https://registry.npmjs.org/@decidim/browserslist-config/-/browserslist-config-0.29.2.tgz"
-  integrity sha512-wqkComBsiTzRjL8Y2bW/2yIpdEFPJ6qEYYIoqaO6Mnch/VxXH4ZgT/ifWwPRgSZdAcPJ1JE8kmF/c6T75dJLCQ==
+"@decidim/browserslist-config@^0.29.4":
+  version "0.29.4"
+  resolved "https://registry.npmjs.org/@decidim/browserslist-config/-/browserslist-config-0.29.4.tgz"
+  integrity sha512-doro7Qms9ziYPg/wegUT4FE+285AUlWYeYPt5Ot8+awV1HIayZUQvCtUVRxarLil+Jjidc7kRgDB0KuOwrL2hQ==
 
-"@decidim/core@^0.29.2":
-  version "0.29.2"
-  resolved "https://registry.npmjs.org/@decidim/core/-/core-0.29.2.tgz"
-  integrity sha512-7SujsCKIUNV/gzNStGoeuAx3xNLjmKb0HIsXy9Pee5cFdUvPm/i3UfZtLZFw3krzkLNFRnuDeySZuOhSZcjCGA==
+"@decidim/core@^0.29.4":
+  version "0.29.4"
+  resolved "https://registry.npmjs.org/@decidim/core/-/core-0.29.4.tgz"
+  integrity sha512-hgPYHyqjeOcvgT7EnWbjJPYW0g/8GiRUICv8AIdVfHZAH+VAo1t2AYJCiumq2MKoJqGqpIoT/bxc1Rel9wfyOg==
   dependencies:
     "@emoji-mart/data" "^1.1.2"
     "@rails/activestorage" "^7.0.8"
@@ -1317,10 +1317,10 @@
     webpack "^5.11.0"
     webpack-cli "^4.2.0"
 
-"@decidim/dev@^0.29.2":
-  version "0.29.2"
-  resolved "https://registry.npmjs.org/@decidim/dev/-/dev-0.29.2.tgz"
-  integrity sha512-z8oAKZMPqbfVo6DY3LouDP21qkTV+89cOTdsOYXnJrfjibaTAzM0ZMYkkWPeDGpaUeeHfU4tYGHfO40Y3yv92g==
+"@decidim/dev@^0.29.4":
+  version "0.29.4"
+  resolved "https://registry.npmjs.org/@decidim/dev/-/dev-0.29.4.tgz"
+  integrity sha512-JI5DX1SAjT9enDrV/JI30yVoOuolX/y5TYwKNHfN9Ott+ews3hCkOd65ncTtFOhaLP48oXqxBeJqyOT808wBmg==
   dependencies:
     "@linthtml/linthtml" "^0.9.6"
     axe-core "^4.7.2"
@@ -1335,20 +1335,20 @@
     "@decidim/voting_schemes-dummy" "0.24.4"
     "@decidim/voting_schemes-electionguard" "0.24.4"
 
-"@decidim/eslint-config@^0.29.2":
-  version "0.29.2"
-  resolved "https://registry.npmjs.org/@decidim/eslint-config/-/eslint-config-0.29.2.tgz"
-  integrity sha512-Edz3HzfXcn43kJNFzlptiLzSgzG0EwKSnf0/+7k/sigpgT3V6S5REUNPUED+e1oOMmxjyh37kwPOSx1oO3lCTw==
+"@decidim/eslint-config@^0.29.4":
+  version "0.29.4"
+  resolved "https://registry.npmjs.org/@decidim/eslint-config/-/eslint-config-0.29.4.tgz"
+  integrity sha512-zgTHOcxGgxj3IEDK2jtcXBoT08mCh1dVe1RLlWepZBGxjWQOF8OJRG90tOy8GUhpEZ9JpU6crkxRiN2CVbZISg==
 
-"@decidim/prettier-config@^0.29.2":
-  version "0.29.2"
-  resolved "https://registry.npmjs.org/@decidim/prettier-config/-/prettier-config-0.29.2.tgz"
-  integrity sha512-YOkdKi5wWxIJkrVGcdFw9ztSXormjljIr42eHglEusFW2wm7Wz31+Nb/miTaSu+VS9NSmbw6CUlnsCNv8uNqsQ==
+"@decidim/prettier-config@^0.29.4":
+  version "0.29.4"
+  resolved "https://registry.npmjs.org/@decidim/prettier-config/-/prettier-config-0.29.4.tgz"
+  integrity sha512-/f0Gj7Pj4zbIzaJPjryRveUep3spG0dNoqeL3JwmYRU0dkZqNafxgnT0ToWnk4xyNjTHIljVORcFIr6tcLpGJg==
 
-"@decidim/stylelint-config@^0.29.2":
-  version "0.29.2"
-  resolved "https://registry.npmjs.org/@decidim/stylelint-config/-/stylelint-config-0.29.2.tgz"
-  integrity sha512-25RtKJM9nrNBjdA5E2K5lclXKy6i6GtfOU7fknrj5RU+w3Ta1UsPqUgEjp8Z71vq2pxOIgJTbOqBs6nfF3rWQQ==
+"@decidim/stylelint-config@^0.29.4":
+  version "0.29.4"
+  resolved "https://registry.npmjs.org/@decidim/stylelint-config/-/stylelint-config-0.29.4.tgz"
+  integrity sha512-KZUlITIOcpzyljypKe3e4yTXz/NW+VuIw/AFnteZWeQPc8sdW+6YxHg22tLr/BkGXtC6sAaUb4sVkpBs/sqyGg==
 
 "@decidim/voting_schemes-dummy@0.24.4":
   version "0.24.4"
@@ -1360,10 +1360,10 @@
   resolved "https://registry.npmjs.org/@decidim/voting_schemes-electionguard/-/voting_schemes-electionguard-0.24.4.tgz"
   integrity sha512-EKTdPKaKIykDtcN/pe0s1HmUuLvan9bEakoDJ9wJNVcYbRtffsb6RaG3LBC6dVPAZYwtem3t0zVHUbIVCCnlCw==
 
-"@decidim/webpacker@^0.29.2":
-  version "0.29.2"
-  resolved "https://registry.npmjs.org/@decidim/webpacker/-/webpacker-0.29.2.tgz"
-  integrity sha512-I8jHfkhMq7542i1WO8bj/IgqpW7ldx5EI0QuyAF78UObwT5M87kOauhvB57L2x+5cnOkroFge8CZfbkmnjfQFQ==
+"@decidim/webpacker@^0.29.4":
+  version "0.29.4"
+  resolved "https://registry.npmjs.org/@decidim/webpacker/-/webpacker-0.29.4.tgz"
+  integrity sha512-2xBMNwvd6iKTLURudOz7lYusfvRWyL46UFmPzYYzIENWJ7D+o9edigj/Pe9iWKj8ANuSxv5bQQgbUTnXeSLNFQ==
   dependencies:
     "@rails/ujs" "^6.1.7"
     "@tailwindcss/typography" "^0.5.2"
@@ -6781,16 +6781,16 @@ jsonpointer@^5.0.0:
   integrity sha512-p/nXbhSEcu3pZRdkW1OfJhpsVtW1gd4Wa1fnQc9YLiTfAjn0312eMKimbdIQzuZl9aa9xUGaRlP9T/CJE/ditQ==
 
 jsrender@^1.0.15:
-  version "1.0.15"
-  resolved "https://registry.yarnpkg.com/jsrender/-/jsrender-1.0.15.tgz#d7e04175cf41c4ff9dc4a45902abbc85cc7867d8"
-  integrity sha512-OodS9veJzdkxj0zqWTEDyHm5MdwpeaBA11X3W06n3wTP7XifCv1JwaNpY6jn0KIltzgm3nM1Gi/tccslMEai1w==
+  version "1.0.16"
+  resolved "https://registry.yarnpkg.com/jsrender/-/jsrender-1.0.16.tgz#4d9542190aac6a134ece142523c0229327a4a1fd"
+  integrity sha512-K3IDCLwR+gQA14qtFDMbNKmlDhGsJLjXMBJ87abE+iTQNYnFCtESPvgtaM+cYKhmjVXbvK1IldgCW1kQZBVUNA==
   dependencies:
     through2 "^3.0.1"
 
 jsviews@^1.0.15:
-  version "1.0.15"
-  resolved "https://registry.yarnpkg.com/jsviews/-/jsviews-1.0.15.tgz#0ce4eece33d29ba37ca28438f56c6369e46ed6b9"
-  integrity sha512-rHQai9aX4GstkWBXfyip98vvlWOqoGpsoRFrcgZsuqryJ9aKrDM4saBb67sNcPj1TrIWyBilx8bTg1GFm8KOjQ==
+  version "1.0.16"
+  resolved "https://registry.yarnpkg.com/jsviews/-/jsviews-1.0.16.tgz#c0ea111a6aa1fa26f66151b7a5e383ce2cf8040e"
+  integrity sha512-ejQrS/VRKs+uJCMIiYiPViahZQzY6bMY3XLKCqkkA831Q0m134Qr3+H7+T+34WBYWYQVhTfo9BfAUE4f8QcENA==
   dependencies:
     jquery "^3.4.1"
 
@@ -8195,9 +8195,9 @@ prop-types@15.8.1, prop-types@^15.7.2:
     react-is "^16.13.1"
 
 prosemirror-changeset@^2.2.0:
-  version "2.2.1"
-  resolved "https://registry.npmjs.org/prosemirror-changeset/-/prosemirror-changeset-2.2.1.tgz"
-  integrity sha512-J7msc6wbxB4ekDFj+n9gTW/jav/p53kdlivvuppHsrZXCaQdVgRghoZbSS3kwrRyAstRVQ4/+u5k7YfLgkkQvQ==
+  version "2.3.1"
+  resolved "https://registry.npmjs.org/prosemirror-changeset/-/prosemirror-changeset-2.3.1.tgz"
+  integrity sha512-j0kORIBm8ayJNl3zQvD1TTPHJX3g042et6y/KQhZhnPrruO8exkTgG8X+NRpj7kIyMMEx74Xb3DyMIBtO0IKkQ==
   dependencies:
     prosemirror-transform "^1.0.0"
 

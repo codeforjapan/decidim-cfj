@@ -50,10 +50,12 @@ Rails.application.config.to_prepare do
         # override
         def order
           params_order = params.fetch(:order, nil)
-          if params_order
-            cookies["comment_default_order"] = params_order if cookies[Decidim.config.consent_cookie_name].present? # cookies_accepted?
+          reload_request = params.fetch(:reload, nil).present?
+
+          if reload_request && params_order.present?
+            cookies["comment_default_order"] = params_order if cookies[Decidim.config.consent_cookie_name].present?
             params_order
-          elsif cookies["comment_default_order"] && cookies[Decidim.config.consent_cookie_name].present? # cookies_accepted?
+          elsif cookies["comment_default_order"].present? && cookies[Decidim.config.consent_cookie_name].present?
             cookies["comment_default_order"]
           else
             "older"
@@ -73,7 +75,7 @@ Rails.application.config.to_prepare do
             single_comment: params.fetch("commentId", nil),
             order: options[:order] || params["orderable"] || cookies["comment_default_order"],
             polymorphic: options[:polymorphic]
-          ).to_s
+          )
         end
       end
     end
@@ -318,14 +320,6 @@ Rails.application.config.to_prepare do
       prepend DecidimProfileActionsDisableMessagePatch
     end
   end
-
-  Decidim::ProfileSidebarCell # rubocop:disable Lint/Void
-  module Decidim
-    class ProfileSidebarCell
-      prepend DecidimProfileActionsDisableMessagePatch
-    end
-  end
-
   # ----------------------------------------
 
   # add settings for comments
