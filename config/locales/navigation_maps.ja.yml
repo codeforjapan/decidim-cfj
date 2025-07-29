@@ -1,0 +1,47 @@
+ja:
+  decidim:
+    components:
+      navigation_maps:
+        name: ナビゲーションマップ
+    navigation_maps:
+      admin:
+        areas:
+          create:
+            error: エリアの作成中にエラーが発生しました
+            success: エリアを作成しました
+          form:
+            no_popup: ポップアップを使わず、エリアに直接リンクします。
+          new:
+            area: 新しいエリアの詳細
+            cancel: キャンセル
+            save: 保存
+          show:
+            area: エリアの詳細
+            cancel: キャンセル
+            link_suggestions: 'ヒント: 他のタブにリンクするには%{map}を使用してください'
+            save: 保存
+          update:
+            error: エリアの保存中にエラーが発生しました
+            success: エリアを保存しました
+      content_blocks:
+        name: ナビゲーションマップ
+        navigation_map:
+          view: 参加する
+        navigation_map_settings_form:
+          add: 追加
+          autohide_tabs: マップが1つだけの場合はタブナビゲーションを非表示にする
+          blueprint_image: ベース画像
+          description: 説明
+          editor: マップエディター
+          height: 高さ (px)
+          id: ID
+          image_missing: 開始するにはベース画像を追加してください
+          info: 一般情報
+          link: リンク
+          remove_blueprint: ベース画像を削除する
+          title: タイトル
+          type: 種別
+          upload_image: 画像をアップロード
+      create:
+        error: ベース画像の作成中にエラーが発生しました
+        success: ベース画像を作成しました
