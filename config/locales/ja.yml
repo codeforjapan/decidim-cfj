@@ -125,10 +125,6 @@ ja:
     moderations:
       actions:
         hide: 非表示にする
-    navigation_maps:
-      content_blocks:
-        navigation_map:
-          view: 表示
     notifications_digest_mailer:
       header:
         real_time: リアルタイム
