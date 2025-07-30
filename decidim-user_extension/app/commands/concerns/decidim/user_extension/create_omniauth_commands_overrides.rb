@@ -20,7 +20,12 @@ module Decidim
           # If user has left the account unconfirmed and later on decides to sign
           # in with omniauth with an already verified account, the account needs
           # to be marked confirmed.
-          @user.skip_confirmation! if !@user.confirmed? && @user.email == verified_email
+          if !@user.confirmed? && @user.email == verified_email
+            @user.skip_confirmation!
+            @user.after_confirmation
+          end
+          @user.tos_agreement = "1"
+          @user.save!
         else
           generated_password = SecureRandom.hex
 
@@ -38,10 +43,13 @@ module Decidim
             @user.avatar.attach(io: file, filename:)
           end
           @user.skip_confirmation! if verified_email
+          @user.tos_agreement = "1"
+          @user.save!
+
+          @user.after_confirmation if verified_email
         end
 
         @user.user_extension = form.user_extension if form.user_extension.present?
-        @user.tos_agreement = "1"
         @user.save!
       end
 

@@ -28,7 +28,7 @@ module Decidim
 
       def destroy_user_extension
         authorization = Decidim::Authorization.find_by(
-          user: @user,
+          user: current_user,
           name: "user_extension"
         )
         # should be removed privacy data even if current_organization.available_authorization_handlers is empty
