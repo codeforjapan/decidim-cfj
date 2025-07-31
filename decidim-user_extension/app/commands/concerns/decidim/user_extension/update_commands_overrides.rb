@@ -34,19 +34,10 @@ module Decidim
 
       def update_user_extension
         # ignore if user_extension is disable
-        return unless current_organization&.available_authorizations&.include?("user_extension")
-
-        # ユーザーが存在しない場合は処理をスキップ
-        return unless current_user&.persisted?
-
-        # フォームまたはuser_extensionが存在しない場合はスキップ
-        return unless @form&.user_extension
+        return unless current_organization.available_authorizations&.include?("user_extension")
 
         user_extension = @form.user_extension
-        auth = authorization
-        return unless auth # authorizationが取得できない場合はスキップ
-
-        auth.attributes = {
+        authorization.attributes = {
           unique_id: user_extension.unique_id,
           metadata: {
             "real_name" => user_extension.real_name,
@@ -56,7 +47,7 @@ module Decidim
             "occupation" => user_extension.occupation
           }
         }
-        auth.save!
+        authorization.save!
       end
 
       def authorization
