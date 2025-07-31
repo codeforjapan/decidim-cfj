@@ -1,5 +1,15 @@
 # Change Log
 
+## [1.11.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.11.0...v1.11.1) (2025-07-31)
+
+
+### Bug Fixes
+
+* correct user and authorization handling in user_extension commands and views ([b3e8925](https://github.com/codeforjapan/decidim-cfj/commit/b3e8925c989742879b85e1b7fc8a0c937cb86759))
+* invitation edit view template terms-of-service ([54a8ee0](https://github.com/codeforjapan/decidim-cfj/commit/54a8ee0d2dc30fc1e35d9fe19df713974cee42eb))
+* lint ([dbf6e19](https://github.com/codeforjapan/decidim-cfj/commit/dbf6e1954f51a6919f6894c53c761a3da1e21a4a))
+* simplify CreateOmniauthCommandsOverrides#create_new_user and UpdateCommandsOverrides#update_user_extension ([15e5081](https://github.com/codeforjapan/decidim-cfj/commit/15e5081da4dcbbcf31d56b15b2e44de4baeb5656))
+
 ## [1.11.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.10.2...v1.11.0) (2025-07-29)
 
 
