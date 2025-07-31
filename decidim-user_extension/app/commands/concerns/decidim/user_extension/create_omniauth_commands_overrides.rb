@@ -20,29 +20,44 @@ module Decidim
           # If user has left the account unconfirmed and later on decides to sign
           # in with omniauth with an already verified account, the account needs
           # to be marked confirmed.
-          @user.skip_confirmation! if !@user.confirmed? && @user.email == verified_email
+          update_existing_user
         else
-          generated_password = SecureRandom.hex
-
-          @user.email = (verified_email || form.email)
-          @user.name = form.name
-          @user.nickname = form.normalized_nickname
-          @user.newsletter_notifications_at = nil
-          @user.password = generated_password
-          @user.password_confirmation = generated_password
-          @user.remote_avatar_url = form.avatar_url if form.avatar_url.present?
-          if form.avatar_url.present?
-            url = URI.parse(form.avatar_url)
-            filename = File.basename(url.path)
-            file = url.open
-            @user.avatar.attach(io: file, filename:)
-          end
-          @user.skip_confirmation! if verified_email
+          create_new_user
         end
 
-        @user.user_extension = form.user_extension if form.user_extension.present?
+        update_user_extension if form.user_extension.present?
+      end
+
+      def update_existing_user
+        if !@user.confirmed? && @user.email == verified_email
+          @user.skip_confirmation!
+          @user.after_confirmation
+        end
         @user.tos_agreement = "1"
         @user.save!
+      end
+
+      def create_new_user
+        @user.email = (verified_email || form.email)
+        @user.name = form.name
+        @user.nickname = form.normalized_nickname
+        @user.newsletter_notifications_at = nil
+        @user.password = SecureRandom.hex
+        if form.avatar_url.present?
+          url = URI.parse(form.avatar_url)
+          filename = File.basename(url.path)
+          file = url.open
+          @user.avatar.attach(io: file, filename:)
+        end
+        @user.skip_confirmation! if verified_email
+        @user.tos_agreement = "1"
+        @user.save!
+
+        @user.after_confirmation if verified_email
+      end
+
+      def update_user_extension
+        @user.update!(user_extension: form.user_extension)
       end
 
       def trigger_omniauth_registration
