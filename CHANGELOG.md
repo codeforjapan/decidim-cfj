@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.11.2](https://github.com/codeforjapan/decidim-cfj/compare/v1.11.1...v1.11.2) (2025-07-31)
+
+
+### Bug Fixes
+
+* support `share_button_disabled` in collaborative_draft ([f860d37](https://github.com/codeforjapan/decidim-cfj/commit/f860d37dda9713279ba25b85fe6e55fcca9ab37a))
+
 ## [1.11.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.11.0...v1.11.1) (2025-07-31)
 
 
