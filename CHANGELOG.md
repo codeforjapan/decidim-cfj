@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.11.3](https://github.com/codeforjapan/decidim-cfj/compare/v1.11.2...v1.11.3) (2025-08-02)
+
+
+### Bug Fixes
+
+* 管理画面でnicknameが空のユーザーのエラーを修正 ([c4faf5f](https://github.com/codeforjapan/decidim-cfj/commit/c4faf5ff09bc9ba181239f5ebc74d73c25eccda9))
+
 ## [1.11.2](https://github.com/codeforjapan/decidim-cfj/compare/v1.11.1...v1.11.2) (2025-07-31)
 
 
