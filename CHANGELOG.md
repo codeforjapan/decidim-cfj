@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.11.4](https://github.com/codeforjapan/decidim-cfj/compare/v1.11.3...v1.11.4) (2025-08-05)
+
+
+### Bug Fixes
+
+* attached images should not be external-link ([c4dc752](https://github.com/codeforjapan/decidim-cfj/commit/c4dc752ecbb57b153f33af60503bc737bee45b40))
+
 ## [1.11.3](https://github.com/codeforjapan/decidim-cfj/compare/v1.11.2...v1.11.3) (2025-08-02)
 
 
