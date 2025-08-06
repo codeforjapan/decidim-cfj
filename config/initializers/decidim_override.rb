@@ -145,7 +145,12 @@ Rails.application.config.to_prepare do
   ## fix `Decidim::Attachment#file_type`
   module DecidimAttachmentFiletypePatch
     def file_type
-      url&.split(".")&.last&.downcase&.gsub(/[^A-Za-z0-9].*/, "")
+      return unless url
+
+      parts = url.split(".")
+      return unless parts.last
+
+      parts.last.downcase.gsub(/[^A-Za-z0-9].*/, "")
     end
   end
 
@@ -240,7 +245,7 @@ Rails.application.config.to_prepare do
 
       {
         answer_translated_attribute_name(:id) => answer&.session_token,
-        answer_translated_attribute_name(:created_at) => answer&.created_at&.in_time_zone(timezone)&.strftime("%Y-%m-%d %H:%M:%S"),
+        answer_translated_attribute_name(:created_at) => (answer&.created_at ? answer.created_at.in_time_zone(timezone).strftime("%Y-%m-%d %H:%M:%S") : nil),
         answer_translated_attribute_name(:ip_hash) => answer&.ip_hash,
         answer_translated_attribute_name(:user_status) => answer_translated_attribute_name(answer&.decidim_user_id.present? ? "registered" : "unregistered")
       }
