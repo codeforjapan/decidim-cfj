@@ -1,6 +1,7 @@
 # frozen_string_literal: true
-# This migration comes from decidim (originally 20170313095436)
 
+# This migration comes from decidim (originally 20170313095436)
+# This file has been modified by `decidim upgrade:migrations` task on 2025-08-05 08:11:54 UTC
 class AddAvailableAuthorizationsToOrganization < ActiveRecord::Migration[5.0]
   class Organization < ApplicationRecord
     self.table_name = :decidim_organizations

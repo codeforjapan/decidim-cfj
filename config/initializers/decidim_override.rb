@@ -301,33 +301,6 @@ Rails.application.config.to_prepare do
 
   # ----------------------------------------
 
-  # Disable message functionality in profile actions
-  module DecidimProfileActionsDisableMessagePatch
-    private
-
-    # Override to disable message functionality
-    def can_contact_user?
-      false
-    end
-  end
-
-  Decidim::ProfileActionsCell # rubocop:disable Lint/Void
-
-  module Decidim
-    class ProfileActionsCell
-      prepend DecidimProfileActionsDisableMessagePatch
-    end
-  end
-
-  Decidim::ProfileSidebarCell # rubocop:disable Lint/Void
-  module Decidim
-    class ProfileSidebarCell
-      prepend DecidimProfileActionsDisableMessagePatch
-    end
-  end
-
-  # ----------------------------------------
-
   # add settings for comments
   [:proposals, :debates].each do |component_module|
     manifest = Decidim.find_component_manifest(component_module)

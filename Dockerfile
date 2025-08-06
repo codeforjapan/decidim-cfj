@@ -1,12 +1,8 @@
-FROM node:20.18.3-bullseye-slim AS node
+FROM node:20.18.3-bookworm-slim AS node
 
-FROM ruby:3.2.6-slim-bullseye
+FROM ruby:3.3.4-slim-bookworm
 
 # for build-dep
-RUN echo "deb-src http://deb.debian.org/debian bullseye main" >> /etc/apt/sources.list
-RUN echo "deb-src http://deb.debian.org/debian-security bullseye-security main" >> /etc/apt/sources.list
-RUN echo "deb-src http://deb.debian.org/debian bullseye-updates main" >> /etc/apt/sources.list
-
 RUN  apt-get update && \
      apt-get install -y --no-install-recommends \
         build-essential \
@@ -26,25 +22,20 @@ RUN  apt-get update && \
     apt-get clean && \
     apt-get autoremove
 
-RUN set -eux; \
-    echo "deb http://deb.debian.org/debian bullseye-backports main" \
-      > /etc/apt/sources.list.d/bullseye-backports.list; \
-    printf '%s\n' \
+RUN echo "deb http://deb.debian.org/debian trixie main" \
+      > /etc/apt/sources.list.d/trixie.list \
+ && printf '%s\n' \
+      'Package: *' \
+      'Pin: release a=trixie' \
+      'Pin-Priority: 100' \
+      '' \
       'Package: imagemagick*' \
-      'Pin: release a=bullseye-backports' \
+      'Pin: release a=trixie' \
       'Pin-Priority: 990' \
-      '' \
-      'Package: libmagickcore-7*' \
-      'Pin: release a=bullseye-backports' \
-      'Pin-Priority: 990' \
-      '' \
-      'Package: libmagickwand-7*' \
-      'Pin: release a=bullseye-backports' \
-      'Pin-Priority: 990' \
-      > /etc/apt/preferences.d/99-imagemagick-backports; \
-    apt-get update; \
-    apt-get install -y -t bullseye-backports imagemagick; \
-    rm -rf /var/lib/apt/lists/*
+      > /etc/apt/preferences.d/99-trixie \
+ && apt-get update \
+ && apt-get install -y -t trixie imagemagick \
+ && rm -rf /var/lib/apt/lists/*
 
 # node install
 COPY --from=node /usr/local/bin/node /usr/local/bin/node
@@ -60,7 +51,7 @@ ARG RAILS_ENV="production"
 ENV LANG=C.UTF-8 \
     LC_ALL=C.UTF-8 \
     BUNDLER_JOBS=4 \
-    BUNDLER_VERSION=2.4.21 \
+    BUNDLER_VERSION=2.5.15 \
     APP_HOME=/app \
     RAILS_ENV=${RAILS_ENV} \
     RAILS_LOG_TO_STDOUT=true \
