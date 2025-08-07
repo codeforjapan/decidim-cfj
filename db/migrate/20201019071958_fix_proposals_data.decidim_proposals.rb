@@ -22,7 +22,7 @@ class FixProposalsData < ActiveRecord::Migration[5.2]
 
   def up
     PaperTrail.request(enabled: false) do
-      Proposal.find_each do |proposal|
+      Proposal.unscoped.find_each do |proposal|
         next if proposal.title.is_a?(Hash) && proposal.body.is_a?(Hash)
 
         coauthorship = Coauthorship.order(:id).find_by(coauthorable_type: "Decidim::Proposals::Proposal", coauthorable_id: proposal.id)
