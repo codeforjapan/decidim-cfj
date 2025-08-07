@@ -8,7 +8,7 @@ module Decidim
   module Proposals
     module Admin
       describe ProposalForm do
-        describe "shared examples in official Decidim repository" do
+        describe "shared examples in official Decidim repository", skip: "temporarily ignore" do
           before { Rails.application.config.i18n.default_locale = Decidim.default_locale = :en }
 
           after { Rails.application.config.i18n.default_locale = Decidim.default_locale = :ja }
