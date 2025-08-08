@@ -33,7 +33,7 @@ describe "Comments", :perform_enqueued do
 
     # click "評価の高い順"
     within ".comments" do
-      click_link "評価の高い順"
+      select "評価の高い順", from: "order"
     end
 
     # show other page
@@ -43,11 +43,11 @@ describe "Comments", :perform_enqueued do
     visit resource_path
 
     expect(page).to have_css(".comment", minimum: 1)
-    expect(page).to have_css("div.comment-order-by div a.underline", text: "評価の高い順")
+    expect(page).to have_select("order", selected: "評価の高い順")
 
     # click "新しい順"
     within ".comments" do
-      click_link "新しい順"
+      select "新しい順", from: "order"
     end
 
     # show other page
@@ -57,6 +57,6 @@ describe "Comments", :perform_enqueued do
     visit resource_path
 
     expect(page).to have_css(".comment", minimum: 1)
-    expect(page).to have_css("div.comment-order-by div a.underline", text: "新しい順")
+    expect(page).to have_select("order", selected: "新しい順")
   end
 end
