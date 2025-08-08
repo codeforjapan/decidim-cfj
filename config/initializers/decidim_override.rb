@@ -336,4 +336,20 @@ Rails.application.config.to_prepare do
 
     validates :mobile_logo, passthru: { to: Decidim::Organization }
   end
+
+  # ---------------------------------
+  # fix decidim's TranslatedEtiquetteValidator
+  module TranslatedEtiquetteValidatorPatch
+    def validate_each(record, attribute, _value)
+      return unless Decidim.enable_etiquette_validator
+
+      super
+    end
+  end
+
+  # force to autoload `TranslatedEtiquetteValidator`
+  TranslatedEtiquetteValidator # rubocop:disable Lint/Void
+  class TranslatedEtiquetteValidator
+    prepend TranslatedEtiquetteValidatorPatch
+  end
 end
