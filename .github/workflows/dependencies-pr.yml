@@ -1,0 +1,17 @@
+name: Dependencies PR
+
+on:
+  pull_request_target:
+    types: [opened, reopened, synchronize]
+
+jobs:
+  call-reusable-workflow:
+    if: github.actor == 'dependabot[bot]' && github.event.pull_request.user.login == 'dependabot[bot]'
+    uses: codeforjapan/org-actions/.github/workflows/slack-bot-pr.yml@main
+    with:
+      repo_name: ${{ github.event.repository.name }}
+      pr_title: ${{ github.event.pull_request.title }}
+      pr_url: ${{ github.event.pull_request.html_url }}
+    secrets:
+      slack_channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
+      slack_bot_token: ${{ secrets.SLACK_BOT_TOKEN }}
