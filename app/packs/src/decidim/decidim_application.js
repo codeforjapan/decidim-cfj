@@ -3,3 +3,6 @@
 
 // Load images
 require.context("../../images", true)
+
+// add a class to body element in participatory processes
+import "./cfj/url-body-class"
