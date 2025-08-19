@@ -1,6 +1,7 @@
 # frozen_string_literal: true
-# This migration comes from decidim (originally 20171212103803)
 
+# This migration comes from decidim (originally 20171212103803)
+# This file has been modified by `decidim upgrade:migrations` task on 2025-08-05 08:11:54 UTC
 class CreateUniqueNicknames < ActiveRecord::Migration[5.1]
   class User < ApplicationRecord
     include Decidim::Nicknamizable

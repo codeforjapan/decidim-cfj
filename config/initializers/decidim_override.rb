@@ -145,7 +145,12 @@ Rails.application.config.to_prepare do
   ## fix `Decidim::Attachment#file_type`
   module DecidimAttachmentFiletypePatch
     def file_type
-      url&.split(".")&.last&.downcase&.gsub(/[^A-Za-z0-9].*/, "")
+      return unless url
+
+      parts = url.split(".")
+      return unless parts.last
+
+      parts.last.downcase.gsub(/[^A-Za-z0-9].*/, "")
     end
   end
 
@@ -240,7 +245,7 @@ Rails.application.config.to_prepare do
 
       {
         answer_translated_attribute_name(:id) => answer&.session_token,
-        answer_translated_attribute_name(:created_at) => answer&.created_at&.in_time_zone(timezone)&.strftime("%Y-%m-%d %H:%M:%S"),
+        answer_translated_attribute_name(:created_at) => (answer&.created_at ? answer.created_at.in_time_zone(timezone).strftime("%Y-%m-%d %H:%M:%S") : nil),
         answer_translated_attribute_name(:ip_hash) => answer&.ip_hash,
         answer_translated_attribute_name(:user_status) => answer_translated_attribute_name(answer&.decidim_user_id.present? ? "registered" : "unregistered")
       }
@@ -301,33 +306,6 @@ Rails.application.config.to_prepare do
 
   # ----------------------------------------
 
-  # Disable message functionality in profile actions
-  module DecidimProfileActionsDisableMessagePatch
-    private
-
-    # Override to disable message functionality
-    def can_contact_user?
-      false
-    end
-  end
-
-  Decidim::ProfileActionsCell # rubocop:disable Lint/Void
-
-  module Decidim
-    class ProfileActionsCell
-      prepend DecidimProfileActionsDisableMessagePatch
-    end
-  end
-
-  Decidim::ProfileSidebarCell # rubocop:disable Lint/Void
-  module Decidim
-    class ProfileSidebarCell
-      prepend DecidimProfileActionsDisableMessagePatch
-    end
-  end
-
-  # ----------------------------------------
-
   # add settings for comments
   [:proposals, :debates].each do |component_module|
     manifest = Decidim.find_component_manifest(component_module)
@@ -357,5 +335,21 @@ Rails.application.config.to_prepare do
     attribute :remove_mobile_logo, Decidim::AttributeObject::TypeMap::Boolean, default: false
 
     validates :mobile_logo, passthru: { to: Decidim::Organization }
+  end
+
+  # ---------------------------------
+  # fix decidim's TranslatedEtiquetteValidator
+  module TranslatedEtiquetteValidatorPatch
+    def validate_each(record, attribute, _value)
+      return unless Decidim.enable_etiquette_validator
+
+      super
+    end
+  end
+
+  # force to autoload `TranslatedEtiquetteValidator`
+  TranslatedEtiquetteValidator # rubocop:disable Lint/Void
+  class TranslatedEtiquetteValidator
+    prepend TranslatedEtiquetteValidatorPatch
   end
 end
