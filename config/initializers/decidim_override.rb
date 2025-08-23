@@ -358,4 +358,71 @@ Rails.application.config.to_prepare do
 
     validates :mobile_logo, passthru: { to: Decidim::Organization }
   end
+
+  module DecidimAssetRouterStoragePatch
+    private
+
+    # Override blob_url to generate direct CloudFront URLs for S3 assets
+    def blob_url(**options)
+
+      return unless blob
+
+      # For CDN (remote) configuration, generate direct S3 URLs with CloudFront domain
+      if remote? && !options[:only_path] && asset_url_available?
+        # Get the direct S3 URL
+        s3_url = blob.url(**options)
+
+        # Replace S3 domain with CloudFront domain
+        if s3_url && remote_storage_options[:host]
+          s3_uri = URI.parse(s3_url)
+          cdn_host = remote_storage_options[:host]
+
+          # Build CloudFront URL
+          "#{options[:protocol] || 'https'}://#{cdn_host}#{s3_uri.path}"
+        else
+          s3_url
+        end
+      elsif options[:only_path] || remote? || !asset_url_available?
+        # Fallback to Rails redirect URL
+        routes.rails_blob_url(blob, **default_options.merge(options))
+      else
+        # Direct S3 URL for non-CDN configuration
+        blob.url(**options)
+      end
+    end
+
+    # Override representation_url for image variants
+    def representation_url(**options)
+      return rails_representation_url(**options) if options[:only_path]
+
+      # For CDN configuration, try to get direct variant URL
+      if remote? && asset_url_available?
+        variant_s3_url = variant_url(**options)
+
+        if variant_s3_url && remote_storage_options[:host]
+          s3_uri = URI.parse(variant_s3_url)
+          cdn_host = remote_storage_options[:host]
+
+          # Build CloudFront URL for variant
+          "#{options[:protocol] || 'https'}://#{cdn_host}#{s3_uri.path}}"
+        else
+          # Fallback to Rails representation URL if variant not processed yet
+          rails_representation_url(**options)
+        end
+      else
+        # Original logic for non-CDN
+        variant_s3_url = variant_url(**options)
+        return variant_s3_url if variant_s3_url.present?
+
+        if options[:host]
+          rails_representation_url(**options)
+        else
+          representation_url(**options.merge(only_path: true))
+        end
+      end
+    end
+  end
+
+  # Apply the patch
+  Decidim::AssetRouter::Storage.prepend(DecidimAssetRouterStoragePatch)
 end

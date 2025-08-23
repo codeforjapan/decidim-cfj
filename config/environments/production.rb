@@ -56,7 +56,7 @@ Rails.application.configure do
     expires_in: ENV.fetch("REDIS_CACHE_EXPIRES_IN", 60.minutes).to_i
   }
   config.session_store(:cache_store, key: "decidim_session", expire_after: Decidim.config.expire_session_after)
-  config.active_storage.resolve_model_to_route = :rails_storage_proxy
+  # config.active_storage.resolve_model_to_route = :rails_storage_proxy
 
   # Use a real queuing backend for Active Job (and separate queues per environment)
   # config.active_job.queue_adapter     = :resque
