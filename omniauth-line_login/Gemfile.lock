@@ -29,7 +29,7 @@ GEM
     omniauth-oauth2 (1.7.2)
       oauth2 (~> 1.4)
       omniauth (>= 1.9, < 3)
-    rack (2.2.3)
+    rack (2.2.14)
     rack-protection (2.2.0)
       rack
     rake (13.0.6)
@@ -50,6 +50,7 @@ GEM
 
 PLATFORMS
   arm64-darwin-21
+  x86_64-linux
 
 DEPENDENCIES
   omniauth-line_login!
