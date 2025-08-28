@@ -82,6 +82,10 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 
   https://github.com/codeforjapan/decidim-cfj/pull/359 で追加したファイル。履歴の差分が巨大になるとサーバ負荷が大きいため、renderを実行させないよう表示前にredirectさせるものです。
 
+* `app/commands/decidim/search.rb`
+
+  https://github.com/codeforjapan/decidim-cfj/pull/619 で追加したファイル。検索対象をpublic_spacesのみにするための修正。
+
 * `app/forms/decidim/debates/close_debate_form.rb`
 
   https://github.com/codeforjapan/decidim-cfj/pull/415 で追加されたファイル。ディベートでconclusionsに空文字列を許すための修正。
