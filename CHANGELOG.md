@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.11.5](https://github.com/codeforjapan/decidim-cfj/compare/v1.11.4...v1.11.5) (2025-08-28)
+
+
+### Bug Fixes
+
+* sub hero headline message in footer ([2876bb7](https://github.com/codeforjapan/decidim-cfj/commit/2876bb74543ac8de96584051043fa9f7873394fe))
+
 ## [1.11.4](https://github.com/codeforjapan/decidim-cfj/compare/v1.11.3...v1.11.4) (2025-08-05)
 
 
