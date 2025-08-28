@@ -129,6 +129,11 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 
   `comment:remove_orphans`タスク。https://github.com/codeforjapan/decidim-cfj/pull/454 で追加されたものです。
 
+* `lib/decidim/map/provider/static_map`以下
+
+`Decidim::Map::Provider::StaticMap::CfjOsm`という独自のstatic map providerを定義するためのものです。
+`config/initializers/decidim.rb`のconfig.maps以下のstaticのところで導入されています。
+
 #### `decidim-user_extension`について
 
 `decidim-user_extension`はカスタムモジュールとして追加されているものです。このモジュール内にもDecidim本体に依存している箇所があります。
@@ -144,8 +149,3 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 * `decidim-user_extension/app/views/decidim/account/show.html.erb`, `decidim-user_extension/app/views/decidim/account/_user_extension.html.erb`
 
 `decidim-core/app/views/decidim/account/show.html.erb` を上書きしています。
-
-* `lib/decidim/map/provider/static_map`以下
-
-`Decidim::Map::Provider::StaticMap::CfjOsm`という独自のstatic map providerを定義するためのものです。
-`config/initializers/decidim.rb`のconfig.maps以下のstaticのところで導入されています。
