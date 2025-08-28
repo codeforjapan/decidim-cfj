@@ -90,13 +90,13 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 
   https://github.com/codeforjapan/decidim-cfj/pull/615 で追加したファイル。pg_searchのfeatureとしてbigram(`pg_bigm`)に対応させるためのもの。
 
-* `app/uploaders/decidim/cw/application_uploader.rb`
-
-  https://github.com/decidim/decidim/issues/6720 や https://github.com/codeforjapan/decidim-cfj/issues/101 などの対応のために導入。
-
 * `app/uploaders/decidim/image_uploader.rb`
 
   https://github.com/codeforjapan/decidim-cfj/pull/455 で追加したもの。ピクセル数の大きい画像に対応するため、max_image_height_or_widthの値を変更している。
+
+* `app/uploaders/decidim/organization_mobile_logo_uploader.rb`
+
+  https://github.com/codeforjapan/decidim-cfj/pull/728 で追加したもの。モバイル用のロゴ画像をfaviconとは別に登録できるようにするためのアップローダー。
 
 * `app/views/layouts/decidim/footer/_main_links.html.erb`
 
