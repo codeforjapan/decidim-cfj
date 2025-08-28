@@ -130,6 +130,10 @@ ja:
         real_time: リアルタイム
       intro:
         real_time: 'あなたがフォローしているアクティビティに基づいた通知です:'
+    pages:
+      home:
+        footer_sub_hero:
+          footer_sub_hero_headline: '%{organization} へようこそ。'
     participatory_processes:
       content_blocks:
         highlighted_processes:
