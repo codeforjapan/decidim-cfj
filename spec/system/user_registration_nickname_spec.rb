@@ -7,7 +7,7 @@ describe "User registration with nickname input" do
 
   before do
     switch_to_host(organization.host)
-    visit decidim.new_user_registration_path
+    visit decidim.new_user_registration_path(locale: :ja)
   end
 
   context "when registering with valid nickname" do
