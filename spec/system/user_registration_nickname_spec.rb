@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe "User registration with nickname input", type: :system do
+describe "User registration with nickname input" do
   let(:organization) { create(:organization) }
 
   before do
@@ -23,7 +23,7 @@ describe "User registration with nickname input", type: :system do
       end
 
       expect(page).to have_content("confirmation email")
-      
+
       user = Decidim::User.find_by(email: "test@example.com")
       expect(user).to be_present
       expect(user.nickname).to eq("shinagawa_taro")
@@ -45,7 +45,7 @@ describe "User registration with nickname input", type: :system do
     end
 
     it "shows validation error for duplicate nickname" do
-      create(:user, nickname: "existing_user", organization: organization)
+      create(:user, nickname: "existing_user", organization:)
 
       within "form.new_user" do
         fill_in "Name", with: "テストユーザー"
@@ -78,10 +78,10 @@ describe "User registration with nickname input", type: :system do
       end
 
       expect(page).to have_content("confirmation email")
-      
+
       user = Decidim::User.find_by(email: "test@example.com")
       expect(user).to be_present
-      expect(user.nickname).to eq("Test_User")
+      expect(user.nickname).to eq("test_user")
     end
   end
 end

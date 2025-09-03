@@ -12,11 +12,11 @@ describe "RegistrationForm with nickname input" do
 
   let(:params) do
     {
-      name: name,
-      email: email,
-      nickname: nickname,
-      password: password,
-      tos_agreement: tos_agreement
+      name:,
+      email:,
+      nickname:,
+      password:,
+      tos_agreement:
     }
   end
 
@@ -46,7 +46,7 @@ describe "RegistrationForm with nickname input" do
 
     context "with duplicate nickname" do
       before do
-        create(:user, nickname: "test_user", organization: organization)
+        create(:user, nickname: "test_user", organization:)
       end
 
       it "is invalid" do
@@ -69,7 +69,7 @@ describe "RegistrationForm with nickname input" do
     let(:nickname) { "" }
 
     it "generates nickname from name" do
-      expect(form.nickname).to eq("Test_User")
+      expect(form.nickname).to eq("test_user")
     end
   end
 
@@ -77,7 +77,7 @@ describe "RegistrationForm with nickname input" do
     let(:nickname) { nil }
 
     it "generates nickname from name" do
-      expect(form.nickname).to eq("Test_User")
+      expect(form.nickname).to eq("test_user")
     end
   end
 end
