@@ -153,3 +153,11 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 * `decidim-user_extension/app/views/decidim/account/show.html.erb`, `decidim-user_extension/app/views/decidim/account/_user_extension.html.erb`
 
 `decidim-core/app/views/decidim/account/show.html.erb` を上書きしています。
+
+* `decidim-user_extension/app/views/decidim/devise/registrations/new.html.erb`
+
+  ユーザー登録フォームにnicknameの入力欄を追加。日本語名前でのユーザー登録時のROLLBACK問題を解決するため、ユーザーが直接有効なnicknameを入力できるようにしたもの。
+
+* `config/initializers/decidim_override.rb`
+
+  `Decidim::RegistrationForm`にnicknameフィールドとバリデーションを追加。`Decidim::Devise::RegistrationsController`でnicknameパラメータを許可。
