@@ -7,7 +7,7 @@
   <%= link_to url do %>
     <% if organization.logo.attached? %>
       <%= image_tag(
-            cloudfront_logo_url(organization, :logo, :medium),
+            cloudfront_logo_url(organization, :logo),
             style: "max-height: 50px",
             alt: organization_name(organization)
           ) %>
