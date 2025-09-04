@@ -1,5 +1,30 @@
 # Change Log
 
+## [1.12.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.11.5...v1.12.0) (2025-09-04)
+
+
+### Features
+
+* add Decidim::Search in UPGRADE.md ([6887188](https://github.com/codeforjapan/decidim-cfj/commit/6887188e9324e46520ca546ddfa65d3e6682c7aa))
+* update CfjOsm in UPGRADE.md ([0ec5fcd](https://github.com/codeforjapan/decidim-cfj/commit/0ec5fcdb0af56024c8e1f160e300f06f5b522d8b))
+* update uploaders in UPGRADE.md ([163c10e](https://github.com/codeforjapan/decidim-cfj/commit/163c10ececed5f3b21b1f9255d38089379b47bc1))
+
+
+### Bug Fixes
+
+* force to use locale in JA ([31e7432](https://github.com/codeforjapan/decidim-cfj/commit/31e7432d8c7235aac320590b2e9db0d04347c4d5))
+* lint ([97c59f0](https://github.com/codeforjapan/decidim-cfj/commit/97c59f032bff709dfd3b04a05cf05639e3d4449f))
+* nickname validation error ([92a5cee](https://github.com/codeforjapan/decidim-cfj/commit/92a5cee3c175ede11bb32b799a66dfe7f620b9f5))
+* simplify and update nickname validation specs ([94f20b4](https://github.com/codeforjapan/decidim-cfj/commit/94f20b49e5010c62db6ea1776934712b93b81c0f))
+* update system spec ([8c1c59d](https://github.com/codeforjapan/decidim-cfj/commit/8c1c59dd769cbfed3ce30d3d7202324e6ff23d7b))
+
+## [1.11.5](https://github.com/codeforjapan/decidim-cfj/compare/v1.11.4...v1.11.5) (2025-08-28)
+
+
+### Bug Fixes
+
+* sub hero headline message in footer ([2876bb7](https://github.com/codeforjapan/decidim-cfj/commit/2876bb74543ac8de96584051043fa9f7873394fe))
+
 ## [1.11.4](https://github.com/codeforjapan/decidim-cfj/compare/v1.11.3...v1.11.4) (2025-08-05)
 
 
