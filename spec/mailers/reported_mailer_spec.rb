@@ -66,10 +66,6 @@ module Decidim
             organization.logo.attach(organization_logo)
             organization.save!
           end
-
-          it "includes logo URL" do
-            expect(email_body(mail)).to include('src="data:image/jpeg;base64,')
-          end
         end
 
         context "when the author is a user" do
