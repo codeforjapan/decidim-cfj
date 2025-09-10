@@ -10,11 +10,9 @@ module Decidim
       blob = organization.send(logo_type).blob
       return unless blob
 
-      cdn_host = Rails.application.secrets.dig(:storage, :cdn_host)
-
       s3_key = blob.key
 
-      "https://#{cdn_host}/#{s3_key}"
+      "https://#{organization.host}/s3/#{s3_key}"
     end
   end
 end
