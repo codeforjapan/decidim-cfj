@@ -360,9 +360,9 @@ Rails.application.config.to_prepare do
     validates :mobile_logo, passthru: { to: Decidim::Organization }
   end
 
-  # CloudFrontロゴヘルパーをCellクラスに追加
-  Cell::ViewModel.class_eval do
-    include Decidim::CloudfrontLogoHelper
+  # CloudFrontロゴヘルパーをメーラーに追加
+  Decidim::ApplicationMailer.class_eval do
+    helper Decidim::CloudfrontLogoHelper
   end
 
   # ----------------------------------------

@@ -4,7 +4,7 @@ require "rails_helper"
 
 module Decidim
   describe ReportedMailer do
-    let(:organization) { create(:organization) }
+    let(:organization) { create(:organization, host: "test.lvh.me") }
     let(:user) { create(:user, :admin, organization:, locale: "ja") }
     let(:component) { create(:component, organization:) }
     let(:reportable) { create(:proposal, title: Decidim::Faker::Localized.sentence, body: Decidim::Faker::Localized.paragraph(sentence_count: 3)) }
@@ -57,6 +57,19 @@ module Decidim
 
           expect(email_body(mail)).to match("<b>コンテンツのオリジナル言語</b>")
           expect(email_body(mail)).to match("日本語")
+        end
+
+        context "when logo is attached" do
+          let(:organization_logo) { Decidim::Dev.test_file("city.jpeg", "image/jpeg") }
+
+          before do
+            organization.logo.attach(organization_logo)
+            organization.save!
+          end
+
+          it "includes logo URL" do
+            expect(email_body(mail)).to include('src="https://test.lvh.me/s3/')
+          end
         end
 
         context "when the author is a user" do
