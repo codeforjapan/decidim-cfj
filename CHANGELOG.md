@@ -1,5 +1,30 @@
 # Change Log
 
+## [1.13.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.12.0...v1.13.0) (2025-09-12)
+
+
+### Features
+
+* add CloudFront integration for logo assets in layouts and mailer templates ([9ed0b07](https://github.com/codeforjapan/decidim-cfj/commit/9ed0b07ceb09e9c16625f1a63c96e37d9c262b0f))
+* include CloudFrontLogoHelper in Cell::ViewModel for logo support ([cd16983](https://github.com/codeforjapan/decidim-cfj/commit/cd169837ca68a956e5d98f0f5ed29add46e3cd9d))
+* restore mail with logo test ([c712c55](https://github.com/codeforjapan/decidim-cfj/commit/c712c55dc9fe9d4c96a4aa874ce1682e7c7942b8))
+
+
+### Bug Fixes
+
+* error ([f89e625](https://github.com/codeforjapan/decidim-cfj/commit/f89e6251ffab38c8e2fd939829a6c789de45d0d1))
+* lint ([f06ec00](https://github.com/codeforjapan/decidim-cfj/commit/f06ec000b237d7db46bf837a71adaa2304bec7aa))
+* lint ([242f5ae](https://github.com/codeforjapan/decidim-cfj/commit/242f5ae85550f95c692c15fd9f8917bdddb300c6))
+* lint ([65f88c1](https://github.com/codeforjapan/decidim-cfj/commit/65f88c13e19e00c5ae832754450d50faf131d8d0))
+* lint ([f3a6f99](https://github.com/codeforjapan/decidim-cfj/commit/f3a6f993d8bc406ecba30b0248a212159b2948bb))
+* remove debug log ([cf7e3e1](https://github.com/codeforjapan/decidim-cfj/commit/cf7e3e15761f8823354e4fad0e5b6bfb1698a2ab))
+* rollback files ([33e0051](https://github.com/codeforjapan/decidim-cfj/commit/33e0051ee28db9892f6d5a3acf6bd2cae61a59dc))
+* spec error ([0734d1a](https://github.com/codeforjapan/decidim-cfj/commit/0734d1a456cea541e9594b8ef1c8b6b89b7450e7))
+* spec error ([8e4eadf](https://github.com/codeforjapan/decidim-cfj/commit/8e4eadfd925892189777dcdf849b8663748019f7))
+* spec error ([9ea456a](https://github.com/codeforjapan/decidim-cfj/commit/9ea456ad35d5e22c1f937d0e78ef5f13b6e87ca2))
+* update logo helper to use organization host instead of cdn_host ([d15ec3d](https://github.com/codeforjapan/decidim-cfj/commit/d15ec3d61e449c078b66db8935e1ab88e182fb48))
+* use Decidim::CloudfrontLogoHelper in Decidim::ApplicationMailer ([7325c75](https://github.com/codeforjapan/decidim-cfj/commit/7325c758ad750a84050c51f6ac7b80a3dae82662))
+
 ## [1.12.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.11.5...v1.12.0) (2025-09-04)
 
 
