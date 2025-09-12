@@ -360,6 +360,11 @@ Rails.application.config.to_prepare do
     validates :mobile_logo, passthru: { to: Decidim::Organization }
   end
 
+  # CloudFrontロゴヘルパーをメーラーに追加
+  Decidim::ApplicationMailer.class_eval do
+    helper Decidim::CloudfrontLogoHelper
+  end
+
   # ----------------------------------------
   # Add nickname input field to registration form
 

@@ -4,7 +4,7 @@ require "rails_helper"
 
 module Decidim
   describe ReportedMailer do
-    let(:organization) { create(:organization) }
+    let(:organization) { create(:organization, host: "test.lvh.me") }
     let(:user) { create(:user, :admin, organization:, locale: "ja") }
     let(:component) { create(:component, organization:) }
     let(:reportable) { create(:proposal, title: Decidim::Faker::Localized.sentence, body: Decidim::Faker::Localized.paragraph(sentence_count: 3)) }
@@ -68,7 +68,7 @@ module Decidim
           end
 
           it "includes logo URL" do
-            expect(email_body(mail)).to include('src="data:image/jpeg;base64,')
+            expect(email_body(mail)).to include('src="https://test.lvh.me/s3/')
           end
         end
 
