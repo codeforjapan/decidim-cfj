@@ -1,5 +1,13 @@
 # Change Log
 
+## [1.13.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.13.0...v1.13.1) (2025-09-12)
+
+
+### Bug Fixes
+
+* add Cloudfront logo helper to ApplicationMailer ([cfbe3e3](https://github.com/codeforjapan/decidim-cfj/commit/cfbe3e323734060d58ed2b7ef58962897863f9c4))
+* update Cloudfront logo helper to use Cell classes instead of Mailer ([0d8d38e](https://github.com/codeforjapan/decidim-cfj/commit/0d8d38e5d55b103c7a4999d36cca409912a1bfda))
+
 ## [1.13.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.12.0...v1.13.0) (2025-09-12)
 
 
