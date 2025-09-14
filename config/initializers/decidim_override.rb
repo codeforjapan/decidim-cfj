@@ -130,6 +130,7 @@ Rails.application.config.to_prepare do
         end
       end
     end
+
     # rubocop:enable Metrics/CyclomaticComplexity
     # rubocop:enable Metrics/PerceivedComplexity:
   end
@@ -189,10 +190,10 @@ Rails.application.config.to_prepare do
          permission_action.scope == :admin &&
          permission_action.subject == :editor_image && (
            user.admin? ||
-           user.roles.any? ||
-           Decidim::ParticipatoryProcessUserRole.exists?(user:) ||
-           Decidim::AssemblyUserRole.exists?(user:) ||
-           Decidim::ConferenceUserRole.exists?(user:)
+             user.roles.any? ||
+             Decidim::ParticipatoryProcessUserRole.exists?(user:) ||
+             Decidim::AssemblyUserRole.exists?(user:) ||
+             Decidim::ConferenceUserRole.exists?(user:)
          )
         allow!
       end
@@ -335,6 +336,51 @@ Rails.application.config.to_prepare do
     attribute :remove_mobile_logo, Decidim::AttributeObject::TypeMap::Boolean, default: false
 
     validates :mobile_logo, passthru: { to: Decidim::Organization }
+  end
+
+  # CloudFrontロゴヘルパーをCellクラスに追加
+  Cell::ViewModel.class_eval do
+    include Decidim::CloudfrontLogoHelper
+  end
+
+  # CloudFrontロゴヘルパーをメーラーに追加
+  Decidim::ApplicationMailer.class_eval do
+    helper Decidim::CloudfrontLogoHelper
+  end
+
+  # ----------------------------------------
+  # Add nickname input field to registration form
+
+  # Patch RegistrationForm to include nickname field
+  Decidim::RegistrationForm.class_eval do
+    attribute :nickname, String
+
+    validates :nickname, presence: true, format: { with: Decidim::User::REGEXP_NICKNAME }
+    validates :nickname, length: { maximum: Decidim::User.nickname_max_length }
+    validate :nickname_unique_in_organization
+
+    # Override the nickname method to use the input value instead of generated one
+    def nickname
+      # Use the attribute value directly, don't call the original method
+      attributes[:nickname].presence || generate_nickname(name, current_organization)
+    end
+
+    private
+
+    def nickname_unique_in_organization
+      return if nickname.blank? || nickname.strip.empty?
+
+      errors.add(:nickname, :taken) if Decidim::UserBaseEntity.exists?(nickname: nickname.strip, organization: current_organization)
+    end
+  end
+
+  # Patch RegistrationsController to permit nickname parameter
+  Decidim::Devise::RegistrationsController.class_eval do
+    private
+
+    def configure_permitted_parameters
+      devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :tos_agreement, :nickname])
+    end
   end
 
   # ---------------------------------

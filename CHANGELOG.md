@@ -1,5 +1,70 @@
 # Change Log
 
+## [1.13.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.13.0...v1.13.1) (2025-09-12)
+
+
+### Bug Fixes
+
+* add Cloudfront logo helper to ApplicationMailer ([cfbe3e3](https://github.com/codeforjapan/decidim-cfj/commit/cfbe3e323734060d58ed2b7ef58962897863f9c4))
+* update Cloudfront logo helper to use Cell classes instead of Mailer ([0d8d38e](https://github.com/codeforjapan/decidim-cfj/commit/0d8d38e5d55b103c7a4999d36cca409912a1bfda))
+
+## [1.13.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.12.0...v1.13.0) (2025-09-12)
+
+
+### Features
+
+* add CloudFront integration for logo assets in layouts and mailer templates ([9ed0b07](https://github.com/codeforjapan/decidim-cfj/commit/9ed0b07ceb09e9c16625f1a63c96e37d9c262b0f))
+* include CloudFrontLogoHelper in Cell::ViewModel for logo support ([cd16983](https://github.com/codeforjapan/decidim-cfj/commit/cd169837ca68a956e5d98f0f5ed29add46e3cd9d))
+* restore mail with logo test ([c712c55](https://github.com/codeforjapan/decidim-cfj/commit/c712c55dc9fe9d4c96a4aa874ce1682e7c7942b8))
+
+
+### Bug Fixes
+
+* error ([f89e625](https://github.com/codeforjapan/decidim-cfj/commit/f89e6251ffab38c8e2fd939829a6c789de45d0d1))
+* lint ([f06ec00](https://github.com/codeforjapan/decidim-cfj/commit/f06ec000b237d7db46bf837a71adaa2304bec7aa))
+* lint ([242f5ae](https://github.com/codeforjapan/decidim-cfj/commit/242f5ae85550f95c692c15fd9f8917bdddb300c6))
+* lint ([65f88c1](https://github.com/codeforjapan/decidim-cfj/commit/65f88c13e19e00c5ae832754450d50faf131d8d0))
+* lint ([f3a6f99](https://github.com/codeforjapan/decidim-cfj/commit/f3a6f993d8bc406ecba30b0248a212159b2948bb))
+* remove debug log ([cf7e3e1](https://github.com/codeforjapan/decidim-cfj/commit/cf7e3e15761f8823354e4fad0e5b6bfb1698a2ab))
+* rollback files ([33e0051](https://github.com/codeforjapan/decidim-cfj/commit/33e0051ee28db9892f6d5a3acf6bd2cae61a59dc))
+* spec error ([0734d1a](https://github.com/codeforjapan/decidim-cfj/commit/0734d1a456cea541e9594b8ef1c8b6b89b7450e7))
+* spec error ([8e4eadf](https://github.com/codeforjapan/decidim-cfj/commit/8e4eadfd925892189777dcdf849b8663748019f7))
+* spec error ([9ea456a](https://github.com/codeforjapan/decidim-cfj/commit/9ea456ad35d5e22c1f937d0e78ef5f13b6e87ca2))
+* update logo helper to use organization host instead of cdn_host ([d15ec3d](https://github.com/codeforjapan/decidim-cfj/commit/d15ec3d61e449c078b66db8935e1ab88e182fb48))
+* use Decidim::CloudfrontLogoHelper in Decidim::ApplicationMailer ([7325c75](https://github.com/codeforjapan/decidim-cfj/commit/7325c758ad750a84050c51f6ac7b80a3dae82662))
+
+## [1.12.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.11.5...v1.12.0) (2025-09-04)
+
+
+### Features
+
+* add Decidim::Search in UPGRADE.md ([6887188](https://github.com/codeforjapan/decidim-cfj/commit/6887188e9324e46520ca546ddfa65d3e6682c7aa))
+* update CfjOsm in UPGRADE.md ([0ec5fcd](https://github.com/codeforjapan/decidim-cfj/commit/0ec5fcdb0af56024c8e1f160e300f06f5b522d8b))
+* update uploaders in UPGRADE.md ([163c10e](https://github.com/codeforjapan/decidim-cfj/commit/163c10ececed5f3b21b1f9255d38089379b47bc1))
+
+
+### Bug Fixes
+
+* force to use locale in JA ([31e7432](https://github.com/codeforjapan/decidim-cfj/commit/31e7432d8c7235aac320590b2e9db0d04347c4d5))
+* lint ([97c59f0](https://github.com/codeforjapan/decidim-cfj/commit/97c59f032bff709dfd3b04a05cf05639e3d4449f))
+* nickname validation error ([92a5cee](https://github.com/codeforjapan/decidim-cfj/commit/92a5cee3c175ede11bb32b799a66dfe7f620b9f5))
+* simplify and update nickname validation specs ([94f20b4](https://github.com/codeforjapan/decidim-cfj/commit/94f20b49e5010c62db6ea1776934712b93b81c0f))
+* update system spec ([8c1c59d](https://github.com/codeforjapan/decidim-cfj/commit/8c1c59dd769cbfed3ce30d3d7202324e6ff23d7b))
+
+## [1.11.5](https://github.com/codeforjapan/decidim-cfj/compare/v1.11.4...v1.11.5) (2025-08-28)
+
+
+### Bug Fixes
+
+* sub hero headline message in footer ([2876bb7](https://github.com/codeforjapan/decidim-cfj/commit/2876bb74543ac8de96584051043fa9f7873394fe))
+
+## [1.11.4](https://github.com/codeforjapan/decidim-cfj/compare/v1.11.3...v1.11.4) (2025-08-05)
+
+
+### Bug Fixes
+
+* attached images should not be external-link ([c4dc752](https://github.com/codeforjapan/decidim-cfj/commit/c4dc752ecbb57b153f33af60503bc737bee45b40))
+
 ## [1.11.3](https://github.com/codeforjapan/decidim-cfj/compare/v1.11.2...v1.11.3) (2025-08-02)
 
 

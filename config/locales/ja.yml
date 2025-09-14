@@ -4,9 +4,6 @@ ja:
     attributes:
       config:
         validate_body_max_caps_percent: 本文内での大文字の最大許容割合
-      organization:
-        mobile_logo: "モバイル版ロゴ"
-      config:
         validate_body_max_marks_together: 本文で許容される最多連続記号文字数
         validate_body_min_length: 本文に必要な最小文字数
         validate_body_start_with_caps: 本文を大文字で始めることを強制する
@@ -14,6 +11,8 @@ ja:
         validate_title_max_marks_together: タイトルで許容される最多連続記号文字数
         validate_title_min_length: タイトルに必要な最小文字数
         validate_title_start_with_caps: タイトルを大文字で始めることを強制する
+      organization:
+        mobile_logo: "モバイル版ロゴ"
       decidim/user:
         name: アカウントID
       question:
@@ -63,7 +62,7 @@ ja:
         user_extension:
           address_help: 例) 兵庫県加古川市加古川町
         new:
-          nickname_help: 本人を識別するための任意のアルファベットを入力してください。
+          nickname_help: アルファベット小文字、数字、'-' および '_' を使用できます。
           nickname_notice: "※ 表示名とアカウントIDが投稿に表示されます。例）共創 歩@ayumi"
           nickname_placeholder: ayumi
           password_help: 半角英数字%{minimum_characters}文字以上で入力してください。単純すぎてはいけません（例：123456）。アカウントIDやメールアドレスと異なる必要があります。
@@ -130,6 +129,10 @@ ja:
         real_time: リアルタイム
       intro:
         real_time: 'あなたがフォローしているアクティビティに基づいた通知です:'
+    pages:
+      home:
+        footer_sub_hero:
+          footer_sub_hero_headline: '%{organization} へようこそ。'
     participatory_processes:
       content_blocks:
         highlighted_processes:
