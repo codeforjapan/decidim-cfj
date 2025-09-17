@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.13.2](https://github.com/codeforjapan/decidim-cfj/compare/v1.13.1...v1.13.2) (2025-09-17)
+
+
+### Bug Fixes
+
+* add nickname validations to Decidim::OmniauthRegistrationForm ([d454037](https://github.com/codeforjapan/decidim-cfj/commit/d454037080a78d61b4a189b8898de1d9567b6e89))
+
 ## [1.13.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.13.0...v1.13.1) (2025-09-12)
 
 
