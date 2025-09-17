@@ -31,6 +31,19 @@ module Decidim
         expect(email_body(mail)).to include("Content for Sarah Connor")
       end
 
+      context "when logo is attached" do
+        let(:organization_logo) { Decidim::Dev.test_file("city.jpeg", "image/jpeg") }
+
+        before do
+          organization.logo.attach(organization_logo)
+          organization.save!
+        end
+
+        it "includes logo URL" do
+          expect(email_body(mail)).to include('src="https://test.lvh.me/s3/')
+        end
+      end
+
       context "when the user has a different locale" do
         before do
           user.locale = "ja"
