@@ -1,0 +1,6 @@
+ja:
+  decidim:
+    ai:
+      comment_moderation:
+        name: "AIコメントモデレーション"
+        description: "OpenAI Chat APIを使用したコメントの自動モデレーション"

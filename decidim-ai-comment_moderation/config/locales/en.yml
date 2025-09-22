@@ -1,0 +1,6 @@
+en:
+  decidim:
+    ai:
+      comment_moderation:
+        name: "AI Comment Moderation"
+        description: "Automatic comment moderation using OpenAI Chat API"
