@@ -1,0 +1,32 @@
+en:
+  decidim:
+    ai:
+      comment_moderation:
+        name: "AI Comment Moderation"
+        description: "Automatic comment moderation using OpenAI"
+
+        analysis:
+          spam_detected: "Spam detected"
+          offensive_detected: "Offensive content detected"
+          high_confidence: "High confidence"
+          medium_confidence: "Medium confidence"
+          low_confidence: "Low confidence"
+
+        reasons:
+          advertisement: "Advertisement"
+          repetitive: "Repetitive content"
+          unrelated: "Unrelated content"
+          hate_speech: "Hate speech"
+          discrimination: "Discrimination"
+          personal_attack: "Personal attack"
+          inappropriate_language: "Inappropriate language"
+
+        severity:
+          low: "Low"
+          medium: "Medium"
+          high: "High"
+
+        notifications:
+          analysis_complete: "AI analysis completed"
+          moderation_required: "Moderation required"
+          auto_hidden: "Comment has been automatically hidden"

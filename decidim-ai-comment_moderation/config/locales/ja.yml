@@ -1,0 +1,32 @@
+ja:
+  decidim:
+    ai:
+      comment_moderation:
+        name: "AIコメントモデレーション"
+        description: "OpenAIを使用したコメントの自動モデレーション"
+
+        analysis:
+          spam_detected: "スパムが検出されました"
+          offensive_detected: "不適切な内容が検出されました"
+          high_confidence: "高信頼度"
+          medium_confidence: "中信頼度"
+          low_confidence: "低信頼度"
+
+        reasons:
+          advertisement: "広告・宣伝"
+          repetitive: "繰り返し内容"
+          unrelated: "無関係な内容"
+          hate_speech: "ヘイトスピーチ"
+          discrimination: "差別的表現"
+          personal_attack: "個人攻撃"
+          inappropriate_language: "不適切な言語"
+
+        severity:
+          low: "低"
+          medium: "中"
+          high: "高"
+
+        notifications:
+          analysis_complete: "AI分析が完了しました"
+          moderation_required: "モデレーションが必要です"
+          auto_hidden: "コメントは自動的に非表示になりました"
