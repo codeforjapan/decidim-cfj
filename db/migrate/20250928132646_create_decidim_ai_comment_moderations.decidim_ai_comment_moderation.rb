@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# This migration comes from decidim_ai_comment_moderation (originally 1)
 class CreateDecidimAiCommentModerations < ActiveRecord::Migration[7.0]
   def change
     create_table :decidim_ai_comment_moderations do |t|

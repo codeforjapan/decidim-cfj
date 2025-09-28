@@ -22,8 +22,8 @@ Gem::Specification.new do |spec|
     "README.md"
   ]
 
-  spec.add_dependency "decidim-core", "~> 0.29.2"
   spec.add_dependency "decidim-comments", "~> 0.29.2"
+  spec.add_dependency "decidim-core", "~> 0.29.2"
   spec.add_dependency "ruby-openai", "~> 6.0"
 
   spec.metadata["rubygems_mfa_required"] = "true"

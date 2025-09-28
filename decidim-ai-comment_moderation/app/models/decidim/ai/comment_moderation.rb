@@ -7,10 +7,9 @@ module Decidim
 
       belongs_to :commentable, polymorphic: true
 
-      validates :commentable, presence: true
       validates :confidence_score,
                 numericality: { greater_than_or_equal_to: 0,
-                              less_than_or_equal_to: 1 },
+                                less_than_or_equal_to: 1 },
                 allow_nil: true
 
       scope :high_confidence, -> { where("confidence_score > ?", 0.8) }

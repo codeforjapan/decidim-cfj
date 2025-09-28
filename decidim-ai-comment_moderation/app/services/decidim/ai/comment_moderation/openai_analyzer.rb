@@ -8,7 +8,7 @@ module Decidim
       class OpenaiAnalyzer
         def initialize(comment)
           @comment = comment
-          @client = OpenAI::Client.new(access_token: ENV["OPENAI_API_KEY"])
+          @client = OpenAI::Client.new(access_token: ENV.fetch("OPENAI_API_KEY", nil))
         end
 
         def analyze
@@ -16,7 +16,7 @@ module Decidim
 
           response = @client.chat(
             parameters: {
-              model: ENV.fetch("AI_MODERATION_MODEL", "gpt-3.5-turbo"),
+              model: ENV.fetch("DECIDIM_AI_MODERATION_MODEL", "gpt-3.5-turbo"),
               messages: build_messages,
               temperature: 0.3,
               max_tokens: 500
@@ -24,7 +24,7 @@ module Decidim
           )
 
           parse_response(response)
-        rescue => e
+        rescue StandardError => e
           Rails.logger.error "AI Analysis failed for comment #{@comment.id}: #{e.message}"
           nil
         end

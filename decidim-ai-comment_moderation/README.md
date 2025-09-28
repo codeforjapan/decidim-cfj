@@ -39,8 +39,8 @@ $ rails db:migrate
 OPENAI_API_KEY=sk-...
 
 # オプション（デフォルト値あり）
-AI_MODERATION_ENABLED=true
-AI_MODERATION_MODEL=gpt-3.5-turbo
+DECIDIM_AI_MODERATION_ENABLED_HOSTS=decidim.exapmle.org,decidim.example.jp
+DECIDIM_AI_MODERATION_MODEL=gpt-3.5-turbo
 ```
 
 ## 使用方法
