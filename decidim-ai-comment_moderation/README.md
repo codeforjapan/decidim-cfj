@@ -1,119 +1,119 @@
 # Decidim::Ai::CommentModeration
 
-AI-powered comment moderation module for Decidim v0.29.2 using OpenAI.
+OpenAIを活用したAIコメントモデレーションモジュールです。
 
-## Features
+## 機能
 
-- Automatic spam and offensive content detection
-- Confidence-based moderation decisions
-- Detailed logging of AI analysis results
-- Support for Japanese and English
+- スパムと不適切なコンテンツの自動検出
+- 信頼度に基づくモデレーション判定
+- AI分析結果の詳細なログ記録
+- 日本語と英語のサポート
 
-## Installation
+## インストール
 
-Add this line to your application's Gemfile:
+アプリケーションのGemfileに以下の行を追加してください：
 
 ```ruby
 gem "decidim-ai-comment_moderation", path: "decidim-ai-comment_moderation"
 ```
 
-And then execute:
+その後、以下を実行してください：
 
 ```bash
 $ bundle install
 ```
 
-Run the migrations:
+マイグレーションを実行します：
 
 ```bash
 $ rails decidim_ai_comment_moderation:install:migrations
 $ rails db:migrate
 ```
 
-## Configuration
+## 設定
 
-Set the following environment variables in your `.env` file:
+`.env`ファイルに以下の環境変数を設定してください：
 
 ```bash
-# Required
+# 必須
 OPENAI_API_KEY=sk-...
 
-# Optional (with defaults)
+# オプション（デフォルト値あり）
 AI_MODERATION_ENABLED=true
 AI_MODERATION_MODEL=gpt-3.5-turbo
 ```
 
-## Usage
+## 使用方法
 
-Once installed and configured, the module will automatically:
+インストールと設定が完了すると、モジュールは自動的に以下を実行します：
 
-1. Monitor new comments as they are created
-2. Send them to OpenAI for analysis
-3. Store the analysis results in the database
-4. Log potential issues for moderator review
+1. 新しいコメントの作成を監視
+2. OpenAIに分析を依頼
+3. 分析結果をデータベースに保存
+4. モデレーターレビュー用に潜在的な問題をログに記録
 
-### Checking Analysis Results
+### 分析結果の確認
 
 ```ruby
-# In Rails console
+# Railsコンソールで
 comment = Decidim::Comments::Comment.last
 moderation = comment.ai_moderation
 
-# Check if spam or offensive
+# スパムまたは不適切かをチェック
 moderation.spam?
 moderation.offensive?
 
-# Get confidence score
+# 信頼度スコアを取得
 moderation.confidence_score
 
-# Get reasons
+# 理由を取得
 moderation.reasons
 ```
 
-### Monitoring Logs
+### ログの監視
 
-The module logs all analysis results. Look for `[AI Moderation]` in your Rails logs:
+モジュールはすべての分析結果をログに記録します。Railsログで`[AI Moderation]`を確認してください：
 
 ```
 [AI Moderation] Comment #123 analyzed: Spam: true, Offensive: false, Confidence: 0.92, Severity: high
 [AI Moderation] Reasons: advertisement, promotional links
 ```
 
-## Database Schema
+## データベーススキーマ
 
-The module creates a `decidim_ai_comment_moderations` table with:
+モジュールは以下のフィールドを持つ`decidim_ai_comment_moderations`テーブルを作成します：
 
-- `commentable_type` and `commentable_id`: Polymorphic association to comments
-- `analysis_result`: JSONB field containing the full AI analysis
-- `confidence_score`: Float value (0.0-1.0) indicating AI confidence
-- `created_at` and `updated_at`: Timestamps
+- `commentable_type`と`commentable_id`：コメントへのポリモーフィック関連
+- `analysis_result`：完全なAI分析を含むJSONBフィールド
+- `confidence_score`：AI信頼度を示す浮動小数点値（0.0-1.0）
+- `created_at`と`updated_at`：タイムスタンプ
 
-## AI Analysis Response Format
+## AI分析レスポンス形式
 
-The AI returns analysis in the following format:
+AIは以下の形式で分析を返します：
 
 ```json
 {
   "is_spam": boolean,
   "is_offensive": boolean,
   "confidence": 0.0-1.0,
-  "reasons": ["reason1", "reason2"],
+  "reasons": ["理由1", "理由2"],
   "severity": "low|medium|high"
 }
 ```
 
-## Future Enhancements
+## 今後の機能拡張予定
 
-- Admin dashboard for reviewing AI moderations
-- Auto-hide functionality for high-confidence violations
-- Support for other AI providers (Anthropic, etc.)
-- Feedback mechanism for improving AI accuracy
-- Integration with Decidim's existing moderation system
+- AIモデレーション確認用の管理画面
+- 高信頼度違反の自動非表示機能
+- 他のAIプロバイダー（Anthropicなど）のサポート
+- AI精度向上のためのフィードバック機能
+- Decidimの既存モデレーションシステムとの統合
 
-## Contributing
+## コントリビューション
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/codeforjapan/decidim-cfj.
+バグレポートやプルリクエストは、GitHubのhttps://github.com/codeforjapan/decidim-cfj で歓迎しています。
 
-## License
+## ライセンス
 
-This module is available as open source under the terms of the [AGPL-3.0 License](https://opensource.org/licenses/AGPL-3.0).
+このモジュールは[AGPL-3.0ライセンス](https://opensource.org/licenses/AGPL-3.0)の条件の下でオープンソースとして利用可能です。
