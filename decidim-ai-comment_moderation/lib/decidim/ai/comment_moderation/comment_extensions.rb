@@ -8,7 +8,7 @@ module Decidim
 
         included do
           has_one :ai_moderation,
-                  class_name: "Decidim::Ai::CommentModeration",
+                  class_name: "Decidim::Ai::CommentModeration::CommentModeration",
                   as: :commentable,
                   dependent: :destroy
         end

@@ -21,7 +21,7 @@ module Decidim
 
           return unless result
 
-          moderation = Decidim::Ai::CommentModeration.create!(
+          moderation = Decidim::Ai::CommentModeration::CommentModeration.create!(
             commentable: comment,
             analysis_result: result,
             confidence_score: result["confidence"]
@@ -40,7 +40,7 @@ module Decidim
         end
 
         def already_analyzed?(comment)
-          Decidim::Ai::CommentModeration.exists?(
+          Decidim::Ai::CommentModeration::CommentModeration.exists?(
             commentable_type: "Decidim::Comments::Comment",
             commentable_id: comment.id
           )
