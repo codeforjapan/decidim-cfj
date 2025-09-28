@@ -14,12 +14,10 @@ module Decidim
         def analyze
           return nil unless api_key_present?
 
-          response = @client.chat(
+          response = @client.moderations(
             parameters: {
-              model: ENV.fetch("DECIDIM_AI_MODERATION_MODEL", "gpt-3.5-turbo"),
-              messages: build_messages,
-              temperature: 0.3,
-              max_tokens: 500
+              model: ENV.fetch("DECIDIM_AI_MODERATION_MODEL", "omni-moderation-latest"),
+              input: comment_content
             }
           )
 
@@ -35,60 +33,52 @@ module Decidim
           ENV["OPENAI_API_KEY"].present?
         end
 
-        def build_messages
-          [
-            {
-              role: "system",
-              content: moderation_prompt
-            },
-            {
-              role: "user",
-              content: comment_content
-            }
-          ]
-        end
-
         def comment_content
           @comment.translated_body
         end
 
-        def moderation_prompt
-          <<~PROMPT
-            You are a content moderator for a civic participation platform.
-            Analyze the following comment and return a JSON response with this exact format:
-
-            {
-              "is_spam": boolean,
-              "is_offensive": boolean,
-              "confidence": 0.0-1.0,
-              "reasons": ["reason1", "reason2"],
-              "severity": "low|medium|high"
-            }
-
-            Criteria:
-            - Spam: advertisements, repetitive content, unrelated content, promotional links
-            - Offensive: hate speech, discrimination, personal attacks, inappropriate language
-            - Confidence: how certain you are about your judgment (0.0-1.0)
-            - Severity:
-              - low: minor issues that might need review
-              - medium: clear violations that should be reviewed
-              - high: serious violations requiring immediate action
-
-            Return ONLY the JSON object, no other text.
-          PROMPT
-        end
-
         def parse_response(response)
-          content = response.dig("choices", 0, "message", "content")
-          return nil unless content
+          result = response.dig("results", 0)
+          return nil unless result
 
-          # Try to extract JSON from the response
-          json_match = content.match(/\{.*\}/m)
-          return nil unless json_match
+          # Map OpenAI moderation categories to our format
+          categories = result["categories"] || {}
+          category_scores = result["category_scores"] || {}
 
-          JSON.parse(json_match[0])
-        rescue JSON::ParserError => e
-          Rails.logger.error "Failed to parse AI response: #{e.message}"
+          # Determine if content is spam (not directly mapped in OpenAI moderation)
+          # We'll consider content spam if it's flagged but doesn't fall into harmful categories
+          harmful_categories = %w[harassment harassment/threatening hate hate/threatening violence violence/graphic sexual sexual/minors self-harm self-harm/intent self-harm/instructions illicit illicit/violent]
+          is_harmful = harmful_categories.any? { |cat| categories[cat] }
+          is_spam = result["flagged"] && !is_harmful
+
+          # Determine if content is offensive based on harmful categories
+          is_offensive = is_harmful
+
+          # Calculate confidence based on highest category score
+          max_score = category_scores.values.max || 0.0
+          confidence = [max_score, 0.9].min # Cap at 0.9 since moderation API is quite confident
+
+          # Generate reasons based on flagged categories
+          reasons = categories.select { |_, flagged| flagged }.keys
+
+          # Determine severity based on scores
+          severity = if max_score >= 0.8
+                      "high"
+                    elsif max_score >= 0.5
+                      "medium"
+                    else
+                      "low"
+                    end
+
+          {
+            "is_spam" => is_spam,
+            "is_offensive" => is_offensive,
+            "confidence" => confidence,
+            "reasons" => reasons,
+            "severity" => severity
+          }
+        rescue StandardError => e
+          Rails.logger.error "Failed to parse moderation response: #{e.message}"
           nil
         end
       end
