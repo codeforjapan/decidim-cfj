@@ -10,6 +10,9 @@ module Decidim
           comment = Decidim::Comments::Comment.find_by(id: comment_id)
           return unless comment
 
+          organization = comment.organization
+          return unless ai_moderation_enabled?(organization)
+
           # Skip if already analyzed
           return if already_analyzed?(comment)
 
@@ -31,6 +34,10 @@ module Decidim
         end
 
         private
+
+        def ai_moderation_enabled?(organization)
+          organization.present? && Decidim::Ai::CommentModeration::Config.enabled_for?(organization) && ENV["OPENAI_API_KEY"].present?
+        end
 
         def already_analyzed?(comment)
           Decidim::Ai::CommentModeration.exists?(

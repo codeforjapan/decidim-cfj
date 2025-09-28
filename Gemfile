@@ -31,6 +31,7 @@ gem "omniauth-line_login", path: "omniauth-line_login"
 gem "omniauth-rails_csrf_protection"
 
 gem "decidim-user_extension", path: "decidim-user_extension"
+gem "decidim-ai-comment_moderation", path: "decidim-ai-comment_moderation"
 
 gem "slack-ruby-client"
 
