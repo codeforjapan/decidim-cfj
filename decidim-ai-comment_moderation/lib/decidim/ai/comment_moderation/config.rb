@@ -6,7 +6,7 @@ module Decidim
       class Config
         class << self
           def enabled_for?(organization)
-            return false if organization.nil?
+            return false unless organization
 
             enabled_hosts.include?(organization.host)
           end
