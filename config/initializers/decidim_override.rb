@@ -349,7 +349,7 @@ Rails.application.config.to_prepare do
   end
 
   # ----------------------------------------
-  # Add nickname input field to registration form
+  # Add nickname input field to registration form and omniauth registration form
 
   # Patch RegistrationForm to include nickname field
   Decidim::RegistrationForm.class_eval do
@@ -380,6 +380,21 @@ Rails.application.config.to_prepare do
 
     def configure_permitted_parameters
       devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :tos_agreement, :nickname])
+    end
+  end
+
+  # Patch RegistrationForm to include nickname field
+  Decidim::OmniauthRegistrationForm.class_eval do
+    validates :nickname, presence: true, format: { with: Decidim::User::REGEXP_NICKNAME }
+    validates :nickname, length: { maximum: Decidim::User.nickname_max_length }
+    validate :nickname_unique_in_organization
+
+    private
+
+    def nickname_unique_in_organization
+      return if nickname.blank? || nickname.strip.empty?
+
+      errors.add(:nickname, :taken) if Decidim::UserBaseEntity.exists?(nickname: nickname.strip, organization: current_organization)
     end
   end
 
