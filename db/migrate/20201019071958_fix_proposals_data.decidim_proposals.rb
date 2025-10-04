@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # This migration comes from decidim_proposals (originally 20201002085508)
-# This file has been modified by `decidim upgrade:migrations` task on 2025-08-05 08:11:54 UTC
+# This file has been modified by `decidim upgrade:migrations` task on 2025-10-04 07:20:51 UTC
 class FixProposalsData < ActiveRecord::Migration[5.2]
   class Proposal < ApplicationRecord
     self.table_name = :decidim_proposals_proposals
@@ -22,7 +22,7 @@ class FixProposalsData < ActiveRecord::Migration[5.2]
 
   def up
     PaperTrail.request(enabled: false) do
-      Proposal.unscoped.find_each do |proposal|
+      Proposal.find_each do |proposal|
         next if proposal.title.is_a?(Hash) && proposal.body.is_a?(Hash)
 
         coauthorship = Coauthorship.order(:id).find_by(coauthorable_type: "Decidim::Proposals::Proposal", coauthorable_id: proposal.id)

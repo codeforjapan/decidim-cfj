@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # This migration comes from decidim (originally 20190412131728)
-# This file has been modified by `decidim upgrade:migrations` task on 2025-08-05 08:11:54 UTC
+# This file has been modified by `decidim upgrade:migrations` task on 2025-10-04 07:20:51 UTC
 class FixUserNames < ActiveRecord::Migration[5.2]
   class UserBaseEntity < ApplicationRecord
     include Decidim::Nicknamizable
@@ -25,7 +25,7 @@ class FixUserNames < ActiveRecord::Migration[5.2]
 
         entity.name = entity.name.delete(characters_to_remove).strip
         sanitized_nickname = entity.nickname.delete(characters_to_remove).strip
-        entity.nickname = UserBaseEntity.nicknamize(sanitized_nickname, organization: entity.organization)
+        entity.nickname = UserBaseEntity.nicknamize(sanitized_nickname, entity.decidim_organization_id)
         entity.save(validate: false)
       end
     end

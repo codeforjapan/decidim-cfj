@@ -4,14 +4,14 @@ source "https://rubygems.org"
 
 ruby RUBY_VERSION
 
-gem "decidim", "0.30.0"
+gem "decidim", "0.30.2"
 
-gem "decidim-decidim_awesome", git: "https://github.com/codeforjapan/decidim-module-decidim_awesome.git", branch: "release/0.30/fix-papertrail"
-#
-# gem "decidim-term_customizer", git: "https://github.com/codeforjapan/decidim-module-term_customizer.git", branch: "029-ja"
-#
-# gem "decidim-navigation_maps", git: "https://github.com/codeforjapan/decidim-module-navigation_maps.git", branch: "upgrade-0.29-2025-03-12"
-# gem "decidim-polis", git: "https://github.com/codeforjapan/decidim-polis.git", branch: "update-0-29-2"
+gem "decidim-decidim_awesome", "0.13.1"
+
+gem "decidim-term_customizer", git: "https://github.com/codeforjapan/decidim-module-term_customizer.git", branch: "030-ja"
+
+gem "decidim-navigation_maps", git: "https://github.com/codeforjapan/decidim-module-navigation_maps.git", branch: "upgrade-0.30-2025-10-04"
+gem "decidim-polis", git: "https://github.com/codeforjapan/decidim-polis.git", branch: "update-0-30-2"
 
 gem "bootsnap"
 
@@ -38,7 +38,7 @@ group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
   gem "figaro"
 
-  gem "decidim-dev", "0.30.0"
+  gem "decidim-dev", "0.30.2"
   gem "dotenv-rails"
   gem "factory_bot_rails"
   gem "rspec-rails"
