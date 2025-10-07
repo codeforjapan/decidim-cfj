@@ -23,7 +23,7 @@ describe "Profile" do
       visit decidim.root_path
 
       within_user_menu do
-        find("a", text: "profile").click
+        find("a", text: "My account").click
       end
     end
 
