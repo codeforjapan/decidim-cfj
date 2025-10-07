@@ -68,7 +68,6 @@ RSpec.configure do |config|
     FactoryBot.modify do
       factory :organization, class: "Decidim::Organization" do
         available_locales { [:ja, :en] }
-        default_locale { :ja }
       end
     end
   end
