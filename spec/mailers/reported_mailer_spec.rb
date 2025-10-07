@@ -14,10 +14,12 @@ module Decidim
     let(:decidim) { Decidim::Core::Engine.routes.url_helpers }
 
     before do
-      if reportable.coauthorships.first.author.is_a?(Decidim::Organization)
-        reportable.coauthorships.first.author.update!(name: { en: "O'Higgins" })
-      else
-        reportable.coauthorships.first.author.update!(name: "O'Higgins")
+      I18n.with_locale(:ja) do
+        if reportable.coauthorships.first.author.is_a?(Decidim::Organization)
+          reportable.coauthorships.first.author.update!(name: { en: "O'Higgins" })
+        else
+          reportable.coauthorships.first.author.update!(name: "O'Higgins")
+        end
       end
     end
 
