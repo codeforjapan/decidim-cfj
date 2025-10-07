@@ -24,7 +24,7 @@ module Decidim::DecidimAwesome
 
     it "shows the map" do
       expect(subject).to have_css("#awesome-map")
-      expect(subject).to have_content("window.AwesomeMap.categories")
+      expect(subject).to have_content("window.AwesomeMap.taxonomies")
     end
 
     it "do not show the title" do
@@ -55,10 +55,10 @@ module Decidim::DecidimAwesome
       expect(components.pluck("id")).to include(proposal_component.id)
     end
 
-    it "uses all categories" do
-      categories = JSON.parse(subject.to_s.match(/window\.AwesomeMap\.categories = (\[.*\])/)[1])
+    it "uses all taxonomies" do
+      taxonomies = JSON.parse(subject.to_s.match(/window\.AwesomeMap\.taxonomies = (\[.*\])/)[1])
 
-      expect(categories.pluck("id")).to include(category.id)
+      expect(taxonomies.pluck("id")).to include(category.id)
     end
 
     context "when the content block has a title" do
