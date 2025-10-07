@@ -78,7 +78,7 @@ Rails.application.config.to_prepare do
             single_comment: params.fetch("commentId", nil),
             order: options[:order] || params["orderable"] || cookies["comment_default_order"],
             polymorphic: options[:polymorphic]
-          ).to_s
+          )
         end
       end
     end
