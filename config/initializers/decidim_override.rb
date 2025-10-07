@@ -14,6 +14,12 @@ Rails.application.config.to_prepare do
         @options = fixed_options.freeze
       end
     end
+  # Override Decidim Awesome validation settings
+  # Set minimum title length to 8 characters instead of default 15
+  Decidim::DecidimAwesome.configure do |config|
+    config.validate_title_min_length = 8
+  end
+
   end
 
   # load default definitions
