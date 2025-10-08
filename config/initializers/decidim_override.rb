@@ -55,6 +55,10 @@ Rails.application.config.to_prepare do
         # override
         def order
           params_order = params.fetch(:order, nil)
+
+          ## XXX `"null"` is invalid, it should be `nil`
+          params_order = nil if params_order == "null"
+
           if params_order
             cookies["comment_default_order"] = params_order if cookies[Decidim.config.consent_cookie_name].present? # cookies_accepted?
             params_order
