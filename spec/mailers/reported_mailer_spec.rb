@@ -4,13 +4,13 @@ require "rails_helper"
 
 module Decidim
   describe ReportedMailer do
-    let(:organization) { create(:organization, host: "test.lvh.me") }
+    let(:organization) { create(:organization, host: "test.lvh.me", default_locale: "ja") }
     let(:user) { create(:user, :admin, organization:, locale: "ja") }
-    let(:component) { create(:component, organization:) }
-    let(:reportable) { create(:proposal, title: Decidim::Faker::Localized.sentence, body: Decidim::Faker::Localized.paragraph(sentence_count: 3)) }
+    let(:component) { create(:component, manifest_name: :proposals, organization:) }
+    let(:reportable) { create(:proposal, component:, title: Decidim::Faker::Localized.sentence, body: Decidim::Faker::Localized.paragraph(sentence_count: 3)) }
     let(:moderation) { create(:moderation, reportable:, participatory_space: component.participatory_space, report_count: 1) }
     let(:author) { reportable.creator_identity }
-    let!(:report) { I18n.with_locale(:ja) { create(:report, moderation:, details: "bacon eggs spam") } }
+    let!(:report) { create(:report, moderation:, details: "bacon eggs spam") }
     let(:decidim) { Decidim::Core::Engine.routes.url_helpers }
 
     before do
