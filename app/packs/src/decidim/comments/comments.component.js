@@ -422,7 +422,7 @@ export default class CommentsComponent {
     desktopOrderSelect.style.borderColor = "black";
     mobileOrderSelect.style.borderColor = "black";
 
-    desktopOrderSelect.addEventListener("change", function(event) {
+    desktopOrderSelect.addEventListener("change", (event) => {
       const selectedOption = desktopOrderSelect.querySelector(`[value=${event.target.value}]`);
       const orderUrl = selectedOption.dataset.orderCommentUrl;
 
@@ -431,9 +431,10 @@ export default class CommentsComponent {
         type: "GET",
         error: (data) => (console.error(data))
       });
+      this.order = selectedOption.value;
     });
 
-    mobileOrderSelect.addEventListener("change", function(event) {
+    mobileOrderSelect.addEventListener("change", (event) => {
       const selectedOption = mobileOrderSelect.querySelector(`[value=${event.target.value}]`);
       const orderUrl = selectedOption.dataset.orderCommentUrl;
 
@@ -442,6 +443,7 @@ export default class CommentsComponent {
         type: "GET",
         error: (data) => (console.error(data))
       });
+      this.order = selectedOption.value;
     });
   }
 }
