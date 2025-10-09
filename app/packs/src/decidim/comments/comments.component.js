@@ -167,8 +167,6 @@ export default class CommentsComponent {
         this._stopPolling();
       });
 
-      document.querySelectorAll(".new_report").forEach((container) => changeReportFormBehavior(container));
-
       const $dropdown = $add.find("[data-comments-dropdown]");
       if ($dropdown.length > 0) {
         initializeCommentsDropdown($dropdown[0]);
