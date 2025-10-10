@@ -10,21 +10,23 @@ module Decidim::DecidimAwesome
     let(:content_block) { create(:content_block, organization:, manifest_name: :awesome_map, scope_name: :homepage, settings:) }
     let(:settings) { {} }
     let!(:participatory_process) { create(:participatory_process, organization:) }
-    let!(:category) { create(:category, participatory_space: participatory_process) }
+    let(:root_taxonomy) { create(:taxonomy, organization:) }
+    let!(:taxonomy) { create(:taxonomy, parent: root_taxonomy, organization:) }
     let!(:proposal_component) { create(:proposal_component, :with_geocoding_enabled, participatory_space: participatory_process) }
     let!(:meeting_component) { create(:meeting_component, participatory_space: participatory_process) }
-    let!(:proposal) { create(:proposal, component: proposal_component) }
+    let!(:proposal) { create(:proposal, component: proposal_component, taxonomies: [taxonomy]) }
     let!(:meeting) { create(:meeting, component: meeting_component) }
 
     controller Decidim::PagesController
 
     before do
       allow(controller).to receive(:current_organization).and_return(organization)
+      content_block.update!(settings: content_block.settings.to_h.merge(taxonomy_ids: [taxonomy.id.to_s]))
     end
 
     it "shows the map" do
       expect(subject).to have_css("#awesome-map")
-      expect(subject).to have_content("window.AwesomeMap.categories")
+      expect(subject).to have_content("window.AwesomeMap.taxonomies")
     end
 
     it "do not show the title" do
@@ -55,10 +57,11 @@ module Decidim::DecidimAwesome
       expect(components.pluck("id")).to include(proposal_component.id)
     end
 
-    it "uses all categories" do
-      categories = JSON.parse(subject.to_s.match(/window\.AwesomeMap\.categories = (\[.*\])/)[1])
+    it "respects taxonomy_ids filter setting" do
+      taxonomies = JSON.parse(subject.to_s.match(/window\.AwesomeMap\.taxonomies = (\[.*\])/)[1])
 
-      expect(categories.pluck("id")).to include(category.id)
+      expect(taxonomies.pluck("id")).to include(taxonomy.id)
+      expect(taxonomies.pluck("id")).not_to include(root_taxonomy.id)
     end
 
     context "when the content block has a title" do
