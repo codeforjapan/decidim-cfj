@@ -1,5 +1,20 @@
 # Change Log
 
+## [1.14.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.13.2...v1.14.0) (2025-09-18)
+
+
+### Features
+
+* add newsletter mailer spec ([84c3c4c](https://github.com/codeforjapan/decidim-cfj/commit/84c3c4cd6b25b9da63cc286fbe58e5acff16375e))
+* add spec of logo attached ([c29a78a](https://github.com/codeforjapan/decidim-cfj/commit/c29a78adf08c5cc26c326f3b5adfadac9376c204))
+
+
+### Bug Fixes
+
+* bundle update rexml ([c87b766](https://github.com/codeforjapan/decidim-cfj/commit/c87b7665e7988cabcaa75e4d482a2415b8b1f36d))
+* remove omniauth-line_login/Gemfile.lock ([61149d6](https://github.com/codeforjapan/decidim-cfj/commit/61149d6e8e02a89a1a42beb438fdc08f0d1c19e0))
+* update graphql, rack, and nokogiri ([f12d1e3](https://github.com/codeforjapan/decidim-cfj/commit/f12d1e386ceef1efe9c6a2f6db6a3bab34a906d4))
+
 ## [1.13.2](https://github.com/codeforjapan/decidim-cfj/compare/v1.13.1...v1.13.2) (2025-09-17)
 
 
