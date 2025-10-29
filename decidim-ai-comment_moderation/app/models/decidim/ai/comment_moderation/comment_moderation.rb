@@ -8,7 +8,7 @@ module Decidim
 
         # Store accessor for analysis_result JSONB field
         store_accessor :analysis_result, :flagged, :decidim_reason, :severity, :confidence,
-                       :flagged_categories, :categories, :category_scores
+                       :flagged_categories, :categories
 
         validates :confidence_score,
                   numericality: { greater_than_or_equal_to: 0,
@@ -16,27 +16,10 @@ module Decidim
                   allow_nil: true
 
         scope :high_confidence, -> { where("confidence_score > ?", 0.8) }
-        # Scopes using JSONB queries for store_accessor fields
         scope :flagged_content, -> { where("analysis_result ->> 'flagged' IN ('true', 't', '1')") }
         scope :spam_detected, -> { where("analysis_result ->> 'decidim_reason' = ?", "spam") }
         scope :offensive_detected, -> { where("analysis_result ->> 'decidim_reason' = ?", "offensive") }
-        scope :inappropriate_detected, -> { where("analysis_result ->> 'decidim_reason' = ?", "does_not_belong") }
-        scope :by_severity, ->(severity) { where("analysis_result ->> 'severity' = ?", severity) }
-
-        # Complex JSONB queries for categories
-        scope :with_categories, lambda { |categories|
-          categories = Array(categories)
-          where(
-            categories.map { "analysis_result -> 'categories' ->> ? = 'true'" }.join(" OR "),
-            *categories
-          )
-        }
         scope :recent, -> { order(created_at: :desc) }
-
-        # Delegate methods to create a Result object from stored data
-        def result
-          @result ||= build_result_from_analysis
-        end
 
         # Type casting for store_accessor fields
         def flagged
@@ -49,10 +32,6 @@ module Decidim
         end
 
         def categories
-          super || {}
-        end
-
-        def category_scores
           super || {}
         end
 
@@ -69,14 +48,6 @@ module Decidim
           decidim_reason == "does_not_belong"
         end
 
-        def high_severity?
-          severity == "high"
-        end
-
-        def reasons
-          analysis_result["reasons"] || []
-        end
-
         def requires_moderation?
           flagged? && high_confidence?
         end
@@ -85,24 +56,6 @@ module Decidim
           return false if confidence_score.nil?
 
           confidence_score > 0.8
-        end
-
-        private
-
-        def build_result_from_analysis
-          # Create a mock OpenAI response from stored analysis
-          mock_response = {
-            "results" => [
-              {
-                "flagged" => analysis_result["flagged"],
-                "categories" => analysis_result["categories"] || {},
-                "category_scores" => analysis_result["category_scores"] || {}
-              }
-            ]
-          }
-          OpenaiAnalyzer::Result.new(mock_response)
-        rescue StandardError
-          nil
         end
       end
     end

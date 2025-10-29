@@ -24,7 +24,7 @@ module Decidim
         it "validates presence of commentable" do
           moderation = build(:ai_comment_moderation, commentable: nil)
           expect(moderation).not_to be_valid
-          expect(moderation.errors[:commentable]).to include("cannot be blank")
+          expect(moderation.errors[:commentable]).to include("must exist")
         end
 
         it "validates confidence_score range" do
@@ -99,42 +99,6 @@ module Decidim
 
           it "returns false" do
             expect(subject.offensive?).to be false
-          end
-        end
-      end
-
-      describe "#high_severity?" do
-        context "when severity is high" do
-          subject { create(:ai_comment_moderation, :high_severity) }
-
-          it "returns true" do
-            expect(subject.high_severity?).to be true
-          end
-        end
-
-        context "when severity is not high" do
-          subject { create(:ai_comment_moderation, :low_severity) }
-
-          it "returns false" do
-            expect(subject.high_severity?).to be false
-          end
-        end
-      end
-
-      describe "#reasons" do
-        context "when reasons are present" do
-          subject { create(:ai_comment_moderation, :with_reasons) }
-
-          it "returns the reasons array" do
-            expect(subject.reasons).to eq(%w(spam advertisement))
-          end
-        end
-
-        context "when no reasons are present" do
-          subject { create(:ai_comment_moderation, :clean) }
-
-          it "returns empty array" do
-            expect(subject.reasons).to eq([])
           end
         end
       end
