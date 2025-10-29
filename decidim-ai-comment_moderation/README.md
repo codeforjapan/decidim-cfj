@@ -2,28 +2,29 @@
 
 OpenAI Chat APIを活用したAIコメントモデレーションモジュールです。
 スパムや暴力的・挑発的なコメントを自動検出し、DecidimのReport機能を使いAdmin宛に報告します。
+また、スコアが一定以上の場合には、コメントを自動で非表示にします。
 
 ## 概要
 
-このモジュールは、Decidimの組み込みモデレーションワークフローと統合し、スパム、暴力的、挑発的なコメントを自動的に検出して通報します。
-OpenAI Chat APIを使用してコンテンツを分析し、シンプルな設定で動作します。
+このモジュールは、Decidimの標準モデレーションワークフローと統合されており、スパム、暴力的、挑発的なコメントを自動的に検出して通報します。
+OpenAI Chat APIを使用してコメントの内容を分析します。また設定は変更可能です。
 
 ## 機能
 
 - 自動検出: スパムと不適切なコンテンツ（暴力的・挑発的・ヘイト的）の自動検出
 - 信頼度ベースの判定: 設定可能な信頼度しきい値による柔軟なモデレーション
 - 自動非表示: 非常に高い信頼度のコメントを自動的に非表示にする機能（オプション）
-- Decidimの既存機能と連携: 標準の通報システムと完全に統合
+- Decidimの既存機能と連携: 標準の通報システムと統合
 
 ## アーキテクチャ
 
 ### 二層構造
 
-#### Layer 1: AI分析レコード
+#### Layer 1: AIによる分析と結果の保存
 - コメントの作成通知をsubscribeし、AIによる分析を行い、結果を`Decidim::Ai::CommentModeration::CommentModeration`に記録
 - 保存内容: OpenAI Chat APIによる分析結果（カテゴリ、信頼度、理由）
 
-#### Layer 2: Decidim通報
+#### Layer 2: 通報+非表示
 - 分析結果により問題があるコメントであれば、Admin宛の通知を行う
 - 通知には`Decidim::CreateReport`を利用
 
@@ -167,25 +168,25 @@ config.openai_timeout = ENV.fetch("OPENAI_TIMEOUT", "120").to_i
 config.openai_timeout = 180
 
 # より強力なモデルを使用
-config.model = "gpt-4o"
+config.model = "gpt-5"
 ```
 
 ## 動作フロー
 
 1. コメント作成: ユーザーが新しいコメントを投稿
 2. イベント発行: Decidimが`decidim.comments.comment_created`イベントを発行
-3. ジョブ自動実行: engine.rbのイベントサブスクライバーが`AnalyzeCommentJob`を自動的にエンキュー
+3. ジョブ自動実行: engine.rbのevent subscriberが`AnalyzeCommentJob`を自動的に呼び出し(enqueue)
 4. AI分析: OpenAI Chat APIがコンテンツを分析
    - AIが3つのカテゴリ（spam、offensive、inappropriate）で判定
    - 信頼度スコア（0.0〜1.0）と判定理由を返す
-5. レコード作成: AI分析結果が`CommentModeration`レコードに保存される
+5. レコード作成: AI分析結果を`CommentModeration`レコードに保存する
 6. 判定ロジック:
    - フラグあり AND 信頼度 ≥ auto_hide_threshold → コメントを自動非表示（`config.auto_hide_threshold`が設定されている場合）
    - フラグあり AND 信頼度 ≥ confidence_threshold → Decidim通報を作成
    - フラグあり BUT 信頼度 < confidence_threshold → 監視用にログ記録
    - フラグなし → アクションなし
 
-注意: 組織のホストが`config.enabled_hosts`に含まれていない場合、ジョブは実行されても分析をスキップします。
+NOTE: organizationのホストが`config.enabled_hosts`に含まれていない場合、ジョブは実行されても分析をスキップします。
 
 ## AIシステムユーザー
 
@@ -193,7 +194,7 @@ config.model = "gpt-4o"
 
 - メールアドレス:
   - デフォルト: `ai-moderation@{organization.host}`（組織ごと）
-  - カスタム: `DECIDIM_AI_USER_EMAIL`で全組織共通のメールアドレスを設定可能
+  - カスタム: `DECIDIM_AI_USER_EMAIL`で全organization共通のメールアドレスを設定可能
 - ニックネーム: `ai_moderator_{organization.id}`（組織ごとにユニーク）
 - 管理ユーザー: ログインできず、メールを受信しない
 - 用途: 通報作成のためにのみ内部で使用
