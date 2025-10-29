@@ -30,13 +30,6 @@ module Decidim
           user
         end
 
-        # Check if a user is an AI system user
-        def ai_user?(user)
-          return false unless user
-
-          user.email == ai_user_email && user.nickname == ai_user_nickname
-        end
-
         private
 
         def ai_user_email

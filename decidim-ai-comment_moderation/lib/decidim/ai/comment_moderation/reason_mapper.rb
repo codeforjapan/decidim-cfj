@@ -5,9 +5,6 @@ module Decidim
     module CommentModeration
       # Maps AI analysis results to Decidim report reasons
       class ReasonMapper
-        # Decidim report reasons from Decidim::Report::REASONS
-        DECIDIM_REASONS = %w(spam offensive does_not_belong hidden_during_block).freeze
-
         attr_reader :ai_analysis_result
 
         def initialize(ai_analysis_result)

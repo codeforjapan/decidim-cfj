@@ -77,11 +77,6 @@ module Decidim
             confidence >= threshold
           end
 
-          def requires_auto_hide?
-            # Auto-hide feature removed for simplification
-            false
-          end
-
           private
 
           def validate_response!
