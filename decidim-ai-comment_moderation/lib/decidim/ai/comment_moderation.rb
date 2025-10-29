@@ -15,6 +15,7 @@ module Decidim
       #     config.openai_api_key = ENV["OPENAI_API_KEY"]
       #     config.enabled_hosts = ["example.org", "demo.example.org"]
       #     config.confidence_threshold = 0.8
+      #     config.auto_hide_threshold = 0.95  # nil to disable auto-hide
       #     config.ai_user_email = "ai-moderation@example.org"
       #     config.model = "gpt-4o-mini"
       #   end
@@ -30,6 +31,12 @@ module Decidim
       # Confidence threshold for creating reports (0.0 to 1.0)
       config_accessor :confidence_threshold do
         0.8
+      end
+
+      # Confidence threshold for auto-hiding comments (0.0 to 1.0)
+      # Set to nil to disable auto-hide feature
+      config_accessor :auto_hide_threshold do
+        nil
       end
 
       # AI user email address (optional)

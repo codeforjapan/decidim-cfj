@@ -12,6 +12,7 @@ OpenAI Chat APIを使用してコンテンツを分析し、シンプルな設�
 
 - 自動検出: スパムと不適切なコンテンツ（暴力的・挑発的・ヘイト的）の自動検出
 - 信頼度ベースの判定: 設定可能な信頼度しきい値による柔軟なモデレーション
+- 自動非表示: 非常に高い信頼度のコメントを自動的に非表示にする機能（オプション）
 - Decidimの既存機能と連携: 標準の通報システムと完全に統合
 
 ## アーキテクチャ
@@ -78,6 +79,10 @@ Decidim::Ai::CommentModeration.configure do |config|
   # 通報を作成する信頼度しきい値（0.0〜1.0、デフォルト: 0.8）
   config.confidence_threshold = 0.8
 
+  # コメントを自動非表示にする信頼度しきい値（0.0〜1.0、デフォルト: nil）
+  # nilを設定すると自動非表示機能は無効になります
+  config.auto_hide_threshold = 0.95
+
   # オプション: AIユーザーのメールアドレス（全組織共通、デフォルト: nil）
   # 設定しない場合は組織ごとに ai-moderation@{organization.host} が使用されます
   config.ai_user_email = "ai-moderation@example.org"
@@ -96,6 +101,7 @@ end
 Decidim::Ai::CommentModeration.config.openai_api_key
 Decidim::Ai::CommentModeration.config.enabled_hosts
 Decidim::Ai::CommentModeration.config.confidence_threshold
+Decidim::Ai::CommentModeration.config.auto_hide_threshold
 Decidim::Ai::CommentModeration.config.ai_user_email
 Decidim::Ai::CommentModeration.config.model
 
@@ -109,16 +115,23 @@ Decidim::Ai::CommentModeration.enabled_for?(organization)
 # 80%以上の信頼度で自動通報（推奨）
 config.confidence_threshold = 0.8
 
+# 95%以上の信頼度で自動非表示
+config.auto_hide_threshold = 0.95
+
 # より厳格に90%以上で通報
 config.confidence_threshold = 0.9
 
 # より寛容に70%以上で通報
 config.confidence_threshold = 0.7
 
+# 自動非表示機能を無効にする
+config.auto_hide_threshold = nil
+
 # 環境変数から値を読み込む
 config.openai_api_key = ENV["OPENAI_API_KEY"]
 config.enabled_hosts = ENV.fetch("HOSTS", "").split(",").map(&:strip)
 config.confidence_threshold = ENV.fetch("THRESHOLD", "0.8").to_f
+config.auto_hide_threshold = ENV.fetch("AUTO_HIDE_THRESHOLD", "").presence&.to_f
 ```
 
 ## 動作フロー
@@ -131,8 +144,9 @@ config.confidence_threshold = ENV.fetch("THRESHOLD", "0.8").to_f
    - 信頼度スコア（0.0〜1.0）と判定理由を返す
 5. レコード作成: AI分析結果が`CommentModeration`レコードに保存される
 6. 判定ロジック:
-   - フラグあり AND 信頼度 ≥ しきい値 → Decidim通報を作成
-   - フラグあり BUT 信頼度 < しきい値 → 監視用にログ記録
+   - フラグあり AND 信頼度 ≥ auto_hide_threshold → コメントを自動非表示（`config.auto_hide_threshold`が設定されている場合）
+   - フラグあり AND 信頼度 ≥ confidence_threshold → Decidim通報を作成
+   - フラグあり BUT 信頼度 < confidence_threshold → 監視用にログ記録
    - フラグなし → アクションなし
 
 注意: 組織のホストが`config.enabled_hosts`に含まれていない場合、ジョブは実行されても分析をスキップします。

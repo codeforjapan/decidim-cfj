@@ -77,6 +77,13 @@ module Decidim
             confidence >= threshold
           end
 
+          def requires_auto_hide?
+            return false unless flagged?
+            return false if auto_hide_threshold.nil?
+
+            confidence >= auto_hide_threshold
+          end
+
           private
 
           def validate_response!
@@ -110,6 +117,10 @@ module Decidim
 
           def threshold
             Decidim::Ai::CommentModeration.confidence_threshold
+          end
+
+          def auto_hide_threshold
+            Decidim::Ai::CommentModeration.config.auto_hide_threshold
           end
         end
       end

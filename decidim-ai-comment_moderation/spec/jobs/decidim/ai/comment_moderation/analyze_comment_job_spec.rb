@@ -52,6 +52,7 @@ module Decidim
                 allow(result_double).to receive(:decidim_reason).and_return("spam")
                 allow(result_double).to receive(:flagged_categories).and_return(["spam"])
                 allow(result_double).to receive(:requires_moderation?).and_return(true)
+                allow(result_double).to receive(:requires_auto_hide?).and_return(false)
                 allow(analyzer).to receive(:analyze).and_return(result_double)
               end
 
@@ -85,6 +86,7 @@ module Decidim
                   allow(result_double).to receive(:decidim_reason).and_return("offensive")
                   allow(result_double).to receive(:flagged_categories).and_return(%w(spam offensive))
                   allow(result_double).to receive(:requires_moderation?).and_return(true)
+                  allow(result_double).to receive(:requires_auto_hide?).and_return(false)
                 end
 
                 it "creates report for high-confidence issues" do
@@ -101,6 +103,7 @@ module Decidim
                   allow(result_double).to receive(:decidim_reason).and_return(nil)
                   allow(result_double).to receive(:flagged_categories).and_return([])
                   allow(result_double).to receive(:requires_moderation?).and_return(false)
+                  allow(result_double).to receive(:requires_auto_hide?).and_return(false)
                 end
 
                 it "does not create a report" do
@@ -117,6 +120,7 @@ module Decidim
                   allow(result_double).to receive(:decidim_reason).and_return("spam")
                   allow(result_double).to receive(:flagged_categories).and_return(["spam"])
                   allow(result_double).to receive(:requires_moderation?).and_return(false)
+                  allow(result_double).to receive(:requires_auto_hide?).and_return(false)
                 end
 
                 it "logs but does not create report" do
@@ -126,6 +130,84 @@ module Decidim
                     "[AI Moderation] Flagged but below threshold for comment ##{comment.id}: " \
                     "spam (confidence: 0.5)"
                   )
+                end
+              end
+
+              context "when auto-hide threshold is met" do
+                before do
+                  Decidim::Ai::CommentModeration.configure do |config|
+                    config.auto_hide_threshold = 0.95
+                  end
+
+                  allow(result_double).to receive(:flagged?).and_return(true)
+                  allow(result_double).to receive(:confidence).and_return(0.98)
+                  allow(result_double).to receive(:decidim_reason).and_return("offensive")
+                  allow(result_double).to receive(:flagged_categories).and_return(["offensive"])
+                  allow(result_double).to receive(:requires_moderation?).and_return(true)
+                  allow(result_double).to receive(:requires_auto_hide?).and_return(true)
+                end
+
+                it "auto-hides the comment" do
+                  job.perform(comment.id)
+
+                  expect(comment.reload.hidden?).to be true
+                  expect(Rails.logger).to have_received(:info).with(
+                    "[AI Moderation] Comment ##{comment.id} auto-hidden: confidence=98.0%, reason=offensive"
+                  )
+                end
+
+                it "creates a moderation record with hidden_at" do
+                  job.perform(comment.id)
+
+                  moderation = comment.reload.moderation
+                  expect(moderation).to be_present
+                  expect(moderation.hidden_at).to be_present
+                end
+
+                context "when comment is already hidden" do
+                  let!(:existing_moderation) do
+                    Decidim::Moderation.create!(
+                      reportable: comment,
+                      participatory_space: comment.participatory_space,
+                      report_count: 1,
+                      hidden_at: 1.day.ago
+                    )
+                  end
+
+                  before do
+                    # Comment needs to be reloaded to pick up the moderation
+                    comment.reload
+                    # Need to delete the AI moderation record so the job runs
+                    Decidim::Ai::CommentModeration::CommentModeration.where(commentable: comment).delete_all
+                  end
+
+                  it "does not update hidden_at again" do
+                    original_hidden_at = existing_moderation.hidden_at
+                    job.perform(comment.id)
+
+                    expect(existing_moderation.reload.hidden_at).to be_within(1.second).of(original_hidden_at)
+                  end
+                end
+              end
+
+              context "when auto-hide threshold is not configured" do
+                before do
+                  Decidim::Ai::CommentModeration.configure do |config|
+                    config.auto_hide_threshold = nil
+                  end
+
+                  allow(result_double).to receive(:flagged?).and_return(true)
+                  allow(result_double).to receive(:confidence).and_return(0.99)
+                  allow(result_double).to receive(:decidim_reason).and_return("offensive")
+                  allow(result_double).to receive(:flagged_categories).and_return(["offensive"])
+                  allow(result_double).to receive(:requires_moderation?).and_return(true)
+                  allow(result_double).to receive(:requires_auto_hide?).and_return(false)
+                end
+
+                it "does not auto-hide the comment" do
+                  job.perform(comment.id)
+
+                  expect(comment.reload.hidden?).to be false
                 end
               end
             end

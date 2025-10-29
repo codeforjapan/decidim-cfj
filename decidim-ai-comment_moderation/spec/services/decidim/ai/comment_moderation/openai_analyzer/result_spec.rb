@@ -124,6 +124,52 @@ module Decidim
             end
           end
 
+          describe "#requires_auto_hide?" do
+            context "when auto_hide_threshold is configured" do
+              before do
+                allow(Decidim::Ai::CommentModeration.config).to receive(:auto_hide_threshold).and_return(0.95)
+              end
+
+              it "returns true for very high confidence flagged content" do
+                response = offensive_response.deep_dup
+                response["choices"][0]["message"]["content"] = {
+                  "flagged" => true,
+                  "categories" => { "offensive" => true },
+                  "confidence" => 0.98
+                }.to_json
+                result = described_class.new(response, comment_text)
+                expect(result.requires_auto_hide?).to be true
+              end
+
+              it "returns false for content below auto-hide threshold" do
+                result = described_class.new(offensive_response, comment_text)
+                expect(result.requires_auto_hide?).to be false
+              end
+
+              it "returns false for clean content" do
+                result = described_class.new(clean_response, comment_text)
+                expect(result.requires_auto_hide?).to be false
+              end
+            end
+
+            context "when auto_hide_threshold is not configured" do
+              before do
+                allow(Decidim::Ai::CommentModeration.config).to receive(:auto_hide_threshold).and_return(nil)
+              end
+
+              it "returns false even for very high confidence content" do
+                response = offensive_response.deep_dup
+                response["choices"][0]["message"]["content"] = {
+                  "flagged" => true,
+                  "categories" => { "offensive" => true },
+                  "confidence" => 0.99
+                }.to_json
+                result = described_class.new(response, comment_text)
+                expect(result.requires_auto_hide?).to be false
+              end
+            end
+          end
+
           describe "#to_h" do
             let(:result) { described_class.new(offensive_response, comment_text) }
 

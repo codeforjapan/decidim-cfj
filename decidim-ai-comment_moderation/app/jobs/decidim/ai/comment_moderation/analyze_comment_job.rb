@@ -30,6 +30,9 @@ module Decidim
 
           log_analysis(comment, result)
 
+          # Auto-hide if confidence is very high
+          auto_hide_comment(comment, result) if result.requires_auto_hide?
+
           # Create Decidim Report if needed
           if should_create_report?(result)
             create_decidim_report(comment, result)
@@ -80,6 +83,25 @@ module Decidim
           return false if result.decidim_reason.blank?
 
           result.requires_moderation?
+        end
+
+        def auto_hide_comment(comment, result)
+          moderation = comment.moderation || Decidim::Moderation.create!(
+            reportable: comment,
+            participatory_space: comment.participatory_space,
+            report_count: 0
+          )
+
+          if moderation.hidden_at.nil?
+            moderation.update!(hidden_at: Time.current)
+            Rails.logger.info(
+              "[AI Moderation] Comment ##{comment.id} auto-hidden: " \
+              "confidence=#{(result.confidence * 100).round(1)}%, " \
+              "reason=#{result.decidim_reason}"
+            )
+          end
+        rescue StandardError => e
+          Rails.logger.error "Failed to auto-hide comment #{comment.id}: #{e.message}"
         end
 
         def create_decidim_report(comment, result)
