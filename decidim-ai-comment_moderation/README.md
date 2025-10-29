@@ -89,6 +89,34 @@ Decidim::Ai::CommentModeration.configure do |config|
 
   # オプション: OpenAI Chat モデル（デフォルト: gpt-4o-mini）
   config.model = "gpt-4o-mini"
+
+  # オプション: OpenAI APIリクエストタイムアウト（秒、デフォルト: 120）
+  config.openai_timeout = 120
+end
+```
+
+### OpenAI設定の仕組み
+
+このモジュールは`OpenAI.configure`を使用してOpenAI gemをグローバルに設定します。engine.rbが自動的に以下の設定を行います：
+
+```ruby
+OpenAI.configure do |c|
+  c.access_token = Decidim::Ai::CommentModeration.config.openai_api_key
+  c.request_timeout = Decidim::Ai::CommentModeration.config.openai_timeout
+end
+```
+
+#### 高度な設定: Azure OpenAIやカスタムエンドポイント
+
+追加のOpenAI設定が必要な場合（例: Azure OpenAIを使用する場合）は、initializerで直接`OpenAI.configure`を呼び出すことができます：
+
+```ruby
+# Azure OpenAIを使用する例
+OpenAI.configure do |c|
+  c.access_token = ENV["AZURE_OPENAI_API_KEY"]
+  c.uri_base = "https://your-resource-name.openai.azure.com/"
+  c.api_type = :azure
+  c.api_version = "2023-05-15"
 end
 ```
 
@@ -104,6 +132,7 @@ Decidim::Ai::CommentModeration.config.confidence_threshold
 Decidim::Ai::CommentModeration.config.auto_hide_threshold
 Decidim::Ai::CommentModeration.config.ai_user_email
 Decidim::Ai::CommentModeration.config.model
+Decidim::Ai::CommentModeration.config.openai_timeout
 
 # ヘルパーメソッド
 Decidim::Ai::CommentModeration.enabled_for?(organization)
@@ -132,6 +161,13 @@ config.openai_api_key = ENV["OPENAI_API_KEY"]
 config.enabled_hosts = ENV.fetch("HOSTS", "").split(",").map(&:strip)
 config.confidence_threshold = ENV.fetch("THRESHOLD", "0.8").to_f
 config.auto_hide_threshold = ENV.fetch("AUTO_HIDE_THRESHOLD", "").presence&.to_f
+config.openai_timeout = ENV.fetch("OPENAI_TIMEOUT", "120").to_i
+
+# タイムアウトを延長（大量のコメント分析など）
+config.openai_timeout = 180
+
+# より強力なモデルを使用
+config.model = "gpt-4o"
 ```
 
 ## 動作フロー

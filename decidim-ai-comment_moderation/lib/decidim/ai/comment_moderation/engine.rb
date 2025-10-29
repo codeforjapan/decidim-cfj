@@ -31,6 +31,17 @@ module Decidim
           end
         end
 
+        initializer "decidim_ai_comment_moderation.configure_openai" do
+          config.to_prepare do
+            require "openai"
+
+            OpenAI.configure do |c|
+              c.access_token = Decidim::Ai::CommentModeration.config.openai_api_key
+              c.request_timeout = Decidim::Ai::CommentModeration.config.openai_timeout if Decidim::Ai::CommentModeration.config.openai_timeout
+            end
+          end
+        end
+
         initializer "decidim_ai_comment_moderation.log_enabled_hosts" do
           Rails.application.config.after_initialize do
             if Decidim::Ai::CommentModeration.enabled_hosts.any?

@@ -32,15 +32,13 @@ module Decidim
 
         def initialize(comment)
           @comment = comment
-          api_key = Decidim::Ai::CommentModeration.config.openai_api_key
-          @client = OpenAI::Client.new(access_token: api_key) if api_key.present?
         end
 
         def analyze
           return nil if Decidim::Ai::CommentModeration.config.openai_api_key.blank?
-          return nil unless @client
 
-          response = @client.chat(
+          client = OpenAI::Client.new
+          response = client.chat(
             parameters: {
               model: model_name,
               messages: [

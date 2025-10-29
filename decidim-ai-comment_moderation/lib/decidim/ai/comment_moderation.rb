@@ -18,6 +18,7 @@ module Decidim
       #     config.auto_hide_threshold = 0.95  # nil to disable auto-hide
       #     config.ai_user_email = "ai-moderation@example.org"
       #     config.model = "gpt-4o-mini"
+      #     config.openai_timeout = 120  # seconds
       #   end
 
       # OpenAI API key (required)
@@ -46,6 +47,11 @@ module Decidim
       # OpenAI model to use
       config_accessor :model do
         "gpt-4o-mini"
+      end
+
+      # OpenAI request timeout in seconds (optional)
+      config_accessor :openai_timeout do
+        120
       end
 
       # Check if AI moderation is enabled for an organization

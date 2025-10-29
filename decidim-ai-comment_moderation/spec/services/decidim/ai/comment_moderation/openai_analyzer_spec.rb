@@ -25,17 +25,17 @@ module Decidim
             config.model = "gpt-4o-mini"
           end
 
-          allow(OpenAI::Client).to receive(:new).and_return(openai_client)
+          # Configure OpenAI globally (simulating what engine.rb does)
+          OpenAI.configure do |c|
+            c.access_token = "test-key-123"
+          end
+
+          allow(OpenAI::Client).to receive(:new).with(no_args).and_return(openai_client)
         end
 
         describe "#initialize" do
           it "creates an analyzer with a comment" do
             expect(analyzer.instance_variable_get(:@comment)).to eq(comment)
-          end
-
-          it "initializes OpenAI client with API key" do
-            analyzer # Force evaluation of analyzer
-            expect(OpenAI::Client).to have_received(:new).with(access_token: "test-key-123")
           end
         end
 
