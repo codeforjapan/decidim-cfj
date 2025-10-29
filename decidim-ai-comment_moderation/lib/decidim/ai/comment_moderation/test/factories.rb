@@ -39,7 +39,7 @@ FactoryBot.define do
           "flagged" => true,
           "decidim_reason" => "offensive",
           "confidence" => 0.85,
-          "flagged_categories" => ["harassment", "hate"],
+          "flagged_categories" => %w(harassment hate),
           "severity" => "high",
           "categories" => { "harassment" => true, "hate" => true },
           "category_scores" => { "harassment" => 0.85, "hate" => 0.7 }
@@ -144,11 +144,11 @@ FactoryBot.define do
           "flagged" => true,
           "decidim_reason" => "spam",
           "confidence" => 0.9,
-          "flagged_categories" => ["spam", "advertisement"],
+          "flagged_categories" => %w(spam advertisement),
           "severity" => "high",
           "categories" => { "spam" => true, "advertisement" => true },
           "category_scores" => { "spam" => 0.9, "advertisement" => 0.8 },
-          "reasons" => ["spam", "advertisement"]
+          "reasons" => %w(spam advertisement)
         }
       end
       confidence_score { 0.9 }

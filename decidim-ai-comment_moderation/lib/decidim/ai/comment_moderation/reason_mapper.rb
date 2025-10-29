@@ -39,9 +39,7 @@ module Decidim
           details << "AI自動検出による通報"
           details << "信頼度: #{confidence_percentage}"
 
-          if flagged_categories.any?
-            details << "検出カテゴリ: #{flagged_categories.join(', ')}"
-          end
+          details << "検出カテゴリ: #{flagged_categories.join(", ")}" if flagged_categories.any?
 
           details.join("\n")
         end

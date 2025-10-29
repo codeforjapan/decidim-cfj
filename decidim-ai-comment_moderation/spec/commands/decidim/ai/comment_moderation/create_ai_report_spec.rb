@@ -9,19 +9,19 @@ module Decidim
         subject { described_class.new(comment, ai_analysis_result) }
 
         let(:organization) { create(:organization) }
-        let(:participatory_process) { create(:participatory_process, organization: organization) }
+        let(:participatory_process) { create(:participatory_process, organization:) }
         let(:component) { create(:component, participatory_space: participatory_process) }
-        let(:commentable) { create(:dummy_resource, component: component) }
-        let(:comment) { create(:comment, commentable: commentable) }
+        let(:commentable) { create(:dummy_resource, component:) }
+        let(:comment) { create(:comment, commentable:) }
 
         let(:ai_analysis_result) do
           {
-            flagged: flagged,
-            decidim_reason: decidim_reason,
-            confidence: confidence,
-            severity: severity,
-            flagged_categories: flagged_categories,
-            categories: categories,
+            flagged:,
+            decidim_reason:,
+            confidence:,
+            severity:,
+            flagged_categories:,
+            categories:,
             reason: ai_reason
           }
         end
@@ -122,7 +122,7 @@ module Decidim
                 participatory_space: participatory_process
               )
               Decidim::Report.create!(
-                moderation: moderation,
+                moderation:,
                 user: ai_user,
                 reason: "spam",
                 details: "Previous AI report"
@@ -141,13 +141,13 @@ module Decidim
           context "when comment has human reports" do
             before do
               # Create a human report
-              human_user = create(:user, organization: organization)
+              human_user = create(:user, organization:)
               moderation = Decidim::Moderation.create!(
                 reportable: comment,
                 participatory_space: participatory_process
               )
               Decidim::Report.create!(
-                moderation: moderation,
+                moderation:,
                 user: human_user,
                 reason: "offensive",
                 details: "Human report"

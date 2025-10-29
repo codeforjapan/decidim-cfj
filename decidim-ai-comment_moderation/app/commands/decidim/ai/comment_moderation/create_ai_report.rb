@@ -35,7 +35,7 @@ module Decidim
         end
 
         def already_reported_by_ai?
-          return false unless reportable.moderation.present?
+          return false if reportable.moderation.blank?
 
           ai_user = SystemAiUser.new(reportable.organization).find_or_create_ai_user
           reportable.moderation.reports.exists?(user: ai_user)

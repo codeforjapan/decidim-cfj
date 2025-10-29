@@ -62,11 +62,11 @@ module Decidim
           def to_h
             {
               flagged: flagged?,
-              decidim_reason: decidim_reason,
-              confidence: confidence,
-              severity: severity,
-              flagged_categories: flagged_categories,
-              categories: categories,
+              decidim_reason:,
+              confidence:,
+              severity:,
+              flagged_categories:,
+              categories:,
               reason: ai_reason
             }
           end
@@ -85,9 +85,7 @@ module Decidim
           private
 
           def validate_response!
-            unless @raw_response.is_a?(Hash) && @raw_response.dig("choices", 0, "message", "content")
-              raise StandardError, "Failed to parse chat API response: invalid format"
-            end
+            raise StandardError, "Failed to parse chat API response: invalid format" unless @raw_response.is_a?(Hash) && @raw_response.dig("choices", 0, "message", "content")
           rescue StandardError => e
             Rails.logger.error e.message
             raise

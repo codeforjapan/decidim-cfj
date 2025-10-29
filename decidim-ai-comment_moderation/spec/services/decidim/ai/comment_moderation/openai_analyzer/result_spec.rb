@@ -105,7 +105,6 @@ module Decidim
             end
           end
 
-
           describe "#requires_moderation?" do
             it "returns true for flagged high-confidence content" do
               allow(Decidim::Ai::CommentModeration).to receive(:confidence_threshold).and_return(0.8)
@@ -124,7 +123,6 @@ module Decidim
               expect(result.requires_moderation?).to be false
             end
           end
-
 
           describe "#to_h" do
             let(:result) { described_class.new(offensive_response, comment_text) }
@@ -151,7 +149,6 @@ module Decidim
               expect(parsed["decidim_reason"]).to eq("offensive")
             end
           end
-
         end
       end
     end

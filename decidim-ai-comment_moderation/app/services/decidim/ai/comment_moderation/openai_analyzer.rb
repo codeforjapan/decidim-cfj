@@ -9,7 +9,7 @@ module Decidim
       class OpenaiAnalyzer
         attr_reader :comment
 
-        SYSTEM_PROMPT = <<~PROMPT.freeze
+        SYSTEM_PROMPT = <<~PROMPT
           あなたはコメントのモデレーションを行うAIアシスタントです。
           与えられたコメントを分析し、以下のカテゴリに該当するかどうかを判定してください：
 
@@ -37,7 +37,7 @@ module Decidim
         end
 
         def analyze
-          return nil unless Decidim::Ai::CommentModeration.config.openai_api_key.present?
+          return nil if Decidim::Ai::CommentModeration.config.openai_api_key.blank?
           return nil unless @client
 
           response = @client.chat(

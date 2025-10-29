@@ -22,7 +22,7 @@ module Decidim
           return unless result
 
           # Store the AI analysis record
-          moderation = Decidim::Ai::CommentModeration::CommentModeration.create!(
+          Decidim::Ai::CommentModeration::CommentModeration.create!(
             commentable: comment,
             analysis_result: result.to_h,
             confidence_score: result.confidence
@@ -61,9 +61,7 @@ module Decidim
             "Confidence: #{result.confidence}"
           )
 
-          if result.flagged_categories.present?
-            Rails.logger.info "[AI Moderation] Flagged categories: #{result.flagged_categories.join(", ")}"
-          end
+          Rails.logger.info "[AI Moderation] Flagged categories: #{result.flagged_categories.join(", ")}" if result.flagged_categories.present?
         end
 
         def notify_if_needed(comment, result)
@@ -79,7 +77,7 @@ module Decidim
 
         def should_create_report?(result)
           return false unless result.flagged?
-          return false unless result.decidim_reason.present?
+          return false if result.decidim_reason.blank?
 
           result.requires_moderation?
         end
@@ -87,7 +85,7 @@ module Decidim
         def create_decidim_report(comment, result)
           # Use the command to create AI report
           CreateAiReport.call(comment, result.to_h) do
-            on(:ok) do |report|
+            on(:ok) do |_report|
               Rails.logger.info "[AI Moderation] Report created successfully for comment ##{comment.id}"
             end
 

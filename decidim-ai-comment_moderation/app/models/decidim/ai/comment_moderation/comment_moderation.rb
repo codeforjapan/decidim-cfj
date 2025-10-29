@@ -10,7 +10,6 @@ module Decidim
         store_accessor :analysis_result, :flagged, :decidim_reason, :severity, :confidence,
                        :flagged_categories, :categories, :category_scores
 
-        validates :commentable, presence: true
         validates :confidence_score,
                   numericality: { greater_than_or_equal_to: 0,
                                   less_than_or_equal_to: 1 },
@@ -23,10 +22,9 @@ module Decidim
         scope :offensive_detected, -> { where("analysis_result ->> 'decidim_reason' = ?", "offensive") }
         scope :inappropriate_detected, -> { where("analysis_result ->> 'decidim_reason' = ?", "does_not_belong") }
         scope :by_severity, ->(severity) { where("analysis_result ->> 'severity' = ?", severity) }
-        scope :recent, -> { order(created_at: :desc) }
 
         # Complex JSONB queries for categories
-        scope :with_categories, ->(categories) {
+        scope :with_categories, lambda { |categories|
           categories = Array(categories)
           where(
             categories.map { "analysis_result -> 'categories' ->> ? = 'true'" }.join(" OR "),
@@ -44,7 +42,7 @@ module Decidim
         def flagged
           super.in?([true, "true", 1, "1"])
         end
-        alias_method :flagged?, :flagged
+        alias flagged? flagged
 
         def flagged_categories
           super || []
