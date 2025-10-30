@@ -1242,15 +1242,15 @@
   resolved "https://registry.npmjs.org/@csstools/utilities/-/utilities-1.0.0.tgz"
   integrity sha512-tAgvZQe/t2mlvpNosA4+CkMiZ2azISW5WPAcdSalZlEjQvUfghHxfQcrCiK/7/CrfAWVxyM88kGFYO82heIGDg==
 
-"@decidim/browserslist-config@^0.30.2":
-  version "0.30.2"
-  resolved "https://registry.npmjs.org/@decidim/browserslist-config/-/browserslist-config-0.30.2.tgz"
-  integrity sha512-agxCEMe3+hZeCo1doa5A2Ft6hOfeIlEYuzNhJKQ5jTsIXy8xRXTWQxJQ4MGRLzg/5vwtpHpStE2whv+xkOykoQ==
+"@decidim/browserslist-config@^0.30.3":
+  version "0.30.3"
+  resolved "https://registry.npmjs.org/@decidim/browserslist-config/-/browserslist-config-0.30.3.tgz"
+  integrity sha512-UshUSHGFOpHKD8MfhqU+IqreGSnAksM09ouyYlyPlaZj7+Z8X4xlc/KIboEdC+TeHMK1/oHsaYEkR3JbtRAH8w==
 
-"@decidim/core@^0.30.2":
-  version "0.30.2"
-  resolved "https://registry.npmjs.org/@decidim/core/-/core-0.30.2.tgz"
-  integrity sha512-/EUSH0AoQCLynicec8ZqqhlfxfJkHCcbvJ05wDnzRTxU7ZM1z/Q8QA/RYo0p/L9sPtJ2yjyvU2syeGvWSKWOPw==
+"@decidim/core@^0.30.3":
+  version "0.30.3"
+  resolved "https://registry.npmjs.org/@decidim/core/-/core-0.30.3.tgz"
+  integrity sha512-diJRGaqyZmCxzbqLNEeX8RtGQrpbIBbgk+qZVehZvP6KJqVWI7S2kN0U/iD15OtwX86EWPS0G5luPW8BAqNP5g==
   dependencies:
     "@emoji-mart/data" "^1.1.2"
     "@rails/activestorage" "^7.0.8"
@@ -1331,10 +1331,10 @@
     webpack "^5.11.0"
     webpack-cli "^4.2.0"
 
-"@decidim/dev@^0.30.2":
-  version "0.30.2"
-  resolved "https://registry.npmjs.org/@decidim/dev/-/dev-0.30.2.tgz"
-  integrity sha512-ChdlamKpmDaYqHyNL2rc0AfJ4x471A966DXCyvloeNcKUppyWM8Y2Ds7iLy76/t08rEnPP0ZD97SqqQpNN2zAQ==
+"@decidim/dev@^0.30.3":
+  version "0.30.3"
+  resolved "https://registry.npmjs.org/@decidim/dev/-/dev-0.30.3.tgz"
+  integrity sha512-n5F9a5v6YML8MuvAaITCR0N/Abau0wYkEH2VazUuvFVxbNWZ8YMyvXyX3I77kuRLWhVvmvDQbClw8tK10N4WwQ==
   dependencies:
     "@linthtml/linthtml" "^0.9.6"
     axe-core "^4.7.2"
@@ -1349,20 +1349,20 @@
     "@decidim/voting_schemes-dummy" "0.24.4"
     "@decidim/voting_schemes-electionguard" "0.24.4"
 
-"@decidim/eslint-config@^0.30.2":
-  version "0.30.2"
-  resolved "https://registry.npmjs.org/@decidim/eslint-config/-/eslint-config-0.30.2.tgz"
-  integrity sha512-6OD4M5KPDzztlMK8gmOkNwIwrxbQgsdhg7rj6P1ysHxwd4Fj7KFZHm11J9Cy9ELz6I+euR6PqGi7LJ0q8Nty/w==
+"@decidim/eslint-config@^0.30.3":
+  version "0.30.3"
+  resolved "https://registry.npmjs.org/@decidim/eslint-config/-/eslint-config-0.30.3.tgz"
+  integrity sha512-8Oau4Eh1+k6CMz0ayvoM05gYNzMU2M39ijx4dy94HF7IKYYPY1oFq//3J7WRbLj0UbqPeWzdg4k7tcg8KD2mnQ==
 
-"@decidim/prettier-config@^0.30.2":
-  version "0.30.2"
-  resolved "https://registry.npmjs.org/@decidim/prettier-config/-/prettier-config-0.30.2.tgz"
-  integrity sha512-PorfxYA+UniXqBL8a5FbfDobFvKMCLyf6DjaWfJAQUj27W1FNAfZovlbjGgPUQJEx3Ne7GN2DSRwCpkBWbtSDA==
+"@decidim/prettier-config@^0.30.3":
+  version "0.30.3"
+  resolved "https://registry.npmjs.org/@decidim/prettier-config/-/prettier-config-0.30.3.tgz"
+  integrity sha512-JRIRQzpmISA2UaV4NgxfbssclAcdboFrz2t8FzIqcDXqgrgc7FRDHkPmOhmpvQNPxLmgWCKKD+Lzay6H7slmTQ==
 
-"@decidim/stylelint-config@^0.30.2":
-  version "0.30.2"
-  resolved "https://registry.npmjs.org/@decidim/stylelint-config/-/stylelint-config-0.30.2.tgz"
-  integrity sha512-9XfoaTpNbF7UGrg8umNWe2Gn1erqV4t84Dje6AdKMuiQhZ63gNL5INjOu0ZBk4SMj1dCuaXrOotM4CjUeqVsTQ==
+"@decidim/stylelint-config@^0.30.3":
+  version "0.30.3"
+  resolved "https://registry.npmjs.org/@decidim/stylelint-config/-/stylelint-config-0.30.3.tgz"
+  integrity sha512-s/YvJb73XNB7hvWrcM6mKIXyyj2tNNQ4FUmBFk2VsgJIgrCqY57orI7ySi5jx2z2aX+5ztr20G/ee+MzTDWIBA==
 
 "@decidim/voting_schemes-dummy@0.24.4":
   version "0.24.4"
@@ -1374,10 +1374,10 @@
   resolved "https://registry.npmjs.org/@decidim/voting_schemes-electionguard/-/voting_schemes-electionguard-0.24.4.tgz"
   integrity sha512-EKTdPKaKIykDtcN/pe0s1HmUuLvan9bEakoDJ9wJNVcYbRtffsb6RaG3LBC6dVPAZYwtem3t0zVHUbIVCCnlCw==
 
-"@decidim/webpacker@^0.30.2":
-  version "0.30.2"
-  resolved "https://registry.npmjs.org/@decidim/webpacker/-/webpacker-0.30.2.tgz"
-  integrity sha512-zFbROaMAg8/3BlF6i05j/ZzK5oraD/zK/GQcOOLpZv1qao/lSw7UCiFx39kX4G8/xDiZhKYkGta69rkZ+UrntA==
+"@decidim/webpacker@^0.30.3":
+  version "0.30.3"
+  resolved "https://registry.npmjs.org/@decidim/webpacker/-/webpacker-0.30.3.tgz"
+  integrity sha512-uh5eFGl2ab31maRboW8k3RBp38YMYg6Yg4aqqhKOn+7GDEmwvWTSfEPYrqBDOHbbXtr4c8TeK5cspjbC1B2SHA==
   dependencies:
     "@rails/ujs" "^6.1.7"
     "@tailwindcss/typography" "^0.5.2"
@@ -1643,17 +1643,17 @@
   resolved "https://registry.npmjs.org/@leichtgewicht/ip-codec/-/ip-codec-2.0.5.tgz"
   integrity sha512-Vo+PSpZG2/fmgmiNzYK9qWRh8h/CHrwD0mo1h1DzL4yzHNSfWYujGTYsWGreD000gcgmZ7K4Ys6Tx9TxtsKdDw==
 
-"@lezer/common@^1.0.0":
-  version "1.2.3"
-  resolved "https://registry.npmjs.org/@lezer/common/-/common-1.2.3.tgz"
-  integrity sha512-w7ojc8ejBqr2REPsWxJjrMFsA/ysDCFICn8zEOR9mrqzOu2amhITYuLD8ag6XZf0CFXDrhKqw7+tW8cX66NaDA==
+"@lezer/common@^1.0.0", "@lezer/common@^1.3.0":
+  version "1.3.0"
+  resolved "https://registry.npmjs.org/@lezer/common/-/common-1.3.0.tgz"
+  integrity sha512-L9X8uHCYU310o99L3/MpJKYxPzXPOS7S0NmBaM7UO/x2Kb2WbmMLSkfvdr1KxRIFYOpbY0Jhn7CfLSUDzL8arQ==
 
 "@lezer/highlight@^1.0.0":
-  version "1.2.1"
-  resolved "https://registry.npmjs.org/@lezer/highlight/-/highlight-1.2.1.tgz"
-  integrity sha512-Z5duk4RN/3zuVO7Jq0pGLJ3qynpxUVsh7IbUbGj88+uV2ApSAn6kWg2au3iJb+0Zi7kKtqffIESgNcRXWZWmSA==
+  version "1.2.3"
+  resolved "https://registry.npmjs.org/@lezer/highlight/-/highlight-1.2.3.tgz"
+  integrity sha512-qXdH7UqTvGfdVBINrgKhDsVTJTxactNNxLk7+UMwZhU13lMHaOBlJe9Vqp907ya56Y3+ed2tlqzys7jDkTmW0g==
   dependencies:
-    "@lezer/common" "^1.0.0"
+    "@lezer/common" "^1.3.0"
 
 "@lezer/lr@^1.0.0":
   version "1.4.2"
@@ -2504,9 +2504,9 @@
     prosemirror-view "^1.28.2"
 
 "@tiptap/pm@^2.7.0":
-  version "2.26.2"
-  resolved "https://registry.npmjs.org/@tiptap/pm/-/pm-2.26.2.tgz"
-  integrity sha512-H2kJHckC9idlYPu/PNdu5XR3Rdu7gbNb+Qrdt2gBnaDyHgAcs+14wak6x19vy27GV9FFzg9722Eb7LErooo28w==
+  version "2.27.1"
+  resolved "https://registry.npmjs.org/@tiptap/pm/-/pm-2.27.1.tgz"
+  integrity sha512-ijKo3+kIjALthYsnBmkRXAuw2Tswd9gd7BUR5OMfIcjGp8v576vKxOxrRfuYiUM78GPt//P0sVc1WV82H5N0PQ==
   dependencies:
     prosemirror-changeset "^2.3.0"
     prosemirror-collab "^1.3.1"
@@ -6897,14 +6897,12 @@ jsonpointer@^5.0.0:
   integrity sha512-p/nXbhSEcu3pZRdkW1OfJhpsVtW1gd4Wa1fnQc9YLiTfAjn0312eMKimbdIQzuZl9aa9xUGaRlP9T/CJE/ditQ==
 
 jsrender@^1.0.16:
-  version "1.0.16"
-  resolved "https://registry.npmjs.org/jsrender/-/jsrender-1.0.16.tgz"
-  integrity sha512-K3IDCLwR+gQA14qtFDMbNKmlDhGsJLjXMBJ87abE+iTQNYnFCtESPvgtaM+cYKhmjVXbvK1IldgCW1kQZBVUNA==
+  version "v1.0.16"
   dependencies:
     through2 "^3.0.1"
 
 jsviews@^1.0.15:
-  version "v1.0.15"
+  version "v1.0.16"
   dependencies:
     jquery "^3.4.1"
 
@@ -9194,9 +9192,9 @@ semver@^6.0.0, semver@^6.1.0, semver@^6.3.0, semver@^6.3.1:
   integrity sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==
 
 semver@^7.0.0:
-  version "7.7.2"
-  resolved "https://registry.npmjs.org/semver/-/semver-7.7.2.tgz"
-  integrity sha512-RF0Fw+rO5AMf9MAyaRXI4AV0Ulj5lMHqVxxdSgiVbixSCXoEmmX/jk0CuJw4+3SqroYO9VoUh+HcuJivvtJemA==
+  version "7.7.3"
+  resolved "https://registry.npmjs.org/semver/-/semver-7.7.3.tgz"
+  integrity sha512-SdsKMrI9TdgjdweUSR9MweHA4EJ8YxHn8DFaDisvhVlUOe4BF1tLD7GAj0lIqWVl+dPb/rExr0Btby5loQm20Q==
 
 semver@^7.3.4:
   version "7.7.1"
@@ -9204,9 +9202,9 @@ semver@^7.3.4:
   integrity sha512-hlq8tAfn0m/61p4BVRcPzIGr6LKiMwo4VM6dGi6pt4qcRkmNzTcWq6eCEjEh+qXjkMDvPlOFFSGwQjoEa6gyMA==
 
 semver@^7.5.3:
-  version "7.7.2"
-  resolved "https://registry.npmjs.org/semver/-/semver-7.7.2.tgz"
-  integrity sha512-RF0Fw+rO5AMf9MAyaRXI4AV0Ulj5lMHqVxxdSgiVbixSCXoEmmX/jk0CuJw4+3SqroYO9VoUh+HcuJivvtJemA==
+  version "7.7.3"
+  resolved "https://registry.npmjs.org/semver/-/semver-7.7.3.tgz"
+  integrity sha512-SdsKMrI9TdgjdweUSR9MweHA4EJ8YxHn8DFaDisvhVlUOe4BF1tLD7GAj0lIqWVl+dPb/rExr0Btby5loQm20Q==
 
 semver@^7.5.4:
   version "7.7.1"
