@@ -406,20 +406,4 @@ Rails.application.config.to_prepare do
       errors.add(:nickname, :taken) if Decidim::UserBaseEntity.exists?(nickname: nickname.strip, organization: current_organization)
     end
   end
-
-  # ---------------------------------
-  # fix decidim's TranslatedEtiquetteValidator
-  module TranslatedEtiquetteValidatorPatch
-    def validate_each(record, attribute, _value)
-      return unless Decidim.enable_etiquette_validator
-
-      super
-    end
-  end
-
-  # force to autoload `TranslatedEtiquetteValidator`
-  TranslatedEtiquetteValidator # rubocop:disable Lint/Void
-  class TranslatedEtiquetteValidator
-    prepend TranslatedEtiquetteValidatorPatch
-  end
 end
