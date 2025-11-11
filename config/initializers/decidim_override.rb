@@ -5,7 +5,7 @@ Rails.application.config.to_prepare do
   #
   # minimum title length should be 8
   Decidim::Proposals::Admin::ProposalForm.validators.each do |validator|
-    if validator.instance_of?(ActiveModel::Validations::LengthValidator) && # rubocop:disable Style/Next
+    if validator.instance_of?(ActiveModel::Validations::LengthValidator) &&
        validator.attributes.first.match?(/^title_/)
 
       fixed_options = validator.options.dup
@@ -13,6 +13,11 @@ Rails.application.config.to_prepare do
       validator.instance_eval do
         @options = fixed_options.freeze
       end
+    end
+    # Override Decidim Awesome validation settings
+    # Set minimum title length to 8 characters instead of default 15
+    Decidim::DecidimAwesome.configure do |config|
+      config.validate_title_min_length = 8
     end
   end
 
@@ -50,6 +55,10 @@ Rails.application.config.to_prepare do
         # override
         def order
           params_order = params.fetch(:order, nil)
+
+          ## XXX `"null"` is invalid, it should be `nil`
+          params_order = nil if params_order == "null"
+
           if params_order
             cookies["comment_default_order"] = params_order if cookies[Decidim.config.consent_cookie_name].present? # cookies_accepted?
             params_order
@@ -73,7 +82,7 @@ Rails.application.config.to_prepare do
             single_comment: params.fetch("commentId", nil),
             order: options[:order] || params["orderable"] || cookies["comment_default_order"],
             polymorphic: options[:polymorphic]
-          ).to_s
+          )
         end
       end
     end
@@ -114,7 +123,7 @@ Rails.application.config.to_prepare do
           "menu-merge-components" => global_settings.menu_merge_components,
           "menu-amendments" => global_settings.menu_amendments,
           "menu-meetings" => global_settings.menu_meetings,
-          "menu-categories" => global_settings.menu_categories,
+          "menu-taxonomies" => global_settings.menu_taxonomies,
           "menu-hashtags" => global_settings.menu_hashtags,
           "show-not-answered" => step_settings&.show_not_answered,
           "show-accepted" => step_settings&.show_accepted,
@@ -143,23 +152,6 @@ Rails.application.config.to_prepare do
     end
   end
 
-  ## fix `Decidim::Attachment#file_type`
-  module DecidimAttachmentFiletypePatch
-    def file_type
-      url&.split(".")&.last&.downcase&.gsub(/[^A-Za-z0-9].*/, "")
-    end
-  end
-
-  # force to autoload `` in decidim-core
-  Decidim::Attachment # rubocop:disable Lint/Void
-
-  # override `UserAnswersSerializer#hash_for`
-  module Decidim
-    class Attachment
-      prepend DecidimAttachmentFiletypePatch
-    end
-  end
-
   ## fix `Decidim::ParticipatoryProcesses::ParticipatoryProcessHelper#process_types`
   module DecidimParticipatoryProcessesProcessTypesPatch
     def process_types
@@ -179,59 +171,7 @@ Rails.application.config.to_prepare do
     end
   end
 
-  module DecidimAdminPermissionsPatch
-    def permissions
-      if user &&
-         permission_action.scope == :admin &&
-         permission_action.subject == :editor_image && (
-           user.admin? ||
-             user.roles.any? ||
-             Decidim::ParticipatoryProcessUserRole.exists?(user:) ||
-             Decidim::AssemblyUserRole.exists?(user:) ||
-             Decidim::ConferenceUserRole.exists?(user:)
-         )
-        allow!
-      end
-
-      super
-    end
-  end
-
-  Decidim::Admin::Permissions # rubocop:disable Lint/Void
-
-  module Decidim
-    module Admin
-      class Permissions < Decidim::DefaultPermissions
-        prepend DecidimAdminPermissionsPatch
-      end
-    end
-  end
-
   # ----------------------------------------
-
-  # fix editing the assembly content block
-  # cf. https://github.com/decidim/decidim/pull/13544
-  module DecidimAssembliesAdminAssemblyLandingPageContentBlocksControllerForV0283Patch
-    def parent_assembly
-      scoped_resource.parent
-    end
-  end
-
-  # force to autoload original controller
-  Decidim::Assemblies::Admin::AssemblyLandingPageContentBlocksController # rubocop:disable Lint/Void
-
-  # add helper `parent_assembly` as helper
-  module Decidim
-    module Assemblies
-      module Admin
-        class AssemblyLandingPageContentBlocksController
-          prepend DecidimAssembliesAdminAssemblyLandingPageContentBlocksControllerForV0283Patch
-
-          helper_method :parent_assembly
-        end
-      end
-    end
-  end
 
   module DecidimFormsUserAnswersSerializerTimezonePatch
     private
@@ -241,7 +181,7 @@ Rails.application.config.to_prepare do
 
       {
         answer_translated_attribute_name(:id) => answer&.session_token,
-        answer_translated_attribute_name(:created_at) => answer&.created_at&.in_time_zone(timezone)&.strftime("%Y-%m-%d %H:%M:%S"),
+        answer_translated_attribute_name(:created_at) => (answer&.created_at ? answer.created_at.in_time_zone(timezone).strftime("%Y-%m-%d %H:%M:%S") : nil),
         answer_translated_attribute_name(:ip_hash) => answer&.ip_hash,
         answer_translated_attribute_name(:user_status) => answer_translated_attribute_name(answer&.decidim_user_id.present? ? "registered" : "unregistered")
       }
@@ -299,33 +239,6 @@ Rails.application.config.to_prepare do
 
   # Insert `app/views` into Cell::ViewModel.view_paths to load application's views
   Cell::ViewModel.view_paths.insert(1, Rails.root.join("app/views"))
-
-  # ----------------------------------------
-
-  # Disable message functionality in profile actions
-  module DecidimProfileActionsDisableMessagePatch
-    private
-
-    # Override to disable message functionality
-    def can_contact_user?
-      false
-    end
-  end
-
-  Decidim::ProfileActionsCell # rubocop:disable Lint/Void
-
-  module Decidim
-    class ProfileActionsCell
-      prepend DecidimProfileActionsDisableMessagePatch
-    end
-  end
-
-  Decidim::ProfileSidebarCell # rubocop:disable Lint/Void
-  module Decidim
-    class ProfileSidebarCell
-      prepend DecidimProfileActionsDisableMessagePatch
-    end
-  end
 
   # ----------------------------------------
 
