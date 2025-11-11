@@ -152,81 +152,7 @@ Rails.application.config.to_prepare do
     end
   end
 
-  ## fix `Decidim::Attachment#file_type`
-  module DecidimAttachmentFiletypePatch
-    def file_type
-      return unless url
-
-      parts = url.split(".")
-      return unless parts.last
-
-      parts.last.downcase.gsub(/[^A-Za-z0-9].*/, "")
-    end
-  end
-
-  # force to autoload `` in decidim-core
-  Decidim::Attachment # rubocop:disable Lint/Void
-
-  # override `UserAnswersSerializer#hash_for`
-  module Decidim
-    class Attachment
-      prepend DecidimAttachmentFiletypePatch
-    end
-  end
-
-  module DecidimAdminPermissionsPatch
-    def permissions
-      if user &&
-         permission_action.scope == :admin &&
-         permission_action.subject == :editor_image && (
-           user.admin? ||
-             user.roles.any? ||
-             Decidim::ParticipatoryProcessUserRole.exists?(user:) ||
-             Decidim::AssemblyUserRole.exists?(user:) ||
-             Decidim::ConferenceUserRole.exists?(user:)
-         )
-        allow!
-      end
-
-      super
-    end
-  end
-
-  Decidim::Admin::Permissions # rubocop:disable Lint/Void
-
-  module Decidim
-    module Admin
-      class Permissions < Decidim::DefaultPermissions
-        prepend DecidimAdminPermissionsPatch
-      end
-    end
-  end
-
   # ----------------------------------------
-
-  # fix editing the assembly content block
-  # cf. https://github.com/decidim/decidim/pull/13544
-  module DecidimAssembliesAdminAssemblyLandingPageContentBlocksControllerForV0283Patch
-    def parent_assembly
-      scoped_resource.parent
-    end
-  end
-
-  # force to autoload original controller
-  Decidim::Assemblies::Admin::AssemblyLandingPageContentBlocksController # rubocop:disable Lint/Void
-
-  # add helper `parent_assembly` as helper
-  module Decidim
-    module Assemblies
-      module Admin
-        class AssemblyLandingPageContentBlocksController
-          prepend DecidimAssembliesAdminAssemblyLandingPageContentBlocksControllerForV0283Patch
-
-          helper_method :parent_assembly
-        end
-      end
-    end
-  end
 
   module DecidimFormsUserAnswersSerializerTimezonePatch
     private
@@ -386,21 +312,5 @@ Rails.application.config.to_prepare do
 
       errors.add(:nickname, :taken) if Decidim::UserBaseEntity.exists?(nickname: nickname.strip, organization: current_organization)
     end
-  end
-
-  # ---------------------------------
-  # fix decidim's TranslatedEtiquetteValidator
-  module TranslatedEtiquetteValidatorPatch
-    def validate_each(record, attribute, _value)
-      return unless Decidim.enable_etiquette_validator
-
-      super
-    end
-  end
-
-  # force to autoload `TranslatedEtiquetteValidator`
-  TranslatedEtiquetteValidator # rubocop:disable Lint/Void
-  class TranslatedEtiquetteValidator
-    prepend TranslatedEtiquetteValidatorPatch
   end
 end
