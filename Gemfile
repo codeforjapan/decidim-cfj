@@ -45,6 +45,7 @@ group :development, :test do
 end
 
 group :development do
+  gem "brakeman"
   gem "letter_opener_web"
   gem "listen", "~> 3.1"
   gem "rubocop-factory_bot", "~> 2.26.0", require: false
