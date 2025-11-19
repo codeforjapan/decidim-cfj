@@ -16,6 +16,9 @@ require "decidim/dev/test/base_spec_helper"
 
 # Add additional requires below this line. Rails is not loaded until this point!
 
+# Load module factories
+Dir[File.join(__dir__, "..", "decidim-*/lib/decidim/**/test/factories.rb")].each { |f| require f }
+
 # The following line is provided for convenience purposes. It has the downside
 # of increasing the boot-up time by auto-requiring all files in the support
 # directory. Alternatively, in the individual `*_spec.rb` files, manually

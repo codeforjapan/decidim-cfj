@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_03_12_050027) do
+ActiveRecord::Schema[7.0].define(version: 2025_10_29_031309) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "ltree"
   enable_extension "pg_bigm"
@@ -117,6 +117,22 @@ ActiveRecord::Schema[7.0].define(version: 2025_03_12_050027) do
     t.index ["resource_type", "resource_id"], name: "index_action_logs_on_resource_type_and_id"
     t.index ["version_id"], name: "index_decidim_action_logs_on_version_id"
     t.index ["visibility"], name: "index_decidim_action_logs_on_visibility"
+  end
+
+  create_table "decidim_ai_comment_moderation_comment_moderations", force: :cascade do |t|
+    t.string "commentable_type", null: false
+    t.integer "commentable_id", null: false
+    t.jsonb "analysis_result", default: {}
+    t.float "confidence_score"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index "((analysis_result ->> 'decidim_reason'::text))", name: "index_ai_comment_moderations_on_decidim_reason"
+    t.index "((analysis_result ->> 'flagged'::text))", name: "index_ai_comment_moderations_on_flagged"
+    t.index "((analysis_result ->> 'severity'::text))", name: "index_ai_comment_moderations_on_severity"
+    t.index ["analysis_result"], name: "index_ai_comment_moderations_on_analysis_result_gin", using: :gin
+    t.index ["commentable_type", "commentable_id"], name: "index_ai_comment_moderations_on_commentable"
+    t.index ["confidence_score"], name: "index_ai_comment_moderations_on_confidence_score"
+    t.index ["created_at"], name: "index_ai_comment_moderations_on_created_at"
   end
 
   create_table "decidim_amendments", force: :cascade do |t|
