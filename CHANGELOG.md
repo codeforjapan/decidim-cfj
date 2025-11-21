@@ -1,5 +1,18 @@
 # Change Log
 
+## [1.15.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.14.0...v1.15.0) (2025-11-19)
+
+
+### Features
+
+* add brakeman ([4357928](https://github.com/codeforjapan/decidim-cfj/commit/43579280dfec8b92977c7b6bd1c9cd3ecea84ec0))
+* add GitHub Actions to scan with brakeman ([e38c158](https://github.com/codeforjapan/decidim-cfj/commit/e38c158e95a3166d21fd9be79bb42a0647ad104b))
+
+
+### Bug Fixes
+
+* update actions/upload-artifact@v4 ([633620b](https://github.com/codeforjapan/decidim-cfj/commit/633620be680f0eea78aaa518cd903d6528df6521))
+
 ## [1.14.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.13.2...v1.14.0) (2025-09-18)
 
 
