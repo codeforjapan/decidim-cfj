@@ -166,6 +166,8 @@ GEM
     bindex (0.8.1)
     bootsnap (1.18.4)
       msgpack (~> 1.2)
+    brakeman (7.1.1)
+      racc
     browser (6.2.0)
     builder (3.3.0)
     bullet (8.0.8)
@@ -968,6 +970,7 @@ PLATFORMS
 DEPENDENCIES
   aws-sdk-s3
   bootsnap
+  brakeman
   byebug (~> 11.0)
   decidim (= 0.30.3)
   decidim-decidim_awesome (= 0.13.1)

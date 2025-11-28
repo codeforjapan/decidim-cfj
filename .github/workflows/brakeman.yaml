@@ -1,0 +1,47 @@
+name: Brakeman Security Scan
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  schedule:
+    # Run weekly on Monday at 9:00 AM JST (00:00 UTC)
+    - cron: '0 0 * * 1'
+  workflow_dispatch:
+
+jobs:
+  brakeman:
+    name: Brakeman Security Scan
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.2.6
+          bundler-cache: true
+
+      - name: Run Brakeman scan
+        run: |
+          bundle exec brakeman --format json --output brakeman-results.json --no-exit-on-warn --no-exit-on-error
+
+      - name: Upload Brakeman results as artifact
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: brakeman-results
+          path: brakeman-results.json
+
+      - name: Check Brakeman results
+        run: |
+          bundle exec brakeman --format plain
