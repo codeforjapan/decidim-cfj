@@ -259,6 +259,9 @@ GEM
     decidim-comments (0.30.3)
       decidim-core (= 0.30.3)
       redcarpet (~> 3.5, >= 3.5.1)
+    decidim-conferences (0.30.3)
+      decidim-core (= 0.30.3)
+      decidim-meetings (= 0.30.3)
     decidim-core (0.30.3)
       active_link_to (~> 1.0)
       acts_as_list (~> 1.0)
@@ -973,6 +976,7 @@ DEPENDENCIES
   brakeman
   byebug (~> 11.0)
   decidim (= 0.30.3)
+  decidim-conferences (~> 0.30.3)
   decidim-decidim_awesome (= 0.13.1)
   decidim-dev (= 0.30.3)
   decidim-navigation_maps!
