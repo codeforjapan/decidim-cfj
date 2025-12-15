@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.15.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.15.0...v1.15.1) (2025-12-15)
+
+
+### Bug Fixes
+
+* add mobile menu support to menu hacks feature ([4b1b431](https://github.com/codeforjapan/decidim-cfj/commit/4b1b43182aa1d89f42fbb1538f120752fc113afb))
+
 ## [1.15.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.14.0...v1.15.0) (2025-11-19)
 
 
