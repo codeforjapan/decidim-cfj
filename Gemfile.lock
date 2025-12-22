@@ -44,6 +44,15 @@ GIT
     decidim-polis (0.29.2)
       decidim-core (= 0.29.2)
 
+GIT
+  remote: https://github.com/takahashim/decidim-broadlistening-view.git
+  revision: 8813e9bd008f9714aee75bc1648e57edb5fd2588
+  branch: 029-stable
+  specs:
+    decidim-broadlistening-view (0.1.0)
+      decidim-admin (~> 0.29.0)
+      decidim-core (~> 0.29.0)
+
 PATH
   remote: decidim-user_extension
   specs:
@@ -925,6 +934,7 @@ DEPENDENCIES
   brakeman
   byebug (~> 11.0)
   decidim (= 0.29.2)
+  decidim-broadlistening-view!
   decidim-decidim_awesome!
   decidim-dev (= 0.29.2)
   decidim-navigation_maps!
