@@ -382,8 +382,8 @@ ActiveRecord::Schema[7.0].define(version: 2025_12_22_065402) do
 
   create_table "decidim_broadlistening_view_reports", force: :cascade do |t|
     t.bigint "decidim_component_id", null: false
-    t.string "title", null: false
-    t.text "description"
+    t.jsonb "title", default: {}, null: false
+    t.jsonb "description", default: {}
     t.jsonb "result_data", default: {}
     t.boolean "published", default: false, null: false
     t.datetime "created_at", null: false
