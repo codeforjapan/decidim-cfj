@@ -30,6 +30,7 @@ gem "omniauth-cityos-dcp", git: "https://github.com/TheDesignium/omniauth-cityos
 gem "omniauth-line_login", path: "omniauth-line_login"
 gem "omniauth-rails_csrf_protection"
 
+gem "decidim-broadlistening-view", git: "https://github.com/takahashim/decidim-broadlistening-view.git", branch: "029-stable"
 gem "decidim-user_extension", path: "decidim-user_extension"
 
 gem "slack-ruby-client"
