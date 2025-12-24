@@ -1,5 +1,17 @@
 # Change Log
 
+## [1.16.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.15.1...v1.16.0) (2025-12-24)
+
+
+### Features
+
+* add decidim-broadlistening-view ([e8f14e1](https://github.com/codeforjapan/decidim-cfj/commit/e8f14e1c04ba899f9bd2c89b1012a56e56068e9d))
+
+
+### Bug Fixes
+
+* support I18N and translated fields ([ae8e124](https://github.com/codeforjapan/decidim-cfj/commit/ae8e124f42795ad4d3bac79b1bf081cfe3aa68f4))
+
 ## [1.15.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.15.0...v1.15.1) (2025-12-15)
 
 
