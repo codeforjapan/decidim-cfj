@@ -1,0 +1,15 @@
+// Override default login button style
+// cf. https://github.com/decidim/decidim/pull/14276
+.button--developer {
+    @apply flex;
+    svg {
+          @apply fill-current;
+    }
+}
+
+.button--line {
+    @apply flex;
+    svg {
+          @apply fill-current;
+    }
+}
