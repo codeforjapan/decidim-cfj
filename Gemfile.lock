@@ -8,17 +8,6 @@ GIT
       omniauth-oauth2
 
 GIT
-  remote: https://github.com/codeforjapan/decidim-module-decidim_awesome.git
-  revision: 7f0483536e21e2ff5b652588480b288b48b09ef4
-  branch: main-2025-12-12
-  specs:
-    decidim-decidim_awesome (0.12.1)
-      decidim-admin (>= 0.29.1, < 0.30)
-      decidim-core (>= 0.29.1, < 0.30)
-      deface (>= 1.5)
-      sassc (~> 2.3)
-
-GIT
   remote: https://github.com/codeforjapan/decidim-module-navigation_maps.git
   revision: d035196fa3e705426a830d6fc22956f20ec05d1c
   branch: upgrade-0.30-2025-10-04
@@ -46,12 +35,12 @@ GIT
 
 GIT
   remote: https://github.com/takahashim/decidim-broadlistening-view.git
-  revision: 8813e9bd008f9714aee75bc1648e57edb5fd2588
-  branch: 029-stable
+  revision: 61a4203764a99c5872c87b7cf7a032f15da3d130
+  branch: 030-stable
   specs:
-    decidim-broadlistening-view (0.1.0)
-      decidim-admin (~> 0.29.0)
-      decidim-core (~> 0.29.0)
+    decidim-broadlistening-view (0.1.1)
+      decidim-admin (>= 0.29.0)
+      decidim-core (>= 0.29.0)
 
 PATH
   remote: decidim-user_extension
@@ -996,9 +985,9 @@ DEPENDENCIES
   brakeman
   byebug (~> 11.0)
   decidim (= 0.30.3)
-  decidim-conferences (~> 0.30.3)
   decidim-broadlistening-view!
-  decidim-decidim_awesome!
+  decidim-conferences (~> 0.30.3)
+  decidim-decidim_awesome (= 0.13.1)
   decidim-dev (= 0.30.3)
   decidim-navigation_maps!
   decidim-polis!
