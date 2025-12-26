@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_12_04_112046) do
+ActiveRecord::Schema[7.0].define(version: 2025_12_22_065402) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "ltree"
   enable_extension "pg_bigm"
@@ -403,6 +403,18 @@ ActiveRecord::Schema[7.0].define(version: 2025_12_04_112046) do
     t.index ["decidim_component_id"], name: "index_decidim_blogs_posts_on_decidim_component_id"
     t.index ["decidim_user_group_id"], name: "index_decidim_blogs_posts_on_decidim_user_group_id"
     t.index ["deleted_at"], name: "index_decidim_blogs_posts_on_deleted_at"
+  end
+
+  create_table "decidim_broadlistening_view_reports", force: :cascade do |t|
+    t.bigint "decidim_component_id", null: false
+    t.jsonb "title", default: {}, null: false
+    t.jsonb "description", default: {}
+    t.jsonb "result_data", default: {}
+    t.boolean "published", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["decidim_component_id"], name: "index_bl_view_reports_on_component_id"
+    t.index ["published"], name: "index_decidim_broadlistening_view_reports_on_published"
   end
 
   create_table "decidim_budgets_budgets", id: :serial, force: :cascade do |t|
