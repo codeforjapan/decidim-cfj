@@ -6,7 +6,7 @@ ruby RUBY_VERSION
 
 gem "decidim", "0.30.3"
 
-gem "decidim-decidim_awesome", git: "https://github.com/codeforjapan/decidim-module-decidim_awesome.git", branch: "main-2025-12-12"
+gem "decidim-decidim_awesome", "0.13.1"
 
 gem "decidim-term_customizer", git: "https://github.com/codeforjapan/decidim-module-term_customizer.git", branch: "030-ja"
 
@@ -30,7 +30,7 @@ gem "omniauth-cityos-dcp", git: "https://github.com/TheDesignium/omniauth-cityos
 gem "omniauth-line_login", path: "omniauth-line_login"
 gem "omniauth-rails_csrf_protection"
 
-gem "decidim-broadlistening-view", git: "https://github.com/takahashim/decidim-broadlistening-view.git", branch: "029-stable"
+gem "decidim-broadlistening-view", git: "https://github.com/takahashim/decidim-broadlistening-view.git", branch: "030-stable"
 gem "decidim-user_extension", path: "decidim-user_extension"
 
 gem "slack-ruby-client"
