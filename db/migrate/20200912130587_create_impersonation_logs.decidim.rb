@@ -1,6 +1,7 @@
 # frozen_string_literal: true
-# This migration comes from decidim (originally 20170724130558)
 
+# This migration comes from decidim (originally 20170724130558)
+# This file has been modified by `decidim upgrade:migrations` task on 2025-08-05 08:11:54 UTC
 class CreateImpersonationLogs < ActiveRecord::Migration[5.1]
   def change
     create_table :decidim_impersonation_logs do |t|
