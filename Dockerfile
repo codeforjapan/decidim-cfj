@@ -82,7 +82,7 @@ RUN cp ./entrypoint /usr/bin/entrypoint \
     && chmod -R +x ./bin/
 
 RUN yarn install \
-    && ./bin/rails assets:precompile \
+    && SKIP_REDIS_SETUP=true ./bin/rails assets:precompile \
     && yarn cache clean
 
 ENTRYPOINT ["entrypoint"]

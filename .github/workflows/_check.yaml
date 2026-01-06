@@ -112,12 +112,12 @@ jobs:
 
       - name: Migrate DB
         run: |
-          bundle exec rails db:create db:migrate
+          SKIP_REDIS_SETUP=true bundle exec rails db:create db:migrate
 
       - name: Precompile assets
-        run: bundle exec rails assets:precompile
+        run: SKIP_REDIS_SETUP=true bundle exec rails assets:precompile
 
       - name: Test with RSpec
         run: |
           export PATH=${GITHUB_WORKSPACE}/vendor/imagemagick7/bin:${PATH}
-          bundle exec rails spec
+          SKIP_REDIS_SETUP=true bundle exec rails spec
