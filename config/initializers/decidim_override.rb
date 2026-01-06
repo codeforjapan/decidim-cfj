@@ -313,4 +313,53 @@ Rails.application.config.to_prepare do
       errors.add(:nickname, :taken) if Decidim::UserBaseEntity.exists?(nickname: nickname.strip, organization: current_organization)
     end
   end
+
+  # ----------------------------------------
+  # decidim-ai 日本語対応
+  # 非ASCII文字をASCIIトークンに変換してBayes分類器で処理可能にする
+
+  module Decidim
+    module Ai
+      module Language
+        class Formatter
+          # 元のcleanupメソッドを保存
+          alias_method :original_cleanup, :cleanup
+
+          # オーバーライド: HTMLタグ除去 + 日本語対応の正規化
+          def cleanup(text)
+            # まずHTMLタグを除去（元の実装を呼び出す）
+            cleaned = original_cleanup(text)
+            
+            # 非ASCII文字をClassifierReborn用にトークン化
+            normalize_for_classifier(cleaned)
+          end
+
+          private
+
+          # content を ASCII トークン列に正規化する
+          # - 英数字は従来通り単語として残す
+          # - 非ASCIIは codepoint を uXXXX にして 1文字=1トークンで追加
+          #
+          # 例: "しね" => "u3057 u306d"
+          #     "buy 安い pills" => "buy pills u5b89 u3044"
+          def normalize_for_classifier(content)
+            s = content.to_s
+            tokens = []
+
+            # ASCIIの単語（英数字+_）はそのまま（英語性能を落としにくい）
+            tokens.concat(s.scan(/[A-Za-z0-9_]+/))
+
+            # 非ASCIIは codepoint を ASCIIトークン化
+            s.each_codepoint do |cp|
+              next if cp < 128
+              tokens << "u#{cp.to_s(16)}"
+            end
+
+            # 何も残らないと Bayes が no-op になりがちなので、空ならダミーを返す
+            tokens.empty? ? "u0" : tokens.join(" ")
+          end
+        end
+      end
+    end
+  end
 end

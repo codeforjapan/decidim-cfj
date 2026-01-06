@@ -67,3 +67,5 @@ gem "rubyzip", ">= 1.0.0"
 gem "zip-zip"
 
 gem "decidim-conferences", "~> 0.30.3"
+
+gem "decidim-ai", "~> 0.30.3"
