@@ -120,4 +120,4 @@ jobs:
       - name: Test with RSpec
         run: |
           export PATH=${GITHUB_WORKSPACE}/vendor/imagemagick7/bin:${PATH}
-          bundle exec rails spec
+          SKIP_REDIS_SETUP=true bundle exec rails spec
