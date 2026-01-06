@@ -323,13 +323,13 @@ Rails.application.config.to_prepare do
       module Language
         class Formatter
           # 元のcleanupメソッドを保存
-          alias_method :original_cleanup, :cleanup
+          alias original_cleanup cleanup
 
           # オーバーライド: HTMLタグ除去 + 日本語対応の正規化
           def cleanup(text)
             # まずHTMLタグを除去（元の実装を呼び出す）
             cleaned = original_cleanup(text)
-            
+
             # 非ASCII文字をClassifierReborn用にトークン化
             normalize_for_classifier(cleaned)
           end
@@ -352,6 +352,7 @@ Rails.application.config.to_prepare do
             # 非ASCIIは codepoint を ASCIIトークン化
             s.each_codepoint do |cp|
               next if cp < 128
+
               tokens << "u#{cp.to_s(16)}"
             end
 
