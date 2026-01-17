@@ -96,3 +96,5 @@ Decidim::Ai::SpamDetection.user_models = {
 # Refer to documentation for more details.
 #
 Decidim::Ai::SpamDetection.user_detection_service = "Decidim::Ai::SpamDetection::Service"
+
+Decidim::Ai::Language.formatter = "Decidim::Ai::Language::JapaneseFormatter"
