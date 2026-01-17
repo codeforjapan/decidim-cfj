@@ -5,7 +5,7 @@ module Decidim
     module Language
       class JapaneseFormatter < Formatter
         def cleanup(text)
-          s = super(text)
+          s = super
           normalize_for_classifier(s)
         end
 
