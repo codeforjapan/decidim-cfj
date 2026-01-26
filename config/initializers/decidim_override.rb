@@ -1,26 +1,6 @@
 # frozen_string_literal: true
 
 Rails.application.config.to_prepare do
-  # Decidim::Proposals::Admin::ProposalForm
-  #
-  # minimum title length should be 8
-  Decidim::Proposals::Admin::ProposalForm.validators.each do |validator|
-    if validator.instance_of?(ActiveModel::Validations::LengthValidator) &&
-       validator.attributes.first.match?(/^title_/)
-
-      fixed_options = validator.options.dup
-      fixed_options[:minimum] = 8
-      validator.instance_eval do
-        @options = fixed_options.freeze
-      end
-    end
-    # Override Decidim Awesome validation settings
-    # Set minimum title length to 8 characters instead of default 15
-    Decidim::DecidimAwesome.configure do |config|
-      config.validate_title_min_length = 8
-    end
-  end
-
   # load default definitions
   Decidim::Comments::SortedComments # rubocop:disable Lint/Void
   Decidim::Comments::CommentsController # rubocop:disable Lint/Void
