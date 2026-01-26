@@ -10,7 +10,10 @@ module.exports = {
         test: require.resolve("jquery"),
         loader: "expose-loader",
         options: {
-          exposes: ["$", "jQuery"]
+          exposes: [
+            { globalName: "$", override: true },
+            { globalName: "jQuery", override: true }
+          ]
         }
       },
       {
@@ -33,7 +36,9 @@ module.exports = {
         test: require.resolve("@rails/ujs"),
         loader: "expose-loader",
         options: {
-          exposes: ["Rails"]
+          exposes: [
+            { globalName: "Rails", override: false }
+          ]
         }
       },
       {
