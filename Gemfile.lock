@@ -332,7 +332,7 @@ GEM
     decidim-debates (0.30.3)
       decidim-comments (= 0.30.3)
       decidim-core (= 0.30.3)
-    decidim-decidim_awesome (0.13.1)
+    decidim-decidim_awesome (0.13.2)
       active_hashcash (~> 0.4.0)
       decidim-admin (>= 0.30.0, < 0.31)
       decidim-core (>= 0.30.0, < 0.31)
@@ -995,7 +995,7 @@ DEPENDENCIES
   decidim-ai (~> 0.30.3)
   decidim-broadlistening-view!
   decidim-conferences (~> 0.30.3)
-  decidim-decidim_awesome (= 0.13.1)
+  decidim-decidim_awesome (= 0.13.2)
   decidim-dev (= 0.30.3)
   decidim-navigation_maps!
   decidim-polis!
