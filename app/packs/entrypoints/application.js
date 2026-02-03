@@ -28,8 +28,3 @@
 // ES6 imports are executed in order, and leaflet_setup.js will run completely
 // before the subsequent plugin imports are evaluated
 import "src/decidim/leaflet_global";
-
-// Import plugins AFTER leaflet_setup - they will extend the global window.L
-import "leaflet.markercluster";
-import "leaflet.featuregroup.subgroup";
-import "leaflet-tilelayer-here";
