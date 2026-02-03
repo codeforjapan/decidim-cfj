@@ -9,10 +9,7 @@
 // They call require("leaflet") which returns window.L, and extend it.
 
 if (!window.L) {
-  const leafletModule = require("leaflet/dist/leaflet-src.js");
-  if (!window.L) {
-    window.L = leafletModule;
-  }
+  window.L = require("leaflet/dist/leaflet-src.js");
 }
 
 module.exports = window.L;
