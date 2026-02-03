@@ -1,4 +1,5 @@
 /* eslint-disable */
+const path = require("path");
 const { config } = require("shakapacker");
 const { InjectManifest } = require("workbox-webpack-plugin");
 const { EsbuildPlugin } = require("esbuild-loader");
@@ -37,7 +38,7 @@ module.exports = {
         loader: "expose-loader",
         options: {
           exposes: [
-            { globalName: "Rails", override: false }
+            { globalName: "Rails", override: true }
           ]
         }
       },
@@ -78,6 +79,11 @@ module.exports = {
     ]
   },
   resolve: {
+    alias: {
+      // Redirect all "leaflet" imports to our global wrapper
+      // This ensures all bundles share the same Leaflet instance with plugins attached
+      leaflet$: path.resolve(__dirname, "../../app/packs/src/decidim/leaflet_global.js")
+    },
     extensions: [".js", ".jsx", ".gql", ".graphql"],
     fallback: {
       crypto: false
