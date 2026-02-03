@@ -57,3 +57,10 @@ public/sw.js.*
 app/views/static/api/*
 tailwind.config.js
 app/views/static/docs/*
+
+## homata
+data/
+*.orig
+*.save
+*.0*
+

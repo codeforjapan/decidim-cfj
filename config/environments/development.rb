@@ -70,4 +70,26 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   # No precompilation on demand on first request
+  #Rails.application.configure do
+  #  config.hosts.clear
+  #end
+  config.hosts << "kinokawa.sekilab.global"
+  config.hosts << /.*\.sekilab\.global/
+  # ヘルスチェック用
+  config.hosts << "localhost"
+
+  #config.force_ssl = true
+  #
+  #config.action_dispatch.trusted_proxies = [
+  #  IPAddr.new("10.0.0.0/16"),
+  #  IPAddr.new("172.16.0.0/12"),
+  #  IPAddr.new("192.168.0.0/16")
+  #]
+  #
+  #Rails.application.config.action_dispatch.trusted_proxies = [
+  #  '127.0.0.1',          # localhost
+  #  '::1',                # IPv6 localhost
+  #  '10.0.0.0/16',        # 例: 172.17.0.0/16 などDockerの場合
+  #  '172.17.0.0/16'       # 例: 172.17.0.0/16 などDockerの場合
+  #]
 end

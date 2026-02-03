@@ -102,4 +102,10 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
   # Specify active_job sidekiq adapter
   config.active_job.queue_adapter = :sidekiq
+
+
+  config.hosts << "kinokawa.sekilab.global"
+  config.hosts << /.*\.sekilab\.global/
+  # ヘルスチェック用
+  config.hosts << "localhost"
 end
