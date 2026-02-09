@@ -1,7 +1,7 @@
 x-custom:
   app:
-    - &rails_env "development"
-    # - &rails_env "production"
+    # - &rails_env "development"
+    - &rails_env "production"
     - &redis_cache_url "${REDIS_CACHE_URL:-redis://redis:6379/0}"
   postgres:
     - &postgres_user "${DATABASE_USERNAME:-postgres}"
@@ -24,7 +24,7 @@ services:
   #    - app
 
   app:
-    image: decidim-cfj
+    image: decidim-kinokawa
     build:
       context: ./
       args:
@@ -32,10 +32,9 @@ services:
     # restart: always
     volumes:
       - .:/app
-      # - node_modules:/app/node_modules
-      - ./data/node_modules:/app/node_modules
-      # - rails-tmp:/app/tmp
-      - ./data/rails-tmp:/app/tmp
+      - node_modules:/app/node_modules
+      - rails-tmp:/app/tmp
+      - decidim-packs:/app/public/decidim-packs 
       # exclude volumes
       - /app/vendor
       - /app/log
@@ -43,20 +42,68 @@ services:
     ports:
       - 80:80
     environment:
-      #PORT: 3000
+      PORT: 80
       DATABASE_HOST: pg
       DATABASE_USERNAME: *postgres_user
       DATABASE_PASSWORD: *postgres_password
+      RDS_HOSTNAME: pg
+      RDS_DB_NAME: decidim_production
+      RDS_USERNAME: *postgres_user
+      RDS_PASSWORD: *postgres_password
+      RDS_PORT: 5432
       RAILS_ENV: *rails_env
       NODE_ENV: *rails_env
       REDIS_URL: *redis_cache_url
       REDIS_CACHE_URL: *redis_cache_url
+    env_file:
+      - .env
     depends_on:
       - pg
       - redis
     links:
       - pg
       - redis
+  # sidekiq (バックグラウンドジョブワーカー)
+  sidekiq:
+    image: decidim-kinokawa
+    build:
+      context: ./
+      args:
+        RAILS_ENV: *rails_env
+    command: bundle exec sidekiq
+    volumes:
+      - .:/app
+      - node_modules:/app/node_modules
+      - rails-tmp:/app/tmp
+      - decidim-packs:/app/public/decidim-packs
+      # exclude volumes (appと同じ除外設定)
+      - /app/vendor
+      - /app/log
+      - /app/.git
+    environment:
+      # PORTは不要
+      DATABASE_HOST: pg
+      DATABASE_USERNAME: *postgres_user
+      DATABASE_PASSWORD: *postgres_password
+      RDS_HOSTNAME: pg
+      RDS_DB_NAME: decidim_production
+      RDS_USERNAME: *postgres_user
+      RDS_PASSWORD: *postgres_password
+      RDS_PORT: 5432
+      RAILS_ENV: *rails_env
+      NODE_ENV: *rails_env
+      REDIS_URL: *redis_cache_url
+      REDIS_CACHE_URL: *redis_cache_url
+    env_file:
+      - .env
+    depends_on:
+      - app
+      - pg
+      - redis
+    links:
+      - pg
+      - redis
+
   pg:
     image: "ghcr.io/codeforjapan/postgresql_bigm:14-latest"
     volumes:
@@ -72,11 +119,11 @@ services:
     ports:
       - 6379:6379
     volumes:
-      # - redis-data:/data
-      - ./data/redis-data:/data
+      - redis-data:/data
 
-#volumes:
-#  node_modules: {}
+volumes:
 #  pg-data: {}
-#  redis-data: {}
-#  rails-tmp: {}
+  node_modules: {}
+  redis-data: {}
+  rails-tmp: {}
+  decidim-packs: {}

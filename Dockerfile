@@ -91,6 +91,5 @@ RUN yarn install \
 
 ENTRYPOINT ["entrypoint"]
 
-EXPOSE 3000
-
+EXPOSE 80
 CMD ["./bin/rails", "s", "-b", "0.0.0.0", "-p", "80"]
