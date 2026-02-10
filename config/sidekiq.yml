@@ -8,5 +8,11 @@
   - metrics
   - exports
   - translations
+  - spam_analysis
+  - user_report
+  - reminders
+  - close_meeting_reminder
+  - vote_reminder
+  - conference_diplomas
   - active_storage_analysis
   - active_storage_purge

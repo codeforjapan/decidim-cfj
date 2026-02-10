@@ -18,8 +18,6 @@ ja:
       question:
         origin_title: 起案者
         origin_url: 元のURL
-      user:
-        avatar: アバター
       user_extension:
         address: 住所
         birth_year: 生年(西暦)
@@ -75,9 +73,6 @@ ja:
     endorsement_buttons_cell:
       endorse: オススメする
     events:
-      gamification:
-        level_up:
-          email_subject: "%{badge_name} のバッジがレベル %{current_level} に達しました！"
       proposals:
         collaborative_draft_access_requester_accepted:
           email_intro: <a href="%{resource_path}">%{resource_title}</a> の共同草案の投稿者としてアクセスすることを承認されました。
@@ -121,9 +116,6 @@ ja:
         description: ユーザーからの報告数
       reported_users:
         description: 報告を受けたユーザー数
-    moderations:
-      actions:
-        hide: 非表示にする
     notifications_digest_mailer:
       header:
         real_time: リアルタイム
@@ -177,8 +169,6 @@ ja:
         first_login:
           actions:
             user_extension_authorization_handler: ユーザー拡張属性対応用
-    welcome_notification:
-      default_body: <p>こんにちは {{name}} さん, {{organization}} へご参加いただきありがとうございます。</p><ul><li>このサイトの使い方は、 <a href="{{help_url}}">ヘルプ</a> セクションをご参照ください。</li><li>目を通していただけると、最初のバッジを獲得できます。<a href="{{badges_url}}">全てのバッジの一覧</a> から、この {{organization}} への参加で獲得できるバッジを見ることができます。</li><li>他の人と一緒に参加し、この {{organization}} へ参加した経験をシェアしましょう。提案を作り、コメントし、議論を行い、共通の利益に貢献する方法を考え、議論に説得力をもたせ、主張を聞いたり読んだりしながら納得し、具体的かつ直接的な方法であなたの考えを表明し、忍耐と決断を持って対応し、自らの考えを守り、他人の考えを取り入れて協力し合いましょう。</li></ul>
   devise:
     invitations:
       edit:

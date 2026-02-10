@@ -29,7 +29,7 @@ describe "Admin manages officializations" do
     end
 
     it "cannot see user_extension fragment" do
-      visit Decidim::UserExtension::AdminEngine.routes.url_helpers.officializations_show_user_extension_path(user.id)
+      visit decidim_admin_user_extension_details.officializations_show_user_extension_path(user.id)
       expect(page).to have_no_content("参加者")
     end
   end
@@ -38,7 +38,7 @@ describe "Admin manages officializations" do
     before do
       switch_to_host(organization.host)
       login_as admin, scope: :user
-      visit decidim_admin.root_path
+      visit decidim_admin.root_path(locale: :ja)
       click_link "参加者"
     end
 
@@ -104,7 +104,7 @@ describe "Admin manages officializations" do
           end
         end
 
-        visit decidim_admin.root_path
+        visit decidim_admin.root_path(locale: :ja)
 
         users.each do |user|
           expect(page).to have_content("#{admin.name} が #{user.name} にいくつかのアクションを実行しました")
