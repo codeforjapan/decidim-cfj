@@ -1,5 +1,13 @@
 # Change Log
 
+## [1.16.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.16.0...v1.16.1) (2026-02-11)
+
+
+### Bug Fixes
+
+* add missing sidekiq queues for Decidim background jobs ([61bf27f](https://github.com/codeforjapan/decidim-cfj/commit/61bf27f31f03d74d1bc0e176aea82bceb9613c12))
+* adjust Sidekiq queue priorities and concurrency settings ([e59ebcc](https://github.com/codeforjapan/decidim-cfj/commit/e59ebcc5a160b0efe9acbc2acdd784e015b15c4a))
+
 ## [1.16.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.15.1...v1.16.0) (2025-12-24)
 
 
