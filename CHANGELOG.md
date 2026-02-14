@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.16.2](https://github.com/codeforjapan/decidim-cfj/compare/v1.16.1...v1.16.2) (2026-02-14)
+
+
+### Bug Fixes
+
+* handle nil author in Decidim::Comments::CommentSerializer to prevent NoMethodError ([fc835f5](https://github.com/codeforjapan/decidim-cfj/commit/fc835f5c0251b486de7ede61c2d54d21f53e4ae7))
+
 ## [1.16.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.16.0...v1.16.1) (2026-02-11)
 
 
