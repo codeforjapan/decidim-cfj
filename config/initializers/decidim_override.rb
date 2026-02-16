@@ -128,12 +128,6 @@ Rails.application.config.to_prepare do
     @transliterators[:en] = I18n::Backend::Transliterator.get(->(string) { string })
   end
 
-  module Decidim
-    config_accessor :max_results_options
-  end
-
-  Decidim.max_results_options = [6, 9, 12, 15]
-
   # Insert `app/views` into Cell::ViewModel.view_paths to load application's views
   Cell::ViewModel.view_paths.insert(1, Rails.root.join("app/views"))
 
