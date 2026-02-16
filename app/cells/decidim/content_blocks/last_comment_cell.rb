@@ -62,9 +62,7 @@ module Decidim
             current_user:
           ).query.where(resource_type: "Decidim::Comments::Comment")
 
-          if participatory_space_filter.present?
-            query = query.where(participatory_space_filter)
-          end
+          query = query.where(participatory_space_filter) if participatory_space_filter.present?
 
           query.limit(comments_to_show * 6)
         end

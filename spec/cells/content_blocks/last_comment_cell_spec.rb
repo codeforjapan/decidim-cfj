@@ -55,16 +55,16 @@ module Decidim
           my_cell.send(:comments)
 
           expect(resource_type_query).to have_received(:where).with(hash_including(
-            participatory_space_type: "Decidim::ParticipatoryProcess",
-            participatory_space_id: participatory_process.id
-          ))
+                                                                      participatory_space_type: "Decidim::ParticipatoryProcess",
+                                                                      participatory_space_id: participatory_process.id
+                                                                    ))
           expect(process_scoped_query).to have_received(:limit).with(18)
         end
       end
 
       context "when content block belongs to assembly scope" do
         let(:scope_name) { :assembly_homepage }
-        let(:scoped_resource_id) { 12345 }
+        let(:scoped_resource_id) { 12_345 }
         let(:assembly_scoped_query) { instance_double(ActiveRecord::Relation) }
 
         before do
@@ -76,9 +76,9 @@ module Decidim
           my_cell.send(:comments)
 
           expect(resource_type_query).to have_received(:where).with(hash_including(
-            participatory_space_type: "Decidim::Assembly",
-            participatory_space_id: scoped_resource_id
-          ))
+                                                                      participatory_space_type: "Decidim::Assembly",
+                                                                      participatory_space_id: scoped_resource_id
+                                                                    ))
           expect(assembly_scoped_query).to have_received(:limit).with(18)
         end
       end
