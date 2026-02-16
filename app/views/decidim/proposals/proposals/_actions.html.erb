@@ -2,9 +2,11 @@
   <%= cell("decidim/endorsement_block", @proposal) %>
   <%= cell "decidim/comments_button", nil %>
 
-  <div class="ml-auto lg:ml-0">
-    <%= cell "decidim/share_widget", @proposal %>
-  </div>
+  <% if !current_component.settings[:share_button_disabled] || !current_component.settings.share_button_disabled? %>
+    <div class="ml-auto lg:ml-0">
+      <%= cell "decidim/share_widget", @proposal %>
+    </div>
+  <% end %>
 </section>
 
 <%= cell "decidim/endorsers_list", @proposal %>
