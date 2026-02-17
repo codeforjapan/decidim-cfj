@@ -229,4 +229,42 @@ Rails.application.config.to_prepare do
       errors.add(:nickname, :taken) if Decidim::UserBaseEntity.exists?(nickname: nickname.strip, organization: current_organization)
     end
   end
+
+  # ----------------------------------------
+
+  # Fix CommentSerializer NoMethodError when author is deleted
+  # cf. https://github.com/decidim/decidim/pull/13592 (comments が修正漏れ)
+  module DecidimCommentsCommentSerializerNilAuthorPatch
+    def serialize
+      {
+        id: resource.id,
+        created_at: resource.created_at,
+        body: resource.body.values.first,
+        locale: resource.body.keys.first,
+        author: {
+          id: resource.author.try(:id),
+          name: resource.author.try(:name)
+        },
+        alignment: resource.alignment,
+        depth: resource.depth,
+        user_group: {
+          id: resource.user_group.try(:id),
+          name: resource.user_group.try(:name) || empty_translatable
+        },
+        commentable_id: resource.decidim_commentable_id,
+        commentable_type: resource.decidim_commentable_type,
+        root_commentable_url:
+      }
+    end
+  end
+
+  Decidim::Comments::CommentSerializer # rubocop:disable Lint/Void
+
+  module Decidim
+    module Comments
+      class CommentSerializer
+        prepend DecidimCommentsCommentSerializerNilAuthorPatch
+      end
+    end
+  end
 end
