@@ -1,5 +1,18 @@
 # Change Log
 
+## [1.17.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.16.1...v1.17.0) (2026-02-17)
+
+
+### Features
+
+* last comments by participatory space scope in LastCommentCell ([7442b2e](https://github.com/codeforjapan/decidim-cfj/commit/7442b2efced6cf36de7930c3dc1d18e6fe923923))
+* register last_comment content block for participatory process and assembly homepages ([4b4e185](https://github.com/codeforjapan/decidim-cfj/commit/4b4e1853d1f870573903d775ef8c6b7da8f41ec6))
+
+
+### Bug Fixes
+
+* handle nil author in Decidim::Comments::CommentSerializer to prevent NoMethodError ([fc835f5](https://github.com/codeforjapan/decidim-cfj/commit/fc835f5c0251b486de7ede61c2d54d21f53e4ae7))
+
 ## [1.16.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.16.0...v1.16.1) (2026-02-11)
 
 
