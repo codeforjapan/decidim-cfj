@@ -56,14 +56,36 @@ module Decidim
       end
 
       def comments
-        @comments ||= Decidim::LastActivity.new(
-          current_organization,
-          current_user:
-        ).query.where(resource_type: "Decidim::Comments::Comment").limit(comments_to_show * 6)
+        @comments ||= begin
+          query = Decidim::LastActivity.new(
+            current_organization,
+            current_user:
+          ).query.where(resource_type: "Decidim::Comments::Comment")
+
+          query = query.where(participatory_space_filter) if participatory_space_filter.present?
+
+          query.limit(comments_to_show * 6)
+        end
       end
 
       def comments_to_show
         options[:comments_count] || 3
+      end
+
+      def participatory_space_filter
+        return if model.scoped_resource_id.blank?
+        return if participatory_space_model_class_name.blank?
+
+        {
+          participatory_space_type: participatory_space_model_class_name,
+          participatory_space_id: model.scoped_resource_id
+        }
+      end
+
+      def participatory_space_model_class_name
+        @participatory_space_model_class_name ||= Decidim.participatory_space_manifests.find do |manifest|
+          manifest.content_blocks_scope_name == model.scope_name.to_s
+        end&.model_class_name
       end
     end
   end
