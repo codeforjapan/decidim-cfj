@@ -47,7 +47,7 @@ services:
       - pg
       - redis
   pg:
-    image: "ghcr.io/codeforjapan/postgresql_bigm:14-latest"
+    image: "ghcr.io/codeforjapan/postgresql_bigm:16-latest"
     volumes:
       - pg-data:/var/lib/postgresql/data
     environment:
