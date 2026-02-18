@@ -1,5 +1,13 @@
 # Change Log
 
+## [1.17.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.17.0...v1.17.1) (2026-02-18)
+
+
+### Bug Fixes
+
+* update PostgreSQL image to version 16 in docker-compose ([a2ecca5](https://github.com/codeforjapan/decidim-cfj/commit/a2ecca50fc704cc8e7f629ddc8300eaa942421ba))
+* update PostgreSQL image to version 16 in GitHub Actions workflow ([7849d55](https://github.com/codeforjapan/decidim-cfj/commit/7849d557530b37079e762f4ea1dec196ad8512d6))
+
 ## [1.17.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.16.1...v1.17.0) (2026-02-17)
 
 
