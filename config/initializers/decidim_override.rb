@@ -2,33 +2,11 @@
 
 Rails.application.config.to_prepare do
   # load default definitions
-  Decidim::Comments::SortedComments # rubocop:disable Lint/Void
   Decidim::Comments::CommentsController # rubocop:disable Lint/Void
   Decidim::Comments::CommentsHelper # rubocop:disable Lint/Void
 
   module Decidim
     module Comments
-      class SortedComments < Decidim::Query
-        # override
-        def query
-          scope = base_scope
-                  .includes(:author, :user_group, :up_votes, :down_votes)
-
-          case @options[:order_by]
-          when "older"
-            order_by_older(scope)
-          when "recent"
-            order_by_recent(scope)
-          when "best_rated"
-            order_by_best_rated(scope)
-          when "most_discussed"
-            order_by_most_discussed(scope)
-          else # rubocop:disable Lint/DuplicateBranch
-            order_by_older(scope)
-          end
-        end
-      end
-
       class CommentsController < Decidim::Comments::ApplicationController
         private
 
