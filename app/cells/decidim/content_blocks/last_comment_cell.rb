@@ -33,7 +33,7 @@ module Decidim
         comments.includes([:user]).each do |comment|
           break if valid_comments_count == comments_to_show
 
-          if comment.visible_for?(current_user)
+          if visible_comment?(comment)
             @valid_comments << comment
             valid_comments_count += 1
           end
@@ -66,6 +66,17 @@ module Decidim
 
           query.limit(comments_to_show * 6)
         end
+      end
+
+      # When displayed on a participatory space landing page, the user already
+      # has access to the space. ActionLog#visible_for? is too restrictive here
+      # because its lazy_relation applies .published scope, which excludes
+      # unpublished spaces even for admins. We use a simpler check instead.
+      def visible_comment?(action_log)
+        return action_log.visible_for?(current_user) if participatory_space_filter.blank?
+
+        resource = action_log.resource_lazy
+        resource.present? && !resource.try(:deleted?) && !resource.try(:hidden?)
       end
 
       def comments_to_show
