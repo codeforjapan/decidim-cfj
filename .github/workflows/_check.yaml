@@ -6,7 +6,7 @@ on:
       ruby-version:
         type: string
         required: false
-        default: 3.2.6
+        default: 3.3.4
 
 jobs:
   rubocop:
@@ -74,7 +74,7 @@ jobs:
           which mogrify
           mogrify -version
 
-      - name: Set up Ruby 3.2.6
+      - name: Set up Ruby 3.3.4
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ inputs.ruby-version }}
@@ -112,12 +112,12 @@ jobs:
 
       - name: Migrate DB
         run: |
-          bundle exec rails db:create db:migrate
+          SKIP_REDIS_SETUP=true bundle exec rails db:create db:migrate
 
       - name: Precompile assets
-        run: bundle exec rails assets:precompile
+        run: SKIP_REDIS_SETUP=true bundle exec rails assets:precompile
 
       - name: Test with RSpec
         run: |
           export PATH=${GITHUB_WORKSPACE}/vendor/imagemagick7/bin:${PATH}
-          bundle exec rails spec
+          SKIP_REDIS_SETUP=true bundle exec rails spec

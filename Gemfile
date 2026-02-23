@@ -4,14 +4,14 @@ source "https://rubygems.org"
 
 ruby RUBY_VERSION
 
-gem "decidim", "0.29.2"
+gem "decidim", "0.30.5"
 
-gem "decidim-decidim_awesome", git: "https://github.com/codeforjapan/decidim-module-decidim_awesome.git", branch: "main-2025-12-12"
+gem "decidim-decidim_awesome", git: "https://github.com/codeforjapan/decidim-module-decidim_awesome.git", branch: "main-2026-02-07"
 
-gem "decidim-term_customizer", git: "https://github.com/codeforjapan/decidim-module-term_customizer.git", branch: "029-ja"
+gem "decidim-term_customizer", git: "https://github.com/codeforjapan/decidim-module-term_customizer.git", branch: "030-ja"
 
-gem "decidim-navigation_maps", git: "https://github.com/codeforjapan/decidim-module-navigation_maps.git", branch: "upgrade-0.29-2025-03-12"
-gem "decidim-polis", git: "https://github.com/codeforjapan/decidim-polis.git", branch: "update-0-29-2"
+gem "decidim-navigation_maps", git: "https://github.com/codeforjapan/decidim-module-navigation_maps.git", branch: "upgrade-0.30-2025-10-04"
+gem "decidim-polis", git: "https://github.com/codeforjapan/decidim-polis.git", branch: "update-0-30-5"
 
 gem "bootsnap"
 
@@ -30,7 +30,7 @@ gem "omniauth-cityos-dcp", git: "https://github.com/TheDesignium/omniauth-cityos
 gem "omniauth-line_login", path: "omniauth-line_login"
 gem "omniauth-rails_csrf_protection"
 
-gem "decidim-broadlistening-view", git: "https://github.com/takahashim/decidim-broadlistening-view.git", branch: "029-stable"
+gem "decidim-broadlistening-view", git: "https://github.com/takahashim/decidim-broadlistening-view.git", branch: "030-stable"
 gem "decidim-user_extension", path: "decidim-user_extension"
 
 gem "slack-ruby-client"
@@ -39,7 +39,7 @@ group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
   gem "figaro"
 
-  gem "decidim-dev", "0.29.2"
+  gem "decidim-dev", "0.30.5"
   gem "dotenv-rails"
   gem "factory_bot_rails"
   gem "rspec-rails"
@@ -65,3 +65,7 @@ end
 
 gem "rubyzip", ">= 1.0.0"
 gem "zip-zip"
+
+gem "decidim-conferences", "~> 0.30.5"
+
+gem "decidim-ai", "~> 0.30.5"

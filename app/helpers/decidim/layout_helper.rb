@@ -88,6 +88,12 @@ module Decidim
       html_properties = options.with_indifferent_access.transform_keys(&:dasherize).slice("width", "height", "aria-label", "role", "aria-hidden", "class", "style")
       html_properties = default_html_properties.merge(html_properties)
 
+      if name == "wechat-line"
+        html_properties = html_properties.merge({ "aria-label" => I18n.t("decidim.author.comments.other") }).except("aria-hidden")
+      elsif name == "heart-line"
+        html_properties = html_properties.merge({ "aria-label" => I18n.t("decidim.author.endorsements.other") }).except("aria-hidden")
+      end
+
       href = Decidim.cors_enabled ? "" : asset_pack_path("media/images/remixicon.symbol.svg")
 
       content_tag :svg, html_properties do
@@ -180,6 +186,12 @@ module Decidim
       main_app.url_for(params)
     rescue ActionController::UrlGenerationError
       "#{request.base_url}#{"?#{params.to_query}" unless params.empty?}"
+    end
+
+    def root_url
+      return onboarding_manager.root_path if current_user&.ephemeral?
+
+      decidim.root_url(host: current_organization.host)
     end
 
     private
