@@ -14,15 +14,20 @@ module Decidim
       end
 
       def activities_query
-        @activities_query ||= Decidim::ParticipatorySpaceLastActivity.new(resource).query
+        @activities_query ||= space_activities_query
       end
 
       private
 
+      # pass current_user to LastActivity so that activities in private/unpublished spaces are visible to authorized users.
+      # Upstream ParticipatorySpaceLastActivity does not pass current_user.
+      def space_activities_query
+        Decidim::LastActivity.new(resource.organization, current_user:).query.where(participatory_space: resource)
+      end
+
       def ordered_users_with_activities
         @ordered_users_with_activities ||=
-          Decidim::ParticipatorySpaceLastActivity
-          .new(resource).query
+          space_activities_query
           .where.not(user: nil)
           .select("decidim_user_id, MAX(decidim_action_logs.created_at)")
           .group("decidim_user_id")
