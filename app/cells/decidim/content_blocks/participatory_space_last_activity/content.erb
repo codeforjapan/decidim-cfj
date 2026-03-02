@@ -1,3 +1,12 @@
+<%
+  _space = resource
+  _raw = Decidim::ActionLog.where(
+    participatory_space_type: _space.class.name,
+    participatory_space_id: _space.id
+  ).count
+  _query_count = activities_query.count
+%>
+<!-- DEBUG last_activity: space=<%= _space.class.name %>#<%= _space.id %> raw=<%= _raw %> query=<%= _query_count %> -->
 <div class="content-block__title">
   <h2 class="h2 decorator"><%= t("name", scope: "decidim.content_blocks.last_activity") %></h2>
   <div class="participatory-space__metadata-link-endorsers">
