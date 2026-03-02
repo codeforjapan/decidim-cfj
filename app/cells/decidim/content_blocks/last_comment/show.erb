@@ -1,3 +1,5 @@
+<!-- DEBUG last_comment: scope=<%= model.scope_name %> scoped_id=<%= model.scoped_resource_id %> comments_query=<%= comments.count %> valid=<%= valid_comments.size %> -->
+<% if valid_comments.any? %>
 <section id="last_comment" class="home__section">
   <div class="home__section-header">
     <h2 class="home__section-title">
@@ -12,3 +14,4 @@
     <%= cell "decidim/last_comment_activities", column_activities %>
   <% end %>
 </section>
+<% end %>
