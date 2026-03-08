@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.18.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.18.0...v1.18.1) (2026-03-08)
+
+
+### Bug Fixes
+
+* update decidim-broadlistening-view to v0.1.2 ([67c3728](https://github.com/codeforjapan/decidim-cfj/commit/67c37281dd4e13068240bcd474011262be67dfc8))
+
 ## [1.18.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.17.0...v1.18.0) (2026-03-03)
 
 
