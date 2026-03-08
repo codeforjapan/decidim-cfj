@@ -46,12 +46,12 @@ GIT
 
 GIT
   remote: https://github.com/takahashim/decidim-broadlistening-view.git
-  revision: 8813e9bd008f9714aee75bc1648e57edb5fd2588
+  revision: 7f129612ade415aebe4646c37591692b4c58a61c
   branch: 029-stable
   specs:
-    decidim-broadlistening-view (0.1.0)
-      decidim-admin (~> 0.29.0)
-      decidim-core (~> 0.29.0)
+    decidim-broadlistening-view (0.1.2)
+      decidim-admin (>= 0.29.0)
+      decidim-core (>= 0.29.0)
 
 PATH
   remote: decidim-user_extension
