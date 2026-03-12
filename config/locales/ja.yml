@@ -35,6 +35,11 @@ ja:
       organization_appearance:
         form:
           mobile_logo_help: "モバイル版で表示されるロゴ画像です。推奨サイズ: 360x120px"
+      taxonomy_filters_selector:
+        new:
+          items_count: "%{count}個の項目"
+        show:
+          items_count: "%{count}個の項目"
     amendments:
       amendable:
         button: '修正'
