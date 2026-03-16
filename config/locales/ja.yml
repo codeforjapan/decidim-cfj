@@ -28,6 +28,11 @@ ja:
         visible: 表示する
   decidim:
     accountability:
+      admin:
+        results:
+          bulk_actions:
+            dates_form:
+              end_date: 終了日
       results:
         nav_breadcrumb:
           global: 全体
@@ -51,6 +56,11 @@ ja:
       user_extension_authorization_handler:
         explanation: 'ユーザー拡張属性保持用'
         name: 'ユーザー拡張属性'
+    budgets:
+      admin:
+        projects:
+          index:
+            change_budget: 予算を変更
     content_blocks:
       last_comment:
         name: 最近のコメント
@@ -121,6 +131,12 @@ ja:
         description: ユーザーからの報告数
       reported_users:
         description: 報告を受けたユーザー数
+    moderations:
+      admin:
+        reportable:
+          bulk_action:
+            unhide:
+              invalid: モデレーションが選択されていません。
     notifications_digest_mailer:
       header:
         real_time: リアルタイム
@@ -157,6 +173,9 @@ ja:
       application_helper:
         filter_origin_values:
           citizens: 一般参加者
+      forms:
+        errors:
+          device_not_supported: お使いのデバイスは位置情報サービスをサポートしていません。アドレスを手動で入力してください。
       models:
         show:
           back: 戻る
@@ -169,6 +188,8 @@ ja:
           delete_image: 画像の削除
           gallery_legend: "(オプション) 提案カードに画像を追加"
           select_a_category: カテゴリーを選択
+        wizard_aside:
+          back_from_step_2: 編集に戻る
     verifications:
       authorizations:
         first_login:
