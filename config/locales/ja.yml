@@ -20,6 +20,8 @@ ja:
         origin_url: 元のURL
       user:
         avatar: アバター
+      taxonomy_filter:
+        internal_name: 管理用ラベル
       user_extension:
         address: 住所
         birth_year: 生年(西暦)
@@ -37,6 +39,9 @@ ja:
       organization_appearance:
         form:
           mobile_logo_help: "モバイル版で表示されるロゴ画像です。推奨サイズ: 360x120px"
+      taxonomy_filter:
+        table:
+          internal_name: 管理用ラベル
     amendments:
       amendable:
         button: '修正'
