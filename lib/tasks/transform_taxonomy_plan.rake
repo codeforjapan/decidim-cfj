@@ -20,6 +20,7 @@ namespace :decidim do
       end
 
       new_categories = {}
+      collisions = Hash.new { |hash, key| hash[key] = [] }
 
       categories_section.each do |_root_name, root_data|
         taxonomies = root_data["taxonomies"] || {}
@@ -27,6 +28,7 @@ namespace :decidim do
 
         taxonomies.each do |intermediate_name, intermediate_data|
           new_root_name = intermediate_name.sub(INTERMEDIATE_PREFIXES, "カテゴリ: ")
+          collisions[new_root_name] << intermediate_name
 
           children = intermediate_data["children"] || {}
           matching_filter = filters.find { |f| f["internal_name"] == intermediate_name }
@@ -49,11 +51,25 @@ namespace :decidim do
             new_filter["participatory_space_manifests"] = matching_filter["participatory_space_manifests"]
           end
 
+          next if new_categories.key?(new_root_name)
+
           new_categories[new_root_name] = {
             "taxonomies" => children,
             "filters" => [new_filter]
           }
         end
+      end
+
+      duplicated_roots = collisions.select { |_name, sources| sources.uniq.size > 1 }
+      if duplicated_roots.any?
+        puts "ERROR: Duplicate root names detected after flattening. Aborting to avoid data loss:"
+        duplicated_roots.each do |new_root_name, sources|
+          puts "  - #{new_root_name}"
+          sources.uniq.each { |source| puts "      from: #{source}" }
+        end
+        puts ""
+        puts "Please rename conflicting participatory spaces or adjust the plan manually."
+        abort "Flattening aborted due to duplicate root names."
       end
 
       data["imported_taxonomies"]["decidim_categories"] = new_categories
@@ -101,6 +117,8 @@ namespace :decidim do
           next
         end
 
+        new_root_names_map = Hash.new { |hash, key| hash[key] = [] }
+
         category_roots.each do |old_root|
           logger.info "  Category root: #{old_root.name[locale]} (id: #{old_root.id})"
 
@@ -113,6 +131,7 @@ namespace :decidim do
           intermediates.each do |intermediate|
             categories = intermediate.children
             new_root_name_value = intermediate.name[locale]&.sub(INTERMEDIATE_PREFIXES, "カテゴリ: ")
+            new_root_names_map[new_root_name_value] << intermediate
 
             # Check 1: Does the intermediate name match expected pattern?
             unless intermediate.name[locale]&.match?(INTERMEDIATE_PREFIXES)
@@ -154,6 +173,18 @@ namespace :decidim do
             end
           end
         end
+
+        duplicated_new_roots = new_root_names_map.select { |_name, intermediates| intermediates.size > 1 }
+        duplicated_new_roots.each do |new_name, intermediates|
+          has_issues = true
+          logger.info "    [ERROR] Duplicate new root name detected: \"#{new_name}\""
+          logger.info "            The following intermediates would collide:"
+          intermediates.each do |intermediate|
+            logger.info "              - #{intermediate.name[locale]} (id: #{intermediate.id})"
+          end
+          logger.info "            Flattening would skip data for some intermediates. Resolve before running flatten."
+        end
+
         logger.info ""
       end
 
@@ -177,6 +208,26 @@ namespace :decidim do
         category_roots = find_category_roots(organization)
         if category_roots.empty?
           logger.info "  No category root taxonomy found. Skipping."
+          next
+        end
+
+        new_root_names_map = Hash.new { |hash, key| hash[key] = [] }
+        category_roots.each do |old_root|
+          old_root.children.each do |intermediate|
+            new_root_name_value = intermediate.name[locale]&.sub(INTERMEDIATE_PREFIXES, "カテゴリ: ")
+            new_root_names_map[new_root_name_value] << intermediate
+          end
+        end
+        duplicated_new_roots = new_root_names_map.select { |_name, intermediates| intermediates.size > 1 }
+        if duplicated_new_roots.any?
+          logger.error "  ERROR: Duplicate new root names detected. Aborting flatten for this organization."
+          duplicated_new_roots.each do |new_name, intermediates|
+            logger.error "    - #{new_name}"
+            intermediates.each do |intermediate|
+              logger.error "        from intermediate: #{intermediate.name[locale]} (id: #{intermediate.id})"
+            end
+          end
+          logger.error "  Resolve naming collisions and rerun."
           next
         end
 
