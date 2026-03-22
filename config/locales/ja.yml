@@ -64,6 +64,10 @@ ja:
         projects:
           index:
             change_budget: 予算を変更
+      projects:
+        budget_summary:
+          checked_out:
+            description: 予算にすでに投票しています。もし考えが変わった場合は、投票を削除できます。
     content_blocks:
       last_comment:
         name: 最近のコメント
@@ -193,6 +197,9 @@ ja:
           select_a_category: カテゴリーを選択
         wizard_aside:
           back_from_step_2: 編集に戻る
+    shared:
+      confirm_modal:
+        title: 確認
     verifications:
       authorizations:
         first_login:
