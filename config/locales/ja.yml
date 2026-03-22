@@ -37,6 +37,9 @@ ja:
         nav_breadcrumb:
           global: 全体
     admin:
+      conference_copies:
+        new:
+          select: 複製したいデータを選択してください
       organization_appearance:
         form:
           mobile_logo_help: "モバイル版で表示されるロゴ画像です。推奨サイズ: 360x120px"
