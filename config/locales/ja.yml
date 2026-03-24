@@ -37,6 +37,9 @@ ja:
         nav_breadcrumb:
           global: 全体
     admin:
+      conference_copies:
+        new:
+          select: 複製したいデータを選択してください
       organization_appearance:
         form:
           mobile_logo_help: "モバイル版で表示されるロゴ画像です。推奨サイズ: 360x120px"
@@ -61,6 +64,10 @@ ja:
         projects:
           index:
             change_budget: 予算を変更
+      projects:
+        budget_summary:
+          checked_out:
+            description: 予算にすでに投票しています。もし考えが変わった場合は、投票を削除できます。
     content_blocks:
       last_comment:
         name: 最近のコメント
@@ -190,6 +197,9 @@ ja:
           select_a_category: カテゴリーを選択
         wizard_aside:
           back_from_step_2: 編集に戻る
+    shared:
+      confirm_modal:
+        title: 確認
     verifications:
       authorizations:
         first_login:
