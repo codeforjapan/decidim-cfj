@@ -1,5 +1,40 @@
 # Change Log
 
+## [1.18.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.18.0...v1.18.1) (2026-03-08)
+
+
+### Bug Fixes
+
+* update decidim-broadlistening-view to v0.1.2 ([67c3728](https://github.com/codeforjapan/decidim-cfj/commit/67c37281dd4e13068240bcd474011262be67dfc8))
+
+## [1.18.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.17.0...v1.18.0) (2026-03-03)
+
+
+### Features
+
+* **GA:** disable EOLRuby checks ([1149075](https://github.com/codeforjapan/decidim-cfj/commit/11490750fa162e51806aa83e2a72e3415d1a7f4b))
+
+
+### Bug Fixes
+
+* show recent activities on unpublished/private space landing pages ([3f568ec](https://github.com/codeforjapan/decidim-cfj/commit/3f568ecb2e8812981c8cddc97778fc9a5ef97023))
+* show recent comments on unpublished/private space landing pages ([fda5eb9](https://github.com/codeforjapan/decidim-cfj/commit/fda5eb93bbbb0110c56d79c9c807f4fdb807cf85))
+* update PostgreSQL image to version 16 in docker-compose ([a2ecca5](https://github.com/codeforjapan/decidim-cfj/commit/a2ecca50fc704cc8e7f629ddc8300eaa942421ba))
+* update PostgreSQL image to version 16 in GitHub Actions workflow ([7849d55](https://github.com/codeforjapan/decidim-cfj/commit/7849d557530b37079e762f4ea1dec196ad8512d6))
+
+## [1.17.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.16.1...v1.17.0) (2026-02-17)
+
+
+### Features
+
+* last comments by participatory space scope in LastCommentCell ([7442b2e](https://github.com/codeforjapan/decidim-cfj/commit/7442b2efced6cf36de7930c3dc1d18e6fe923923))
+* register last_comment content block for participatory process and assembly homepages ([4b4e185](https://github.com/codeforjapan/decidim-cfj/commit/4b4e1853d1f870573903d775ef8c6b7da8f41ec6))
+
+
+### Bug Fixes
+
+* handle nil author in Decidim::Comments::CommentSerializer to prevent NoMethodError ([fc835f5](https://github.com/codeforjapan/decidim-cfj/commit/fc835f5c0251b486de7ede61c2d54d21f53e4ae7))
+
 ## [1.16.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.16.0...v1.16.1) (2026-02-11)
 
 

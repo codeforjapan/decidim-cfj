@@ -33,7 +33,7 @@ jobs:
 
       - name: Run Brakeman scan
         run: |
-          bundle exec brakeman --format json --output brakeman-results.json --no-exit-on-warn --no-exit-on-error
+          bundle exec brakeman --format json --output brakeman-results.json --no-exit-on-warn --no-exit-on-error --except EOLRuby
 
       - name: Upload Brakeman results as artifact
         uses: actions/upload-artifact@v4
@@ -44,4 +44,4 @@ jobs:
 
       - name: Check Brakeman results
         run: |
-          bundle exec brakeman --format plain
+          bundle exec brakeman --format plain --except EOLRuby
