@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.18.2](https://github.com/codeforjapan/decidim-cfj/compare/v1.18.1...v1.18.2) (2026-03-31)
+
+
+### Bug Fixes
+
+* increase PumaWorkerKiller RAM limit to 3072 MB ([39e73de](https://github.com/codeforjapan/decidim-cfj/commit/39e73de666f6b67cb87a2edf5ece79279faf7404))
+
 ## [1.18.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.18.0...v1.18.1) (2026-03-08)
 
 
