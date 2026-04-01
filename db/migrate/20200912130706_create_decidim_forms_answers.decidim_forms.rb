@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# This migration comes from decidim_forms (originally 20170515144119)
+# This file has been modified by `decidim upgrade:migrations` task on 2025-08-05 08:11:54 UTC
 class CreateDecidimFormsAnswers < ActiveRecord::Migration[5.0]
   def change
     create_table :decidim_forms_answers do |t|

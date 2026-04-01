@@ -1,0 +1,302 @@
+ja:
+  activemodel:
+    attributes:
+      component:
+        taxonomy_filters: 分類フィルター
+      taxonomy:
+        name: 分類名
+      taxonomy_filter:
+        root_taxonomy_id: 分類から
+    models:
+      decidim/proposals/admin/update_proposal_taxonomies_event: 提案の分類が変更されました
+  decidim:
+    admin:
+      areas:
+        deprecated: エリアは非推奨となっており、将来のバージョンで削除される予定です。代わりに分類を使用してください。現在、エリアを使用している唯一のモジュールはイニシアチブモジュールです。
+      filters:
+        meetings:
+          taxonomies_part_of_contains:
+            label: 分類
+        projects:
+          taxonomies_part_of_contains:
+            label: 分類
+        proposals:
+          taxonomies_part_of_contains:
+            label: 分類
+        results:
+          taxonomies_part_of_contains:
+            label: 分類
+        taxonomies:
+          taxonomy_id_eq:
+            label: 分類
+      menu:
+        taxonomies: 分類
+        taxonomy_filters: 分類フィルター
+      scopes:
+        deprecated: スコープは非推奨となっており、将来のバージョンで削除される予定です。代わりに分類を使用してください。現在、スコープを使用している唯一のモジュールはイニシアチブモジュールです。
+      taxonomies:
+        actions:
+          destroy: 分類と項目を削除
+          edit: 分類と項目を編集
+        breadcrumb:
+          edit: 分類を編集
+          new: 新しい分類
+        create:
+          invalid: 分類の作成中に問題が発生しました。
+          success: 分類を作成しました。
+        destroy:
+          invalid: 分類の削除中に問題が発生しました。
+          success: 分類を削除しました。
+        edit:
+          description: この分類の項目は、参加型スペースやコンポーネントなどのリソースを分類したりフィルターするために使用されます。 リストの順番を変更するにはドラッグアンドドロップを使用してください。
+          no_items: この分類には現状項目がありません。項目のリストを作成して、参加型スペースやコンポーネントなどのリソースを分類またはフィルタリングできます。項目は最大3レベルまで入れ子にできます。
+          title: 分類「%{taxonomy_name} 」を編集
+        index:
+          description: 分類とフィルターを使用することで、管理者はコンテンツを整理して分類することができます。たとえば、都市の地区や近隣エリアを分類として追加し、特定の地区や近隣エリアだけを対象としたフィルターを作成することが可能です。
+          new_taxonomy: 新しい分類
+          no_items_found: 検索条件に一致する分類が見つかりませんでした。
+        new:
+          create: 分類を作成
+          title: 新しい分類
+        no_taxonomies: 現在、分類はありません。ここで分類のリストを作成し、それぞれに項目を定義してリソースを分類またはフィルタリングします。
+        taxonomy_actions:
+          confirm_destroy: '%{name} を削除してもよろしいですか？その場合全ての子の項目も削除されます。 注意: この分類を使用しているリソース自体は影響を受けませんが、この分類への参照は失われます。'
+        total_items: 分類内の項目
+        update:
+          invalid: 分類の更新中に問題が発生しました。
+          success: 分類を更新しました。
+      taxonomy_filters:
+        create:
+          error: 分類フィルタの作成中に問題が発生しました。
+          success: 分類フィルターを作成しました。
+        destroy:
+          error: 分類フィルタの削除中に問題が発生しました。
+          success: 分類フィルタを削除しました。
+        edit:
+          title: 分類フィルタを編集
+          update: 分類フィルタを更新
+        form:
+          no_items: この分類で使える項目はありません。分類設定で項目を作成できます。
+        index:
+          description: 分類フィルターは、管理者が分類に基づいて参加型スペースを分類したりフィルタリングしたりできるようにするものです。例えば、地理的範囲でプロセスをソートするために分類フィルターを追加することができます。
+          empty: 現在、分類フィルターはありません。分類フィルターのリストを作成し、分類に基づいて参加型スペースをソートおよびフィルタリングしてください。
+        new:
+          create: 分類フィルタを作成
+          title: 新規分類フィルター
+        update:
+          error: 分類フィルタの更新に問題がありました。
+          success: 分類フィルターを更新しました。
+      taxonomy_filters_selector:
+        taxonomies_select:
+          select_taxonomy: 分類を選択
+          taxonomies: 分類
+      titles:
+        taxonomies: 分類
+        taxonomy_filters: '"%{taxonomy}" の分類フィルター'
+    admin_log:
+      taxonomy:
+        create: '%{user_name} が分類 %{resource_name} を作成しました'
+        create_with_parent: '%{user_name} が 分類 %{parent_taxonomy} 内に分類 %{resource_name} を作成しました'
+        delete: '%{user_name} が分類 %{resource_name} を削除しました'
+        delete_with_parent: '%{user_name} が 分類 %{parent_taxonomy} 内の分類 %{resource_name} を削除しました'
+        update: '%{user_name} が分類 %{resource_name} を更新しました'
+        update_with_parent: '%{user_name} が 分類 %{parent_taxonomy} 内の分類 %{resource_name} を更新しました'
+      taxonomy_filter:
+        create_with_filter_info: '%{user_name} が分類 "%{taxonomy_name}" に基づくフィルター %{resource_name}（%{filter_items_count} 項目）を作成しました'
+        delete_with_filter_info: '%{user_name} が分類 "%{taxonomy_name}" に基づくフィルター %{resource_name}（%{filter_items_count} 項目）を削除しました'
+        update_with_filter_info: '%{user_name} が分類 "%{taxonomy_name}" に基づくフィルター %{resource_name}（%{filter_items_count} 項目）を更新しました'
+    assemblies:
+      admin:
+        assemblies:
+          form:
+            no_taxonomy_filters_found: 分類フィルタが見つかりません。
+            taxonomies: 分類
+    accountability:
+      admin:
+        import_results:
+          new:
+            info: |-
+              <p>以下の手順に従うことをお勧めします:</p>
+              <ol>
+              <li>追加したい<a href='%{link_new_status}' target='_blank'>結果のステータスを作成</a>してください。</li>
+              <li>インポートを使用する前に、この管理画面を通じて<a href='%{link_new_result}' target='_blank'>少なくとも1つの結果を手動で作成</a>して、形式や入力が必要な項目をよりよく理解してください。</li>
+              <li>%{link_export_csv}</li>
+              <li>変更作業はローカルで行ってください。CSV の以下のカラムのみ変更可能です（それ以外は無視されます）:</li>
+                <ul>
+                <li><b>taxonomies/ids:</b> 分類のID（複数ある場合はカンマで区切る）</li>
+                <li><b>parent/id:</b> 親のID（関連する結果用）。任意</li>
+                <li><b>title/en:</b> 英語でのタイトル。この項目はプラットフォームの言語設定に依存します。</li>
+                <li><b>description/en:</b> 英語での説明。この項目はプラットフォームの言語設定に依存します。</li>
+                <li><b>start_date:</b> 結果の実行開始日（形式 YYYY-MM-DD）</li>
+                <li><b>end_date:</b> 結果の実行終了日（形式 YYYY-MM-DD）</li>
+                <li><b>status/id:</b> この結果に対するステータスのID</li>
+                <li><b>progress:</b> 実行の進捗率（0 から 100 までのパーセンテージ）</li>
+                <li><b>proposals_ids:</b> 関連する提案の内部ID（カンマ区切り）。<span class='attribute-name'>proposal_url</span>に自動的に変換されます。</li>
+                </ul>
+              </li>
+              </ol>
+        results:
+          bulk_actions:
+            dropdown:
+              change_taxonomies: 分類の変更
+            taxonomies_form:
+              change_taxonomies: 分類の変更
+          update_taxonomies:
+            invalid: 結果 %{results} の分類 %{taxonomies} を更新できませんでした
+            select_a_taxonomy: 分類を選択
+            success: 結果 %{results} の分類 %{taxonomies} を更新しました
+      models:
+        result:
+          fields:
+            taxonomies: 分類
+    budgets:
+      admin:
+        projects:
+          index:
+            change_taxonomies: 分類を変更
+          update_taxonomies:
+            invalid: '分類 %{taxonomies} はこれらのプロジェクトにすでに割り当てられています: %{errored}.'
+            select_a_taxonomy: 分類を選択してください。
+            success: 'プロジェクトの分類 %{taxonomies} を更新しました: %{successful}。'
+      models:
+        project:
+          fields:
+            taxonomies: 分類
+    components:
+      accountability:
+        settings:
+          global:
+            no_taxonomy_filters_found: 分類フィルタが見つかりません。
+      awesome_map:
+        settings:
+          global:
+            menu_taxonomies: 分類検索メニューを表示
+      budgets:
+        settings:
+          global:
+            no_taxonomy_filters_found: 分類フィルタが見つかりません。
+      debates:
+        settings:
+          global:
+            no_taxonomy_filters_found: 分類フィルタが見つかりません。
+      dummy:
+        settings:
+          global:
+            no_taxonomy_filters_found: 分類フィルタが見つかりません。
+      meetings:
+        settings:
+          global:
+            no_taxonomy_filters_found: 分類フィルタが見つかりません。
+      proposals:
+        settings:
+          global:
+            no_taxonomy_filters_found: 分類フィルタが見つかりません。
+      sortitions:
+        settings:
+          global:
+            no_taxonomy_filters_found: 分類フィルタが見つかりません。
+    conferences:
+      admin:
+        conferences:
+          form:
+            no_taxonomy_filters_found: 分類フィルタが見つかりません。
+            taxonomies: 分類
+    debates:
+      models:
+        debate:
+          fields:
+            taxonomies: 分類
+    decidim_awesome:
+      content_blocks:
+        map:
+          taxonomies: 分類
+    events:
+      proposals:
+        proposal_update_taxonomies:
+          email_intro: '管理者があなたの提案 "%{resource_title}" の分類を更新しました。このページでチェックしてください：'
+          email_subject: 提案 %{resource_title} の分類が更新されました
+          notification_title: '提案 <a href="%{resource_path}">%{resource_title}</a> の分類は管理者によって更新されました。'
+    log:
+      value_types:
+        taxonomy_presenter:
+          not_found: 'データベース内に分類が見つかりませんでした (ID: %{id})'
+    meetings:
+      models:
+        meeting:
+          fields:
+            taxonomies: 分類
+    open_data:
+      help:
+        assemblies:
+          taxonomies: このプロジェクトの分類
+        conferences:
+          taxonomies: このカンファレンスの分類
+        debates:
+          taxonomies: このプロジェクトの分類
+        meetings:
+          taxonomies: このミーティングが属している分類
+        projects:
+          taxonomies: このプロジェクトの分類
+        proposals:
+          taxonomies: この提案が属している分類
+        results:
+          taxonomies: 結果の分類
+        taxonomies:
+          children_count: この分類に含まれる子要素の数
+          created_at: 分類の作成日時
+          filter_items_count: この分類を使用しているフィルターのアイテム数
+          filters_count: この分類を使用しているフィルター数
+          id: この分類の固有ID
+          is_root: この分類が親を持たない場合は True
+          name: この分類の名前
+          parent_id: この分類の親の固有ID(もしあれば)
+          taxonomizations_count: この分類を使用するリソースの数
+          updated_at: この分類の最終更新日時
+          weight: この分類が表示される順序
+    participatory_processes:
+      admin:
+        participatory_processes:
+          form:
+            no_taxonomy_filters_found: 分類フィルタが見つかりません。
+            taxonomies: 分類
+    proposals:
+      admin:
+        imports:
+          help:
+            proposals: |-
+              CSVファイルやExcelファイルの場合は以下のカラム名、JSONファイルの場合はキー名が必要です:
+              <ul>
+              <li><b>title/en:</b> 英語でのタイトル。これはプラットフォームの言語設定に依存します。</li>
+              <li><b>body/en:</b> 英語での本文。これはプラットフォームの言語設定に依存します。</li>
+              <li><b>taxonomies/ids:</b> 分類のID (複数の場合はカンマ区切り)</li>
+              </ul>
+        proposals:
+          index:
+            change_taxonomies: 分類を変更
+          update_taxonomies:
+            invalid: 'これらの提案にはすでに %{taxonomies} 分類がありました: %{proposals}。'
+            select_a_taxonomy: 分類を選択してください。
+            success: '提案が %{taxonomies} 分類に更新されました: %{proposals}。'
+      models:
+        proposal:
+          fields:
+            taxonomies: 分類
+    sortitions:
+      admin:
+        models:
+          sortition:
+            fields:
+              taxonomies: 分類
+        sortitions:
+          form:
+            all_taxonomies: すべての分類
+            select_taxonomies: 抽選を適用したい提案のセットに関連する分類。空のままにすると、その分類内のすべての提案に抽選が適用されます。
+      sortitions:
+        show:
+          any_taxonomy: すべての分類から
+          taxonomies: '%{taxonomies} 分類から'
+  layouts:
+    decidim:
+      decidim_awesome:
+        awesome_config:
+          taxonomies: 分類
