@@ -8,8 +8,6 @@ module Decidim
       include Decidim::Core::Engine.routes.url_helpers
 
       def show
-        return if valid_comments.empty?
-
         render
       end
 
