@@ -19,7 +19,7 @@ RSpec.describe "Decidim::Admin NewslettersController recipients_count" do
       before { sign_in user_manager_user, scope: :user }
 
       it "does not return the recipients count" do
-        post decidim_admin.recipients_count_newsletter_path(newsletter), params: params
+        post(decidim_admin.recipients_count_newsletter_path(newsletter), params:)
 
         expect(response).not_to have_http_status(:ok)
       end
@@ -29,7 +29,7 @@ RSpec.describe "Decidim::Admin NewslettersController recipients_count" do
       before { sign_in admin_user, scope: :user }
 
       it "returns the recipients count" do
-        post decidim_admin.recipients_count_newsletter_path(newsletter), params: params
+        post(decidim_admin.recipients_count_newsletter_path(newsletter), params:)
 
         expect(response).to have_http_status(:ok)
       end
