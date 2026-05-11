@@ -40,12 +40,14 @@ module Decidim
         OpenSSL::SSL::SSLError
       ].freeze
 
-      def self.call(url)
-        new(url).call
+      def self.call(url, allowed_content_types: ALLOWED_CONTENT_TYPES, default_filename: "avatar")
+        new(url, allowed_content_types:, default_filename:).call
       end
 
-      def initialize(url)
+      def initialize(url, allowed_content_types: ALLOWED_CONTENT_TYPES, default_filename: "avatar")
         @url = url
+        @allowed_content_types = allowed_content_types
+        @default_filename = default_filename
       end
 
       def call
@@ -90,7 +92,7 @@ module Decidim
       end
 
       def read_success(response, uri)
-        return skip("unexpected_content_type: #{response["content-type"]}") unless image_content_type?(response["content-type"])
+        return skip("unexpected_content_type: #{response["content-type"]}") unless acceptable_content_type?(response["content-type"])
         return skip("content_length_exceeded") if response["content-length"].to_i > MAX_BYTES
 
         body = String.new(capacity: MAX_BYTES)
@@ -99,7 +101,7 @@ module Decidim
           return skip("streamed_body_exceeded") if body.bytesize > MAX_BYTES
         end
 
-        [body, File.basename(uri.path.presence || "avatar")]
+        [body, File.basename(uri.path.presence || @default_filename)]
       end
 
       def follow_redirect(response, uri, redirects_remaining)
@@ -134,11 +136,12 @@ module Decidim
         false
       end
 
-      def image_content_type?(content_type)
+      def acceptable_content_type?(content_type)
+        return true if @allowed_content_types.nil?
         return false if content_type.blank?
 
         mime = content_type.split(";").first.to_s.strip.downcase
-        ALLOWED_CONTENT_TYPES.include?(mime)
+        @allowed_content_types.include?(mime)
       end
 
       def skip(reason)

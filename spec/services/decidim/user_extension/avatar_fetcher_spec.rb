@@ -228,4 +228,51 @@ RSpec.describe Decidim::UserExtension::AvatarFetcher do
       end
     end
   end
+
+  describe ".call with allowed_content_types: nil" do
+    subject(:result) { described_class.call(url, allowed_content_types: nil) }
+
+    context "when the response is text/html" do
+      before do
+        stub_request(:get, url).to_return(
+          status: 200, body:, headers: { "Content-Type" => "text/html" }
+        )
+      end
+
+      it "still returns the body" do
+        io, = result
+        expect(io.read).to eq(body)
+      end
+    end
+
+    context "when the Content-Type is missing" do
+      before { stub_request(:get, url).to_return(status: 200, body:) }
+
+      it "still returns the body" do
+        io, = result
+        expect(io.read).to eq(body)
+      end
+    end
+
+    context "when the host resolves to a private IP" do
+      before { stub_dns(host, "10.0.0.5") }
+
+      it "is still rejected by the SSRF guard" do
+        expect(result).to be_nil
+      end
+    end
+  end
+
+  describe ".call with default_filename:" do
+    subject(:result) { described_class.call(url, allowed_content_types: nil, default_filename: "import") }
+
+    let(:url) { "https://cdn.example.com" }
+
+    before { stub_request(:get, url).to_return(status: 200, body:) }
+
+    it "uses the provided fallback filename" do
+      _io, filename = result
+      expect(filename).to eq("import")
+    end
+  end
 end
