@@ -43,17 +43,24 @@ module Decidim
         @user.nickname = form.normalized_nickname
         @user.newsletter_notifications_at = nil
         @user.password = SecureRandom.hex
-        if form.avatar_url.present?
-          url = URI.parse(form.avatar_url)
-          filename = File.basename(url.path)
-          file = url.open
-          @user.avatar.attach(io: file, filename:)
-        end
+        attach_remote_avatar(form.avatar_url)
         @user.skip_confirmation! if verified_email
         @user.tos_agreement = "1"
         @user.save!
 
         @user.after_confirmation if verified_email
+      end
+
+      def attach_remote_avatar(avatar_url)
+        return if avatar_url.blank?
+
+        io, filename = Decidim::UserExtension::AvatarFetcher.call(avatar_url)
+        unless io
+          Rails.logger.info { "[Decidim::UserExtension] avatar not attached for #{@user.email}" }
+          return
+        end
+
+        @user.avatar.attach(io:, filename:)
       end
 
       def update_user_extension
