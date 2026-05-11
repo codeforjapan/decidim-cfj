@@ -50,8 +50,8 @@ module Decidim
       def proposal_items_for_map
         [coauthors_item_for_map, comments_count_item, endorsements_count_item, state_item, emendation_item].compact_blank.map do |item|
           {
-            text: item[:text].to_s.html_safe,
-            icon: item[:icon].present? ? icon(item[:icon]).html_safe : nil
+            text: item[:text].to_s,
+            icon: item[:icon].present? ? icon(item[:icon]) : nil
           }
         end
       end
@@ -59,8 +59,11 @@ module Decidim
       def coauthors_item_for_map
         presented_author = official? ? Decidim::Proposals::OfficialAuthorPresenter.new : present(resource.identities.first)
 
+        # CGI.escapeHTML is used (instead of decidim_html_escape) because the popup
+        # template renders this via `{{html text}}` and the presenter returns a
+        # SafeBuffer, which Rails' html_escape helpers would skip.
         {
-          text: presented_author.name,
+          text: CGI.escapeHTML(presented_author.name.to_s),
           icon: "account-circle-line"
         }
       end
