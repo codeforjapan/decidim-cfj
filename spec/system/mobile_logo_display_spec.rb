@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe "Mobile logo display", js: true, type: :system do
+describe "Mobile logo display", js: true do
   let(:organization) { create(:organization, name: { en: "Test Organization" }) }
 
   before do
