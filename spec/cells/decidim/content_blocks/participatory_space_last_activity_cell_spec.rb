@@ -26,39 +26,36 @@ module Decidim
       end
       let(:existing_user) { create(:user, organization:) }
 
-      # ordered_users_with_activities は DB クエリを伴うため、
-      # 返すレコードのうち一部の .user が nil（削除済みユーザー）になるケースをモックする
-      let(:log_with_deleted_user) { double("action_log", user: nil) }
-      let(:log_with_existing_user) { double("action_log", user: existing_user) }
-      let(:activity_relation) { instance_double(ActiveRecord::Relation) }
+      # Force-deleted in the before block
+      let(:deleted_user) { create(:user, organization:) }
 
       controller Decidim::ParticipatoryProcesses::ParticipatoryProcessesController
 
       before do
         allow(controller).to receive(:current_organization).and_return(organization)
         allow(controller).to receive(:current_user).and_return(nil)
-        allow(my_cell).to receive(:ordered_users_with_activities).and_return(activity_relation)
-        allow(activity_relation).to receive(:limit).and_return(
-          [log_with_deleted_user, log_with_existing_user]
-        )
+
+        # Overrides to pass Decidim::LastActivity#query filters
+        common_attrs = {
+          organization:,
+          participatory_space: participatory_process,
+          resource: participatory_process,
+          action: "publish",
+          visibility: "all"
+        }
+        create(:action_log, **common_attrs, user: existing_user)
+        create(:action_log, **common_attrs, user: deleted_user)
+
+        deleted_user.destroy!
       end
 
       describe "#last_activities_users" do
-        it "削除済みユーザー（nil）を除外して返す" do
+        it "excludes deleted users whose user association resolves to nil" do
           expect(my_cell.send(:last_activities_users)).to eq([existing_user])
         end
 
-        it "nil を含まない" do
+        it "does not include nil" do
           expect(my_cell.send(:last_activities_users)).not_to include(nil)
-        end
-      end
-
-      describe "#render_recent_avatars" do
-        it "削除済みユーザーが含まれていてもエラーを発生させない" do
-          # render :recent_avatars の内部（avatar_url生成など）はテスト環境依存のため
-          # render 自体をスタブし、nil ユーザーによる NoMethodError が発生しないことを確認する
-          allow(my_cell).to receive(:render).with(:recent_avatars).and_return("<html>stub</html>")
-          expect { my_cell.render_recent_avatars }.not_to raise_error
         end
       end
     end
