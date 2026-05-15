@@ -48,7 +48,7 @@ Rails.application.config.to_prepare do
         reportable_authors.compact_blank.map do |author|
           case author
           when Decidim::User
-            content_tag(:li, author.name)
+            content_tag(:li, author.presenter.name)
           when Decidim::Meetings::Meeting
             content_tag :li do
               link_to resource_locator(author).path, target: "_blank", rel: "noopener" do
