@@ -1,0 +1,8 @@
+// Hide the participatory_process_groups "visibility" (promoted) section.
+// decidim-cfj has chosen to hide this feature (see issue #401 / commit
+// b04a3260), but restoring the upstream HTML lets decidim-decidim_awesome's
+// visibility callout Deface override succeed without errors. We hide the
+// whole accordion card so the callout is hidden along with it.
+#accordion-visibility {
+  display: none;
+}
