@@ -63,7 +63,7 @@ RSpec.describe "Disable DM feature" do
     it "does not render the contact (new conversation) icon link" do
       get "/admin/users"
       expect(response.body).not_to include("current_or_new_conversation")
-      expect(response.body).not_to match(%r{href="[^"]*conversation[^"]*"})
+      expect(response.body).not_to match(/href="[^"]*conversation[^"]*"/)
     end
   end
 
