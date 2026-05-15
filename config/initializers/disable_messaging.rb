@@ -5,8 +5,8 @@
 #   message" links in cells/views that gate on Decidim::User#accepts_conversation?
 #   (e.g. profile_minicard via UserPresenter#direct_messages_enabled?).
 # - Forces UserPresenter#can_be_contacted? to false so that cells/views which
-#   gate on it (profile_sidebar, author/contact, profile_actions_cell,
-#   proposals admin show) hide their contact buttons.
+#   gate on it (author/contact, profile_actions_cell, proposals admin show)
+#   hide their contact buttons.
 # - Suppresses all ConversationMailer deliveries as a defense in depth in case a
 #   conversation record is somehow created (e.g. via background jobs).
 # Routes are also redirected at config/routes.rb.
