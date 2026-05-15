@@ -74,6 +74,25 @@ RSpec.describe "Disable DM feature" do
     end
   end
 
+  describe "Decidim::UserPresenter#can_be_contacted?" do
+    it "always returns false so that cells/views relying on it hide the contact link" do
+      user.update!(direct_message_types: "all")
+      expect(Decidim::UserPresenter.new(user).can_be_contacted?).to be(false)
+    end
+  end
+
+  describe Decidim::Admin::Moderations::ReportsHelper, type: :helper do
+    let(:component) { create(:dummy_component, organization:) }
+    let(:reportable) { create(:dummy_resource, component:, author: user) }
+
+    it "renders the user author name without a conversation link" do
+      output = helper.reportable_author_name(reportable)
+      expect(output).to include(user.name)
+      expect(output).not_to include("<a ")
+      expect(output).not_to include("mail-send-line")
+    end
+  end
+
   describe "notifications settings page" do
     before { sign_in user, scope: :user }
 
