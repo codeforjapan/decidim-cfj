@@ -1,5 +1,17 @@
 # Change Log
 
+## [1.18.3](https://github.com/codeforjapan/decidim-cfj/compare/v1.18.2...v1.18.3) (2026-05-15)
+
+
+### Bug Fixes
+
+* do not use html_safe for text and icon ([ff10e06](https://github.com/codeforjapan/decidim-cfj/commit/ff10e0694284e8f2e14f745802c96c4eaeb2c5f7))
+* enforce permission to newsletter ([d0de4bd](https://github.com/codeforjapan/decidim-cfj/commit/d0de4bdfbe0c7fd46bf53ad9c8b7d80488c7d179))
+* orerride organization_name() to html_escape ([5af8877](https://github.com/codeforjapan/decidim-cfj/commit/5af8877eb10d4f4e4c465788ef90b24644cd5b3d))
+* use AvatarFetcher for secure access ([5e2acf8](https://github.com/codeforjapan/decidim-cfj/commit/5e2acf8cda4d7965a9d44f2869005e85a92351dd))
+* use AvatarFetcher in ApplicationUploader#remote_url= ([cb32d4a](https://github.com/codeforjapan/decidim-cfj/commit/cb32d4a6f012dbbaa064d389096ca07bf835f60b))
+* 削除済みユーザーによる extra_data ブロックの 500 エラーを修正 ([5bc43b1](https://github.com/codeforjapan/decidim-cfj/commit/5bc43b1e830c8a969a947c683b4f491497cc63af))
+
 ## [1.18.2](https://github.com/codeforjapan/decidim-cfj/compare/v1.18.1...v1.18.2) (2026-04-18)
 
 
