@@ -35,7 +35,7 @@ module Decidim
       end
 
       def last_activities_users
-        @last_activities_users ||= ordered_users_with_activities.limit(max_last_activity_users).map(&:user)
+        @last_activities_users ||= ordered_users_with_activities.limit(max_last_activity_users).map(&:user).compact
       end
 
       def max_last_activity_users
