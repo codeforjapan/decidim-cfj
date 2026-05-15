@@ -11,26 +11,31 @@
 #   conversation record is somehow created (e.g. via background jobs).
 # Routes are also redirected at config/routes.rb.
 
-Rails.application.config.to_prepare do
-  Decidim::User.class_eval do
+module DisableMessaging
+  module RejectAllConversations
     def accepts_conversation?(_user)
       false
     end
   end
 
-  Decidim::UserPresenter.class_eval do
+  module ForbidContact
     def can_be_contacted?
       false
     end
   end
 
-  module DisableConversationMailerDelivery
+  module SuppressMailerDelivery
     def process(*)
       super
       message.perform_deliveries = false
     end
   end
-  Decidim::Messaging::ConversationMailer.prepend(DisableConversationMailerDelivery)
+end
+
+Rails.application.config.to_prepare do
+  Decidim::User.prepend(DisableMessaging::RejectAllConversations)
+  Decidim::UserPresenter.prepend(DisableMessaging::ForbidContact)
+  Decidim::Messaging::ConversationMailer.prepend(DisableMessaging::SuppressMailerDelivery)
 
   # decidim-admin moderation reports list the reportable's authors with an
   # unconditional "start conversation" link wrapping the user name. Since DM
