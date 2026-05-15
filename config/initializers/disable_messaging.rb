@@ -45,7 +45,7 @@ Rails.application.config.to_prepare do
     def reportable_author_name(reportable)
       reportable_authors = reportable.try(:authors) || [reportable.try(:normalized_author)]
       content_tag :ul, class: "reportable-authors" do
-        reportable_authors.select(&:present?).map do |author|
+        reportable_authors.select(&:present?).map do |author| # rubocop:disable Rails/CompactBlank
           case author
           when Decidim::User
             content_tag(:li, author.name)
@@ -57,7 +57,7 @@ Rails.application.config.to_prepare do
             end
           when Decidim::Organization
             content_tag :li, organization_name(author)
-          else
+          else # rubocop:disable Lint/DuplicateBranch
             content_tag(:li, author.name)
           end
         end.join.html_safe
