@@ -1,13 +1,57 @@
 // JavaScript test runner configuration (jest).
 //
-// Targets the cfj sources under `app/packs/src/decidim/cfj/` and third-party
-// libraries under `node_modules`. Runs in a jsdom environment so TipTap and
-// ProseMirror code can be exercised without a real browser.
+// Purpose: integration-test cfj's editor extensions against the actual
+// decidim-core (and friends) JavaScript that the production app loads. This
+// is intentionally NOT a pure unit-test setup; the explicit goal is to
+// detect breakage when decidim is upgraded.
 //
 // Companion files:
 //   - spec/js/setup_polyfills.js   jsdom polyfills (Range / ClipboardEvent)
 //   - spec/js/setup_matchers.js    custom matchers (toMatchHtml)
 //   - spec/js/__mocks__/imageMock.js  stub for `import x from "images/..."`
+
+const { execSync } = require("child_process");
+const path = require("path");
+
+// Resolves a Decidim gem's `app/packs` directory.
+//
+// Resolution order:
+//   1. Environment variable override:
+//        DECIDIM_<GEM_NAME_UPPER_SNAKE>_PATH=/abs/path/to/gem
+//      Useful in CI where bundler may not be on PATH.
+//   2. `bundle show <gem>` invoked at jest start.
+//
+// Throws (loudly) if neither succeeds. This is deliberate: silent fallback
+// would let tests pass while production imports break, defeating the purpose
+// of integration testing.
+const findGemPath = (gemName) => {
+  const envVarName = `DECIDIM_${gemName.replace(/-/g, "_").toUpperCase()}_PATH`;
+  if (process.env[envVarName]) {
+    return path.join(process.env[envVarName], "app", "packs");
+  }
+  try {
+    const stdout = execSync(`bundle show ${gemName}`, { encoding: "utf-8" }).trim();
+    return path.join(stdout, "app", "packs");
+  } catch (e) {
+    throw new Error(
+      `[jest.config] Cannot resolve gem "${gemName}". ` +
+      `Run \`bundle install\` first, or set ${envVarName} to override.\n` +
+      `Bundler error: ${e.message}`
+    );
+  }
+};
+
+// Resolve everything against absolute paths so that imports inside the
+// decidim-core gem (which lives outside this project tree) can still find
+// cfj's `node_modules` and any sibling gem packs. `moduleDirectories` walks
+// up from the requiring file and would miss cfj's node_modules when the
+// requiring file is a gem path.
+const cfjRoot = __dirname;
+const modulePaths = [
+  path.join(cfjRoot, "node_modules"),
+  path.join(cfjRoot, "app", "packs"),
+  findGemPath("decidim-core"),
+];
 
 module.exports = {
   testEnvironment: "jsdom",
@@ -15,16 +59,12 @@ module.exports = {
   setupFiles: ["<rootDir>/spec/js/setup_polyfills.js", "raf/polyfill"],
   setupFilesAfterEnv: ["<rootDir>/spec/js/setup_matchers.js"],
   moduleFileExtensions: ["js"],
-  moduleDirectories: ["node_modules", "app/packs"],
+  moduleDirectories: ["node_modules"],
+  modulePaths,
   moduleNameMapper: {
     "\\.(scss|css|less)$": "identity-obj-proxy",
     "^images/(.*)$": "<rootDir>/spec/js/__mocks__/imageMock.js",
   },
-  // The babel preset is supplied inline here so the project root has no
-  // .babelrc / babel.config.* file. This keeps the production webpack /
-  // shakapacker build using its own preset chain (provided via @rails/webpacker
-  // and friends) and avoids any accidental cross-pollination of test-only
-  // transforms into the bundled assets.
   transform: {
     "\\.js$": ["babel-jest", {
       presets: [["@babel/preset-env", { targets: { node: "current" } }]],
