@@ -1,41 +1,54 @@
 /**
- * Specification for the cfj `Iframe` TipTap extension.
+ * Integration spec for the cfj `Iframe` TipTap extension.
  *
- * Real test that exercises:
- *   - cfj source under `app/packs/src/decidim/cfj/editor/extensions/iframe`
- *   - @tiptap/core + the minimum extensions to materialise an Editor
- *   - the isAllowedDomain (HTTPS-only) gate, exercised via setContent
+ * Built on the same DecidimKit composition production loads (cfj's override
+ * at `app/packs/src/decidim/editor/extensions/decidim_kit/index.js`). The
+ * kit's `image` option is left default (Image extension is not registered),
+ * so no upload-modal stub is needed; the Iframe extension is what we are
+ * exercising here.
  *
- * Run with `yarn test`.
+ * Running through the kit means a future decidim upgrade that changes the
+ * extension bundle or alters how Iframe interacts with siblings (Link,
+ * Bold, Dialog, …) will be reflected here automatically.
  */
 
 import { Editor } from "@tiptap/core";
-import Document from "@tiptap/extension-document";
-import Paragraph from "@tiptap/extension-paragraph";
-import Text from "@tiptap/extension-text";
 
-import Iframe from "src/decidim/cfj/editor/extensions/iframe";
+import DecidimKit from "src/decidim/editor/extensions/decidim_kit";
+
+import {
+  createEditorContainer,
+  safeDestroy,
+  setupDecidimI18n,
+} from "test/editor_helpers";
 
 const createEditor = () => {
-  const element = document.createElement("div");
-  document.body.append(element);
   return new Editor({
-    element,
+    element: createEditorContainer(),
     content: "",
-    extensions: [Document, Paragraph, Text, Iframe],
+    extensions: [DecidimKit.configure({})],
   });
 };
 
-describe("Iframe extension", () => {
+describe("Iframe extension (integration via DecidimKit)", () => {
   let editor;
+
+  beforeAll(() => {
+    setupDecidimI18n();
+  });
 
   beforeEach(() => {
     document.body.innerHTML = "";
     editor = createEditor();
   });
 
-  afterEach(() => {
-    editor.destroy();
+  afterEach(() => safeDestroy(editor));
+
+  describe("kit composition", () => {
+    it("loads the iframe extension via the cfj decidim_kit override", () => {
+      const names = editor.extensionManager.extensions.map((e) => e.name);
+      expect(names).toContain("iframe");
+    });
   });
 
   describe("renderHTML wrapper", () => {
