@@ -44,9 +44,6 @@
               <%= icon_link_to "mail-open-line", show_email_officialization_path(user_id: user.id), t(".show_email"), class: "action-icon action-icon--show-email", data: { full_name: user.name, dialog_open: "show-email-modal" } %>
             <% end %>
             <% unless user.blocked? %>
-              <% unless current_user == user %>
-                <%= icon_link_to "mail-line", current_or_new_conversation_path_with(user), t("decidim.contact"), class: "action-icon--new" %>
-              <% end %>
               <% if user.officialized? %>
                 <%= icon "checkbox-circle-line", class: "action-icon action-icon--disabled", role: "img", aria_label: t(".officialize") %>
                 <%= icon_link_to "pencil-line", new_officialization_path(user_id: user.id), t(".reofficialize"), class: "action-icon--new" %>
