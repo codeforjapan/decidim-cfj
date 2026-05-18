@@ -41,9 +41,11 @@ describe("Iframe extension", () => {
   describe("renderHTML wrapper", () => {
     it("wraps the iframe inside a div.iframe-wrapper", () => {
       editor.commands.setContent('<iframe src="https://example.com/embed/x"></iframe>');
-      const html = editor.getHTML();
-      expect(html).toContain('class="iframe-wrapper"');
-      expect(html).toContain("<iframe");
+      expect(editor.getHTML()).toMatchHtml(`
+        <div class="iframe-wrapper">
+          <iframe src="https://example.com/embed/x" frameborder="0" allowfullscreen="true"></iframe>
+        </div>
+      `);
     });
   });
 
@@ -57,14 +59,15 @@ describe("Iframe extension", () => {
       editor.commands.setContent('<iframe src="http://example.com/embed/x"></iframe>');
       const html = editor.getHTML();
       expect(html).toContain("<iframe");
-      expect(html).not.toContain('src="http://example.com/embed/x"');
+      // The iframe must have no src attribute at all — not just a missing URL.
+      expect(html).not.toMatch(/<iframe[^>]*\ssrc=/);
     });
 
     it("strips the src for protocol-relative URLs", () => {
       editor.commands.setContent('<iframe src="//example.com/embed/x"></iframe>');
       const html = editor.getHTML();
       expect(html).toContain("<iframe");
-      expect(html).not.toContain('src="//example.com/embed/x"');
+      expect(html).not.toMatch(/<iframe[^>]*\ssrc=/);
     });
   });
 

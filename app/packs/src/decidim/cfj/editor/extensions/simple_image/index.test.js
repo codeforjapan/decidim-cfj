@@ -48,7 +48,7 @@ describe("SimpleImage extension (integration via DecidimKit)", () => {
 
     it("loads bare <img> as a simpleImage node and preserves src", () => {
       editor.commands.setContent('<p><img src="https://example.com/a.png"></p>');
-      expect(editor.getHTML()).toBe('<p><img src="https://example.com/a.png"></p>');
+      expect(editor.getHTML()).toMatchHtml('<p><img src="https://example.com/a.png"></p>');
     });
 
     it("preserves alt and title on round-trip", () => {
@@ -68,14 +68,15 @@ describe("SimpleImage extension (integration via DecidimKit)", () => {
 
     it("rescues the inner <img> of <div data-image> even though Image is absent (wrapper is dropped)", () => {
       // No Image extension to claim the wrapper; SimpleImage catches the
-      // inner <img> so the picture is not silently lost. The wrapper itself
-      // has no matching extension and gets stripped.
+      // inner <img> so the picture is not silently lost. The wrapper div
+      // has no matching extension and is stripped, leaving the <img> wrapped
+      // only by the implicit paragraph.
       editor.commands.setContent(
         '<div data-image><img src="https://example.com/wrapped.png" alt="w"></div>'
       );
-      const html = editor.getHTML();
-      expect(html).toContain('src="https://example.com/wrapped.png"');
-      expect(html).not.toContain("data-image");
+      expect(editor.getHTML()).toMatchHtml(
+        '<p><img src="https://example.com/wrapped.png" alt="w"></p>'
+      );
     });
   });
 
@@ -112,20 +113,24 @@ describe("SimpleImage extension (integration via DecidimKit)", () => {
     it("routes wrapped <img> through the core Image extension (wrapper preserved)", () => {
       const wrapped = '<div data-image><img src="https://example.com/w.png" alt="w"></div>';
       editor.commands.setContent(wrapped);
-      const html = editor.getHTML();
-      expect(html).toContain('data-image=""');
-      expect(html).toContain('class="editor-content-image"');
-      expect(html).toContain('src="https://example.com/w.png"');
-      expect(html).toContain('alt="w"');
+      // The <div> keeps the data-image marker (so the next round-trip routes
+      // through Image, not SimpleImage) and gains the editor-content-image
+      // class (which controls editor-side styling). Attribute order is what
+      // Image's renderHTML emits today.
+      expect(editor.getHTML()).toMatchHtml(`
+        <div class="editor-content-image" data-image="">
+          <img src="https://example.com/w.png" alt="w">
+        </div>
+      `);
     });
 
     it("routes bare <img> through SimpleImage (no wrapper)", () => {
       editor.commands.setContent('<p><img src="https://example.com/bare.png" alt="b"></p>');
-      const html = editor.getHTML();
-      expect(html).toContain('src="https://example.com/bare.png"');
-      expect(html).toContain('alt="b"');
-      expect(html).not.toContain("data-image");
-      expect(html).not.toContain("editor-content-image");
+      // Bare <img> stays inside the original <p>, with no div wrapper
+      // injected by Image.
+      expect(editor.getHTML()).toMatchHtml(
+        '<p><img src="https://example.com/bare.png" alt="b"></p>'
+      );
     });
 
     it("preserves both forms in a mixed document", () => {
