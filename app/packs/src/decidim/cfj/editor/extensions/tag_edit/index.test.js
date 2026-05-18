@@ -21,30 +21,17 @@ import { Editor } from "@tiptap/core";
 
 import DecidimKit from "src/decidim/editor/extensions/decidim_kit";
 
-// Decidim's editor i18n is normally provided via
-// `window.Decidim.config.get("messages")`. The dialog and a few extensions
-// read keys lazily, so seeding the minimum surface here keeps the flow alive
-// without pulling in the full locale fixtures.
-const setupDecidimI18n = () => {
-  const editorMessages = {
-    inputDialog: {
-      close: "Close",
-      "buttons.cancel": "Cancel",
-      "buttons.save": "Save",
-    },
-  };
-  window.Decidim = {
-    config: {
-      get: (key) => ({ messages: { editor: editorMessages } }[key]),
-    },
-  };
-};
+import {
+  createEditorContainer,
+  safeDestroy,
+  setupDecidimI18n,
+  waitFor,
+  waitForRemoval,
+} from "test/editor_helpers";
 
 const createEditor = () => {
-  const element = document.createElement("div");
-  document.body.append(element);
   return new Editor({
-    element,
+    element: createEditorContainer(),
     content: "",
     // Pass the kit with default options. The Image extension is conditionally
     // loaded only when `image.uploadDialogSelector` is set, which we leave
@@ -65,18 +52,7 @@ describe("TagEdit extension (integration via DecidimKit)", () => {
     editor = createEditor();
   });
 
-  afterEach(() => {
-    // Some decidim-core extensions (e.g. Link's bubble menu) attach DOM
-    // positioning logic in onCreate that does not initialise cleanly in jsdom,
-    // which then causes their onDestroy to throw a null reference at editor
-    // teardown. The test bodies themselves run fine; suppress the cleanup
-    // error so the test result reflects the actual behaviour under test.
-    try {
-      editor.destroy();
-    } catch (_e) {
-      /* ignore jsdom-only destroy errors */
-    }
-  });
+  afterEach(() => safeDestroy(editor));
 
   describe("kit composition", () => {
     it("loads the cfj decidim_kit override (TagEdit / Iframe / SimpleImage included)", () => {
@@ -107,28 +83,9 @@ describe("TagEdit extension (integration via DecidimKit)", () => {
   });
 
   describe("dialog flow", () => {
-    // The dialog is mounted asynchronously (TextDialog appends to document.body
-    // inside the tagEditDialog command). The command itself is fire-and-forget
-    // from the editor.commands perspective, so we poll the DOM instead of
-    // awaiting the promise directly.
-    const waitFor = async (selector, timeoutMs = 500) => {
-      const start = Date.now();
-      while (Date.now() - start < timeoutMs) {
-        const el = document.querySelector(selector);
-        if (el) return el;
-        await new Promise((resolve) => setTimeout(resolve, 10));
-      }
-      throw new Error(`waitFor: ${selector} did not appear within ${timeoutMs}ms`);
-    };
-
-    const waitForRemoval = async (selector, timeoutMs = 500) => {
-      const start = Date.now();
-      while (Date.now() - start < timeoutMs) {
-        if (!document.querySelector(selector)) return;
-        await new Promise((resolve) => setTimeout(resolve, 10));
-      }
-      throw new Error(`waitForRemoval: ${selector} still present after ${timeoutMs}ms`);
-    };
+    // TextDialog appends to document.body asynchronously inside the
+    // tagEditDialog command, so we poll the DOM via waitFor / waitForRemoval
+    // from editor_helpers instead of awaiting the command directly.
 
     it("opens the dialog and renders a textarea named 'tagsrc'", async () => {
       editor.commands.setContent("<p>initial</p>");

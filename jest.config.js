@@ -64,6 +64,10 @@ module.exports = {
   moduleNameMapper: {
     "\\.(scss|css|less)$": "identity-obj-proxy",
     "^images/(.*)$": "<rootDir>/spec/js/__mocks__/imageMock.js",
+    // Shared test helpers live under spec/js/. Import as `test/<name>` so the
+    // path doesn't surface in production webpack bundles (which don't load
+    // this alias).
+    "^test/(.*)$": "<rootDir>/spec/js/$1",
   },
   transform: {
     "\\.js$": ["babel-jest", {

@@ -19,43 +19,13 @@
 import { Editor } from "@tiptap/core";
 
 import DecidimKit from "src/decidim/editor/extensions/decidim_kit";
-import editorMessages from "src/decidim/editor/test/fixtures/editor_messages";
-import uploadTemplates from "src/decidim/editor/test/fixtures/upload_templates";
 
-// Decidim's editor reads i18n via `window.Decidim.config.get("messages")`.
-// Reuse decidim-core's own test fixture for editor messages so all keys that
-// the editor / NodeView / dialogs look up are present.
-const setupDecidimI18n = () => {
-  window.Decidim = {
-    config: {
-      get: (key) => ({ messages: { editor: editorMessages } }[key]),
-    },
-  };
-};
-
-// The Image extension's UploadDialog expects the production upload modal
-// markup (dropzone, save/cancel buttons, upload-modal__text caption, etc.).
-// Reuse decidim-core's own test fixture so construction succeeds in jsdom.
-// The dialog UI itself is never exercised here.
-const mountUploadDialogStub = () => {
-  const host = document.createElement("div");
-  host.innerHTML = uploadTemplates.redesign;
-  document.body.append(host);
-  return "#upload_dialog";
-};
-
-const createEditorContainer = () => {
-  const element = document.createElement("div");
-  document.body.append(element);
-  return element;
-};
-
-const safeDestroy = (editor) => {
-  // jsdom does not initialise Link bubble menu correctly; ignore the
-  // resulting null-reference at teardown so test results reflect what the
-  // test bodies actually verified.
-  try { editor.destroy(); } catch (_e) { /* ignore */ }
-};
+import {
+  createEditorContainer,
+  mountUploadDialogStub,
+  safeDestroy,
+  setupDecidimI18n,
+} from "test/editor_helpers";
 
 describe("SimpleImage extension (integration via DecidimKit)", () => {
   beforeAll(() => {
