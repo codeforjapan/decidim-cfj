@@ -121,3 +121,32 @@ jobs:
         run: |
           export PATH=${GITHUB_WORKSPACE}/vendor/imagemagick7/bin:${PATH}
           bundle exec rails spec
+
+  jstest:
+    name: JS Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v6
+
+      # Ruby + bundler-cache is required because jest.config.js resolves the
+      # decidim-core gem path at startup via `bundle show decidim-core`.
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ inputs.ruby-version }}
+          bundler-cache: true
+
+      - name: setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 20.18.3
+          cache: 'yarn'
+
+      - name: install yarn
+        run: |
+          npm i -g yarn@1.22.19
+          yarn install --frozen-lockfile
+
+      - name: Test with Jest
+        run: yarn test
