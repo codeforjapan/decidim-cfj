@@ -61,6 +61,40 @@ describe("SimpleImage extension (integration via DecidimKit)", () => {
       expect(html).toContain('title="t"');
     });
 
+    it("preserves width and height on round-trip", () => {
+      editor.commands.setContent(
+        '<p><img src="https://example.com/a.png" width="200" height="100"></p>'
+      );
+      expect(editor.getHTML()).toMatchHtml(
+        '<p><img src="https://example.com/a.png" width="200" height="100"></p>'
+      );
+    });
+
+    it("preserves class and id on round-trip", () => {
+      editor.commands.setContent(
+        '<p><img src="https://example.com/a.png" class="thumb" id="hero"></p>'
+      );
+      expect(editor.getHTML()).toMatchHtml(
+        '<p><img src="https://example.com/a.png" class="thumb" id="hero"></p>'
+      );
+    });
+
+    it("does not emit class / id attributes when absent from input", () => {
+      editor.commands.setContent('<p><img src="https://example.com/a.png"></p>');
+      expect(editor.getHTML()).toMatchHtml(
+        '<p><img src="https://example.com/a.png"></p>'
+      );
+    });
+
+    it("preserves the full set of supported attributes together", () => {
+      editor.commands.setContent(
+        '<p><img src="https://example.com/a.png" alt="x" title="t" width="200" height="100" class="ic" id="i1"></p>'
+      );
+      expect(editor.getHTML()).toMatchHtml(
+        '<p><img src="https://example.com/a.png" alt="x" title="t" width="200" height="100" class="ic" id="i1"></p>'
+      );
+    });
+
     it("drops data: URIs (parseHTML excludes them)", () => {
       editor.commands.setContent('<p><img src="data:image/png;base64,AAA"></p>');
       expect(editor.getHTML()).not.toContain("<img");
