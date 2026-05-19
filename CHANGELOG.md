@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.18.4](https://github.com/codeforjapan/decidim-cfj/compare/v1.18.3...v1.18.4) (2026-05-19)
+
+
+### Bug Fixes
+
+* redefine invalid BLOB_REGEX and replace_blobs in decidim-core ([96894ed](https://github.com/codeforjapan/decidim-cfj/commit/96894ed87da76033a249e81c656762ee14e88d0b))
+
 ## [1.18.3](https://github.com/codeforjapan/decidim-cfj/compare/v1.18.2...v1.18.3) (2026-05-15)
 
 
