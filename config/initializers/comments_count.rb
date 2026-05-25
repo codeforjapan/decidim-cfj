@@ -3,11 +3,9 @@
 Rails.application.config.to_prepare do
   # Add :comments_count to accountability_component's stat
   accountability_component = Decidim.find_component_manifest(:accountability)
-  if accountability_component.stats.only([:comments_count]).stats.blank?
-    accountability_component.register_stat :comments_count, tag: :comments do |components, start_at, end_at|
-      results = Decidim::Accountability::FilteredResults.for(components, start_at, end_at)
-      results.sum(:comments_count)
-    end
+  accountability_component.register_stat :comments_count, tag: :comments do |components, start_at, end_at|
+    results = Decidim::Accountability::FilteredResults.for(components, start_at, end_at)
+    results.sum(:comments_count)
   end
 
   # Override :comments_count on blogs_component.
@@ -20,19 +18,15 @@ Rails.application.config.to_prepare do
 
   # Add :comments_count to debates_component's stat
   debates_component = Decidim.find_component_manifest(:debates)
-  if debates_component.stats.only([:comments_count]).stats.blank?
-    debates_component.register_stat :comments_count, tag: :comments do |components, start_at, end_at|
-      debates = Decidim::Debates::FilteredDebates.for(components, start_at, end_at)
-      debates.sum(:comments_count)
-    end
+  debates_component.register_stat :comments_count, tag: :comments do |components, start_at, end_at|
+    debates = Decidim::Debates::FilteredDebates.for(components, start_at, end_at)
+    debates.sum(:comments_count)
   end
 
   # Add :comments_count to sortitions_component's stat
   sortitions_component = Decidim.find_component_manifest(:sortitions)
-  if sortitions_component.stats.only([:comments_count]).stats.blank?
-    sortitions_component.register_stat :comments_count, tag: :comments do |components, start_at, end_at|
-      sortitions = Decidim::Sortitions::FilteredSortitions.for(components, start_at, end_at)
-      sortitions.sum(:comments_count)
-    end
+  sortitions_component.register_stat :comments_count, tag: :comments do |components, start_at, end_at|
+    sortitions = Decidim::Sortitions::FilteredSortitions.for(components, start_at, end_at)
+    sortitions.sum(:comments_count)
   end
 end
