@@ -57,7 +57,7 @@ Rails.application.config.to_prepare do
             end
           when Decidim::Organization
             content_tag :li, organization_name(author)
-          else # rubocop:disable Lint/DuplicateBranch
+          else
             content_tag(:li, author.name)
           end
         end.join.html_safe
