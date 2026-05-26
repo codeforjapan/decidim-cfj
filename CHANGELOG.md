@@ -1,5 +1,13 @@
 # Change Log
 
+## [1.18.4](https://github.com/codeforjapan/decidim-cfj/compare/v1.18.3...v1.18.4) (2026-05-26)
+
+
+### Bug Fixes
+
+* DecidimAwesome::Config#sub_configs_for のN+1クエリを解消 ([293ba1e](https://github.com/codeforjapan/decidim-cfj/commit/293ba1ee7c6e82542ddd4e0d57fe09048c162b24))
+* redefine invalid BLOB_REGEX and replace_blobs in decidim-core ([96894ed](https://github.com/codeforjapan/decidim-cfj/commit/96894ed87da76033a249e81c656762ee14e88d0b))
+
 ## [1.18.3](https://github.com/codeforjapan/decidim-cfj/compare/v1.18.2...v1.18.3) (2026-05-15)
 
 
