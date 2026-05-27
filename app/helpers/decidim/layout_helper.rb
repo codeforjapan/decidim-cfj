@@ -169,7 +169,8 @@ module Decidim
 
       {}.tap do |d|
         d.merge!(unread_notifications: true) if current_user.notifications.any?
-        d.merge!(unread_conversations: true) if current_user.unread_conversations.any?
+        # DM feature is disabled; skip unread conversations check.
+        # d.merge!(unread_conversations: true) if current_user.unread_conversations.any?
         d.merge!(unread_items: d.present?)
       end
     end
