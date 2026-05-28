@@ -1,5 +1,14 @@
 # Change Log
 
+## [1.18.5](https://github.com/codeforjapan/decidim-cfj/compare/v1.18.4...v1.18.5) (2026-05-28)
+
+
+### Bug Fixes
+
+* CloseMeetingReminderGenerator の space_admins メモ化バグを修正 ([3455fd0](https://github.com/codeforjapan/decidim-cfj/commit/3455fd01e9997841aca7c8280301709e59d084bd))
+* space_admins のメモ化をコンポーネント単位のハッシュに変更 ([b0d280f](https://github.com/codeforjapan/decidim-cfj/commit/b0d280ff1e4c1d398b003f0cb07bc508eb11a177))
+* テストをクロス組織の順序依存なしに改善 ([f7e3cdd](https://github.com/codeforjapan/decidim-cfj/commit/f7e3cdd8b2177655afa9cd1f6d39eef6d52de8ec))
+
 ## [1.18.4](https://github.com/codeforjapan/decidim-cfj/compare/v1.18.3...v1.18.4) (2026-05-26)
 
 
