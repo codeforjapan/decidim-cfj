@@ -206,18 +206,20 @@ Rails.application.config.to_prepare do
 
   # Fix CloseMeetingReminderGenerator#space_admins cross-organization memoization bug
   # @space_admins ||= はインスタンス変数にメモ化するため、全組織をまたいで同じ管理者リストが
-  # 使い回されてしまう。メモ化を除去して毎回正しい組織の管理者を返すようにする。
+  # 使い回されてしまう。component.id をキーにしたハッシュでメモ化し、組織ごとに正しい管理者を返す。
   module DecidimMeetingsCloseMeetingReminderGeneratorPatch
     private
 
     def space_admins(component)
-      sa = if component.participatory_space.respond_to?(:user_roles)
-             component.participatory_space.user_roles(:admin).collect(&:user)
-           else
-             []
-           end
-      global_admins = component.organization.admins
-      (global_admins + sa).uniq
+      @space_admins ||= {}
+      @space_admins[component.id] ||= begin
+        sa = if component.participatory_space.respond_to?(:user_roles)
+               component.participatory_space.user_roles(:admin).collect(&:user)
+             else
+               []
+             end
+        (component.organization.admins + sa).uniq
+      end
     end
   end
 
