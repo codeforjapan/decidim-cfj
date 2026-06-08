@@ -5,7 +5,7 @@
 # resource types) do not implement can_participate?.
 module FixNotificationCanParticipate
   def can_participate?(user = nil)
-    return unless resource.respond_to?(:can_participate?)
+    return false unless resource.respond_to?(:can_participate?)
 
     resource.can_participate?(user)
   end
