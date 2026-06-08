@@ -30,12 +30,24 @@ module DisableMessaging
       message.perform_deliveries = false
     end
   end
+
+  # Hides the "Conversations" tab (DM feature) from user group profile pages.
+  # NOTE: This can be removed if/when Decidim drops UserGroup
+  module HideGroupConversationsTab
+    def group_tabs
+      items = [:members].tap do |keys|
+        keys.append(:badges, :followers)
+      end
+      items.map { |key| tab_item(key) }
+    end
+  end
 end
 
 Rails.application.config.to_prepare do
   Decidim::User.prepend(DisableMessaging::RejectAllConversations)
   Decidim::UserPresenter.prepend(DisableMessaging::ForbidContact)
   Decidim::Messaging::ConversationMailer.prepend(DisableMessaging::SuppressMailerDelivery)
+  Decidim::ProfileCell.prepend(DisableMessaging::HideGroupConversationsTab)
 
   # decidim-admin moderation reports list the reportable's authors with an
   # unconditional "start conversation" link wrapping the user name. Since DM
