@@ -41,7 +41,13 @@ module Decidim
 
         Decidim::ActionLog.where(organization:).delete_all
 
-        Decidim::AssembliesSetting.where(organization:).delete_all
+        ActiveRecord::Base.connection.execute(
+          "DELETE FROM decidim_assemblies_settings WHERE decidim_organization_id = #{organization.id}"
+        )
+
+        ActiveRecord::Base.connection.execute(
+          "DELETE FROM decidim_user_blocks WHERE decidim_user_id IN (SELECT id FROM decidim_users WHERE decidim_organization_id = #{organization.id}) OR blocking_user_id IN (SELECT id FROM decidim_users WHERE decidim_organization_id = #{organization.id})"
+        )
 
         organization.destroy!
 

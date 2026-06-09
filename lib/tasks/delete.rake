@@ -18,6 +18,8 @@ namespace :delete do
     :destroy_all_participatory_processes,
     :destroy_all_areas,
     :destroy_all_newsletters,
+    :destroy_all_metrics,
+    :destroy_all_short_links,
     :destroy_organization,
     :destroy_all_messages
   ]
@@ -225,7 +227,6 @@ namespace :delete do
     organization = decidim_find_organization
     return unless organization
 
-    form = OpenStruct.new(valid?: true, delete_reason: "Testing")
     Decidim::User.transaction do
       Decidim::User.where(organization:).find_each(batch_size: 100) do |user|
         Decidim::Gamifications::DestroyAllBadges.call(organization, user)
@@ -233,10 +234,11 @@ namespace :delete do
       end
     end
 
-    # Use tranzaction in Decidim::DestroyAccount
+    # Use transaction in Decidim::DestroyAccount
     Decidim::User.where(organization:).find_each(batch_size: 100) do |user|
       puts "destroy user id: #{user.id}"
-      Decidim::DestroyAccount.call(user, form)
+      form = OpenStruct.new(valid?: true, delete_reason: "delete org", current_user: user)
+      Decidim::DestroyAccount.call(form)
     rescue StandardError => e
       puts "Decidim::DestroyAccount failed: #{e.inspect}"
     end
@@ -268,20 +270,50 @@ namespace :delete do
 
     puts "Finish destroy_all_messages"
   end
+
+  desc "Destroy all metrics for a given organization"
+  task destroy_all_metrics: :environment do
+    puts "Start destroy_all_metrics of #{ENV["DECIDIM_ORGANIZATION_NAME"] || ENV["DECIDIM_ORGANIZATION_ID"]}"
+
+    organization = decidim_find_organization
+    return unless organization
+
+    Decidim::Metric.where(decidim_organization_id: organization.id).delete_all
+
+    puts "Finish destroy_all_metrics of #{ENV["DECIDIM_ORGANIZATION_NAME"] || ENV["DECIDIM_ORGANIZATION_ID"]}"
+  end
+
+  desc "Destroy all short links for a given organization"
+  task destroy_all_short_links: :environment do
+    puts "Start destroy_all_short_links of #{ENV["DECIDIM_ORGANIZATION_NAME"] || ENV["DECIDIM_ORGANIZATION_ID"]}"
+
+    organization = decidim_find_organization
+    return unless organization
+
+    Decidim::ShortLink.where(decidim_organization_id: organization.id).delete_all
+
+    puts "Finish destroy_all_short_links of #{ENV["DECIDIM_ORGANIZATION_NAME"] || ENV["DECIDIM_ORGANIZATION_ID"]}"
+  end
 end
 
 private
 
 def decidim_find_organization
-  organization = Decidim::Organization.find_by(name: ENV.fetch("DECIDIM_ORGANIZATION_NAME"))
+  organization = if (id = ENV["DECIDIM_ORGANIZATION_ID"])
+                   Decidim::Organization.find_by(id: id)
+                 elsif (name = ENV["DECIDIM_ORGANIZATION_NAME"])
+                   Decidim::Organization.all.detect { |org| org.attributes["name"].values.include?(name) }
+                 end
 
   unless organization
-    puts "Organization not found: '#{ENV.fetch("DECIDIM_ORGANIZATION_NAME")}'"
-    puts "Usage: DECIDIM_ORGANIZATION_NAME=<organization name> rails delete::destroy_all"
+    puts "Organization not found."
+    puts "Usage:"
+    puts "  DECIDIM_ORGANIZATION_ID=<id> rails delete:destroy_all"
+    puts "  DECIDIM_ORGANIZATION_NAME=<name> rails delete:destroy_all"
     return
   end
 
-  puts "Organization found: '#{ENV.fetch("DECIDIM_ORGANIZATION_NAME")}' as '#{organization.id}'"
+  puts "Organization found: id=#{organization.id} name=#{organization.attributes["name"].inspect}"
 
   organization
 end
