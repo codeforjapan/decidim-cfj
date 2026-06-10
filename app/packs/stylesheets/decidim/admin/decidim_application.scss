@@ -3,6 +3,11 @@
 // b04a3260), but restoring the upstream HTML lets decidim-decidim_awesome's
 // visibility callout Deface override succeed without errors. We hide the
 // whole accordion card so the callout is hidden along with it.
-#accordion-visibility {
-  display: none;
+// Scoped to process group forms only to avoid hiding the same section on
+// individual participatory process edit forms.
+form.new_participatory_process_group,
+form.edit_participatory_process_group {
+  #accordion-visibility {
+    display: none;
+  }
 }
