@@ -273,35 +273,35 @@ namespace :delete do
 
   desc "Destroy all metrics for a given organization"
   task destroy_all_metrics: :environment do
-    puts "Start destroy_all_metrics of #{ENV["DECIDIM_ORGANIZATION_NAME"] || ENV["DECIDIM_ORGANIZATION_ID"]}"
+    puts "Start destroy_all_metrics of #{ENV.fetch("DECIDIM_ORGANIZATION_NAME", nil) || ENV.fetch("DECIDIM_ORGANIZATION_ID", nil)}"
 
     organization = decidim_find_organization
     return unless organization
 
     Decidim::Metric.where(decidim_organization_id: organization.id).delete_all
 
-    puts "Finish destroy_all_metrics of #{ENV["DECIDIM_ORGANIZATION_NAME"] || ENV["DECIDIM_ORGANIZATION_ID"]}"
+    puts "Finish destroy_all_metrics of #{ENV.fetch("DECIDIM_ORGANIZATION_NAME", nil) || ENV.fetch("DECIDIM_ORGANIZATION_ID", nil)}"
   end
 
   desc "Destroy all short links for a given organization"
   task destroy_all_short_links: :environment do
-    puts "Start destroy_all_short_links of #{ENV["DECIDIM_ORGANIZATION_NAME"] || ENV["DECIDIM_ORGANIZATION_ID"]}"
+    puts "Start destroy_all_short_links of #{ENV.fetch("DECIDIM_ORGANIZATION_NAME", nil) || ENV.fetch("DECIDIM_ORGANIZATION_ID", nil)}"
 
     organization = decidim_find_organization
     return unless organization
 
     Decidim::ShortLink.where(decidim_organization_id: organization.id).delete_all
 
-    puts "Finish destroy_all_short_links of #{ENV["DECIDIM_ORGANIZATION_NAME"] || ENV["DECIDIM_ORGANIZATION_ID"]}"
+    puts "Finish destroy_all_short_links of #{ENV.fetch("DECIDIM_ORGANIZATION_NAME", nil) || ENV.fetch("DECIDIM_ORGANIZATION_ID", nil)}"
   end
 end
 
 private
 
 def decidim_find_organization
-  organization = if (id = ENV["DECIDIM_ORGANIZATION_ID"])
-                   Decidim::Organization.find_by(id: id)
-                 elsif (name = ENV["DECIDIM_ORGANIZATION_NAME"])
+  organization = if (id = ENV.fetch("DECIDIM_ORGANIZATION_ID", nil))
+                   Decidim::Organization.find_by(id:)
+                 elsif (name = ENV.fetch("DECIDIM_ORGANIZATION_NAME", nil))
                    Decidim::Organization.all.detect { |org| org.attributes["name"].values.include?(name) }
                  end
 

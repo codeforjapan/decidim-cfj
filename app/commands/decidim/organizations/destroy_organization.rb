@@ -46,7 +46,10 @@ module Decidim
         )
 
         ActiveRecord::Base.connection.execute(
-          "DELETE FROM decidim_user_blocks WHERE decidim_user_id IN (SELECT id FROM decidim_users WHERE decidim_organization_id = #{organization.id}) OR blocking_user_id IN (SELECT id FROM decidim_users WHERE decidim_organization_id = #{organization.id})"
+          "DELETE FROM decidim_user_blocks WHERE decidim_user_id IN " \
+          "(SELECT id FROM decidim_users WHERE decidim_organization_id = #{organization.id}) " \
+          "OR blocking_user_id IN " \
+          "(SELECT id FROM decidim_users WHERE decidim_organization_id = #{organization.id})"
         )
 
         organization.destroy!
