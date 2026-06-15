@@ -1,6 +1,7 @@
 # frozen_string_literal: true
-# This migration comes from decidim_proposals (originally 20200120215928)
 
+# This migration comes from decidim_proposals (originally 20200120215928)
+# This file has been modified by `decidim upgrade:migrations` task on 2025-08-05 08:11:54 UTC
 # This migration must be executed after CreateDecidimEndorsements migration in decidim-core.
 class MoveProposalEndorsementsToCoreEndorsements < ActiveRecord::Migration[5.2]
   class ProposalEndorsement < ApplicationRecord
@@ -27,7 +28,7 @@ class MoveProposalEndorsementsToCoreEndorsements < ActiveRecord::Migration[5.2]
       )
     end
     # update new `decidim_proposals_proposal.endorsements_count` counter cache
-    Decidim::Proposals::Proposal.select(:id).all.find_each do |proposal|
+    Decidim::Proposals::Proposal.unscoped.select(:id).all.find_each do |proposal|
       Decidim::Proposals::Proposal.reset_counters(proposal.id, :endorsements)
     end
   end

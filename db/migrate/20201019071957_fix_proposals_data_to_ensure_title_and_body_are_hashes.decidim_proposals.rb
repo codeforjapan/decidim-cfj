@@ -6,7 +6,7 @@ class FixProposalsDataToEnsureTitleAndBodyAreHashes < ActiveRecord::Migration[5.
     reset_column_information
 
     PaperTrail.request(enabled: false) do
-      Decidim::Proposals::Proposal.find_each do |proposal|
+      Decidim::Proposals::Proposal.unscoped.find_each do |proposal|
         next if proposal.title.is_a?(Hash) && proposal.body.is_a?(Hash)
 
         author = proposal.coauthorships.first.author

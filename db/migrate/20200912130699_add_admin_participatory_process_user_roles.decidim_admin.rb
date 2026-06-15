@@ -1,6 +1,7 @@
 # frozen_string_literal: true
-# This migration comes from decidim_admin (originally 20161102144648)
 
+# This migration comes from decidim_admin (originally 20161102144648)
+# This file has been modified by `decidim upgrade:migrations` task on 2025-08-05 08:11:54 UTC
 class AddAdminParticipatoryProcessUserRoles < ActiveRecord::Migration[5.0]
   def change
     create_table :decidim_admin_participatory_process_user_roles do |t|

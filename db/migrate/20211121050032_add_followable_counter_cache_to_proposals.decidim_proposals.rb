@@ -1,6 +1,7 @@
 # frozen_string_literal: true
-# This migration comes from decidim_proposals (originally 20210310102839)
 
+# This migration comes from decidim_proposals (originally 20210310102839)
+# This file has been modified by `decidim upgrade:migrations` task on 2025-08-05 08:11:54 UTC
 class AddFollowableCounterCacheToProposals < ActiveRecord::Migration[5.2]
   def change
     add_column :decidim_proposals_proposals, :follows_count, :integer, null: false, default: 0, index: true
@@ -8,7 +9,7 @@ class AddFollowableCounterCacheToProposals < ActiveRecord::Migration[5.2]
     reversible do |dir|
       dir.up do
         Decidim::Proposals::Proposal.reset_column_information
-        Decidim::Proposals::Proposal.find_each do |record|
+        Decidim::Proposals::Proposal.unscoped.find_each do |record|
           record.class.reset_counters(record.id, :follows)
         end
       end
