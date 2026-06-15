@@ -43,6 +43,9 @@ ja:
       organization_appearance:
         form:
           mobile_logo_help: "モバイル版で表示されるロゴ画像です。推奨サイズ: 360x120px"
+      taxonomy_filters:
+        actions:
+          new_taxonomy_filter: 新規分類フィルター
       taxonomy_filters_selector:
         new:
           items_count: "%{count}個の項目"
@@ -149,6 +152,10 @@ ja:
         real_time: リアルタイム
       intro:
         real_time: 'あなたがフォローしているアクティビティに基づいた通知です:'
+    open_data:
+      help:
+        taxonomies:
+          part_of: この分類が他の分類の一部であるかどうかを検出するために使用されます
     pages:
       home:
         footer_sub_hero:
