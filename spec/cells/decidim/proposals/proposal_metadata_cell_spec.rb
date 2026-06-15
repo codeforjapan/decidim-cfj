@@ -23,8 +23,8 @@ module Decidim
         allow(controller).to receive(:current_organization).and_return(organization)
       end
 
-      describe "#proposal_items_for_map" do
-        subject(:items) { cell_instance.send(:proposal_items_for_map) }
+      describe "#items_for_map" do
+        subject(:items) { cell_instance.send(:items_for_map) }
 
         let(:coauthor_item) { items.first }
 
