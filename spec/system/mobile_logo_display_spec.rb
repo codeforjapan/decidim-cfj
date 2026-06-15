@@ -8,6 +8,15 @@ describe "Mobile logo display", js: true do
   before do
     switch_to_host(organization.host)
     I18n.locale = :ja
+    # Selenium reuses the same browser window across system specs. The examples
+    # below shrink it to a mobile viewport, so remember the original size and
+    # restore it afterwards; otherwise later specs run at 375px wide and fail to
+    # find elements that are hidden or repositioned in the mobile layout.
+    @original_window_size = page.current_window.size
+  end
+
+  after do
+    page.current_window.resize_to(*@original_window_size) if @original_window_size
   end
 
   context "when organization has mobile logo" do
