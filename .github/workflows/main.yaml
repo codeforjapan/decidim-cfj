@@ -25,7 +25,7 @@ jobs:
       deploy-env: ${{ steps.output-deploy-env.outputs.deploy-env }}
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
 
       - name: Set env to staging
         id: set-env-staging

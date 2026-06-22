@@ -1,5 +1,42 @@
 # Change Log
 
+## [1.18.5](https://github.com/codeforjapan/decidim-cfj/compare/v1.18.4...v1.18.5) (2026-05-28)
+
+
+### Bug Fixes
+
+* CloseMeetingReminderGenerator の space_admins メモ化バグを修正 ([3455fd0](https://github.com/codeforjapan/decidim-cfj/commit/3455fd01e9997841aca7c8280301709e59d084bd))
+* space_admins のメモ化をコンポーネント単位のハッシュに変更 ([b0d280f](https://github.com/codeforjapan/decidim-cfj/commit/b0d280ff1e4c1d398b003f0cb07bc508eb11a177))
+* テストをクロス組織の順序依存なしに改善 ([f7e3cdd](https://github.com/codeforjapan/decidim-cfj/commit/f7e3cdd8b2177655afa9cd1f6d39eef6d52de8ec))
+
+## [1.18.4](https://github.com/codeforjapan/decidim-cfj/compare/v1.18.3...v1.18.4) (2026-05-26)
+
+
+### Bug Fixes
+
+* DecidimAwesome::Config#sub_configs_for のN+1クエリを解消 ([293ba1e](https://github.com/codeforjapan/decidim-cfj/commit/293ba1ee7c6e82542ddd4e0d57fe09048c162b24))
+* redefine invalid BLOB_REGEX and replace_blobs in decidim-core ([96894ed](https://github.com/codeforjapan/decidim-cfj/commit/96894ed87da76033a249e81c656762ee14e88d0b))
+
+## [1.18.3](https://github.com/codeforjapan/decidim-cfj/compare/v1.18.2...v1.18.3) (2026-05-15)
+
+
+### Bug Fixes
+
+* do not use html_safe for text and icon ([ff10e06](https://github.com/codeforjapan/decidim-cfj/commit/ff10e0694284e8f2e14f745802c96c4eaeb2c5f7))
+* enforce permission to newsletter ([d0de4bd](https://github.com/codeforjapan/decidim-cfj/commit/d0de4bdfbe0c7fd46bf53ad9c8b7d80488c7d179))
+* orerride organization_name() to html_escape ([5af8877](https://github.com/codeforjapan/decidim-cfj/commit/5af8877eb10d4f4e4c465788ef90b24644cd5b3d))
+* use AvatarFetcher for secure access ([5e2acf8](https://github.com/codeforjapan/decidim-cfj/commit/5e2acf8cda4d7965a9d44f2869005e85a92351dd))
+* use AvatarFetcher in ApplicationUploader#remote_url= ([cb32d4a](https://github.com/codeforjapan/decidim-cfj/commit/cb32d4a6f012dbbaa064d389096ca07bf835f60b))
+* 削除済みユーザーによる extra_data ブロックの 500 エラーを修正 ([5bc43b1](https://github.com/codeforjapan/decidim-cfj/commit/5bc43b1e830c8a969a947c683b4f491497cc63af))
+
+## [1.18.2](https://github.com/codeforjapan/decidim-cfj/compare/v1.18.1...v1.18.2) (2026-04-18)
+
+
+### Bug Fixes
+
+* harden BlobRenderer variation Hash ([40138a4](https://github.com/codeforjapan/decidim-cfj/commit/40138a4720d08df9da262dc43f9491e6b911cb22))
+* increase PumaWorkerKiller RAM limit to 3072 MB ([39e73de](https://github.com/codeforjapan/decidim-cfj/commit/39e73de666f6b67cb87a2edf5ece79279faf7404))
+
 ## [1.18.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.18.0...v1.18.1) (2026-03-08)
 
 

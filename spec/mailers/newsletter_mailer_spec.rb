@@ -44,6 +44,20 @@ module Decidim
         end
       end
 
+      context "when the organization name contains HTML" do
+        before do
+          # update_column bypasses Decidim's organization name validation to simulate
+          # legacy data or unvalidated updates. The cell override must escape regardless.
+          organization.update_column(:name, { en: '<a href="http://evil.example">click</a>' }) # rubocop:disable Rails/SkipsModelValidations
+        end
+
+        it "HTML-escapes the organization name in the newsletter template" do
+          body = email_body(mail)
+          expect(body).to include("&lt;a")
+          expect(body).not_to match(%r{<a href="http://evil\.example"})
+        end
+      end
+
       context "when the user has a different locale" do
         before do
           user.locale = "ja"

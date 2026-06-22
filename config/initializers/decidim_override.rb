@@ -201,4 +201,35 @@ Rails.application.config.to_prepare do
       errors.add(:nickname, :taken) if Decidim::UserBaseEntity.exists?(nickname: nickname.strip, organization: current_organization)
     end
   end
+
+  # ----------------------------------------
+
+  # Fix CloseMeetingReminderGenerator#space_admins cross-organization memoization bug
+  # @space_admins ||= はインスタンス変数にメモ化するため、全組織をまたいで同じ管理者リストが
+  # 使い回されてしまう。component.id をキーにしたハッシュでメモ化し、組織ごとに正しい管理者を返す。
+  module DecidimMeetingsCloseMeetingReminderGeneratorPatch
+    private
+
+    def space_admins(component)
+      @space_admins ||= {}
+      @space_admins[component.id] ||= begin
+        sa = if component.participatory_space.respond_to?(:user_roles)
+               component.participatory_space.user_roles(:admin).collect(&:user)
+             else
+               []
+             end
+        (component.organization.admins + sa).uniq
+      end
+    end
+  end
+
+  Decidim::Meetings::CloseMeetingReminderGenerator # rubocop:disable Lint/Void
+
+  module Decidim
+    module Meetings
+      class CloseMeetingReminderGenerator
+        prepend DecidimMeetingsCloseMeetingReminderGeneratorPatch
+      end
+    end
+  end
 end
