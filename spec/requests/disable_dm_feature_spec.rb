@@ -111,6 +111,19 @@ RSpec.describe "Disable DM feature" do
     end
   end
 
+  describe "Decidim::Exporters::OpenDataUserSerializer" do
+    subject(:serialized) { Decidim::Exporters::OpenDataUserSerializer.new(user).serialize }
+
+    it "forces direct_messages_enabled to false even when the user allows DMs" do
+      user.update!(direct_message_types: "all")
+      expect(serialized[:direct_messages_enabled]).to be(false)
+    end
+
+    it "keeps the direct_messages_enabled key so the Open Data schema is preserved" do
+      expect(serialized).to have_key(:direct_messages_enabled)
+    end
+  end
+
   describe "Decidim::Messaging::ConversationMailer" do
     let(:conversation) do
       create(:conversation, originator: user, interlocutors: [other_user], user:, body: "hi")
