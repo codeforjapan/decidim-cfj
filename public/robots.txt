@@ -1,7 +1,45 @@
-# the following adds a rule for all bots to not index any page that contains a profile or search
+# -------------------------------------------------
+# (1) AI学習用Bot・悪質Botのブロック
+# -------------------------------------------------
+
+# Meta AI学習ボット（OGPクローラー facebookexternalhit とは別物）
+User-agent: FacebookBot
+Disallow: /
+
+# Meta AI学習エージェント（CPUスパイクの主因、2026年5月障害）
+User-agent: Meta-ExternalAgent
+Disallow: /
+
+# OpenAI GPT学習ボット
+User-agent: GPTBot
+Disallow: /
+
+# Anthropic Claude学習ボット
+User-agent: ClaudeBot
+Disallow: /
+
+# Google AI学習制御トークン
+User-agent: Google-Extended
+Disallow: /
+
+# ByteDance Bytespider（robots.txt無視の実績あり、記録目的で記載）
+User-agent: Bytespider
+Disallow: /
+
+# CommonCrawl（AI学習データセットの主要ソース）
+User-agent: CCBot
+Disallow: /
+
+# -------------------------------------------------
+# (2) 一般検索エンジン：許可 + Decidim動的URLのブロック
+# -------------------------------------------------
+
 User-agent: *
 Disallow: /profiles/
 Disallow: /search
 Disallow: /*/versions
 Disallow: /sitemap.xml
-Disallow: /
+# フィルタ・並び替えURLはBotの網羅的アクセスによる高負荷の原因
+Disallow: /*?*filter
+Disallow: /*?*order
+Disallow: /*?*per_page
