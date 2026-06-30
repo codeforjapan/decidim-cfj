@@ -9,8 +9,8 @@ GIT
 
 GIT
   remote: https://github.com/codeforjapan/decidim-module-decidim_awesome.git
-  revision: d0ac3aa3e1146a70364ab07895c6a8bf0565a68e
-  branch: main-2026-02-07
+  revision: f4aa93e0bc8e5d10a16442e7b51282317c0dae00
+  branch: release/0.30-stable
   specs:
     decidim-decidim_awesome (0.13.2)
       active_hashcash (~> 0.4.0)
@@ -154,9 +154,11 @@ GEM
       activesupport (>= 6.1)
     addressable (2.9.0)
       public_suffix (>= 2.0.2, < 8.0)
+    anonymous_loader (0.1.2)
+      version_gem (~> 1.1, >= 1.1.13)
     ast (2.4.2)
-    auth-sanitizer (0.1.2)
-      version_gem (~> 1.1, >= 1.1.9)
+    auth-sanitizer (0.2.2)
+      version_gem (~> 1.1, >= 1.1.10)
     aws-eventstream (1.3.2)
     aws-partitions (1.1065.0)
     aws-sdk-core (3.220.1)
@@ -217,7 +219,6 @@ GEM
     cells-rails (0.1.6)
       actionpack (>= 5.0)
       cells (>= 4.1.6, < 5.0.0)
-    cgi (0.5.1)
     charlock_holmes (0.7.9)
     chartkick (5.1.5)
     childprocess (5.1.0)
@@ -233,8 +234,9 @@ GEM
       bigdecimal
       rexml
     crass (1.0.6)
-    css_parser (2.2.0)
+    css_parser (3.0.0)
       addressable
+      ssrf_filter (~> 1.5)
     csv (3.3.5)
     date (3.5.1)
     date_validator (0.12.0)
@@ -450,7 +452,7 @@ GEM
       nokogiri (>= 1.18.2)
       rubyzip (~> 2.3.0)
     docile (1.4.1)
-    doorkeeper (5.9.0)
+    doorkeeper (5.9.3)
       railties (>= 5)
     doorkeeper-i18n (4.0.1)
     dotenv (3.1.7)
@@ -469,7 +471,7 @@ GEM
       temple
     erubi (1.13.1)
     escape_utils (1.3.0)
-    excon (1.4.2)
+    excon (1.5.0)
       logger
     extended-markdown-filter (0.7.0)
       html-pipeline (~> 2.9)
@@ -480,7 +482,7 @@ GEM
       railties (>= 5.0.0)
     faker (3.5.3)
       i18n (>= 1.8.11, < 2)
-    faraday (2.14.2)
+    faraday (2.14.3)
       faraday-net_http (>= 2.0, < 3.5)
       json
       logger
@@ -489,7 +491,7 @@ GEM
       hashie
     faraday-multipart (1.1.0)
       multipart-post (~> 2.0)
-    faraday-net_http (3.4.2)
+    faraday-net_http (3.4.4)
       net-http (~> 0.5)
     fast-stemmer (1.0.2)
     ffi (1.17.4-aarch64-linux-gnu)
@@ -531,7 +533,7 @@ GEM
       ffi (~> 1.0)
     gli (2.22.2)
       ostruct
-    globalid (1.3.0)
+    globalid (1.4.0)
       activesupport (>= 6.1)
     google-protobuf (4.34.1-aarch64-linux-gnu)
       bigdecimal
@@ -570,7 +572,7 @@ GEM
       activesupport (>= 2)
       nokogiri (>= 1.4)
     htmlentities (4.4.2)
-    i18n (1.14.8)
+    i18n (1.15.2)
       concurrent-ruby (~> 1.0)
     i18n-tasks (1.1.2)
       activesupport (>= 4.0.2)
@@ -597,7 +599,7 @@ GEM
       rails (>= 3.2.0)
     io-console (0.8.2)
     jmespath (1.6.2)
-    json (2.19.5)
+    json (2.20.0)
     jwt (3.2.0)
       base64
     kaminari (1.2.2)
@@ -637,7 +639,7 @@ GEM
       net-imap
       net-pop
       net-smtp
-    marcel (1.1.0)
+    marcel (1.2.1)
     matrix (0.4.3)
     method_source (1.1.0)
     mime-types (3.7.0)
@@ -657,7 +659,7 @@ GEM
     mutex_m (0.3.0)
     net-http (0.9.1)
       uri (>= 0.11.1)
-    net-imap (0.6.4)
+    net-imap (0.6.4.1)
       date
       net-protocol
     net-pop (0.1.2)
@@ -668,32 +670,32 @@ GEM
       net-protocol
     newrelic_rpm (9.17.0)
     nio4r (2.7.5)
-    nokogiri (1.19.3-aarch64-linux-gnu)
+    nokogiri (1.19.4-aarch64-linux-gnu)
       racc (~> 1.4)
-    nokogiri (1.19.3-arm64-darwin)
+    nokogiri (1.19.4-arm64-darwin)
       racc (~> 1.4)
-    nokogiri (1.19.3-x86_64-linux-gnu)
+    nokogiri (1.19.4-x86_64-linux-gnu)
       racc (~> 1.4)
-    oauth (1.1.4)
-      auth-sanitizer (~> 0.1, >= 0.1.2)
+    oauth (1.1.7)
+      auth-sanitizer (~> 0.2, >= 0.2.1)
       base64 (~> 0.1)
-      cgi
-      oauth-tty (~> 1.0, >= 1.0.7)
-      snaky_hash (~> 2.0, >= 2.0.4)
-      version_gem (~> 1.1, >= 1.1.9)
-    oauth-tty (1.0.7)
-      auth-sanitizer (~> 0.1)
-      cgi
-      version_gem (~> 1.1, >= 1.1.9)
-    oauth2 (2.0.19)
-      auth-sanitizer (~> 0.1)
+      oauth-tty (~> 1.0, >= 1.0.10)
+      snaky_hash (~> 2.0, >= 2.0.5)
+      version_gem (~> 1.1, >= 1.1.12)
+    oauth-tty (1.0.12)
+      anonymous_loader (~> 0.1, >= 0.1.1)
+      auth-sanitizer (~> 0.2, >= 0.2.2)
+      version_gem (~> 1.1, >= 1.1.12)
+    oauth2 (2.0.24)
+      anonymous_loader (~> 0.1, >= 0.1.1)
+      auth-sanitizer (~> 0.2, >= 0.2.2)
       faraday (>= 0.17.3, < 4.0)
       jwt (>= 1.0, < 4.0)
       logger (~> 1.2)
       multi_xml (~> 0.5)
       rack (>= 1.2, < 4)
-      snaky_hash (~> 2.0, >= 2.0.3)
-      version_gem (~> 1.1, >= 1.1.9)
+      snaky_hash (~> 2.0, >= 2.0.6)
+      version_gem (~> 1.1, >= 1.1.12)
     omniauth (2.1.4)
       hashie (>= 3.4.6)
       logger
@@ -939,13 +941,14 @@ GEM
       hashie
       logger
     smart_properties (1.17.0)
-    snaky_hash (2.0.4)
+    snaky_hash (2.0.6)
       hashie (>= 0.1.0, < 6)
       version_gem (>= 1.1.8, < 3)
     spring (4.5.0)
     spring-watcher-listen (2.1.0)
       listen (>= 2.7, < 4.0)
       spring (>= 4)
+    ssrf_filter (1.5.0)
     strscan (3.1.8)
     temple (0.10.4)
     terminal-table (4.0.0)
@@ -963,7 +966,7 @@ GEM
     valid_email2 (7.0.15)
       activemodel (>= 6.0)
       mail (~> 2.5)
-    version_gem (1.1.9)
+    version_gem (1.1.13)
     w3c_rspec_validators (0.3.0)
       rails
       rspec
@@ -987,7 +990,7 @@ GEM
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
     websocket (1.2.11)
-    websocket-driver (0.8.0)
+    websocket-driver (0.8.2)
       base64
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -998,7 +1001,7 @@ GEM
     wisper-rspec (1.1.0)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.7.5)
+    zeitwerk (2.8.2)
     zip-zip (0.3)
       rubyzip (>= 1.0.0)
 
