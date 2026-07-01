@@ -1,5 +1,13 @@
 # Change Log
 
+## [1.18.6](https://github.com/codeforjapan/decidim-cfj/compare/v1.18.5...v1.18.6) (2026-07-01)
+
+
+### Bug Fixes
+
+* delete:destroy_all タスクの修正と拡張 ([85da592](https://github.com/codeforjapan/decidim-cfj/commit/85da59231c969a2298130f67b72daf3d73d2f419))
+* RuboCop違反を修正 ([03b9418](https://github.com/codeforjapan/decidim-cfj/commit/03b9418df4619e7dbce075d6b24cf2166d3b8144))
+
 ## [1.18.5](https://github.com/codeforjapan/decidim-cfj/compare/v1.18.4...v1.18.5) (2026-05-28)
 
 
