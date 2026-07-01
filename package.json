@@ -14,7 +14,7 @@
     "@rails/actioncable": "^6.1.7",
     "@rails/webpacker": "^6.0.0-rc.6",
     "codemirror": "^5.65.18",
-    "core-js": "^3.36.0",
+    "core-js": "^3.49.0",
     "emojibase": "^15.3.0",
     "europa": "^4.0.0",
     "form-storage": "^1.3.5",
