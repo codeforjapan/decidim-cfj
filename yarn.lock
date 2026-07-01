@@ -1498,10 +1498,10 @@
   resolved "https://registry.npmjs.org/@csstools/utilities/-/utilities-1.0.0.tgz"
   integrity sha512-tAgvZQe/t2mlvpNosA4+CkMiZ2azISW5WPAcdSalZlEjQvUfghHxfQcrCiK/7/CrfAWVxyM88kGFYO82heIGDg==
 
-"@decidim/browserslist-config@^0.29.2":
-  version "0.29.2"
-  resolved "https://registry.npmjs.org/@decidim/browserslist-config/-/browserslist-config-0.29.2.tgz"
-  integrity sha512-wqkComBsiTzRjL8Y2bW/2yIpdEFPJ6qEYYIoqaO6Mnch/VxXH4ZgT/ifWwPRgSZdAcPJ1JE8kmF/c6T75dJLCQ==
+"@decidim/browserslist-config@^0.31.5":
+  version "0.31.5"
+  resolved "https://registry.yarnpkg.com/@decidim/browserslist-config/-/browserslist-config-0.31.5.tgz#1411be8218a463077bf04b1f74b107ae5f84835d"
+  integrity sha512-pbM5FUqBUz2NRbTNNc/AeXRIdnQ9HIDBG3YwCUM0qTpBGuVwmV0+I6hbHU9UcFLGLkqNfac42m/00jqNqiNBKQ==
 
 "@decidim/core@^0.29.2":
   version "0.29.2"
