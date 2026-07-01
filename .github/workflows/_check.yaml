@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - uses: ruby/setup-ruby@v1
         with:
@@ -61,7 +61,7 @@ jobs:
           - 6379/tcp
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: apt-get
         run: |
@@ -127,7 +127,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       # Ruby + bundler-cache is required because jest.config.js resolves the
       # decidim-core gem path at startup via `bundle show decidim-core`.
