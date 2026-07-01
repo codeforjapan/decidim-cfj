@@ -30,6 +30,14 @@ Disallow: /
 User-agent: CCBot
 Disallow: /
 
+# Apple AI学習ボット（通常検索クローラーのApplebotとは別物）
+User-agent: Applebot-Extended
+Disallow: /
+
+# Amazon Alexa AI学習ボット
+User-agent: Amazonbot
+Disallow: /
+
 # -------------------------------------------------
 # (2) 一般検索エンジン：許可 + Decidim動的URLのブロック
 # -------------------------------------------------
