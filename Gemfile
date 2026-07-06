@@ -63,6 +63,15 @@ group :production do
   gem "sidekiq", "6.5.12"
 end
 
+group :development do
+  # Profiling gems
+  gem "bullet"
+  gem "flamegraph"
+  gem "memory_profiler"
+  gem "rack-mini-profiler", require: false
+  gem "stackprof"
+end
+
 gem "rubyzip", ">= 1.0.0"
 gem "zip-zip"
 
