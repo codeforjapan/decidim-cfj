@@ -110,9 +110,10 @@ jobs:
             asset-precompile-cache-${{ hashFiles('ASSETS_VERSION') }}
             asset-precompile-cache-
 
-      - name: Migrate DB
+      - name: Setup parallel test DBs
         run: |
-          bundle exec rails db:create db:migrate
+          bundle exec rails parallel:create
+          bundle exec rails parallel:migrate
 
       - name: Precompile assets
         run: bundle exec rails assets:precompile
@@ -120,7 +121,7 @@ jobs:
       - name: Test with RSpec
         run: |
           export PATH=${GITHUB_WORKSPACE}/vendor/imagemagick7/bin:${PATH}
-          bundle exec rails spec
+          bundle exec parallel_test -t rspec spec/
 
   jstest:
     name: JS Test
