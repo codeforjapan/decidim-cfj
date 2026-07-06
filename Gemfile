@@ -53,6 +53,13 @@ group :development do
   gem "rubocop-faker"
   gem "rubocop-rspec_rails", "~> 2.30.0", require: false
   gem "web-console", "~> 4.2"
+
+  # Profiling gems
+  gem "bullet"
+  gem "flamegraph"
+  gem "memory_profiler"
+  gem "rack-mini-profiler", require: false
+  gem "stackprof"
 end
 
 group :production do
@@ -61,15 +68,6 @@ group :production do
   gem "fog-aws"
   # gem "oj", platform: :mri
   gem "sidekiq", "6.5.12"
-end
-
-group :development do
-  # Profiling gems
-  gem "bullet"
-  gem "flamegraph"
-  gem "memory_profiler"
-  gem "rack-mini-profiler", require: false
-  gem "stackprof"
 end
 
 gem "rubyzip", ">= 1.0.0"
