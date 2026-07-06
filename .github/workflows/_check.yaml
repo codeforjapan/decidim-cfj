@@ -91,23 +91,17 @@ jobs:
           npm i -g yarn@1.22.19
           yarn install --frozen-lockfile
 
-      - name: create assets precompile cache key
-        run: |
-          # use newest commit hash of precompile target files
-          git rev-parse $(git log --oneline -n 1 app/decidim-packs tmp/shakapacker.lock lib/assets Gemfile.lock yarn.lock | awk '{print $1}') > ASSETS_VERSION
-
       - name: asset cache
         uses: actions/cache@v6
         with:
           path: |
             public/decidim-packs
             public/assets
-            tmp/cache/assets
-            tmp/shakapacker.lock
             public/packs-test
-          key: asset-precompile-cache-${{ hashFiles('ASSETS_VERSION') }}
+            tmp/cache/assets
+            tmp/shakapacker
+          key: asset-precompile-cache-${{ hashFiles('app/packs/**', 'config/webpack/**', 'config/shakapacker.yml', 'package.json', 'yarn.lock', 'Gemfile.lock') }}
           restore-keys: |
-            asset-precompile-cache-${{ hashFiles('ASSETS_VERSION') }}
             asset-precompile-cache-
 
       - name: Setup parallel test DBs
