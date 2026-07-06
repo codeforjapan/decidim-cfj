@@ -1,12 +1,8 @@
 FROM node:20.18.3-bookworm-slim AS node
 
-FROM ruby:3.2.6-slim-bookworm
+FROM ruby:3.3.4-slim-bookworm
 
 # for build-dep
-RUN echo "deb-src http://deb.debian.org/debian bullseye main" >> /etc/apt/sources.list
-RUN echo "deb-src http://deb.debian.org/debian-security bullseye-security main" >> /etc/apt/sources.list
-RUN echo "deb-src http://deb.debian.org/debian bullseye-updates main" >> /etc/apt/sources.list
-
 RUN  apt-get update && \
      apt-get install -y --no-install-recommends \
         build-essential \
@@ -55,7 +51,7 @@ ARG RAILS_ENV="production"
 ENV LANG=C.UTF-8 \
     LC_ALL=C.UTF-8 \
     BUNDLER_JOBS=4 \
-    BUNDLER_VERSION=2.4.21 \
+    BUNDLER_VERSION=2.5.15 \
     APP_HOME=/app \
     RAILS_ENV=${RAILS_ENV} \
     RAILS_LOG_TO_STDOUT=true \
@@ -86,7 +82,7 @@ RUN cp ./entrypoint /usr/bin/entrypoint \
     && chmod -R +x ./bin/
 
 RUN yarn install \
-    && ./bin/rails assets:precompile \
+    && SKIP_REDIS_SETUP=true ./bin/rails assets:precompile \
     && yarn cache clean
 
 ENTRYPOINT ["entrypoint"]

@@ -105,7 +105,7 @@ namespace :decidim do
       # Process other content types that might have rich text
       # Add more models as needed...
 
-      puts "\n#{("=" * 50)}"
+      puts "\n#{"=" * 50}"
       puts "Signed URL fix task completed!"
       puts "Total items checked: #{total_checked}"
       puts "Items fixed: #{fixed_count}"

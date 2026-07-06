@@ -54,35 +54,6 @@ module Decidim
           end
         end
 
-        # Try to find blob by filename when key search fails
-        # @param s3_url [String] S3 URL
-        # @return [String, nil] Global ID or nil if no matching blob found
-        def s3_url_to_global_id_by_filename(s3_url)
-          return nil unless s3_url.is_a?(String)
-
-          # Extract filename from query parameters
-          filename = extract_filename_from_s3_url(s3_url)
-          return nil unless filename
-
-          # Search for blobs with matching filename
-          begin
-            blobs = ActiveStorage::Blob.where(filename:)
-            case blobs.count
-            when 0
-              Rails.logger.warn "No blob found with filename: #{filename}"
-              nil
-            when 1
-              blobs.first.to_global_id.to_s
-            else
-              Rails.logger.warn "Multiple blobs found with filename #{filename}, using the most recent"
-              blobs.order(created_at: :desc).first.to_global_id.to_s
-            end
-          rescue StandardError => e
-            Rails.logger.warn "Failed to find blob by filename #{filename}: #{e.message}"
-            nil
-          end
-        end
-
         # Convert any blob URL (Rails or S3) to Global ID
         # @param url [String] Any blob URL
         # @return [String, nil] Global ID or nil if conversion fails

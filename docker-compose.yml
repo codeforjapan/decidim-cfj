@@ -43,6 +43,8 @@ services:
       RAILS_ENV: *rails_env
       REDIS_URL: *redis_cache_url
       REDIS_CACHE_URL: *redis_cache_url
+      DECIDIM_SPAM_DETECTION_BACKEND_USER_REDIS_URL: *redis_cache_url
+      DECIDIM_SPAM_DETECTION_BACKEND_RESOURCE_REDIS_URL: *redis_cache_url
     links:
       - pg
       - redis

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
-# This migration comes from decidim_debates (originally 20180119150434)
 
+# This migration comes from decidim_debates (originally 20180119150434)
+# This file has been modified by `decidim upgrade:migrations` task on 2025-08-05 08:11:54 UTC
 class AddReferenceToDebates < ActiveRecord::Migration[5.1]
   class Debate < ApplicationRecord
     self.table_name = :decidim_debates_debates

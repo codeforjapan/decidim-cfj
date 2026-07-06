@@ -1,6 +1,7 @@
 # frozen_string_literal: true
-# This migration comes from decidim_participatory_processes (originally 20170220110740)
 
+# This migration comes from decidim_participatory_processes (originally 20170220110740)
+# This file has been modified by `decidim upgrade:migrations` task on 2025-08-05 08:11:54 UTC
 class RemoveStepsShortDescription < ActiveRecord::Migration[5.0]
   class ParticipatoryProcessStep < ApplicationRecord
     self.table_name = :decidim_participatory_process_steps
@@ -20,7 +21,7 @@ class RemoveStepsShortDescription < ActiveRecord::Migration[5.0]
 
   def new_description_for(step)
     desc = {}
-    step.description.each_key do |locale|
+    step.description.keys.each do |locale|
       desc[locale] = step.short_description[locale] + step.description[locale]
     end
     desc

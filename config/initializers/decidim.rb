@@ -540,3 +540,6 @@ end
 
 ## Share buttons on SNS
 Decidim.social_share_services = %w(X Facebook LINE)
+
+## Disable Etiquette validator configuration
+Decidim.enable_etiquette_validator = false
