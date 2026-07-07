@@ -503,6 +503,7 @@ GEM
     file_validators (3.0.0)
       activemodel (>= 3.2)
       mime-types (>= 1.0)
+    flamegraph (0.9.5)
     fog-aws (3.30.0)
       base64 (~> 0.2.0)
       fog-core (~> 2.6)
@@ -641,6 +642,7 @@ GEM
       net-smtp
     marcel (1.2.1)
     matrix (0.4.3)
+    memory_profiler (1.1.0)
     method_source (1.1.0)
     mime-types (3.7.0)
       logger
@@ -762,6 +764,8 @@ GEM
       rack (>= 1.0, < 4)
     rack-cors (1.1.1)
       rack (>= 2.0.0)
+    rack-mini-profiler (4.0.1)
+      rack (>= 1.2.0)
     rack-protection (3.2.0)
       base64 (>= 0.1.0)
       rack (~> 2.2, >= 2.2.4)
@@ -949,6 +953,7 @@ GEM
       listen (>= 2.7, < 4.0)
       spring (>= 4)
     ssrf_filter (1.5.0)
+    stackprof (0.2.28)
     strscan (3.1.8)
     temple (0.10.4)
     terminal-table (4.0.0)
@@ -1014,6 +1019,7 @@ DEPENDENCIES
   aws-sdk-s3
   bootsnap
   brakeman
+  bullet
   byebug (~> 11.0)
   decidim (= 0.30.9)
   decidim-ai (~> 0.30.9)
@@ -1030,16 +1036,19 @@ DEPENDENCIES
   factory_bot_rails
   faker
   figaro
+  flamegraph
   fog-aws
   image_processing
   letter_opener_web
   listen (~> 3.1)
+  memory_profiler
   newrelic_rpm
   omniauth-cityos-dcp!
   omniauth-line_login!
   omniauth-rails_csrf_protection
   puma (>= 6.3.1)
   puma_worker_killer
+  rack-mini-profiler
   rspec-rails
   rubocop-factory_bot (~> 2.26.0)
   rubocop-faker
@@ -1047,6 +1056,7 @@ DEPENDENCIES
   rubyzip (>= 1.0.0)
   sidekiq (= 6.5.12)
   slack-ruby-client
+  stackprof
   web-console (~> 4.2)
   wicked_pdf (~> 2.1)
   zip-zip
