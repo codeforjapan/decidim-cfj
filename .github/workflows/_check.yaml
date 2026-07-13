@@ -81,10 +81,17 @@ jobs:
           bundler-cache: true
 
       - name: setup Node
+        id: setup-node
         uses: actions/setup-node@v6
         with:
           node-version: 20.18.3
           cache: 'yarn'
+
+      - name: node_modules cache
+        uses: actions/cache@v6
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-node${{ steps.setup-node.outputs.node-version }}-${{ hashFiles('yarn.lock') }}
 
       - name: install yarn
         run: |
@@ -133,10 +140,17 @@ jobs:
           bundler-cache: true
 
       - name: setup Node
+        id: setup-node
         uses: actions/setup-node@v6
         with:
           node-version: 20.18.3
           cache: 'yarn'
+
+      - name: node_modules cache
+        uses: actions/cache@v6
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-node${{ steps.setup-node.outputs.node-version }}-${{ hashFiles('yarn.lock') }}
 
       - name: install yarn
         run: |

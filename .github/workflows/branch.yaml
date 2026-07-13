@@ -2,6 +2,11 @@ name: Pull request Check & test
 
 permissions: write-all
 
+# Cancel superseded runs on the same PR so only the latest push is checked.
+concurrency:
+  group: pr-check-${{ github.ref }}
+  cancel-in-progress: true
+
 on:
   pull_request:
     types: [opened, synchronize, reopened]
