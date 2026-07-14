@@ -6,7 +6,7 @@
   },
   "private": true,
   "dependencies": {
-    "@decidim/browserslist-config": "^0.29.2",
+    "@decidim/browserslist-config": "^0.31.5",
     "@decidim/core": "^0.29.2",
     "@decidim/elections": "^0.28.5",
     "@decidim/webpacker": "^0.29.2",
