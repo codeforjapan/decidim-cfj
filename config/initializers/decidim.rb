@@ -390,7 +390,7 @@ Decidim.configure do |config|
   end
   config.follow_http_x_forwarded_host = Rails.application.secrets.decidim[:follow_http_x_forwarded_host].present?
   config.maximum_conversation_message_length = Rails.application.secrets.decidim[:maximum_conversation_message_length].to_i
-  config.password_blacklist = Rails.application.secrets.decidim[:password_blacklist] if Rails.application.secrets.decidim[:password_blacklist].present?
+  config.denied_passwords = Rails.application.secrets.decidim[:denied_passwords] if Rails.application.secrets.decidim[:denied_passwords].present?
   config.allow_open_redirects = Rails.application.secrets.decidim[:allow_open_redirects] if Rails.application.secrets.decidim[:allow_open_redirects].present?
 
   config.content_security_policies_extra = {
@@ -415,8 +415,6 @@ end
 
 if Decidim.module_installed? :proposals
   Decidim::Proposals.configure do |config|
-    config.similarity_threshold = Rails.application.secrets.dig(:decidim, :proposals, :similarity_threshold).presence || 0.25
-    config.similarity_limit = Rails.application.secrets.dig(:decidim, :proposals, :similarity_limit).presence || 10
     config.participatory_space_highlighted_proposals_limit = Rails.application.secrets.dig(:decidim, :proposals, :participatory_space_highlighted_proposals_limit).presence || 4
     config.process_group_highlighted_proposals_limit = Rails.application.secrets.dig(:decidim, :proposals, :process_group_highlighted_proposals_limit).presence || 3
   end
@@ -450,19 +448,11 @@ if Decidim.module_installed? :accountability
   end
 end
 
-if Decidim.module_installed? :consultations
-  Decidim::Consultations.configure do |config|
-    config.stats_cache_expiration_time = Rails.application.secrets.dig(:decidim, :consultations, :stats_cache_expiration_time).to_i.minutes
-  end
-end
-
 if Decidim.module_installed? :initiatives
   Decidim::Initiatives.configure do |config|
     unless Rails.application.secrets.dig(:decidim, :initiatives, :creation_enabled) == "auto"
       config.creation_enabled = Rails.application.secrets.dig(:decidim, :initiatives, :creation_enabled).present?
     end
-    config.similarity_threshold = Rails.application.secrets.dig(:decidim, :initiatives, :similarity_threshold).presence || 0.25
-    config.similarity_limit = Rails.application.secrets.dig(:decidim, :initiatives, :similarity_limit).presence || 5
     config.minimum_committee_members = Rails.application.secrets.dig(:decidim, :initiatives, :minimum_committee_members).presence || 2
     config.default_signature_time_period_length = Rails.application.secrets.dig(:decidim, :initiatives, :default_signature_time_period_length).presence || 120
     config.default_components = Rails.application.secrets.dig(:decidim, :initiatives, :default_components)
@@ -474,23 +464,6 @@ if Decidim.module_installed? :initiatives
       config.print_enabled = Rails.application.secrets.dig(:decidim, :initiatives, :print_enabled).present?
     end
     config.do_not_require_authorization = Rails.application.secrets.dig(:decidim, :initiatives, :do_not_require_authorization).present?
-  end
-end
-
-if Decidim.module_installed? :elections
-  Decidim::Elections.configure do |config|
-    config.setup_minimum_hours_before_start = Rails.application.secrets.dig(:elections, :setup_minimum_hours_before_start).presence || 3
-    config.start_vote_maximum_hours_before_start = Rails.application.secrets.dig(:elections, :start_vote_maximum_hours_before_start).presence || 6
-    config.voter_token_expiration_minutes = Rails.application.secrets.dig(:elections, :voter_token_expiration_minutes).presence || 120
-  end
-
-  Decidim::Votings.configure do |config|
-    config.check_census_max_requests = Rails.application.secrets.dig(:elections, :votings, :check_census_max_requests).presence || 5
-    config.throttling_period = Rails.application.secrets.dig(:elections, :votings, :throttling_period).to_i.minutes
-  end
-
-  Decidim::Votings::Census.configure do |config|
-    config.census_access_codes_export_expiry_time = Rails.application.secrets.dig(:elections, :votings, :census, :access_codes_export_expiry_time).to_i.days
   end
 end
 
