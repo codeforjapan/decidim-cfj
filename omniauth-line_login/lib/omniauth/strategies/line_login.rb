@@ -6,6 +6,7 @@ module OmniAuth
     class LineLogin < OmniAuth::Strategies::OAuth2
       option :name, 'line_login'
       option :scope, 'profile openid'
+      option :pkce, true
 
       option :client_options, {
         site: 'https://api.line.me',
