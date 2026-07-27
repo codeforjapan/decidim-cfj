@@ -29,6 +29,12 @@ module OmniAuth
         @raw_info ||= verify_id_token
       end
 
+      def callback_phase
+        super
+      rescue OmniAuth::LineLogin::Error => e
+        fail!(:invalid_id_token, e)
+      end
+
       private
 
       def authorize_params
@@ -43,12 +49,15 @@ module OmniAuth
       end
 
       def verify_id_token
+        nonce = session.delete('omniauth.nonce')
+        raise OmniAuth::LineLogin::Error, 'nonce is missing from the session' if nonce.nil? || nonce.empty?
+
         @id_token_payload ||= client.request(:post, 'https://api.line.me/oauth2/v2.1/verify',
                                              {
                                                body: {
                                                  id_token: access_token['id_token'],
                                                  client_id: options.client_id,
-                                                 nonce: session.delete('omniauth.nonce')
+                                                 nonce: nonce
                                                }
                                              }).parsed
         @id_token_payload
