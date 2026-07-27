@@ -51,7 +51,6 @@ module OmniAuth
                                                  nonce: session.delete('omniauth.nonce')
                                                }
                                              }).parsed
-        Rails.logger.info("token:#{@id_token_payload.inspect}")
         @id_token_payload
       end
     end
