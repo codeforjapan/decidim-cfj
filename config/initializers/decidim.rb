@@ -400,7 +400,6 @@ Decidim.configure do |config|
     "script-src" => ["*"],
     "style-src" => ["*"],
     "font-src" => ["*"],
-    "frame-src" => ["*"],
     "connect-src" => ["*"]
   }
 end
