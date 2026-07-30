@@ -63,6 +63,15 @@ RSpec.configure do |config|
 
   config.include ActiveStorageHelpers
 
+  # Override organization factory to use correct locales
+  config.before(:suite) do
+    FactoryBot.modify do
+      factory :organization, class: "Decidim::Organization" do
+        available_locales { [:ja, :en] }
+      end
+    end
+  end
+
   config.append_before do
     ## XXX: Override CSP settings
     # cf. https://github.com/decidim/decidim/blob/a1768d7c19c0c80b19f5a1be6d888668f121a6be/decidim-dev/lib/decidim/dev/test/spec_helper.rb#L43-L46

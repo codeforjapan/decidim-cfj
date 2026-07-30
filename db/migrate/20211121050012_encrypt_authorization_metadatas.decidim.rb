@@ -1,6 +1,7 @@
 # frozen_string_literal: true
-# This migration comes from decidim (originally 20201127114444)
 
+# This migration comes from decidim (originally 20201127114444)
+# This file has been modified by `decidim upgrade:migrations` task on 2025-08-05 08:11:54 UTC
 class EncryptAuthorizationMetadatas < ActiveRecord::Migration[5.2]
   def up
     Decidim::Authorization.all.each do |auth|

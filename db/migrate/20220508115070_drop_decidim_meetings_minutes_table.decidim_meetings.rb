@@ -1,6 +1,7 @@
 # frozen_string_literal: true
-# This migration comes from decidim_meetings (originally 20210512100333)
 
+# This migration comes from decidim_meetings (originally 20210512100333)
+# This file has been modified by `decidim upgrade:migrations` task on 2025-08-05 08:11:54 UTC
 class DropDecidimMeetingsMinutesTable < ActiveRecord::Migration[6.0]
   class Minutes < ApplicationRecord
     self.table_name = "decidim_meetings_minutes"
@@ -22,29 +23,26 @@ class DropDecidimMeetingsMinutesTable < ActiveRecord::Migration[6.0]
     ActionLog.where(resource_type: "Decidim::Meetings::Minutes").each do |action_log|
       minutes = Minutes.find_by(id: action_log.resource_id)
       version = Version.find_by(id: action_log.version_id)
-      if minutes.present?
-        version_updates = {
-          item_type: "Decidim::Meetings::Meeting",
-          item_id: minutes.decidim_meeting_id
-        }
-        if version.object_changes.present?
-          version_updates[:object_changes] = version.object_changes
-                                                    .gsub("\ndescription:\n-\n-", "\nminutes_description:\n-\n-")
-                                                    .gsub("\ndescription:\n-\n-", "\nminutes_description:\n-\n-")
-        end
+      next unless minutes && version
 
-        version.update!(version_updates)
-        action_log.update!(
-          resource_type: "Decidim::Meetings::Meeting",
-          resource_id: minutes.decidim_meeting_id,
-          action: "close"
-        )
-      else
-        if version.present?
-          version.destroy!
-        end
+      version_updates = {
+        item_type: "Decidim::Meetings::Meeting",
+        item_id: minutes.decidim_meeting_id
+      }
+      if version.object_changes.present?
+        version_updates[:object_changes] = version.object_changes
+                                                  .gsub("\ndescription:\n-\n-", "\nminutes_description:\n-\n-")
+                                                  .gsub("\ndescription:\n-\n-", "\nminutes_description:\n-\n-")
       end
+
+      version.update!(version_updates)
+      action_log.update!(
+        resource_type: "Decidim::Meetings::Meeting",
+        resource_id: minutes.decidim_meeting_id,
+        action: "close"
+      )
     end
+
     drop_table :decidim_meetings_minutes
   end
 
@@ -76,7 +74,7 @@ end
 private
 
 def blank_minutes?(meeting)
-  meeting.video_url.blank? &&
+  (meeting.video_url.blank? &&
     meeting.audio_url.blank? &&
-    meeting.minutes_description.blank? || meeting.minutes_description.is_a?(Hash) && meeting.minutes_description.values.all?(&:blank?)
+    meeting.minutes_description.blank?) || (meeting.minutes_description.is_a?(Hash) && meeting.minutes_description.values.all?(&:blank?))
 end

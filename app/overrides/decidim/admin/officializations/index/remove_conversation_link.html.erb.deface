@@ -1,0 +1,2 @@
+<!-- remove "erb[silent]:contains('unless current_user == user')" -->
+<!-- closing_selector "erb[silent]:contains('end')" -->

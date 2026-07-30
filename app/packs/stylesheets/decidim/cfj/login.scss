@@ -1,0 +1,9 @@
+// Override default login button style
+// cf. https://github.com/decidim/decidim/pull/14276
+// Applies to every omniauth provider button (button--<provider>)
+.login__omniauth [class*="button--"] {
+    @apply flex;
+    svg {
+          @apply fill-current;
+    }
+}

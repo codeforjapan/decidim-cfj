@@ -1,0 +1,23 @@
+// Fix for decidim-awesome map marker icon background
+// Leaflet default adds white background and border to div icons
+#awesome-map .leaflet-div-icon {
+  background: transparent;
+  border: none;
+}
+
+// Fix for decidim-awesome map popup text color
+// The original CSS sets text-white but popup background is white
+#awesome-map .leaflet-popup-content {
+  a {
+    color: inherit;
+  }
+  h3 {
+    color: inherit;
+  }
+  div.card__list-metadata span {
+    color: inherit;
+  }
+  .description {
+    color: inherit;
+  }
+}

@@ -8,7 +8,7 @@ Dockerで環境を構築する際は、1.環境構築と2. 実行（ローカル
 
 | アプリケーション名                                 | バージョン  |
 |-------------------------------------------|--------|
-| [Ruby](https://www.ruby-lang.org/ja/)     | 3.2.6  |
+| [Ruby](https://www.ruby-lang.org/ja/)     | 3.3.4  |
 | [Bundler](https://bundler.io/)            | 2.4.21 |
 | [PostgreSQL](https://www.postgresql.org/) | 14     |
 
@@ -20,7 +20,7 @@ Dockerで環境を構築する際は、1.環境構築と2. 実行（ローカル
 ## 2. 実行（ローカルバージョン）
 ### 2.1 Rubyのインストール
 ```
-rbenv install 3.2.6
+rbenv install 3.3.4
 ```
 ### 2.2 リポジトリをクローン
 ```
@@ -29,10 +29,10 @@ git clone git@github.com:codeforjapan/decidim-cfj.git
 
 ### 2.3 bundlerのインストール
 
-通常、Ruby 3.2.6ではbundler 2.3.7が標準でインストールされているはずですが、何かしらの事情でインストールされていない場合は改めてインストールしてください。
+通常、Ruby 3.3.4ではbundler 2.5.15が標準でインストールされているはずですが、何かしらの事情でインストールされていない場合は改めてインストールしてください。
 
 ```
-gem install bundler:2.3.7
+gem install bundler:2.5.15
 ```
 
 ### 2.4 DBのユーザーとパスワードの設定

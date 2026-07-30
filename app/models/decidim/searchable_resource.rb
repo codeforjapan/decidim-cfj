@@ -33,6 +33,7 @@ module Decidim
     pg_search_scope :global_search,
                     against: { content_a: "A", content_b: "B", content_c: "C", content_d: "D" },
                     ranked_by: ":bigram",
-                    using: :bigram
+                    using: :bigram,
+                    order_within_rank: "datetime DESC"
   end
 end

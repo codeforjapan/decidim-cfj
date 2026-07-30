@@ -11,7 +11,7 @@ module Decidim
       OBJECT_CHANGE_SIZE_LIMIT = 1_000_000
 
       def versioned_resource
-        @versioned_resource ||= present(Debate.where(component: current_component).find(params[:debate_id]))
+        @versioned_resource ||= present(Debate.where(component: current_component).not_hidden.find(params[:debate_id]))
       end
 
       def show
