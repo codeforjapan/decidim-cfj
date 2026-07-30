@@ -48,9 +48,9 @@ module OmniAuth
         full_host + script_name + callback_path
       end
 
-      def verify_id_token
+      def verify_id_token # rubocop:disable Metrics/MethodLength
         nonce = session.delete('omniauth.nonce')
-        raise OmniAuth::LineLogin::Error, 'nonce is missing from the session' if nonce.nil? || nonce.empty?
+        raise OmniAuth::LineLogin::Error, 'nonce is missing from the session' if nonce.blank?
 
         @id_token_payload ||= client.request(:post, 'https://api.line.me/oauth2/v2.1/verify',
                                              {

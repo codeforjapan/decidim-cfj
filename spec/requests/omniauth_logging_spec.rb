@@ -156,7 +156,7 @@ RSpec.describe "OmniAuth audit logging" do
       expect(logged).not_to include("result=ok")
     end
 
-    context "利用者が IdP でキャンセルした場合" do
+    describe "利用者が IdP でキャンセルした場合" do
       let(:auth_hash) { :access_denied }
 
       it "キャンセルであることを記録する" do
