@@ -44,12 +44,18 @@ RSpec.describe "Decidim::MultipleAttachmentsMethods scoping override" do
       expect(translated_attribute(unrelated_attachment.reload.title)).to eq("Unrelated document")
     end
 
+    it "leaves the weight of a document in another organization unchanged" do
+      expect(submit(build_form(submitted_documents))).to eq(:ok)
+
+      expect(unrelated_attachment.reload.weight).to eq(99)
+    end
+
     # This command assigns @attached_to before build_attachments, so the check
     # can compare against the record itself rather than the organization. A
     # document of the same organization but a different record is out of reach.
     it "leaves a document of the same organization but another record unchanged" do
       sibling_process = create(:participatory_process, organization:)
-      sibling = create(:attachment, attached_to: sibling_process, title: { "en" => "Sibling document" })
+      sibling = create(:attachment, attached_to: sibling_process, title: { "en" => "Sibling document" }, weight: 7)
 
       form = build_form(
         [
@@ -64,7 +70,9 @@ RSpec.describe "Decidim::MultipleAttachmentsMethods scoping override" do
 
       expect(submit(form)).to eq(:ok)
 
-      expect(translated_attribute(sibling.reload.title)).to eq("Sibling document")
+      sibling.reload
+      expect(translated_attribute(sibling.title)).to eq("Sibling document")
+      expect(sibling.weight).to eq(7)
     end
 
     it "leaves the document untouched when no document ids are submitted" do
@@ -110,6 +118,46 @@ RSpec.describe "Decidim::MultipleAttachmentsMethods scoping override" do
       command_class.new(rename_payload(attached_document), target_process).send(:build_attachments)
 
       expect(translated_attribute(attached_document.reload.title)).to eq("Renamed")
+    end
+  end
+
+  # keep_ids also decides what document_cleanup! destroys, so the filtering must
+  # never remove an id the owner actually holds.
+  describe "cleanup of the documents held by the record" do
+    let(:target_process) { create(:participatory_process, organization:) }
+    let!(:held_document) do
+      create(:attachment, :with_pdf, attached_to: target_process, title: { "en" => "Held document" })
+    end
+
+    let(:command_class) do
+      Class.new do
+        include Decidim::MultipleAttachmentsMethods
+
+        attr_reader :form
+
+        def initialize(form, attached_to)
+          @form = form
+          @attached_to = attached_to
+        end
+      end
+    end
+
+    let(:form_class) { Struct.new(:add_documents, :documents) }
+
+    it "keeps a document the form still references" do
+      command = command_class.new(form_class.new([], [held_document.id]), target_process)
+
+      command.send(:document_cleanup!)
+
+      expect(Decidim::Attachment.exists?(held_document.id)).to be true
+    end
+
+    it "destroys a document the form no longer references" do
+      command = command_class.new(form_class.new([], []), target_process)
+
+      command.send(:document_cleanup!)
+
+      expect(Decidim::Attachment.exists?(held_document.id)).to be false
     end
   end
 

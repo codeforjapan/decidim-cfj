@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-# Adds a scope condition to the attachment lookup in
-# update_attachment_title_for.
+# Adds a scope condition to the two places where this module writes to an
+# attachment the request identified by id: the title update and the weight
+# assignment fed by keep_ids.
 #
 # Deliberately narrow, because this prepends onto a decidim-core module shared
 # by proposals, collaborative drafts, debates and questionnaire answers:
@@ -10,6 +11,8 @@
 #   as upstream does.
 # - When no owner can be resolved the original behaviour is used, so the patch
 #   can never drop an update that used to succeed.
+# - keep_ids only ever drops ids that are definitely out of scope, so
+#   document_cleanup! keeps destroying exactly what it destroyed before.
 module MultipleAttachmentsScopeHardening
   private
 
@@ -18,6 +21,22 @@ module MultipleAttachmentsScopeHardening
     return unless attachment_in_scope?(record)
 
     record.update(title: title_for(attachment))
+  end
+
+  # Drops only ids whose attachment definitely belongs to another organization,
+  # so the weight assignment in create_attachments cannot reach them. Anything
+  # the check cannot resolve is kept. document_cleanup! also reads this, but it
+  # only iterates attachments of documents_attached_to, which always share its
+  # organization, so nothing it would have kept can be dropped here.
+  def keep_ids
+    super.reject { |id| foreign_attachment?(id) }
+  end
+
+  def foreign_attachment?(id)
+    record = Decidim::Attachment.find_by(id:)
+    return false if record.blank?
+
+    !attachment_in_scope?(record)
   end
 
   # Decidim derives the right to touch an attachment from the right to edit the
