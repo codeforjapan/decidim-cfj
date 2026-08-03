@@ -12,11 +12,15 @@ Rails.application.config.to_prepare do
 
     private
 
+    # Both sides are checked, not just current_user as #collection does. A
+    # conflict records the submitting user as current_user and the holder of the
+    # matching authorization as managed_user, and the two can belong to
+    # different organizations. The transfer writes to managed_user.
     def ensure_conflict_in_current_organization
-      return if Decidim::Verifications::Conflict
-                .joins(:current_user)
-                .where(decidim_users: { decidim_organization_id: current_organization.id })
-                .exists?(id: params[:id])
+      conflict = Decidim::Verifications::Conflict.find_by(id: params[:id])
+      return if conflict.present? &&
+                conflict.current_user&.decidim_organization_id == current_organization.id &&
+                conflict.managed_user&.decidim_organization_id == current_organization.id
 
       raise ActionController::RoutingError, "Not Found"
     end

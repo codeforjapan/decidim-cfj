@@ -45,6 +45,31 @@ RSpec.describe "Decidim::Admin ConflictsController organization scope" do
     end
   end
 
+  # A conflict is recorded with the submitting user as current_user and the
+  # holder of the matching authorization as managed_user, and those two can end
+  # up in different organizations. The transfer writes to managed_user, so that
+  # is the side the check has to cover.
+  describe "PATCH update on a conflict whose managed user is elsewhere" do
+    let(:params) { { transfer_user: { reason: "reason", email: "transferred@example.org" } } }
+
+    let!(:mixed_conflict) do
+      create(
+        :conflict,
+        current_user: create(:user, :confirmed, organization:),
+        managed_user: create(:user, managed: true, organization: other_organization)
+      )
+    end
+
+    it "does not transfer a managed user in another organization" do
+      original_email = mixed_conflict.managed_user.email
+
+      expect { patch decidim_admin.conflict_path(mixed_conflict), params: }
+        .to raise_error(ActionController::RoutingError)
+
+      expect(mixed_conflict.managed_user.reload.email).to eq(original_email)
+    end
+  end
+
   describe "PATCH update" do
     let(:params) { { transfer_user: { reason: "reason", email: "transferred@example.org" } } }
 
