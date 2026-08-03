@@ -2,15 +2,6 @@
 
 # Scopes the authorization looked up when registering a verification conflict to
 # the organization of the user being authorized.
-#
-# The sibling lookups in this area are already organization-scoped
-# (AuthorizationHandler#duplicate and
-# Admin::ImpersonationsController#existing_managed_user); this one is not, and
-# unique_id carries no organization component, so it can otherwise resolve an
-# authorization belonging to a different organization.
-#
-# The method body mirrors the upstream one apart from the scope, since the
-# lookup is inline and there is no narrower seam to override.
 Rails.application.config.to_prepare do
   Decidim::Verifications::AuthorizeUser # rubocop:disable Lint/Void
 
