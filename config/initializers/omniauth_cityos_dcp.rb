@@ -20,6 +20,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
 
     provider(
       :cityos_dcp_login,
+      cookie_store: Rails.application.config.session_store.to_s.include?("CookieStore"),
       setup: setup_cityos_dcp_provider_proc(
         :cityos_dcp_login,
         client_id: :client_id,

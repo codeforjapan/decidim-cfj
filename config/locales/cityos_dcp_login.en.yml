@@ -3,7 +3,6 @@ en:
     system:
       organizations:
         omniauth_settings:
-          icon_path: Icon URL
           cityos_dcp_login:
             client_id: Client ID
             client_secret: Client secret
