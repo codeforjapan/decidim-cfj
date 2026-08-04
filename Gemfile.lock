@@ -1,10 +1,9 @@
 GIT
   remote: https://github.com/TheDesignium/omniauth-cityos-dcp.git
-  revision: 0c6a487ce4801f8e0e1e2844be4812e9e0006528
-  tag: v1.5.0
+  revision: 3c0bfbb430d0a75f974876ffb5963fbf5c2f3be1
+  tag: v1.5.1
   specs:
-    omniauth-cityos-dcp (1.5.0)
-      decidim (>= 0.30.0)
+    omniauth-cityos-dcp (1.5.1)
       omniauth-oauth2
 
 GIT
