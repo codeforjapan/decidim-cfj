@@ -1,10 +1,18 @@
 # frozen_string_literal: true
 
-def setup_cityos_dcp_provider_proc(provider, config_mapping = {})
+require Rails.root.join("lib/decidim/cfj/cityos_omniauth_configuration").to_s
+
+def setup_cityos_dcp_provider_proc(_provider, config_mapping = {})
   lambda do |env|
     request = Rack::Request.new(env)
     organization = Decidim::Organization.find_by(host: request.host)
-    provider_config = organization.enabled_omniauth_providers[provider]
+    raise Decidim::Cfj::CityosOmniauthConfiguration::Error, "cityos_organization_not_found" unless organization
+
+    provider_config = Decidim::Cfj::CityosOmniauthConfiguration.provider_config(organization)
+    raise Decidim::Cfj::CityosOmniauthConfiguration::Error, "cityos_provider_disabled" unless provider_config
+
+    missing_keys = Decidim::Cfj::CityosOmniauthConfiguration.missing_keys(provider_config)
+    raise Decidim::Cfj::CityosOmniauthConfiguration::Error, "cityos_configuration_missing" if missing_keys.any?
 
     config_mapping.each do |option_key, config_key|
       env["omniauth.strategy"].options[option_key] = provider_config[config_key]
