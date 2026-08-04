@@ -1,0 +1,24 @@
+<% is_horizontal = false unless local_assigns.has_key?(:is_horizontal) %>
+<% if Devise.mappings[:user].omniauthable? && current_organization.enabled_omniauth_providers.any? %>
+  <div class="login__omniauth<%= " login__omniauth__horizontal" if is_horizontal %>">
+    <%- current_organization.enabled_omniauth_providers.keys.each do |provider| %>
+      <% provider_key = provider.to_sym %>
+      <% provider_config = current_organization.enabled_omniauth_providers[provider_key] %>
+      <% provider_label = provider_config[:label].presence || provider_name(provider_key) %>
+      <% provider_icon_path = provider_config[:icon_path].presence %>
+      <% link_classes = "login__omniauth-button login__omniauth-button--#{normalize_provider_name(provider_key)}" %>
+      <%= link_to decidim.send("user_#{provider}_omniauth_authorize_path"), class: link_classes, method: :post, title: provider_label do %>
+        <% if provider_key == :cityos_dcp_login %>
+          <%= external_icon(provider_icon_path) if provider_icon_path %>
+          <span><%= provider_label %></span>
+        <% else %>
+          <%= oauth_icon provider_key %>
+          <span class="sr-only"><%= t("devise.shared.links.log_in_with_provider", provider: normalize_provider_name(provider_key).titleize) %></span>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+  <%- if current_organization.sign_in_enabled? %>
+    <span class="login__omniauth-separator"><%= t(".or") %></span>
+  <% end %>
+<% end %>
