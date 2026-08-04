@@ -1,5 +1,18 @@
 # Change Log
 
+## [1.19.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.19.0...v1.19.1) (2026-08-04)
+
+
+### Bug Fixes
+
+* apply the same scope to the attachment weight assignment ([75869d6](https://github.com/codeforjapan/decidim-cfj/commit/75869d6f2e3302b30bfc6a784a3f2d6a62f5752b))
+* check both sides of a verification conflict against the organization ([b592fa8](https://github.com/codeforjapan/decidim-cfj/commit/b592fa8063b41c58e08358e5f39b4a075e63ae23))
+* compare the attachment against the record or organization in scope ([68908f2](https://github.com/codeforjapan/decidim-cfj/commit/68908f2db44d4962935ba44318b5b7e59a9afa90))
+* hardening MultipleAttachments ([ed2a257](https://github.com/codeforjapan/decidim-cfj/commit/ed2a257442b28dbbd7136a9be99694e6360fde2d))
+* scope admin conflicts to the current organization ([7f0b1ea](https://github.com/codeforjapan/decidim-cfj/commit/7f0b1ea9fd8ae5ff04aa361646bd2dd633322e76))
+* scope publish answers to the authorised survey ([281770d](https://github.com/codeforjapan/decidim-cfj/commit/281770d53e71d9373e39c0c8d6a2cf20003e7995))
+* scope verification conflict lookup to the user's organization ([05aba3a](https://github.com/codeforjapan/decidim-cfj/commit/05aba3af4d339de247e5b053548742fa766e4d10))
+
 ## [1.19.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.18.6...v1.19.0) (2026-07-30)
 
 
