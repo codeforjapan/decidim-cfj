@@ -82,7 +82,7 @@ jobs:
 
       - name: setup Node
         id: setup-node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: 20.18.3
           cache: 'yarn'
@@ -141,7 +141,7 @@ jobs:
 
       - name: setup Node
         id: setup-node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: 20.18.3
           cache: 'yarn'
