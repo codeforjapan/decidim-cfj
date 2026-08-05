@@ -12,7 +12,6 @@
 // This is necessary for testing purposes
 const $ = window.$;
 
-import changeReportFormBehavior from "src/decidim/change_report_form_behavior";
 import { initializeCommentsDropdown } from "../../decidim/comments/comments_dropdown";
 
 export default class CommentsComponent {

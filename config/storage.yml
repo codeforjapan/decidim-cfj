@@ -11,6 +11,7 @@ amazon:
   service: S3
   region: ap-northeast-1
   bucket: <%= ENV.fetch("AWS_BUCKET_NAME", "cfj-decidim") %>
+  public: true
 
 # Remember not to checkin your GCS keyfile to a repository
 # google:
