@@ -48,29 +48,29 @@ Rails.application.config.to_prepare do
 
   # ----------------------------------------
 
-  module DecidimFormsUserAnswersSerializerTimezonePatch
+  module DecidimFormsUserResponsesSerializerTimezonePatch
     private
 
-    def hash_for(answer)
-      timezone = answer.organization&.time_zone || "UTC"
+    def hash_for(response)
+      timezone = response.organization&.time_zone || "UTC"
 
       {
-        answer_translated_attribute_name(:id) => answer&.session_token,
-        answer_translated_attribute_name(:created_at) => (answer&.created_at ? answer.created_at.in_time_zone(timezone).strftime("%Y-%m-%d %H:%M:%S") : nil),
-        answer_translated_attribute_name(:ip_hash) => answer&.ip_hash,
-        answer_translated_attribute_name(:user_status) => answer_translated_attribute_name(answer&.decidim_user_id.present? ? "registered" : "unregistered")
+        response_translated_attribute_name(:id) => response&.session_token,
+        response_translated_attribute_name(:created_at) => (response&.created_at ? response.created_at.in_time_zone(timezone).strftime("%Y-%m-%d %H:%M:%S") : nil),
+        response_translated_attribute_name(:ip_hash) => response&.ip_hash,
+        response_translated_attribute_name(:user_status) => response_translated_attribute_name(response&.decidim_user_id.present? ? "registered" : "unregistered")
       }
     end
   end
 
-  # force to autoload `UserAnswersSerializer` in decidim-forms gem
-  Decidim::Forms::UserAnswersSerializer # rubocop:disable Lint/Void
+  # force to autoload `UserResponsesSerializer` in decidim-forms gem
+  Decidim::Forms::UserResponsesSerializer # rubocop:disable Lint/Void
 
-  # override `UserAnswersSerializer#hash_for`
+  # override `UserResponsesSerializer#hash_for`
   module Decidim
     module Forms
-      class UserAnswersSerializer
-        prepend DecidimFormsUserAnswersSerializerTimezonePatch
+      class UserResponsesSerializer
+        prepend DecidimFormsUserResponsesSerializerTimezonePatch
       end
     end
   end
@@ -102,6 +102,7 @@ Rails.application.config.to_prepare do
 
   # Fix I18n.transliterate()
   I18n.config.backend.instance_eval do
+    @transliterators ||= {}
     @transliterators[:ja] = I18n::Backend::Transliterator.get(->(string) { string })
     @transliterators[:en] = I18n::Backend::Transliterator.get(->(string) { string })
   end
@@ -131,16 +132,17 @@ Rails.application.config.to_prepare do
     validates_upload :mobile_logo, uploader: Decidim::OrganizationMobileLogoUploader
   end
 
-  Decidim::Admin::UpdateOrganizationAppearance.class_eval do
-    fetch_file_attributes :mobile_logo
-  end
-
-  Decidim::Admin::OrganizationAppearanceForm.class_eval do
-    attribute :mobile_logo
-    attribute :remove_mobile_logo, Decidim::AttributeObject::TypeMap::Boolean, default: false
-
-    validates :mobile_logo, passthru: { to: Decidim::Organization }
-  end
+  # TODO(0.31): mobile_logo の appearance フォーム/コマンド配線を再ポート(0.31 で gem から削除)
+  # Decidim::Admin::UpdateOrganizationAppearance.class_eval do
+  #   fetch_file_attributes :mobile_logo
+  # end
+  #
+  # Decidim::Admin::OrganizationAppearanceForm.class_eval do
+  #   attribute :mobile_logo
+  #   attribute :remove_mobile_logo, Decidim::AttributeObject::TypeMap::Boolean, default: false
+  #
+  #   validates :mobile_logo, passthru: { to: Decidim::Organization }
+  # end
 
   # CloudFrontロゴヘルパーをCellクラスに追加
   Cell::ViewModel.class_eval do
