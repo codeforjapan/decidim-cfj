@@ -25,7 +25,7 @@ jobs:
       deploy-env: ${{ steps.output-deploy-env.outputs.deploy-env }}
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Set env to staging
         id: set-env-staging
@@ -37,7 +37,7 @@ jobs:
         id: set-env-production
         if: ${{ needs.release.outputs.created }}
         run: |
-          echo "DEPLOY_ENV=prd-v0292" >> $GITHUB_ENV
+          echo "DEPLOY_ENV=prd-v030" >> $GITHUB_ENV
 
       - name: Output App Env
         id: output-deploy-env

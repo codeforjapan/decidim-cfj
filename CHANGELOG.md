@@ -1,5 +1,28 @@
 # Change Log
 
+## [1.19.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.18.6...v1.19.0) (2026-07-30)
+
+
+### Features
+
+* add profilers in development ([3f7bb87](https://github.com/codeforjapan/decidim-cfj/commit/3f7bb87a289b4173b55e28bf852086bd0e1c5f47))
+
+
+### Bug Fixes
+
+* **initializers:** remove unused parameters ([ffddc5f](https://github.com/codeforjapan/decidim-cfj/commit/ffddc5f2505d1d6db819128ea3efd2b5bbab6070))
+* remove Decidim::ContentParsers::BlobParserUpstreamFix ([53a55e9](https://github.com/codeforjapan/decidim-cfj/commit/53a55e914d8a5b6f37194403f8cf0fa633acc585))
+* remove invalid packages ([bf6f5dc](https://github.com/codeforjapan/decidim-cfj/commit/bf6f5dc088f4b2115d22e2c2ecef18dc419e3fdd))
+* update content_security_policies_extra in initializers ([0213fad](https://github.com/codeforjapan/decidim-cfj/commit/0213fad758654599b54372942ebde5bf79c94a45))
+
+## [1.18.6](https://github.com/codeforjapan/decidim-cfj/compare/v1.18.5...v1.18.6) (2026-07-01)
+
+
+### Bug Fixes
+
+* delete:destroy_all タスクの修正と拡張 ([85da592](https://github.com/codeforjapan/decidim-cfj/commit/85da59231c969a2298130f67b72daf3d73d2f419))
+* RuboCop違反を修正 ([03b9418](https://github.com/codeforjapan/decidim-cfj/commit/03b9418df4619e7dbce075d6b24cf2166d3b8144))
+
 ## [1.18.5](https://github.com/codeforjapan/decidim-cfj/compare/v1.18.4...v1.18.5) (2026-05-28)
 
 
