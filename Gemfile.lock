@@ -11,6 +11,15 @@ GIT
       sassc (~> 2.3)
 
 GIT
+  remote: https://github.com/codeforjapan/decidim-module-navigation_maps.git
+  revision: 8b8874b48000d3679e83b86648abf491d6bfd634
+  branch: upgrade-0.31-2026-08-10
+  specs:
+    decidim-navigation_maps (1.8.0)
+      decidim-admin (>= 0.31, < 0.32)
+      decidim-core (>= 0.31, < 0.32)
+
+GIT
   remote: https://github.com/codeforjapan/decidim-module-term_customizer.git
   revision: 128ddf7ee77430f12a534d9ac29db213f9721d9a
   branch: 031-ja
@@ -1063,6 +1072,7 @@ DEPENDENCIES
   decidim-conferences (~> 0.31.7)
   decidim-decidim_awesome!
   decidim-dev (= 0.31.7)
+  decidim-navigation_maps!
   decidim-term_customizer!
   decidim-user_extension!
   deface
