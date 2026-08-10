@@ -4,7 +4,7 @@ require "rails_helper"
 
 module Decidim
   module Admin
-    describe OrganizationAppearanceForm do
+    describe OrganizationForm do
       let(:organization) { create(:organization) }
       let(:current_organization) { organization }
 
@@ -19,9 +19,9 @@ module Decidim
       let(:remove_mobile_logo) { false }
 
       let(:form) do
-        described_class.from_params(params).with_context(
-          current_organization: organization
-        )
+        described_class.from_model(organization)
+                       .with_context(current_organization: organization)
+                       .tap { |form| form.assign_attributes(params) }
       end
 
       describe "validations" do

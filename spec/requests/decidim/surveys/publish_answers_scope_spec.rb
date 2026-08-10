@@ -3,7 +3,7 @@
 require "rails_helper"
 require "decidim/surveys/test/factories"
 
-RSpec.describe "Decidim::Surveys PublishAnswersController organization scope" do
+RSpec.describe "Decidim::Surveys PublishResponsesController organization scope" do
   include Devise::Test::IntegrationHelpers
 
   let(:organization) { create(:organization) }
@@ -24,35 +24,35 @@ RSpec.describe "Decidim::Surveys PublishAnswersController organization scope" do
     sign_in admin_user, scope: :user
   end
 
-  def publish_answer_path(question)
+  def publish_response_path(question)
     Decidim::EngineRouter
       .admin_proxy(component)
-      .survey_publish_answer_path(survey_id: survey.id, id: question.id)
+      .survey_publish_response_path(survey_id: survey.id, id: question.id)
   end
 
   describe "PATCH update" do
     it "does not publish the answers of a question in another organization" do
-      expect { patch publish_answer_path(other_question) }
-        .to raise_error(ActionController::RoutingError)
+      expect { patch publish_response_path(other_question) }
+        .not_to change { other_question.reload.survey_responses_published_at }
 
-      expect(other_question.reload.survey_answers_published_at).to be_nil
+      expect(response).to have_http_status(:not_found)
     end
 
     it "publishes the answers of a question in the authorised survey" do
-      patch publish_answer_path(own_question)
+      patch publish_response_path(own_question)
 
-      expect(own_question.reload.survey_answers_published_at).to be_present
+      expect(own_question.reload.survey_responses_published_at).to be_present
     end
   end
 
   describe "DELETE destroy" do
-    before { other_question.update!(survey_answers_published_at: Time.current) }
+    before { other_question.update!(survey_responses_published_at: Time.current) }
 
     it "does not unpublish the answers of a question in another organization" do
-      expect { delete publish_answer_path(other_question) }
-        .to raise_error(ActionController::RoutingError)
+      expect { delete publish_response_path(other_question) }
+        .not_to change { other_question.reload.survey_responses_published_at }
 
-      expect(other_question.reload.survey_answers_published_at).to be_present
+      expect(response).to have_http_status(:not_found)
     end
   end
 end

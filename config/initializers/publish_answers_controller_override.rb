@@ -4,9 +4,9 @@
 # :survey_id, but pass :id straight to the command, which resolves the question
 # without a scope. This ties :id to the questionnaire of the authorised survey.
 Rails.application.config.to_prepare do
-  Decidim::Surveys::Admin::PublishAnswersController # rubocop:disable Lint/Void
+  Decidim::Surveys::Admin::PublishResponsesController # rubocop:disable Lint/Void
 
-  module DecidimSurveysPublishAnswersScopePatch
+  module DecidimSurveysPublishResponsesScopePatch
     def self.prepended(base)
       base.before_action :ensure_question_in_authorised_survey, only: [:update, :destroy]
     end
@@ -21,5 +21,5 @@ Rails.application.config.to_prepare do
     end
   end
 
-  Decidim::Surveys::Admin::PublishAnswersController.prepend(DecidimSurveysPublishAnswersScopePatch)
+  Decidim::Surveys::Admin::PublishResponsesController.prepend(DecidimSurveysPublishResponsesScopePatch)
 end
