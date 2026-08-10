@@ -10,6 +10,15 @@ GIT
       deface (>= 1.5)
       sassc (~> 2.3)
 
+GIT
+  remote: https://github.com/codeforjapan/decidim-module-term_customizer.git
+  revision: 128ddf7ee77430f12a534d9ac29db213f9721d9a
+  branch: 031-ja
+  specs:
+    decidim-term_customizer (0.31.0)
+      decidim-admin (~> 0.31.0)
+      decidim-core (~> 0.31.0)
+
 PATH
   remote: decidim-user_extension
   specs:
@@ -1054,6 +1063,7 @@ DEPENDENCIES
   decidim-conferences (~> 0.31.7)
   decidim-decidim_awesome!
   decidim-dev (= 0.31.7)
+  decidim-term_customizer!
   decidim-user_extension!
   deface
   dotenv-rails

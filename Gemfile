@@ -8,7 +8,7 @@ gem "decidim", "0.31.7"
 
 gem "decidim-decidim_awesome", git: "https://github.com/codeforjapan/decidim-module-decidim_awesome.git", branch: "release/0.31-stable"
 
-# gem "decidim-term_customizer", git: "https://github.com/codeforjapan/decidim-module-term_customizer.git", branch: "030-ja"
+gem "decidim-term_customizer", git: "https://github.com/codeforjapan/decidim-module-term_customizer.git", branch: "031-ja"
 
 # gem "decidim-navigation_maps", git: "https://github.com/codeforjapan/decidim-module-navigation_maps.git", branch: "upgrade-0.30-2025-10-04"
 # gem "decidim-polis", git: "https://github.com/codeforjapan/decidim-polis.git", branch: "update-0-30-9"
