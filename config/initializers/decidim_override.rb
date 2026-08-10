@@ -132,17 +132,19 @@ Rails.application.config.to_prepare do
     validates_upload :mobile_logo, uploader: Decidim::OrganizationMobileLogoUploader
   end
 
-  # TODO(0.31): mobile_logo の appearance フォーム/コマンド配線を再ポート(0.31 で gem から削除)
-  # Decidim::Admin::UpdateOrganizationAppearance.class_eval do
-  #   fetch_file_attributes :mobile_logo
-  # end
-  #
-  # Decidim::Admin::OrganizationAppearanceForm.class_eval do
-  #   attribute :mobile_logo
-  #   attribute :remove_mobile_logo, Decidim::AttributeObject::TypeMap::Boolean, default: false
-  #
-  #   validates :mobile_logo, passthru: { to: Decidim::Organization }
-  # end
+  # 0.31 で専用の OrganizationAppearanceForm/UpdateOrganizationAppearance は廃止され、
+  # 外観設定は汎用の OrganizationForm/UpdateOrganization に統合された。mobile_logo の
+  # フォーム属性とファイル保存をそちらに配線する。
+  Decidim::Admin::UpdateOrganization.class_eval do
+    fetch_file_attributes :mobile_logo
+  end
+
+  Decidim::Admin::OrganizationForm.class_eval do
+    attribute :mobile_logo
+    attribute :remove_mobile_logo, Decidim::AttributeObject::TypeMap::Boolean, default: false
+
+    validates :mobile_logo, passthru: { to: Decidim::Organization }
+  end
 
   # CloudFrontロゴヘルパーをCellクラスに追加
   Cell::ViewModel.class_eval do
