@@ -59,7 +59,7 @@ module MultipleAttachmentsScopeHardening
 end
 
 Rails.application.config.to_prepare do
-  Decidim::MultipleAttachmentsMethods # rubocop:disable Lint/Void
+  Decidim::MultipleAttachmentsMethods
 
   Decidim::MultipleAttachmentsMethods.prepend(MultipleAttachmentsScopeHardening) unless Decidim::MultipleAttachmentsMethods.include?(MultipleAttachmentsScopeHardening)
 end

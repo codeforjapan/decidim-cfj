@@ -78,12 +78,12 @@ Rails.application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = Logger::Formatter.new
   config.action_mailer.smtp_settings = {
-    address: ENV["SMTP_ADDRESS"],
+    address: ENV.fetch("SMTP_ADDRESS", nil),
     port: Decidim::Env.new("SMTP_PORT", 587).to_i,
     authentication: Decidim::Env.new("SMTP_AUTHENTICATION", "plain").to_s,
-    user_name: ENV["SMTP_USERNAME"],
-    password: ENV["SMTP_PASSWORD"],
-    domain: ENV["SMTP_DOMAIN"],
+    user_name: ENV.fetch("SMTP_USERNAME", nil),
+    password: ENV.fetch("SMTP_PASSWORD", nil),
+    domain: ENV.fetch("SMTP_DOMAIN", nil),
     enable_starttls_auto: Decidim::Env.new("SMTP_STARTTLS_AUTO", "true").value != "false",
     openssl_verify_mode: "none"
   }

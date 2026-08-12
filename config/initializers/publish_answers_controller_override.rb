@@ -4,7 +4,7 @@
 # :survey_id, but pass :id straight to the command, which resolves the question
 # without a scope. This ties :id to the questionnaire of the authorised survey.
 Rails.application.config.to_prepare do
-  Decidim::Surveys::Admin::PublishAnswersController # rubocop:disable Lint/Void
+  Decidim::Surveys::Admin::PublishAnswersController
 
   module DecidimSurveysPublishAnswersScopePatch
     def self.prepended(base)
