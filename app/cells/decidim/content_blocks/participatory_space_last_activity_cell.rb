@@ -29,8 +29,8 @@ module Decidim
         @ordered_users_with_activities ||=
           space_activities_query
           .where.not(user: nil)
-          .select("decidim_user_id, MAX(decidim_action_logs.created_at)")
-          .group("decidim_user_id")
+          .select("user_id, MAX(decidim_action_logs.created_at)")
+          .group("user_id")
           .reorder("MAX(decidim_action_logs.created_at) DESC")
       end
 
