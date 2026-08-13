@@ -21,6 +21,18 @@ common: &default_settings
   distributed_tracing:
     enabled: true
 
+  # 分散トレーシングの span 取り込み量を抑制（既定 2000/分 → 250/分）。
+  # スループット/応答時間/エラー率/DB時間などの集計値は Metric 由来のため影響せず、
+  # 個別トレースのサンプル数だけが減る（遅い/エラーのものは優先して残る）。
+  span_events:
+    max_samples_stored: 250
+
+  # アプリログは CloudWatch(ECS awslogs)に集約し、New Relic への転送は行わない。
+  # Rails の描画ノイズログ(Rendered cell 等)が取り込みコストの大半を占めていたため。
+  application_logging:
+    forwarding:
+      enabled: false
+
   # To disable the agent regardless of other settings, uncomment the following:
   # agent_enabled: false
 
