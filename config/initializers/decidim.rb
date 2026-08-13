@@ -14,28 +14,28 @@ Decidim.configure do |config|
   config.default_locale = Decidim::Env.new("DECIDIM_DEFAULT_LOCALE", "ja").to_s.presence || :ja
 
   # Map and Geocoder configuration
-  if Decidim::Env.new("MAPS_STATIC_PROVIDER", ENV["MAPS_PROVIDER"]).to_s.present?
-    static_provider = Decidim::Env.new("MAPS_STATIC_PROVIDER", ENV["MAPS_PROVIDER"]).to_s
-    dynamic_provider = Decidim::Env.new("MAPS_DYNAMIC_PROVIDER", ENV["MAPS_PROVIDER"]).to_s
-    dynamic_url = ENV["MAPS_DYNAMIC_URL"]
-    static_url = ENV["MAPS_STATIC_URL"]
+  if Decidim::Env.new("MAPS_STATIC_PROVIDER", ENV.fetch("MAPS_PROVIDER", nil)).to_s.present?
+    static_provider = Decidim::Env.new("MAPS_STATIC_PROVIDER", ENV.fetch("MAPS_PROVIDER", nil)).to_s
+    dynamic_provider = Decidim::Env.new("MAPS_DYNAMIC_PROVIDER", ENV.fetch("MAPS_PROVIDER", nil)).to_s
+    dynamic_url = ENV.fetch("MAPS_DYNAMIC_URL", nil)
+    static_url = ENV.fetch("MAPS_STATIC_URL", nil)
     static_url = "https://image.maps.ls.hereapi.com/mia/1.6/mapview" if static_provider == "here" && static_url.blank?
     config.maps = {
-      provider: ENV["MAPS_PROVIDER"],
-      api_key: Decidim::Env.new("MAPS_STATIC_API_KEY", ENV["MAPS_API_KEY"]).to_s,
+      provider: ENV.fetch("MAPS_PROVIDER", nil),
+      api_key: Decidim::Env.new("MAPS_STATIC_API_KEY", ENV.fetch("MAPS_API_KEY", nil)).to_s,
       static: { provider: static_provider, url: static_url },
       dynamic: {
         provider: dynamic_provider,
-        api_key: Decidim::Env.new("MAPS_DYNAMIC_API_KEY", ENV["MAPS_API_KEY"]).to_s
+        api_key: Decidim::Env.new("MAPS_DYNAMIC_API_KEY", ENV.fetch("MAPS_API_KEY", nil)).to_s
       }
     }
-    geocoding_host = ENV["MAPS_GEOCODING_HOST"]
+    geocoding_host = ENV.fetch("MAPS_GEOCODING_HOST", nil)
     config.maps[:geocoding] = { host: geocoding_host, use_https: true } if geocoding_host
     config.maps[:dynamic][:tile_layer] = {}
     config.maps[:dynamic][:tile_layer][:url] = dynamic_url if dynamic_url
-    attribution = ENV["MAPS_ATTRIBUTION"]
+    attribution = ENV.fetch("MAPS_ATTRIBUTION", nil)
     config.maps[:dynamic][:tile_layer][:attribution] = attribution if attribution
-    extra_vars = ENV["MAPS_EXTRA_VARS"]
+    extra_vars = ENV.fetch("MAPS_EXTRA_VARS", nil)
     if extra_vars.present?
       vars = URI.decode_www_form(extra_vars)
       vars.each do |key, value|
@@ -64,8 +64,8 @@ Decidim.configure do |config|
   # Etherpad configuration
   if Decidim::Env.new("ETHERPAD_SERVER").to_s.present?
     config.etherpad = {
-      server: ENV["ETHERPAD_SERVER"],
-      api_key: ENV["ETHERPAD_API_KEY"],
+      server: ENV.fetch("ETHERPAD_SERVER", nil),
+      api_key: ENV.fetch("ETHERPAD_API_KEY", nil),
       api_version: Decidim::Env.new("ETHERPAD_API_VERSION", "1.2.1").to_s
     }
   end

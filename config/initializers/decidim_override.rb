@@ -2,8 +2,8 @@
 
 Rails.application.config.to_prepare do
   # load default definitions
-  Decidim::Comments::CommentsController # rubocop:disable Lint/Void
-  Decidim::Comments::CommentsHelper # rubocop:disable Lint/Void
+  Decidim::Comments::CommentsController
+  Decidim::Comments::CommentsHelper
 
   module Decidim
     module Comments
@@ -64,7 +64,7 @@ Rails.application.config.to_prepare do
   end
 
   # force to autoload `UserResponsesSerializer` in decidim-forms gem
-  Decidim::Forms::UserResponsesSerializer # rubocop:disable Lint/Void
+  Decidim::Forms::UserResponsesSerializer
 
   # override `UserResponsesSerializer#hash_for`
   module Decidim
@@ -89,7 +89,7 @@ Rails.application.config.to_prepare do
   end
 
   # force to autoload original controller
-  Decidim::LinksController # rubocop:disable Lint/Void
+  Decidim::LinksController
 
   # add helper `escape_url` as helper
   module Decidim
@@ -227,7 +227,7 @@ Rails.application.config.to_prepare do
     end
   end
 
-  Decidim::Meetings::CloseMeetingReminderGenerator # rubocop:disable Lint/Void
+  Decidim::Meetings::CloseMeetingReminderGenerator
 
   module Decidim
     module Meetings

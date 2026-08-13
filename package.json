@@ -5,6 +5,7 @@
     "npm": ">=9.6.7"
   },
   "private": true,
+  "packageManager": "yarn@1.22.19",
   "dependencies": {
     "@decidim/browserslist-config": "^0.31.7",
     "@decidim/core": "^0.31.7",

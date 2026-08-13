@@ -2,7 +2,7 @@
 
 # This patch forces `html_escape: true` at the presenter boundary
 Rails.application.config.to_prepare do
-  Decidim::Proposals::ProposalPresenter # rubocop:disable Lint/Void
+  Decidim::Proposals::ProposalPresenter
 
   module ProposalPresenterAlwaysEscapeTitle
     # rubocop:disable Lint/UnusedMethodArgument
