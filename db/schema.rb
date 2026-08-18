@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_05_18_113546) do
+ActiveRecord::Schema[7.0].define(version: 2026_08_17_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "ltree"
   enable_extension "pg_bigm"
@@ -490,6 +490,14 @@ ActiveRecord::Schema[7.0].define(version: 2026_05_18_113546) do
     t.datetime "updated_at", precision: nil, null: false
     t.index ["categorizable_type", "categorizable_id"], name: "decidim_categorizations_categorizable_id_and_type"
     t.index ["decidim_category_id"], name: "index_decidim_categorizations_on_decidim_category_id"
+  end
+
+  create_table "decidim_cfj_survey_orders", force: :cascade do |t|
+    t.integer "decidim_surveys_survey_id", null: false
+    t.integer "weight", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["decidim_surveys_survey_id"], name: "index_decidim_cfj_survey_orders_on_survey", unique: true
   end
 
   create_table "decidim_coauthorships", force: :cascade do |t|
@@ -2110,6 +2118,7 @@ ActiveRecord::Schema[7.0].define(version: 2026_05_18_113546) do
   add_foreign_key "decidim_budgets_orders", "decidim_budgets_budgets"
   add_foreign_key "decidim_budgets_projects", "decidim_budgets_budgets"
   add_foreign_key "decidim_categorizations", "decidim_categories"
+  add_foreign_key "decidim_cfj_survey_orders", "decidim_surveys_surveys", on_delete: :cascade
   add_foreign_key "decidim_debates_debates", "decidim_scopes"
   add_foreign_key "decidim_editor_images", "decidim_organizations"
   add_foreign_key "decidim_editor_images", "decidim_users", column: "decidim_author_id"
