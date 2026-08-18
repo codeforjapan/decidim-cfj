@@ -19,7 +19,6 @@ RSpec.describe Decidim::BulkUserImporter do
         expect(user).to be_present
         expect(user).to be_confirmed
         expect(user).to be_tos_accepted
-        expect(user.newsletter_notifications_at).to be_present
         expect(user.managed).to be(false)
         expect(user).to be_active_for_authentication
         expect(user.valid_password?(result.password)).to be(true)
@@ -32,6 +31,11 @@ RSpec.describe Decidim::BulkUserImporter do
       it "generates a name and a nickname from the local part" do
         expect(result.name).to eq("Taro Yamada")
         expect(result.nickname).to eq("taro_yamada")
+      end
+
+      it "leaves the newsletter subscription off" do
+        expect(result.status).to eq(:created)
+        expect(user.newsletter_notifications_at).to be_nil
       end
     end
 
