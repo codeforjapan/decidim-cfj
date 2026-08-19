@@ -19,7 +19,7 @@ RSpec.describe Decidim::BulkUserImporter do
         expect(user).to be_present
         expect(user).to be_confirmed
         expect(user).to be_tos_accepted
-        expect(user.newsletter_notifications_at).to be_present
+        expect(user.newsletter_notifications_at).to be_nil
         expect(user.managed).to be(false)
         expect(user).to be_active_for_authentication
         expect(user.valid_password?(result.password)).to be(true)
@@ -32,6 +32,41 @@ RSpec.describe Decidim::BulkUserImporter do
       it "generates a name and a nickname from the local part" do
         expect(result.name).to eq("Taro Yamada")
         expect(result.nickname).to eq("taro_yamada")
+      end
+    end
+
+    context "when a block is given" do
+      let(:rows) { [{ email: }, { email: "hanako@example.com" }] }
+
+      it "yields each result as soon as the row is processed" do
+        yielded = []
+
+        results = importer.import(rows) do |result|
+          yielded << [result, Decidim::User.count]
+        end
+
+        expect(yielded.map(&:first)).to eq(results)
+        expect(yielded.map(&:last)).to eq([1, 2])
+      end
+    end
+
+    context "when saving raises an unexpected error" do
+      subject(:results) { failing_importer.import([{ email: "first@example.com" }, { email: }]) }
+
+      let(:failing_importer) { described_class.new(organization:) }
+
+      before do
+        allow(failing_importer).to receive(:create_user).and_wrap_original do |original, row, target_email|
+          raise ActiveRecord::RecordNotUnique, "duplicate key value violates unique constraint" if target_email == "first@example.com"
+
+          original.call(row, target_email)
+        end
+      end
+
+      it "marks only that row as failed and keeps processing the rest" do
+        expect(results.first.status).to eq(:failed)
+        expect(results.first.error).to include("ActiveRecord::RecordNotUnique")
+        expect(results.last.status).to eq(:created)
       end
     end
 
