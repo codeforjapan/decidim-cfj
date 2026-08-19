@@ -4,7 +4,8 @@ module Decidim
   # 招待メールを経由せず、ログイン可能な確定ユーザーを CSV などから一括作成する。
   #
   #   - email は必須。name / nickname / password は空なら自動生成する。
-  #   - 利用規約同意 (accepted_tos_version) とニュースレター受信 (newsletter_notifications_at) をONにする。
+  #   - 利用規約同意 (accepted_tos_version) をONにする。
+  #   - ニュースレター受信 (newsletter_notifications_at) はOFFにする。
   #   - skip_confirmation! で confirmed_at をセットするため、確認メールも招待メールも送信しない。
   #   - nickname の一意化を効かせるため、行ごとに保存する（全体をトランザクションで囲まない）。
   class BulkUserImporter
@@ -74,7 +75,7 @@ module Decidim
         password_updated_at: Time.current,
         tos_agreement: true,
         accepted_tos_version: organization.tos_version,
-        newsletter_notifications_at: Time.current,
+        newsletter_notifications_at: nil,
         locale:
       }
     end
