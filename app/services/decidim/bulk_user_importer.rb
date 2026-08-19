@@ -39,6 +39,9 @@ module Decidim
     rescue ActiveRecord::RecordInvalid => e
       Result.new(email:, nickname: presence(row[:nickname]), name: presence(row[:name]),
                  status: :failed, error: e.record.errors.full_messages.join("; "))
+    rescue StandardError => e
+      Result.new(email:, nickname: presence(row[:nickname]), name: presence(row[:name]),
+                 status: :failed, error: "#{e.class}: #{e.message}")
     end
 
     def create_user(row, email)
