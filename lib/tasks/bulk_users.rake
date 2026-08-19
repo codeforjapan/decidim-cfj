@@ -27,18 +27,19 @@ namespace :bulk_users do
     input = ENV.fetch("IN")
     output = ENV.fetch("OUT", "created_users.csv")
 
-    rows = CSV.read(input, headers: true).map do |row|
+    rows = CSV.read(input, headers: true, encoding: "bom|utf-8").map do |row|
       { email: row["email"], name: row["name"], nickname: row["nickname"], password: row["password"] }
     end
 
     puts "Start bulk_users:import of #{rows.count} rows from #{input}"
 
-    results = Decidim::BulkUserImporter.new(organization:).import(rows)
+    importer = Decidim::BulkUserImporter.new(organization:)
 
-    CSV.open(output, "w") do |csv|
+    results = CSV.open(output, "w") do |csv|
       csv << %w(email nickname name password status error)
-      results.each do |result|
+      importer.import(rows) do |result|
         csv << [result.email, result.nickname, result.name, result.password, result.status, result.error]
+        csv.flush
       end
     end
 

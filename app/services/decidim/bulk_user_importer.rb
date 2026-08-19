@@ -22,7 +22,11 @@ module Decidim
     # rows: [{ email:, name:?, nickname:?, password:? }, ...]
     # returns: Array<Result> (status: :created / :skipped / :failed)
     def import(rows)
-      rows.map { |row| create_one(row) }
+      rows.map do |row|
+        result = create_one(row)
+        yield result if block_given?
+        result
+      end
     end
 
     private
