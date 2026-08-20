@@ -21,6 +21,8 @@ module Decidim
     end
 
     # rows: [{ email:, name:?, nickname:?, password:? }, ...]
+    # ブロックを渡すと、1行処理するたびに Result を yield する。
+    # 呼び出し側はその都度書き出すことで、途中で中断しても処理済み分の認証情報を残せる。
     # returns: Array<Result> (status: :created / :skipped / :failed)
     def import(rows)
       rows.map do |row|

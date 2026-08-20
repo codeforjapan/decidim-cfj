@@ -48,6 +48,8 @@ taro.yamada@example.com,山田 太郎
 hanako@example.com,
 ```
 
+文字コードは UTF-8 です。Excel で保存した BOM 付き UTF-8 のCSVもそのまま渡せます（`encoding: "bom|utf-8"` で読み込むため、BOM は除去されます）。
+
 ### 2.3 実行
 
 組織の指定は既存の rake タスクと同じく `DECIDIM_ORGANIZATION_ID` または `DECIDIM_ORGANIZATION_NAME` で行います。
@@ -82,9 +84,11 @@ DECIDIM_ORGANIZATION_ID=1 bundle exec rails bulk_users:import \
 
 - `created`: 作成に成功
 - `skipped`: `email` が空（`blank email`）、または同じ組織に同じメールアドレスが既に存在する（`already exists`）
-- `failed`: バリデーションエラー。1行の失敗が他の行の処理を止めることはありません
+- `failed`: バリデーションエラーなど。想定外のエラーもその行だけ `failed` として記録され、1行の失敗が他の行の処理を止めることはありません
 
-同じメールアドレスは `skipped` になるため、同じCSVを再実行しても重複作成されません（冪等）。
+出力CSVは1行処理するたびに書き出してフラッシュされます。途中でプロセスが落ちても、そこまでに作成したユーザーの認証情報はCSVに残ります（残らないと、DBにはユーザーがいるのにパスワードが誰にもわからない状態になるため）。
+
+同じメールアドレスは `skipped` になるため、同じCSVを再実行しても重複作成されません（冪等）。`failed` になった行を修正して再実行すれば、成功済みの行は `skipped` されて未処理の行だけが作成されます。
 
 ## 3. 実装上の注意
 
