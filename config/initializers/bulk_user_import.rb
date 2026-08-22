@@ -3,10 +3,10 @@
 # 管理画面の CSV 一括登録（Decidim::Admin::BulkUserImportsController）を Decidim に差し込む。
 #
 # ルートは to_prepare ではなく初期化時に一度だけ append している。
-# RouteSet#append に積んだブロックはルートのリロード（RouteSet#clear!）では捨てられないため、
-# 開発環境でリクエストごとに走る to_prepare に置くとリロードのたびに同じルートが積み増され、
-# `rails routes` に何本も現れてしまう。ルート定義は再読み込み対象の定数を参照しないので、
-# 起動時に一度だけ登録すれば十分。
+# ルート定義は再読み込み対象の定数を参照しない（controller: は文字列指定）ので、起動時に一度
+# 登録すれば足りる。to_prepare に置くと呼ばれるたびに RouteSet#append にブロックが積まれ、
+# 積み増したぶんは捨てられない。実測ではブロックが重複しても `rails routes` の本数は増えな
+# かったが、積み増すこと自体に意味がないため初期化時に寄せている。
 #
 # コアの管理画面ルートを包む OrganizationDashboardConstraint は使っていない。制約を外れた場合の
 # 結果はルート不一致（404）で、非管理者に「権限がありません」を返せないため、認可は

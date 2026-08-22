@@ -140,6 +140,36 @@ RSpec.describe "Decidim::Admin BulkUserImportsController" do
         expect(response.body).to include("imported users in bulk (1 created / 0 skipped / 0 failed)")
       end
 
+      # 画面とドキュメントで「Excel の BOM 付き UTF-8 をそのまま読める」と説明しているため固定する
+      context "when the CSV has a UTF-8 BOM" do
+        let(:csv_body) { "\uFEFFemail,name\n#{email},山田 太郎\n" }
+
+        it "strips the BOM and imports the row" do
+          expect { post(decidim_admin.bulk_user_import_path, params:) }.to change(Decidim::User, :count).by(1)
+
+          expect(response).to have_http_status(:ok)
+          expect(Decidim::User.find_by(email:)).to be_present
+        end
+      end
+
+      context "when the file is larger than the size limit" do
+        let(:csv_body) { "email\n#{"a" * Decidim::Admin::BulkUserImportsController::MAX_FILE_SIZE}@example.com\n" }
+
+        it "rejects the file" do
+          expect { post(decidim_admin.bulk_user_import_path, params:) }.not_to change(Decidim::User, :count)
+
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(flash[:alert]).to eq(
+            I18n.t(
+              "decidim.admin.bulk_user_imports.create.errors.file_too_large",
+              size: ActiveSupport::NumberHelper.number_to_human_size(
+                Decidim::Admin::BulkUserImportsController::MAX_FILE_SIZE
+              )
+            )
+          )
+        end
+      end
+
       context "when no file is attached" do
         it "renders an error instead of failing" do
           post decidim_admin.bulk_user_import_path
