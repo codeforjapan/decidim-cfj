@@ -1,0 +1,40 @@
+ja:
+  decidim:
+    admin:
+      bulk_user_imports:
+        create:
+          errors:
+            empty_csv: CSVにデータ行がありません。ヘッダ行の下に登録したいユーザーを記入してください。
+            file_too_large: ファイルサイズが上限（%{size}）を超えています。分割してアップロードしてください。
+            invalid_extension: 拡張子が .csv のファイルを選択してください。
+            malformed_csv: CSVを読み取れませんでした。UTF-8 のCSVとして保存し直してから、もう一度お試しください。
+            missing_email_header: CSVのヘッダ行に email 列がありません。
+            missing_file: CSVファイルを選択してください。
+            missing_tos_version: 組織の利用規約が未設定です。管理画面で利用規約を保存してから実行してください。
+            too_many_rows: 一度に登録できるのは %{max} 行までです。CSVを分割してアップロードしてください。
+        new:
+          format:
+            encoding: 文字コードは UTF-8 です。Excel で保存した BOM 付き UTF-8 のCSVもそのまま読み込めます。
+            example: |-
+              email,name,nickname,password
+              taro.yamada@example.com,山田 太郎,,
+              hanako@example.com,,,
+            explanation: ヘッダ行の email 列は必須です。任意で name / nickname / password 列を追加できます。空欄の項目は自動生成されます。
+            limits: 一度にアップロードできるのは %{max_rows} 行・%{max_size} までです。処理はその場で実行されるため、これを超える場合はCSVを分割してください。
+            title: CSVの形式
+          title: アカウントの一括登録
+          upload:
+            explanation: 登録が終わると、認証情報を含む結果CSVのダウンロードが始まります。画面はこのままです。
+            file_label: CSVファイル
+            submit: 一括登録する
+            title: CSVをアップロード
+          warning:
+            no_email: 確認メール・招待メールは送信されません。作成した認証情報は運営側から本人へ配布してください。
+            plain_password: ダウンロードされるCSVには平文パスワードが含まれます。配布後は速やかに削除するなど、取り扱いに注意してください。
+            title: 実行前にご確認ください
+            tos_accepted: 作成されたアカウントは、メール確認済み・利用規約に同意済み・ニュースレター受信OFFとして登録されます。
+      menu:
+        bulk_user_imports: アカウント一括登録
+    admin_log:
+      organization:
+        bulk_user_import: "%{user_name} がアカウントを一括登録しました（作成 %{created}件 / スキップ %{skipped}件 / 失敗 %{failed}件）"
