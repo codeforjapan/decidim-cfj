@@ -62,6 +62,10 @@ module Decidim
       @organization = organization
       @email_domain = email_domain
       @dry_run = dry_run
+      # dry_run は採番の計算だけでインポータを使わないため作らない
+      # （tos_version 未設定の組織でも、プレビュー表示は失敗させない）。
+      return if dry_run
+
       @importer = BulkUserImporter.new(organization:,
                                        password_length: PASSWORD_LENGTH,
                                        password_charset: PASSWORD_CHARSET)
