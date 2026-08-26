@@ -1,0 +1,78 @@
+<% add_decidim_page_title(t(".title")) %>
+
+<div class="card">
+  <div class="item_show__header">
+    <h1 class="item_show__header-title">
+      <%= t(".title") %>
+    </h1>
+  </div>
+</div>
+
+<% if slug_too_long? %>
+  <div class="card">
+    <div class="card-section p-4">
+      <div class="flash alert">
+        <%= t(".slug_too_long", slug: current_assembly.slug, max: Decidim::BulkSpaceAccountIssuer::MAX_SLUG_LENGTH) %>
+      </div>
+    </div>
+  </div>
+<% else %>
+  <div class="card">
+    <div class="card-divider">
+      <h2 class="card-title"><%= t(".about.title") %></h2>
+    </div>
+    <div class="card-section p-4">
+      <ul>
+        <li><%= t(".about.id_format", participant: next_account_ids["participant"], admin: next_account_ids["admin"]) %></li>
+        <li><%= t(".about.email_domain", domain: settings.email_domain) %></li>
+        <li><%= t(".about.password") %></li>
+        <li><%= t(".about.no_email") %></li>
+        <li><%= t(".about.spare") %></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-divider">
+      <h2 class="card-title"><%= t(".form.title") %></h2>
+    </div>
+    <div class="card-section p-4">
+      <p><%= t(".form.explanation", max: max_accounts) %></p>
+
+      <%= form_with url: decidim_admin_assemblies.assembly_bulk_account_issue_path(current_assembly),
+                    scope: :bulk_account_issue,
+                    method: :post,
+                    builder: ActionView::Helpers::FormBuilder,
+                    html: { class: "form form-defaults" } do |form| %>
+        <div class="row column">
+          <%= form.label :participant_count, t(".form.participant_count"), class: "form__label" %>
+          <%= form.number_field :participant_count, value: 0, min: 0, max: max_accounts, required: true %>
+        </div>
+
+        <div class="row column">
+          <%= form.label :admin_count, t(".form.admin_count"), class: "form__label" %>
+          <%= form.number_field :admin_count, value: 0, min: 0, max: max_accounts, required: true %>
+        </div>
+
+        <div class="item__edit-sticky">
+          <div class="item__edit-sticky-container">
+            <%= form.submit t(".form.submit"), class: "button button__sm button__secondary", data: { disable_with: false } %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-divider">
+      <h2 class="card-title"><%= t(".warning.title") %></h2>
+    </div>
+    <div class="card-section p-4">
+      <ul>
+        <li><%= t(".warning.uppercase") %></li>
+        <li><%= t(".warning.furigana") %></li>
+        <li><%= t(".warning.custody") %></li>
+      </ul>
+    </div>
+  </div>
+<% end %>

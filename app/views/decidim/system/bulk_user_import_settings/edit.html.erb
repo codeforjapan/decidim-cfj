@@ -1,0 +1,42 @@
+<% add_decidim_page_title(t(".title")) %>
+
+<% provide :title do %>
+  <h1 class="h1"><%= t(".title", organization: translated_attribute(@organization.name)) %></h1>
+<% end %>
+
+<% if @setting.errors.any? %>
+  <div class="flash alert">
+    <ul>
+      <% @setting.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_with model: @setting,
+              url: bulk_user_import_setting_path(@organization.id),
+              method: :patch,
+              scope: :bulk_user_import_setting,
+              local: true do |form| %>
+  <div class="form__wrapper">
+    <div>
+      <%= form.label :email_domain, t(".email_domain_label") %>
+      <%= form.text_field :email_domain, placeholder: "chiba-mirai" %>
+      <p class="help-text"><%= t(".email_domain_help") %></p>
+    </div>
+
+    <div>
+      <%= form.label :enabled do %>
+        <%= form.check_box :enabled %>
+        <%= t(".enabled_label") %>
+      <% end %>
+      <p class="help-text"><%= t(".enabled_help") %></p>
+    </div>
+  </div>
+
+  <div class="form__wrapper-block">
+    <%= link_to t(".back"), bulk_user_import_settings_path, class: "button button__sm button__transparent-secondary" %>
+    <%= form.submit t(".save"), class: "button button__sm button__secondary" %>
+  </div>
+<% end %>
