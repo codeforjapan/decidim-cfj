@@ -57,3 +57,6 @@ app/views/static/api/*
 tailwind.config.js
 app/views/static/docs/*
 package-lock.json
+
+# bulk_users:import の出力（平文パスワードを含む）。既定は tmp/ 配下だが、OUT= の指定ミスに備えてどこでも ignore する
+created_users*.csv
