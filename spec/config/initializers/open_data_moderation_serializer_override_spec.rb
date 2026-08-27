@@ -16,6 +16,16 @@ RSpec.describe "Decidim::Exporters::OpenDataModerationSerializer nil reportable 
     it "serializes the reported url" do
       expect(subject[:reported_url]).to eq(reportable.reported_content_url)
     end
+
+    # override は serialize 全体を差し替えているため、上流がフィールドを追加しても
+    # 気づかずに欠落しうる。キー集合を固定して差分を検知する。
+    it "keeps the upstream key set" do
+      expect(subject.keys).to contain_exactly(
+        :id, :hidden_at, :report_count, :reported_url,
+        :reportable_type, :reportable_id, :reported_content, :reports
+      )
+      expect(subject[:reports].keys).to contain_exactly(:reasons, :locale, :details)
+    end
   end
 
   # Decidim::Moderation#reportable はポリモーフィック関連のため DB の外部キー制約を張れず、
@@ -43,6 +53,38 @@ RSpec.describe "Decidim::Exporters::OpenDataModerationSerializer nil reportable 
       expect(subject[:id]).to eq(moderation.id)
       expect(subject[:reportable_id]).to eq(reportable.id)
       expect(subject[:reportable_type]).to eq(reportable.class.name)
+      expect(subject[:hidden_at]).to be_present
+    end
+  end
+
+  # Decidim::Component は SoftDeletable だが Decidim::HasComponent の belongs_to は
+  # with_deleted を付けていないため、管理画面からコンポーネントをゴミ箱に入れると
+  # reportable は残ったまま reportable.component だけが nil になる。
+  # その状態で reported_content_url を呼ぶと EngineRouter が target に対して
+  # mounted_engine を呼び NoMethodError になる。
+  context "when the reportable's component has been soft-deleted" do
+    let(:reportable) { create(:proposal, component:) }
+    let!(:moderation) { create(:moderation, :hidden, reportable:) }
+
+    before do
+      component.destroy
+      moderation.reload
+      reportable.reload
+    end
+
+    it "still resolves the reportable but not its component" do
+      expect(moderation.reportable).to be_present
+      expect(reportable.component).to be_nil
+    end
+
+    it "does not raise and leaves the reported url empty" do
+      expect { subject }.not_to raise_error
+      expect(subject[:reported_url]).to be_nil
+    end
+
+    it "still serializes the moderation attributes" do
+      expect(subject[:id]).to eq(moderation.id)
+      expect(subject[:reportable_id]).to eq(reportable.id)
       expect(subject[:hidden_at]).to be_present
     end
   end

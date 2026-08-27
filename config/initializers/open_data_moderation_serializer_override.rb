@@ -1,16 +1,32 @@
 # frozen_string_literal: true
 
-# Decidim::Exporters::OpenDataModerationSerializer が `resource.reportable` の nil を
-# 想定しておらず、オープンデータのエクスポート全体を落としている問題への対処。
+# Decidim::Exporters::OpenDataModerationSerializer の reported_url 生成が
+# 壊れた参照で例外を投げ、オープンデータのエクスポート全体を落としている問題への対処。
 #
-# Decidim::Moderation#reportable はポリモーフィック関連のため DB の外部キー制約を張れず、
-# 参照先 (提案・コメント等) が物理削除されると dangling になる。
 # moderations の collection (decidim-core/lib/decidim/core.rb の open_data_manifests) は
-# hidden スコープで絞り込むだけで reportable の存在を確認しないため、
-# 1 件でも壊れたレコードがあると NoMethodError になり ZIP 生成が中断される。
+# participatory_space と hidden でしか絞り込まないため、URL を生成できないレコードが
+# 1 件でもあると ZIP 生成が moderations の時点で中断され、
+# 提案も会議もユーザーも一切出力されなくなる。
 #
-# 本番実測: hidden な moderation 88 件のうち reportable が nil なのは 1 件だけだが、
-# その 1 件のせいで当該組織のオープンデータが一切出力されなくなっていた。
+# 到達しうる例外が単一ではないため、個別の nil ガードではなく
+# reported_url の計算全体を rescue する。本番で確認できたのは以下の 2 経路。
+#
+#   1. reportable が nil
+#      Decidim::Moderation#reportable はポリモーフィック関連で DB の外部キー制約を
+#      張れないため、参照先が物理削除されると dangling になる。
+#
+#   2. reportable は残っているが reportable.component が nil
+#      Decidim::Component は SoftDeletable (acts_as_paranoid) だが
+#      Decidim::HasComponent の belongs_to :component は with_deleted を付けていない。
+#      管理画面からコンポーネントをゴミ箱に入れると、中の提案やコメントは
+#      trash されないまま component だけが引けなくなる。
+#      その状態で reported_content_url を呼ぶと
+#      ResourceLocatorPresenter#route_proxy が EngineRouter.main_proxy(component || target)
+#      に target を渡し、Proposal/Comment は mounted_engine を持たないため
+#      NoMethodError: undefined method `mounted_engine' になる。
+#
+# 本番実測 (hidden な moderation 88 件): 1 が 1 件、2 が 1 件。
+# この 2 件のせいで該当する 2 組織のオープンデータが一切出力されていなかった。
 #
 # decidim 0.30.9 / 0.31.7 / 0.32.1 / develop のいずれでも当該 serializer は
 # 同一内容で未修正のため、上流追従では解消しない (上流 issue: decidim/decidim#17574)。
@@ -28,7 +44,7 @@ Rails.application.config.to_prepare do
         id: resource.id,
         hidden_at: resource.hidden_at,
         report_count: resource.report_count,
-        reported_url: resource.reportable&.reported_content_url,
+        reported_url: safe_reported_url,
         reportable_type: resource.decidim_reportable_type,
         reportable_id: resource.decidim_reportable_id,
         reported_content: resource.reported_content,
@@ -38,6 +54,21 @@ Rails.application.config.to_prepare do
           details: resource.reports.map(&:details)
         }
       }
+    end
+
+    private
+
+    # URL 生成は壊れた参照で複数種類の例外を投げうる。
+    # 1 レコードのために組織全体のエクスポートを止めないよう、握って nil を返す。
+    def safe_reported_url
+      resource.reportable&.reported_content_url
+    rescue StandardError => e
+      Rails.logger.warn(
+        "[open_data] failed to build reported_url for Decidim::Moderation " \
+        "id=#{resource.id} reportable=#{resource.decidim_reportable_type}##{resource.decidim_reportable_id}: " \
+        "#{e.class}: #{e.message}"
+      )
+      nil
     end
   end
 
