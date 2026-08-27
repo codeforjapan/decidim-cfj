@@ -1,5 +1,18 @@
 # Change Log
 
+## [1.20.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.19.1...v1.20.0) (2026-08-27)
+
+
+### Features
+
+* **survey:** add weight column(table) for surver to reorder items ([0a3a33a](https://github.com/codeforjapan/decidim-cfj/commit/0a3a33a93413d8922e3252a96e6e29165f541e9f))
+
+
+### Bug Fixes
+
+* PumaWorkerKiller の閾値を CDK のタスク定義から ENV で受け取る ([ebb0668](https://github.com/codeforjapan/decidim-cfj/commit/ebb06689ff504876db657bc372940e3f7c45f71f))
+* オープンデータのエクスポートが nil の blocking で落ちる問題に対処 ([4403fc1](https://github.com/codeforjapan/decidim-cfj/commit/4403fc1168c8d9c4d06fbad49d8b137339481eb9))
+
 ## [1.19.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.19.0...v1.19.1) (2026-08-13)
 
 
