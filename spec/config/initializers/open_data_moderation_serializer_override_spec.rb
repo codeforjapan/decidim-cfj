@@ -3,7 +3,9 @@
 require "rails_helper"
 
 RSpec.describe "Decidim::Exporters::OpenDataModerationSerializer nil reportable override" do
-  subject { Decidim::Exporters::OpenDataModerationSerializer.new(moderation).serialize }
+  subject { described_serializer.new(moderation).serialize }
+
+  let(:described_serializer) { Decidim::Exporters::OpenDataModerationSerializer }
 
   let(:organization) { create(:organization) }
   let(:participatory_process) { create(:participatory_process, organization:) }
@@ -18,13 +20,14 @@ RSpec.describe "Decidim::Exporters::OpenDataModerationSerializer nil reportable 
     end
 
     # override は serialize 全体を差し替えているため、上流がフィールドを追加しても
-    # 気づかずに欠落しうる。キー集合を固定して差分を検知する。
+    # 気づかずに欠落しうる。ハードコードした一覧と比べても「今の形」同士の比較にしかならず
+    # 上流の変更を検知できないので、super_method で上流実装を直接呼んで突き合わせる。
     it "keeps the upstream key set" do
-      expect(subject.keys).to contain_exactly(
-        :id, :hidden_at, :report_count, :reported_url,
-        :reportable_type, :reportable_id, :reported_content, :reports
-      )
-      expect(subject[:reports].keys).to contain_exactly(:reasons, :locale, :details)
+      serializer = described_serializer.new(moderation)
+      upstream = described_serializer.instance_method(:serialize).super_method.bind(serializer).call
+
+      expect(subject.keys).to match_array(upstream.keys)
+      expect(subject[:reports].keys).to match_array(upstream[:reports].keys)
     end
   end
 

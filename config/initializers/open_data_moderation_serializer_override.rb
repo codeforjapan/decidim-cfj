@@ -60,15 +60,33 @@ Rails.application.config.to_prepare do
 
     # URL 生成は壊れた参照で複数種類の例外を投げうる。
     # 1 レコードのために組織全体のエクスポートを止めないよう、握って nil を返す。
+    #
+    # rescue する例外は実際に観測した壊れ方に絞る。StandardError まで広げると
+    # 一時的な DB エラー (ActiveRecord::StatementInvalid 等) も飲み込んでしまい、
+    # 「参照が消えている」のか「引けなかっただけ」なのか区別できないまま
+    # 空の URL を正常な公開データとして出力することになる。
+    # NameError は NoMethodError (mounted_engine 不在) と
+    # 型名を解決できないケースの両方を含む。
     def safe_reported_url
-      resource.reportable&.reported_content_url
-    rescue StandardError => e
+      reportable = resource.reportable
+
+      if reportable.nil?
+        log_missing_reported_url("dangling reportable")
+        return nil
+      end
+
+      reportable.reported_content_url
+    rescue NameError, ActiveRecord::RecordNotFound => e
+      log_missing_reported_url("#{e.class}: #{e.message}")
+      nil
+    end
+
+    def log_missing_reported_url(reason)
       Rails.logger.warn(
         "[open_data] failed to build reported_url for Decidim::Moderation " \
         "id=#{resource.id} reportable=#{resource.decidim_reportable_type}##{resource.decidim_reportable_id}: " \
-        "#{e.class}: #{e.message}"
+        "#{reason}"
       )
-      nil
     end
   end
 
