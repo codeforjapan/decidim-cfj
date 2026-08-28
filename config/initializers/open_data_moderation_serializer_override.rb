@@ -62,24 +62,23 @@ module DecidimExportersOpenDataModerationSerializerNilReportablePatch
   # URL 生成は壊れた参照で複数種類の例外を投げうる。
   # 1 レコードのために組織全体のエクスポートを止めないよう、握って nil を返す。
   #
-  # 例外クラスを列挙して絞ると、URL 生成の別経路で投げられる例外を取りこぼして
-  # 同じ障害を繰り返す。EngineRouter は route helper を method_missing で呼ぶため
-  # NameError 系だけでなく ActionController::UrlGenerationError も投げうる。
+  # 例外クラスを列挙して絞ると URL 生成の別経路を取りこぼして同じ障害を繰り返す。
+  # EngineRouter は route helper を method_missing で呼ぶため、NameError 系だけでなく
+  # ActionController::UrlGenerationError も投げうる。よって StandardError を広く受ける。
   #
-  # 一方で StandardError を素通しすると一時的な DB エラーまで飲み込み、
-  # 「参照が消えている」のか「引けなかっただけ」なのか区別できないまま
-  # 空の URL を正常な公開データとして出力してしまう。
-  # そこで広く受けたうえで、一時障害だけは再送出して顕在化させる。
-  # ActiveRecord::StatementInvalid は QueryCanceled だけでなく
-  # PG::UndefinedTable / NoDatabaseError のような恒久的な失敗も含むため使わない。
-  # それらを再送出すると 1 レコードのために毎回エクスポートが止まり続ける。
-  # ConnectionTimeoutError (プール枯渇) は ConnectionNotEstablished の子孫。
-  TRANSIENT_ERRORS = [
-    ActiveRecord::QueryCanceled,
-    ActiveRecord::LockWaitTimeout,
-    ActiveRecord::ConnectionNotEstablished
-  ].freeze
-
+  # 一時的な DB 障害まで握って空の URL を公開データとして出す懸念はあるが、
+  # 一時障害と恒久障害を例外クラスで判別するのは PostgreSQL では成立しない。
+  # PostgreSQLAdapter#translate_exception が ConnectionNotEstablished に変換するのは
+  # メッセージが /connection is closed/i に一致した場合だけで、実際の接続断
+  # (server closed the connection unexpectedly) やデッドロックは素の
+  # StatementInvalid に落ちる。逆に StatementInvalid には PG::UndefinedTable の
+  # ような恒久的な失敗も含まれる。
+  #
+  # 代わりに、DB 障害はこの rescue を抜けた先で必ず顕在化することに依存する。
+  # OpenDataExporter#data_for_all_resources は moderations の後に users /
+  # user_groups / taxonomies と全コンポーネント・全空間を順に処理しており、
+  # いずれも DB アクセスを伴う。接続が落ちていればそちらで例外になり ZIP は
+  # 生成されないため、壊れたデータが正常な成果物として公開されることはない。
   def safe_reported_url
     reportable = resource.reportable
 
@@ -91,8 +90,6 @@ module DecidimExportersOpenDataModerationSerializerNilReportablePatch
     end
 
     reportable.reported_content_url
-  rescue *TRANSIENT_ERRORS
-    raise
   rescue StandardError => e
     log_missing_reported_url("#{e.class}: #{e.message}")
     nil

@@ -66,36 +66,28 @@ RSpec.describe "Decidim::Exporters::OpenDataModerationSerializer nil reportable 
     end
   end
 
-  # 一時障害まで握り潰すと、空の URL が正常な公開データとして出力されてしまう。
-  context "when the url generation hits a transient database error" do
-    let(:reportable) { create(:proposal, component:) }
-    let(:moderation) { create(:moderation, :hidden, reportable:) }
+  # 例外クラスを列挙して絞ると別経路を取りこぼすため StandardError を広く受ける。
+  # 一時障害と恒久障害は例外クラスで判別できない (PostgreSQL の接続断もデッドロックも
+  # 素の StatementInvalid に落ちる) ので、ここでは区別せず握って nil を返す。
+  # DB 障害はこの rescue を抜けた先の他マニフェスト処理で顕在化する。
+  [
+    [ActiveRecord::StatementInvalid, "server closed the connection unexpectedly"],
+    [ActionController::UrlGenerationError, "no route matches"],
+    [NoMethodError, "undefined method `mounted_engine'"]
+  ].each do |error_class, message|
+    context "when the url generation raises #{error_class}" do
+      let(:reportable) { create(:proposal, component:) }
+      let(:moderation) { create(:moderation, :hidden, reportable:) }
 
-    before do
-      allow(moderation).to receive(:reportable)
-        .and_raise(ActiveRecord::QueryCanceled, "statement timeout")
-    end
+      before do
+        allow(moderation).to receive(:reportable).and_return(reportable)
+        allow(reportable).to receive(:reported_content_url).and_raise(error_class, message)
+      end
 
-    it "re-raises instead of publishing an empty url" do
-      expect { subject }.to raise_error(ActiveRecord::QueryCanceled)
-    end
-  end
-
-  # 一方 ActiveRecord::StatementInvalid には PG::UndefinedTable のような恒久的な失敗も
-  # 含まれる。これを再送出すると 1 レコードのために毎回エクスポートが止まり続けるため、
-  # 握って nil を返す側に倒す。
-  context "when the url generation hits a permanent schema error" do
-    let(:reportable) { create(:proposal, component:) }
-    let(:moderation) { create(:moderation, :hidden, reportable:) }
-
-    before do
-      allow(moderation).to receive(:reportable)
-        .and_raise(ActiveRecord::StatementInvalid, "relation does not exist")
-    end
-
-    it "does not raise and leaves the reported url empty" do
-      expect { subject }.not_to raise_error
-      expect(subject[:reported_url]).to be_nil
+      it "does not raise and leaves the reported url empty" do
+        expect { subject }.not_to raise_error
+        expect(subject[:reported_url]).to be_nil
+      end
     end
   end
 
