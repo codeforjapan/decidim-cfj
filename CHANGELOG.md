@@ -1,5 +1,20 @@
 # Change Log
 
+## [1.20.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.20.0...v1.20.1) (2026-08-28)
+
+
+### Bug Fixes
+
+* **meetings:** 管理画面のミーティング複製が必ず 500 になる問題を修正 ([dea1898](https://github.com/codeforjapan/decidim-cfj/commit/dea1898880d1d48ba6a0e5762719b5b9a3603285))
+* **meetings:** 複製オーバーライドの消し忘れを起動時に検知する ([9c30420](https://github.com/codeforjapan/decidim-cfj/commit/9c30420f62878504c535bbedab57814862d375e3))
+* reported_url の生成を rescue して壊れた参照全般に対応 ([caab391](https://github.com/codeforjapan/decidim-cfj/commit/caab39190efe33fdd0b133f929e699873221afe8))
+* rescue の絞り込みで生まれた穴を塞ぎ、ログの誤診を防ぐ ([c4368f6](https://github.com/codeforjapan/decidim-cfj/commit/c4368f6aeca6bfafc9d816b04b4cdf690ca11ba6))
+* rescue 範囲を実際の壊れ方に絞り、ドリフト検知を実効化する ([4ade331](https://github.com/codeforjapan/decidim-cfj/commit/4ade3318daa35220a644e850bce66f950c333fb1))
+* オープンデータのエクスポートが nil の reportable で落ちる問題に対処 ([e6085dc](https://github.com/codeforjapan/decidim-cfj/commit/e6085dc1b1ce779b1d50dd7a1e39382df1aaf83c))
+* コメントの過剰主張を正し、ログレベルを分離する ([ac7ce23](https://github.com/codeforjapan/decidim-cfj/commit/ac7ce2306602c853060dd79f23133b3bc3c34ed2))
+* 一時障害の再送出をやめ、rescue を StandardError に一本化する ([04ecdd0](https://github.com/codeforjapan/decidim-cfj/commit/04ecdd0eeed82de59e02a19e22f4b6f7b44d7b71))
+* 再送出対象を実際の一時障害に限定し、発火しないガードを修正する ([1ef1dc6](https://github.com/codeforjapan/decidim-cfj/commit/1ef1dc61664593bf393a3e747618d8047a46b1d7))
+
 ## [1.20.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.19.1...v1.20.0) (2026-08-27)
 
 
