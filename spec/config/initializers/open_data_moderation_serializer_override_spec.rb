@@ -58,6 +58,18 @@ RSpec.describe "Decidim::Exporters::OpenDataModerationSerializer nil reportable 
       expect(subject[:reported_url]).to be_nil
     end
 
+    # ゴミ箱行きは管理者の通常運用で発生するため warn だと件数分ノイズになる。
+    # 異常を示す例外側の warn と区別できるようにする。
+    it "logs at info rather than warn" do
+      allow(Rails.logger).to receive(:info)
+      allow(Rails.logger).to receive(:warn)
+
+      subject
+
+      expect(Rails.logger).to have_received(:info).with(/could not be resolved/)
+      expect(Rails.logger).not_to have_received(:warn)
+    end
+
     it "still serializes the moderation attributes" do
       expect(subject[:id]).to eq(moderation.id)
       expect(subject[:reportable_id]).to eq(reportable.id)
@@ -87,6 +99,14 @@ RSpec.describe "Decidim::Exporters::OpenDataModerationSerializer nil reportable 
       it "does not raise and leaves the reported url empty" do
         expect { subject }.not_to raise_error
         expect(subject[:reported_url]).to be_nil
+      end
+
+      it "logs at warn" do
+        allow(Rails.logger).to receive(:warn)
+
+        subject
+
+        expect(Rails.logger).to have_received(:warn).with(/#{error_class}/)
       end
     end
   end

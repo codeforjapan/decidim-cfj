@@ -74,29 +74,41 @@ module DecidimExportersOpenDataModerationSerializerNilReportablePatch
   # StatementInvalid に落ちる。逆に StatementInvalid には PG::UndefinedTable の
   # ような恒久的な失敗も含まれる。
   #
-  # 代わりに、DB 障害はこの rescue を抜けた先で必ず顕在化することに依存する。
+  # 接続断であれば、この rescue を抜けた先で必ず顕在化する。
   # OpenDataExporter#data_for_all_resources は moderations の後に users /
   # user_groups / taxonomies と全コンポーネント・全空間を順に処理しており、
-  # いずれも DB アクセスを伴う。接続が落ちていればそちらで例外になり ZIP は
-  # 生成されないため、壊れたデータが正常な成果物として公開されることはない。
+  # いずれも DB アクセスを伴うため、接続が落ちていればそちらで例外になり
+  # ZIP は生成されない。
+  #
+  # ただし接続が生きたままのクエリ単位の失敗 (RDS の statement_timeout による
+  # PG::QueryCanceled 等) はここで握られ、後続は成功しうる。その場合
+  # reported_url だけが欠けた ZIP が正常な成果物として公開される。
+  # 件数を数えて閾値超過で再送出する案もあるが、serializer はレコードごとに
+  # 生成されるためクラス変数などの状態を持たせることになり、ジョブ間で
+  # リセットされない・スレッド安全でないという別の問題を招く。
+  # 集計と打ち切りは本来 OpenDataJob 側の責務なので、ここでは扱わない。
+  # 系統的な破損は warn ログの件数で検知する (上流 issue: decidim/decidim#17574)。
   def safe_reported_url
     reportable = resource.reportable
 
     if reportable.nil?
       # 物理削除とゴミ箱行きの両方がここに来る。どちらか断定できないため
       # 「解決できない」とだけ記録する。
-      log_missing_reported_url("reportable could not be resolved (deleted or trashed)")
+      # ゴミ箱行きは管理者の通常運用で発生し、エクスポートのたびに件数分出るため
+      # info に留め、異常を示す例外側の warn を埋もれさせない。
+      log_missing_reported_url(:info, "reportable could not be resolved (deleted or trashed)")
       return nil
     end
 
     reportable.reported_content_url
   rescue StandardError => e
-    log_missing_reported_url("#{e.class}: #{e.message}")
+    log_missing_reported_url(:warn, "#{e.class}: #{e.message}")
     nil
   end
 
-  def log_missing_reported_url(reason)
-    Rails.logger.warn(
+  def log_missing_reported_url(level, reason)
+    Rails.logger.public_send(
+      level,
       "[open_data] failed to build reported_url for Decidim::Moderation " \
       "id=#{resource.id} reportable=#{resource.decidim_reportable_type}##{resource.decidim_reportable_id}: " \
       "#{reason}"
