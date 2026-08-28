@@ -19,15 +19,19 @@ RSpec.describe "Decidim::Exporters::OpenDataModerationSerializer nil reportable 
       expect(subject[:reported_url]).to eq(reportable.reported_content_url)
     end
 
-    # override は serialize 全体を差し替えているため、上流がフィールドを追加しても
-    # 気づかずに欠落しうる。ハードコードした一覧と比べても「今の形」同士の比較にしかならず
-    # 上流の変更を検知できないので、super_method で上流実装を直接呼んで突き合わせる。
-    it "keeps the upstream key set" do
-      serializer = described_serializer.new(moderation)
-      upstream = described_serializer.instance_method(:serialize).super_method.bind(serializer).call
+    # override は serialize 全体を差し替えているため、上流がフィールドを追加したり
+    # 値の算出方法を変えたりしても気づかずに取り残される。ハードコードした一覧と比べても
+    # 「今の形」同士の比較にしかならないので、super_method で上流実装を直接呼んで
+    # 戻り値ごと突き合わせる。
+    it "matches the upstream output for a healthy record" do
+      overridden = described_serializer.instance_method(:serialize).super_method
 
-      expect(subject.keys).to match_array(upstream.keys)
-      expect(subject[:reports].keys).to match_array(upstream[:reports].keys)
+      # 上流が修正されて initializer を削除したらここで気づけるようにする。
+      expect(overridden).not_to be_nil,
+                                "override が適用されていない。上流が修正済みなら initializer と本 spec を削除すること"
+
+      upstream = overridden.bind(described_serializer.new(moderation)).call
+      expect(subject).to eq(upstream)
     end
   end
 
@@ -57,6 +61,43 @@ RSpec.describe "Decidim::Exporters::OpenDataModerationSerializer nil reportable 
       expect(subject[:reportable_id]).to eq(reportable.id)
       expect(subject[:reportable_type]).to eq(reportable.class.name)
       expect(subject[:hidden_at]).to be_present
+    end
+  end
+
+  # 一時障害まで握り潰すと、空の URL が正常な公開データとして出力されてしまう。
+  context "when the url generation hits a transient database error" do
+    let(:reportable) { create(:proposal, component:) }
+    let(:moderation) { create(:moderation, :hidden, reportable:) }
+
+    before do
+      allow(moderation).to receive(:reportable)
+        .and_raise(ActiveRecord::StatementInvalid, "statement timeout")
+    end
+
+    it "re-raises instead of publishing an empty url" do
+      expect { subject }.to raise_error(ActiveRecord::StatementInvalid)
+    end
+  end
+
+  # Decidim::Proposals::Proposal は SoftDeletable であり belongs_to :reportable に
+  # with_deleted が無いため、ゴミ箱に入れるだけで reportable が nil になる。
+  # 実運用ではこちらの方が物理削除より起きやすい。
+  context "when the reportable has been trashed" do
+    let(:reportable) { create(:proposal, component:) }
+    let!(:moderation) { create(:moderation, :hidden, reportable:) }
+
+    before do
+      reportable.destroy
+      moderation.reload
+    end
+
+    it "resolves the reportable to nil" do
+      expect(moderation.reportable).to be_nil
+    end
+
+    it "does not raise and leaves the reported url empty" do
+      expect { subject }.not_to raise_error
+      expect(subject[:reported_url]).to be_nil
     end
   end
 

@@ -11,9 +11,13 @@
 # 到達しうる例外が単一ではないため、個別の nil ガードではなく
 # reported_url の計算全体を rescue する。本番で確認できたのは以下の 2 経路。
 #
-#   1. reportable が nil
+#   1. reportable が解決できず nil になる
 #      Decidim::Moderation#reportable はポリモーフィック関連で DB の外部キー制約を
 #      張れないため、参照先が物理削除されると dangling になる。
+#      加えて Decidim::Proposals::Proposal と Decidim::Meetings::Meeting は
+#      SoftDeletable であり belongs_to :reportable に with_deleted が無いため、
+#      「提案をゴミ箱に入れただけ」でも nil になる。実運用ではこちらの方が起きやすい。
+#      いずれの経路でも例外ではなく nil が返る (実測確認済み)。
 #
 #   2. reportable は残っているが reportable.component が nil
 #      Decidim::Component は SoftDeletable (acts_as_paranoid) だが
@@ -61,22 +65,33 @@ Rails.application.config.to_prepare do
     # URL 生成は壊れた参照で複数種類の例外を投げうる。
     # 1 レコードのために組織全体のエクスポートを止めないよう、握って nil を返す。
     #
-    # rescue する例外は実際に観測した壊れ方に絞る。StandardError まで広げると
-    # 一時的な DB エラー (ActiveRecord::StatementInvalid 等) も飲み込んでしまい、
+    # 例外クラスを列挙して絞ると、URL 生成の別経路で投げられる例外を取りこぼして
+    # 同じ障害を繰り返す。EngineRouter は route helper を method_missing で呼ぶため
+    # NameError 系だけでなく ActionController::UrlGenerationError も投げうる。
+    #
+    # 一方で StandardError を素通しすると一時的な DB エラーまで飲み込み、
     # 「参照が消えている」のか「引けなかっただけ」なのか区別できないまま
-    # 空の URL を正常な公開データとして出力することになる。
-    # NameError は NoMethodError (mounted_engine 不在) と
-    # 型名を解決できないケースの両方を含む。
+    # 空の URL を正常な公開データとして出力してしまう。
+    # そこで広く受けたうえで、一時障害だけは再送出して顕在化させる。
+    TRANSIENT_ERRORS = [
+      ActiveRecord::StatementInvalid,
+      ActiveRecord::ConnectionNotEstablished
+    ].freeze
+
     def safe_reported_url
       reportable = resource.reportable
 
       if reportable.nil?
-        log_missing_reported_url("dangling reportable")
+        # 物理削除とゴミ箱行きの両方がここに来る。どちらか断定できないため
+        # 「解決できない」とだけ記録する。
+        log_missing_reported_url("reportable could not be resolved (deleted or trashed)")
         return nil
       end
 
       reportable.reported_content_url
-    rescue NameError, ActiveRecord::RecordNotFound => e
+    rescue *TRANSIENT_ERRORS
+      raise
+    rescue StandardError => e
       log_missing_reported_url("#{e.class}: #{e.message}")
       nil
     end
