@@ -19,7 +19,17 @@
 # v0.31.1 以降に入っているが release/0.30-stable にはバックポートされておらず
 # （0.30.9 が 0.30 系の最終リリース）、自前で持つしかない。
 #
-# 削除手順: Decidim 0.31.1 以上に上げたらこのファイルごと消す。
+# 削除手順: Decidim 0.31.1 以上に上げたら、このファイルとスペックごと消す。
+#
+# 消し忘れると prepend が黙って勝つ。0.31 以降の copy_meeting! は
+# reminder_enabled / send_reminders_before_hours / reminder_message_custom_content の
+# 引き渡しとインライン画像処理が増えているため、このコピーが残っていると
+# 複製されたミーティングからそれらが抜け落ちる。例外は出ずスペックも通ってしまうので、
+# 0.30 系以外では起動時に落として気付けるようにしておく。
+if Gem::Version.new(Decidim::Core.version).segments.first(2) != [0, 30]
+  raise "meeting_copy_taxonomies_override.rb and related specs should be removed in 0.31.x (decidim/decidim#15736)"
+end
+
 Rails.application.config.to_prepare do
   module DecidimCfjMeetingCopyTaxonomiesPatch
     private
