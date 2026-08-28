@@ -26,9 +26,11 @@ RSpec.describe "Decidim::Exporters::OpenDataModerationSerializer nil reportable 
     it "matches the upstream output for a healthy record" do
       overridden = described_serializer.instance_method(:serialize).super_method
 
-      # 上流が修正されて initializer を削除したらここで気づけるようにする。
-      expect(overridden).not_to be_nil,
-                                "override が適用されていない。上流が修正済みなら initializer と本 spec を削除すること"
+      # 親クラス Decidim::Exporters::Serializer も serialize を定義しているため、
+      # override 未適用でも super_method は非 nil (親のメソッド) になる。
+      # nil 判定では検知できないので owner を確認する。
+      expect(overridden&.owner).to eq(described_serializer),
+                                   "override が適用されていない。上流が修正済みなら initializer と本 spec を削除すること"
 
       upstream = overridden.bind(described_serializer.new(moderation)).call
       expect(subject).to eq(upstream)
@@ -71,11 +73,29 @@ RSpec.describe "Decidim::Exporters::OpenDataModerationSerializer nil reportable 
 
     before do
       allow(moderation).to receive(:reportable)
-        .and_raise(ActiveRecord::StatementInvalid, "statement timeout")
+        .and_raise(ActiveRecord::QueryCanceled, "statement timeout")
     end
 
     it "re-raises instead of publishing an empty url" do
-      expect { subject }.to raise_error(ActiveRecord::StatementInvalid)
+      expect { subject }.to raise_error(ActiveRecord::QueryCanceled)
+    end
+  end
+
+  # 一方 ActiveRecord::StatementInvalid には PG::UndefinedTable のような恒久的な失敗も
+  # 含まれる。これを再送出すると 1 レコードのために毎回エクスポートが止まり続けるため、
+  # 握って nil を返す側に倒す。
+  context "when the url generation hits a permanent schema error" do
+    let(:reportable) { create(:proposal, component:) }
+    let(:moderation) { create(:moderation, :hidden, reportable:) }
+
+    before do
+      allow(moderation).to receive(:reportable)
+        .and_raise(ActiveRecord::StatementInvalid, "relation does not exist")
+    end
+
+    it "does not raise and leaves the reported url empty" do
+      expect { subject }.not_to raise_error
+      expect(subject[:reported_url]).to be_nil
     end
   end
 

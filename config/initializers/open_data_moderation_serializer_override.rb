@@ -39,72 +39,75 @@
 # super は使えない (super の中で例外が起きる)。serialize 全体を差し替える。
 # 元は decidim-core/app/serializers/decidim/exporters/open_data_moderation_serializer.rb
 # の v0.30.9 時点の実装で、v0.31.7 / v0.32.1 とも差分なし。
-Rails.application.config.to_prepare do
-  Decidim::Exporters::OpenDataModerationSerializer # rubocop:disable Lint/Void
-
-  module DecidimExportersOpenDataModerationSerializerNilReportablePatch
-    def serialize
-      {
-        id: resource.id,
-        hidden_at: resource.hidden_at,
-        report_count: resource.report_count,
-        reported_url: safe_reported_url,
-        reportable_type: resource.decidim_reportable_type,
-        reportable_id: resource.decidim_reportable_id,
-        reported_content: resource.reported_content,
-        reports: {
-          reasons: resource.reports.map(&:reason),
-          locale: resource.reports.map(&:locale),
-          details: resource.reports.map(&:details)
-        }
+module DecidimExportersOpenDataModerationSerializerNilReportablePatch
+  def serialize
+    {
+      id: resource.id,
+      hidden_at: resource.hidden_at,
+      report_count: resource.report_count,
+      reported_url: safe_reported_url,
+      reportable_type: resource.decidim_reportable_type,
+      reportable_id: resource.decidim_reportable_id,
+      reported_content: resource.reported_content,
+      reports: {
+        reasons: resource.reports.map(&:reason),
+        locale: resource.reports.map(&:locale),
+        details: resource.reports.map(&:details)
       }
-    end
-
-    private
-
-    # URL 生成は壊れた参照で複数種類の例外を投げうる。
-    # 1 レコードのために組織全体のエクスポートを止めないよう、握って nil を返す。
-    #
-    # 例外クラスを列挙して絞ると、URL 生成の別経路で投げられる例外を取りこぼして
-    # 同じ障害を繰り返す。EngineRouter は route helper を method_missing で呼ぶため
-    # NameError 系だけでなく ActionController::UrlGenerationError も投げうる。
-    #
-    # 一方で StandardError を素通しすると一時的な DB エラーまで飲み込み、
-    # 「参照が消えている」のか「引けなかっただけ」なのか区別できないまま
-    # 空の URL を正常な公開データとして出力してしまう。
-    # そこで広く受けたうえで、一時障害だけは再送出して顕在化させる。
-    TRANSIENT_ERRORS = [
-      ActiveRecord::StatementInvalid,
-      ActiveRecord::ConnectionNotEstablished
-    ].freeze
-
-    def safe_reported_url
-      reportable = resource.reportable
-
-      if reportable.nil?
-        # 物理削除とゴミ箱行きの両方がここに来る。どちらか断定できないため
-        # 「解決できない」とだけ記録する。
-        log_missing_reported_url("reportable could not be resolved (deleted or trashed)")
-        return nil
-      end
-
-      reportable.reported_content_url
-    rescue *TRANSIENT_ERRORS
-      raise
-    rescue StandardError => e
-      log_missing_reported_url("#{e.class}: #{e.message}")
-      nil
-    end
-
-    def log_missing_reported_url(reason)
-      Rails.logger.warn(
-        "[open_data] failed to build reported_url for Decidim::Moderation " \
-        "id=#{resource.id} reportable=#{resource.decidim_reportable_type}##{resource.decidim_reportable_id}: " \
-        "#{reason}"
-      )
-    end
+    }
   end
 
+  private
+
+  # URL 生成は壊れた参照で複数種類の例外を投げうる。
+  # 1 レコードのために組織全体のエクスポートを止めないよう、握って nil を返す。
+  #
+  # 例外クラスを列挙して絞ると、URL 生成の別経路で投げられる例外を取りこぼして
+  # 同じ障害を繰り返す。EngineRouter は route helper を method_missing で呼ぶため
+  # NameError 系だけでなく ActionController::UrlGenerationError も投げうる。
+  #
+  # 一方で StandardError を素通しすると一時的な DB エラーまで飲み込み、
+  # 「参照が消えている」のか「引けなかっただけ」なのか区別できないまま
+  # 空の URL を正常な公開データとして出力してしまう。
+  # そこで広く受けたうえで、一時障害だけは再送出して顕在化させる。
+  # ActiveRecord::StatementInvalid は QueryCanceled だけでなく
+  # PG::UndefinedTable / NoDatabaseError のような恒久的な失敗も含むため使わない。
+  # それらを再送出すると 1 レコードのために毎回エクスポートが止まり続ける。
+  # ConnectionTimeoutError (プール枯渇) は ConnectionNotEstablished の子孫。
+  TRANSIENT_ERRORS = [
+    ActiveRecord::QueryCanceled,
+    ActiveRecord::LockWaitTimeout,
+    ActiveRecord::ConnectionNotEstablished
+  ].freeze
+
+  def safe_reported_url
+    reportable = resource.reportable
+
+    if reportable.nil?
+      # 物理削除とゴミ箱行きの両方がここに来る。どちらか断定できないため
+      # 「解決できない」とだけ記録する。
+      log_missing_reported_url("reportable could not be resolved (deleted or trashed)")
+      return nil
+    end
+
+    reportable.reported_content_url
+  rescue *TRANSIENT_ERRORS
+    raise
+  rescue StandardError => e
+    log_missing_reported_url("#{e.class}: #{e.message}")
+    nil
+  end
+
+  def log_missing_reported_url(reason)
+    Rails.logger.warn(
+      "[open_data] failed to build reported_url for Decidim::Moderation " \
+      "id=#{resource.id} reportable=#{resource.decidim_reportable_type}##{resource.decidim_reportable_id}: " \
+      "#{reason}"
+    )
+  end
+end
+
+Rails.application.config.to_prepare do
   Decidim::Exporters::OpenDataModerationSerializer.prepend(
     DecidimExportersOpenDataModerationSerializerNilReportablePatch
   )
