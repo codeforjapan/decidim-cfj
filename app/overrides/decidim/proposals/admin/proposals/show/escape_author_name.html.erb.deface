@@ -1,0 +1,12 @@
+<!-- replace "erb[loud]:contains('presented_author.name')" -->
+
+<%# Backport of decidim/decidim#17004, limited to the author name. %>
+<%# Fixed upstream in 0.31 (#17092) and 0.32 (#17091); release/0.30-stable %>
+<%# stopped taking backports before it landed. %>
+<%# Removal: delete this file once Decidim is 0.31 or newer. %>
+<%= link_to_if(
+      presented_author.profile_path.present?,
+      decidim_html_escape(presented_author.name),
+      presented_author.profile_path,
+      target: :blank
+    ) %>
