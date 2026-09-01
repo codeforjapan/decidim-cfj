@@ -24,8 +24,10 @@ RSpec.describe Decidim::BulkUserImporter do
         expect(user.valid_password?(result.password)).to be(true)
       end
 
-      it "does not send any email" do
-        expect { result }.not_to(change { ActionMailer::Base.deliveries.count })
+      it "does not send or enqueue any email" do
+        # deliveries はテスト環境では常に空のまま（deliver_later はジョブを積むだけで、
+        # queue_adapter = :test は実行しない）なので、キューへの投入自体が無いことを検証する。
+        expect { result }.not_to have_enqueued_job(ActionMailer::MailDeliveryJob)
       end
 
       it "generates a name and a nickname from the local part" do
@@ -36,6 +38,11 @@ RSpec.describe Decidim::BulkUserImporter do
       it "leaves the newsletter subscription off" do
         expect(result.status).to eq(:created)
         expect(user.newsletter_notifications_at).to be_nil
+      end
+
+      it "turns notification digest emails off" do
+        expect(result.status).to eq(:created)
+        expect(user.notifications_sending_frequency).to eq("none")
       end
     end
 
@@ -185,6 +192,79 @@ RSpec.describe Decidim::BulkUserImporter do
         expect(results.first.status).to eq(:failed)
         expect(results.first.error).to be_present
         expect(results.last.status).to eq(:created)
+      end
+    end
+
+    context "with a custom password charset and length" do
+      subject(:result) { readable_importer.import([{ email: }]).first }
+
+      let(:readable_importer) do
+        described_class.new(organization:, password_length: 10,
+                            password_charset: "ABCDEFGHJKLMNPQRSTUVWXYZ23456789".chars)
+      end
+
+      it "draws the password only from that charset" do
+        expect(result.status).to eq(:created)
+        expect(result.password).to match(/\A[A-HJ-NP-Z2-9]{10}\z/)
+        expect(Decidim::User.find_by(organization:, email:).valid_password?(result.password)).to be(true)
+      end
+    end
+
+    context "when a candidate collides with the common password list" do
+      subject(:result) { generator.import([{ email: }]).first }
+
+      let(:generator) { described_class.new(organization:) }
+      let(:candidates) { %w(CommonCandidate123 Kq7WmZ2rTx9BvN4d) }
+
+      before do
+        allow(generator).to receive(:random_password).and_return(*candidates)
+        allow(Decidim::CommonPasswords.instance).to receive(:passwords).and_return([candidates.first])
+      end
+
+      it "draws again" do
+        expect(result.status).to eq(:created)
+        expect(result.password).to eq(candidates.last)
+      end
+    end
+
+    context "when no acceptable password can be generated" do
+      subject(:results) { importer.import([{ email: }]) }
+
+      before do
+        stub_const("#{described_class}::MAX_PASSWORD_ATTEMPTS", 5)
+        # 拒否リストが全候補に一致する状況を作り、再抽選が有限で打ち切られて
+        # その行だけが failed になる（無限ループしない）ことを確認する。
+        allow(Decidim).to receive(:denied_passwords).and_return([/.*/])
+      end
+
+      it "fails the row after a bounded number of attempts instead of looping forever" do
+        expect(results.first.status).to eq(:failed)
+        expect(results.first.error).to include("password")
+      end
+    end
+  end
+
+  describe "#initialize" do
+    context "when the organization has no tos_version" do
+      # 組織ファクトリは after(:create) で TOS ページ経由の tos_version を必ず設定するため、スタブで nil にする
+      before { allow(organization).to receive(:tos_version).and_return(nil) }
+
+      it "raises instead of creating users that would all count as not having accepted the TOS" do
+        expect { described_class.new(organization:) }.to raise_error(ArgumentError, /tos_version/)
+      end
+    end
+
+    context "when the password length is below the validator minimum" do
+      it "raises" do
+        expect { described_class.new(organization:, password_length: 8) }
+          .to raise_error(ArgumentError, /password_length/)
+      end
+    end
+
+    context "when the charset cannot satisfy the unique character constraint" do
+      it "raises" do
+        expect { described_class.new(organization:, password_charset: %w(A B A B)) }
+          .to raise_error(ArgumentError, /password_charset/)
       end
     end
   end

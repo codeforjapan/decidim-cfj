@@ -24,9 +24,11 @@ pidfile ENV.fetch("PIDFILE", "tmp/pids/server.pid")
 
 before_fork do
   PumaWorkerKiller.config do |config|
-    config.ram = 3072
+    # コンテナの実メモリ量は CDK のタスク定義 (decidim-cfj-cdk) を単一の情報源とする。
+    # ハードコードすると実値と乖離しても気づけないため ENV で受け取る。
+    config.ram = Integer(ENV.fetch("PUMA_WORKER_KILLER_RAM_MB"))
+    config.percent_usage = Float(ENV.fetch("PUMA_WORKER_KILLER_PERCENT_USAGE"))
     config.frequency = 60
-    config.percent_usage = 0.9
     config.rolling_restart_frequency = 24 * 60 * 60
     config.reaper_status_logs = true
     config.pre_term = lambda do |worker|

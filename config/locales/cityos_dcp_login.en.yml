@@ -1,0 +1,15 @@
+en:
+  decidim:
+    system:
+      organizations:
+        omniauth_settings:
+          cityos_dcp_login:
+            client_id: Client ID
+            client_secret: Client secret
+            service_id: Service ID
+            policy: Policy
+            scope: Scope
+            opt_api_base_url: Opt-in API base URL
+            optin_url: Opt-in URL
+            authorization_url: Authorization endpoint URL
+            label: Login button display name
