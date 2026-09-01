@@ -39,7 +39,7 @@ RSpec.describe Decidim::BulkSpaceAccountIssuer do
       it "generates readable passwords and matching furigana" do
         result = results.first
 
-        expect(result.password).to match(/\A[A-HJ-NPR-Z2-9]{10}\z/)
+        expect(result.password).to match(/\A[A-HJKMNPR-TV-Z2-9]{10}\z/)
         expected = result.password.chars.map { |c| described_class::FURIGANA.fetch(c) }.join("・")
         expect(result.furigana).to eq(expected)
         expect(result.furigana.split("・").size).to eq(10)
