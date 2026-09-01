@@ -1,0 +1,66 @@
+<% add_decidim_page_title(t(".title")) %>
+
+<div class="card">
+  <div class="item_show__header">
+    <h1 class="item_show__header-title">
+      <%= t(".title") %>
+    </h1>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-divider">
+    <h2 class="card-title">
+      <%= t(".warning.title") %>
+    </h2>
+  </div>
+  <div class="card-section p-4">
+    <ul>
+      <li><%= t(".warning.no_email") %></li>
+      <li><%= t(".warning.tos_accepted") %></li>
+      <li><%= t(".warning.plain_password") %></li>
+    </ul>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-divider">
+    <h2 class="card-title">
+      <%= t(".format.title") %>
+    </h2>
+  </div>
+  <div class="card-section p-4">
+    <p><%= t(".format.explanation") %></p>
+    <code class="code-block"><%= t(".format.example") %></code>
+    <p><%= t(".format.encoding") %></p>
+    <p><%= t(".format.limits", max_rows:, max_size: max_file_size) %></p>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-divider">
+    <h2 class="card-title">
+      <%= t(".upload.title") %>
+    </h2>
+  </div>
+  <div class="card-section p-4">
+    <p><%= t(".upload.explanation") %></p>
+
+    <%= form_with url: bulk_user_import_path,
+                  scope: :bulk_user_import,
+                  method: :post,
+                  builder: ActionView::Helpers::FormBuilder,
+                  html: { class: "form form-defaults" } do |form| %>
+      <div class="row column">
+        <%= form.label :file, t(".upload.file_label"), class: "form__label" %>
+        <%= form.file_field :file, accept: ".csv,text/csv", required: true %>
+      </div>
+
+      <div class="item__edit-sticky">
+        <div class="item__edit-sticky-container">
+          <%= form.submit t(".upload.submit"), class: "button button__sm button__secondary", data: { disable_with: false } %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

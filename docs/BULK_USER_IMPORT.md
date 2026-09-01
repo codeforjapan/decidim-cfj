@@ -21,6 +21,21 @@
 |----------|------|
 | `app/services/decidim/bulk_user_importer.rb` | 一括登録のコアロジック |
 | `lib/tasks/bulk_users.rake` | CSVを読み込んで実行する rake タスク |
+| `app/controllers/decidim/admin/bulk_user_imports_controller.rb` | 管理画面のCSVアップロード画面 |
+| `app/permissions/decidim/bulk_user_import_permissions.rb` | 管理画面の権限（組織admin限定） |
+| `app/views/decidim/admin/bulk_user_imports/new.html.erb` | アップロードフォーム |
+| `config/initializers/bulk_user_import.rb` | ルーティング・アイコン・管理メニューの登録 |
+| `config/initializers/admin_log_organization_presenter_override.rb` | `/admin/logs` での一括登録の表示 |
+| `config/locales/bulk_user_import.{ja,en}.yml` | 画面文言 |
+
+実行方法は2つあり、どちらも同じ `Decidim::BulkUserImporter` を呼びます。
+
+| | 管理画面 | rake タスク |
+|---|----------|-------------|
+| 使える人 | 組織の管理者 | サーバのシェル権限を持つ人 |
+| 件数の上限 | 500行 / 1MB（同期処理のため） | なし |
+| 出力CSV | ブラウザにダウンロード | `OUT=` で指定したパス |
+| 実行記録 | `/admin/logs` に残る | 残らない（標準出力のみ） |
 
 ## 2. 使い方
 
@@ -29,7 +44,7 @@
 利用規約の同意は `tos_agreement` と `accepted_tos_version` の**両方**で判定され、`accepted_tos_version` は組織の `tos_version` との日時比較で評価されます。
 組織の `tos_version` が未設定のままだと、作成した全ユーザーが「規約未同意」扱いになります。
 
-管理画面から利用規約を一度保存するか、次のように設定してください。未設定の場合、rake タスクは処理を行わず中断します。
+管理画面から利用規約を一度保存するか、次のように設定してください。未設定の場合、rake タスクは処理を行わず中断し、管理画面はエラーを表示します。
 
 ```bash
 bundle exec rails runner '
@@ -51,7 +66,19 @@ hanako@example.com,
 
 文字コードは UTF-8 です。Excel で保存した BOM 付き UTF-8 のCSVもそのまま渡せます（`encoding: "bom|utf-8"` で読み込むため、BOM は除去されます）。
 
-### 2.3 実行
+### 2.3 実行: 管理画面
+
+管理画面の「参加者」→「アカウント一括登録」を開き、CSVを選んで「一括登録する」を押します。
+処理が終わると、結果CSV（`created_users_<timestamp>.csv`）のダウンロードが始まります。画面は遷移しません。
+
+- 使えるのは**その組織の管理者のみ**です。作成されるユーザーは常にログイン中の組織に属します
+- 同期処理のため、**1回あたり 500行・1MB** が上限です。超える場合はCSVを分割するか、rake タスクを使ってください
+- 誰が・いつ・何件作成したかは `Decidim::ActionLogger` で記録され、`/admin/logs` から確認できます
+- ファイル未添付・拡張子が `.csv` でない・CSVが壊れている・`email` 列が無い・行数超過の場合は、画面上にエラーが表示されます（登録は行われません）
+
+ダウンロードされるCSVには**平文パスワードが含まれます**。配布後はすみやかに削除してください。
+
+### 2.4 実行: rake タスク
 
 組織の指定は既存の rake タスクと同じく `DECIDIM_ORGANIZATION_ID` または `DECIDIM_ORGANIZATION_NAME` で行います。
 
@@ -70,7 +97,7 @@ DECIDIM_ORGANIZATION_ID=1 bundle exec rails bulk_users:import \
 
 出力CSVは平文パスワードを含むため、パーミッション `0600` で作成されます。既定の出力先は `tmp/` 配下（`.gitignore` 済み）で、`created_users*.csv` というファイル名もどこにあっても ignore されます。入力CSVも `tmp/` 配下に置いてください。
 
-### 2.4 出力CSV
+### 2.5 出力CSV
 
 | 列 | 内容 |
 |----|------|
@@ -150,7 +177,7 @@ CSVの `password` 列で明示的に指定した場合はその値がそのま�
 
 ## 5. 既知の制約
 
-- 管理画面からCSVをアップロードするUIは未実装です（別PRで対応予定）
+- 管理画面からの実行は同期処理のため、1回あたり 500行・1MB が上限です（大量件数は rake タスクを使うか、ActiveJob 化を検討してください）
 - 組織をまたいだ一括作成には対応していません。組織ごとに実行してください
 - 既存ユーザーの属性更新は行いません（既存メールは常に `skipped`）
 - `available_authorizations` に `user_extension` を含む組織では、作成したユーザーはログイン後に拡張属性（氏名・住所など）の入力を求められ、入力を終えるまで各ページから `/account` へリダイレクトされます。これは既存の招待フローで作成したユーザーと同じ挙動です（招待受諾フローも拡張属性を作成しないため）
