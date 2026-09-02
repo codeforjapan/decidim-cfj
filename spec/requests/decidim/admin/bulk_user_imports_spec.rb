@@ -212,6 +212,14 @@ RSpec.describe "Decidim::Admin BulkUserImportsController" do
         end
       end
 
+      # 上限そのものを守る。spec の他の箇所は MAX_ROWS を動的に参照するため、値を引き上げても
+      # 気づけない。管理画面はどちらも CloudFront の OriginReadTimeout 30秒の内側で完了する必要が
+      # あり、CSV 取り込みは 1 行あたりの処理がアセンブリ側の発行より重い（パスワード生成の
+      # リトライと任意項目の検証が乗る）ため、発行側の上限を超えてはならない。
+      it "does not allow more rows than the assembly issuing cap" do
+        expect(described_cap).to be <= Decidim::Assemblies::Admin::BulkAccountIssuesController::MAX_ACCOUNTS_PER_REQUEST
+      end
+
       context "when the row limit is exceeded" do
         let(:max_rows) { Decidim::Admin::BulkUserImportsController::MAX_ROWS }
         let(:csv_body) do
@@ -268,4 +276,6 @@ RSpec.describe "Decidim::Admin BulkUserImportsController" do
       end
     end
   end
+
+  def described_cap = Decidim::Admin::BulkUserImportsController::MAX_ROWS
 end
