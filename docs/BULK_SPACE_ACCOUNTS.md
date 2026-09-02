@@ -18,11 +18,18 @@
 **/system（大元の管理画面）の「一括アカウント発行」ページ**から組織ごとに設定できます。rake でも設定できます。
 
 ```bash
-DECIDIM_ORGANIZATION_ID=1 bundle exec rails bulk_users:configure ENABLED=true EMAIL_DOMAIN=chiba-mirai
+DECIDIM_ORGANIZATION_ID=1 bundle exec rails bulk_users:configure ENABLED=true EMAIL_DOMAIN=chiba-mirai.test
 DECIDIM_ORGANIZATION_ID=1 bundle exec rails bulk_users:configure   # 現在値の表示
 ```
 
-`EMAIL_DOMAIN` は小文字英数字と `.` `-` のみです。TLD（`.jp` など）は不要で、`chiba-mirai` のような文字列がそのまま使えます。
+`EMAIL_DOMAIN` は小文字英数字と `.` `-` のみで、**`chiba-mirai.test` のようにドット付き（TLD 相当を含む）である必要があります**。
+ドットなしのドメイン（例: `chiba-mirai`）だと、発行はできてもログイン画面のメール形式チェック（Foundation Abide）で
+「このフィールドにはエラーがあります。」と弾かれ、参加者がログインできません。
+TLD 相当には、RFC 2606 で予約されていてグローバル DNS には委任されない
+（＝絶対に実在・配送されない）`.test` を推奨します。短くて打ちやすいのも利点です。
+`.example` / `.invalid`（同じく RFC 2606 予約）や `.internal`（ICANN がプライベート用途向けに予約）でも
+技術的には同等です。`.xx` のような根拠のない自作 TLD は、将来 gTLD として実在してしまう
+可能性があるため使わないでください。
 このドメインはログインID（メール形式）の一部として参加者に配布されるので、短く打ちやすいものにしてください。
 
 組織の利用規約バージョン（`tos_version`）が未設定の場合は実行できません（`BULK_USER_IMPORT.md` 2.1 を参照）。
@@ -73,7 +80,7 @@ DECIDIM_ORGANIZATION_ID=1 bundle exec rails bulk_users:issue IN=tmp/bulk/plan.cs
 
 ```
 space_slug,role,account_id,email,password,furigana,status,error
-a-high,participant,a-high-001,a-high-001@chiba-mirai,K7M2WX4NPR,ケー・ナナ・エム・ニ・ダブリュー・エックス・ヨン・エヌ・ピー・アール,created,
+a-high,participant,a-high-001,a-high-001@chiba-mirai.test,K7M2WX4NPR,ケー・ナナ・エム・ニ・ダブリュー・エックス・ヨン・エヌ・ピー・アール,created,
 ```
 
 - 1件処理するたびに書き出してフラッシュします。途中でプロセスが落ちても処理済み分の認証情報は残ります

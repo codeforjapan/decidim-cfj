@@ -155,7 +155,7 @@ namespace :bulk_users do
   # 組織ごとの発行設定の確認・変更。/system の画面から編集できるようにするまでの暫定手段。
   #
   #   DECIDIM_ORGANIZATION_ID=<id> rails bulk_users:configure                              # 現在値の表示
-  #   DECIDIM_ORGANIZATION_ID=<id> rails bulk_users:configure ENABLED=true EMAIL_DOMAIN=chiba-mirai
+  #   DECIDIM_ORGANIZATION_ID=<id> rails bulk_users:configure ENABLED=true EMAIL_DOMAIN=chiba-mirai.test
   desc "Show or update bulk account issuing settings (EMAIL_DOMAIN= ENABLED=true|false)"
   task configure: :environment do
     organization = bulk_users_find_organization
