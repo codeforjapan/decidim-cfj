@@ -1,4 +1,15 @@
 ja:
+  activerecord:
+    attributes:
+      decidim/bulk_user_import_setting:
+        email_domain: ダミーメールのドメイン
+        enabled: 有効フラグ
+    errors:
+      models:
+        decidim/bulk_user_import_setting:
+          attributes:
+            email_domain:
+              invalid: は「chiba-mirai.test」のような小文字のドット付きドメインにしてください（ログイン画面の形式チェックを通すため TLD 相当が必要です。実在しない .test を推奨）
   decidim:
     admin:
       menu:
@@ -44,7 +55,7 @@ ja:
       bulk_user_import_settings:
         edit:
           back: 一覧に戻る
-          email_domain_help: 小文字英数字と . - のみ。ログインID（メール形式）の一部として配布されるため、短く打ちやすい文字列にしてください。TLD（.jp など）は不要です。
+          email_domain_help: 小文字英数字と . - のみ。ログイン画面の形式チェックを通すため「chiba-mirai.test」のようにドット付き（TLD相当を含む）である必要があります。実在するドメインと紛れないよう、テスト用に予約されていて絶対に配送されない .test を推奨します。ログインID（メール形式）の一部として配布されるため、短く打ちやすい文字列にしてください。
           email_domain_label: ダミーメールのドメイン
           enabled_help: ONにすると、この組織の非公開アセンブリの管理画面に「アカウント一括発行」メニューが表示されます。
           enabled_label: 一括アカウント発行を有効にする

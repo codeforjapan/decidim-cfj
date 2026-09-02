@@ -45,15 +45,26 @@ end
 
 # アセンブリ管理画面のサイドメニュー。ブロックはレンダリング時にビューのコンテキストで評価される。
 # 権限チェーンはコントローラ側の専用クラスに任せ、ここでは表示条件だけを見る。
+#
+# 表示条件（MVP）: /system でこの組織の発行が有効 かつ このスペースが非公開、の両方を
+# 満たす場合のみ。将来別ケースに広げる場合もこの条件式に足す。
+#
+# 注意: MenuItem#visible? は if: が nil のとき「条件指定なし＝表示」と解釈する。
+# find_by(...)&.enabled? のような式は設定レコードが無い組織で nil になり、
+# 未設定の組織（マルチテナントの他組織を含む）に全表示される事故につながるため、
+# 各項を必ず true/false に確定させること。
 Decidim.menu :admin_assembly_menu do |menu|
+  issuing_available = current_user.present? && current_user.admin? &&
+                      current_participatory_space.private_space? &&
+                      Decidim::BulkUserImportSetting.exists?(decidim_organization_id: current_organization.id,
+                                                             enabled: true)
+
   menu.add_item :bulk_account_issue,
                 I18n.t("menu.bulk_account_issue", scope: "decidim.admin"),
                 decidim_admin_assemblies.new_assembly_bulk_account_issue_path(current_participatory_space),
                 icon_name: "user-add-line",
                 active: is_active_link?(decidim_admin_assemblies.new_assembly_bulk_account_issue_path(current_participatory_space)),
-                if: current_user&.admin? &&
-                    current_participatory_space.private_space? &&
-                    Decidim::BulkUserImportSetting.find_by(decidim_organization_id: current_organization.id)&.enabled?
+                if: issuing_available
 end
 
 # 管理ログで一括発行（action: "bulk_account_issue"）の行を専用の文言で表示する。
