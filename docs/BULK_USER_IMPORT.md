@@ -58,6 +58,8 @@ bundle exec rails runner '
 
 ヘッダ行の `email` 列は必須です。任意で `name` / `nickname` / `password` 列を追加でき、空の場合は自動生成されます。
 
+列名は完全一致で照合します。`Email` のように大文字が混ざっていたり、ヘッダ行が無かったりする場合は、処理を行わずに中断します（管理画面でもエラーを表示します）。
+
 ```csv
 email,name
 taro.yamada@example.com,山田 太郎
@@ -65,6 +67,8 @@ hanako@example.com,
 ```
 
 文字コードは UTF-8 です。Excel で保存した BOM 付き UTF-8 のCSVもそのまま渡せます（`encoding: "bom|utf-8"` で読み込むため、BOM は除去されます）。
+
+出力CSVには BOM を付けています。Excel でそのまま開いても日本語（`name` 列、発行タスクの `furigana` 列）が文字化けしません。
 
 ### 2.3 実行: 管理画面
 

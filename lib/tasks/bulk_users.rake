@@ -15,6 +15,10 @@
 # 出力CSV (OUT, 既定 tmp/bulk_users/created_users_<日時>.csv): email,nickname,name,password,status,error
 #   ※ 生成した平文パスワードが入る。0600 で作成される。配布が完了するまで保管し、不要になったら削除する。
 #   ※ 既存ファイルへは書き込まない（上書きすると発行済みパスワードが失われるため、存在する場合は中断する）。
+# 出力CSVは運用者が Excel で開いて配布に使う。BOM が無いと日本語（name 列、発行タスクの
+# フリガナ列）が文字化けするため、入力側の "bom|utf-8" と対で出力にも付ける。
+BULK_USERS_UTF8_BOM = "\xEF\xBB\xBF"
+
 namespace :bulk_users do
   desc "Create confirmed users in bulk from a CSV (IN= OUT= DECIDIM_ORGANIZATION_ID= or DECIDIM_ORGANIZATION_NAME=)"
   task import: :environment do
@@ -27,7 +31,21 @@ namespace :bulk_users do
     input = ENV.fetch("IN")
     output = ENV.fetch("OUT") { "tmp/bulk_users/created_users_#{Time.zone.now.strftime("%Y%m%d%H%M%S")}.csv" }
 
-    rows = CSV.read(input, headers: true, encoding: "bom|utf-8").map do |row|
+    table = CSV.read(input, headers: true, encoding: "bom|utf-8")
+
+    # ヘッダ名が違う（Excel が書き出す "Email"、日本語見出し、ヘッダ行なし等）と全行が
+    # blank email で skip され、created=0 skipped=N failed=0 を出して exit 0 で正常終了して
+    # しまう。組織未検出や出力先の重複では中断するのに、入力の取り違えだけ無言で no-op に
+    # なるのは非対称なので、ここで弾く。
+    #
+    # 出力ファイルを作る前に検証する。作ってしまうと、CSV を直して同じ OUT で再実行しようと
+    # しても「既に存在する」で中断され、別パスの指定を強いられるため。
+    unless table.headers.include?("email")
+      abort "入力CSV #{input} に email 列がありません（検出した列: #{table.headers.compact.join(", ").presence || "なし"}）。" \
+            "1行目をヘッダ行にして email 列を用意してください。"
+    end
+
+    rows = table.map do |row|
       { email: row["email"], name: row["name"], nickname: row["nickname"], password: row["password"] }
     end
 
@@ -47,6 +65,7 @@ namespace :bulk_users do
     end
 
     results = begin
+      io.write(BULK_USERS_UTF8_BOM)
       csv = CSV.new(io)
       csv << %w(email nickname name password status error)
       importer.import(rows) do |result|
@@ -130,6 +149,7 @@ namespace :bulk_users do
     end
 
     results = begin
+      io.write(BULK_USERS_UTF8_BOM)
       csv = CSV.new(io)
       csv << %w(space_slug role account_id email password furigana status error)
       issuer.issue(instructions) do |result|
