@@ -11,7 +11,7 @@ RSpec.describe "Decidim::Assemblies::Admin BulkAccountIssuesController" do
     create(:assembly, organization:, slug: "a-high", private_space: true, is_transparent: false)
   end
   let!(:settings) do
-    Decidim::BulkUserImportSetting.create!(organization:, email_domain: "chiba-mirai", enabled: true)
+    Decidim::BulkUserImportSetting.create!(organization:, email_domain: "chiba-mirai.test", enabled: true)
   end
   let(:admin_user) { create(:user, :admin, :confirmed, organization:) }
   let(:new_path) { "/admin/assemblies/#{assembly.slug}/bulk_account_issue/new" }
@@ -22,6 +22,88 @@ RSpec.describe "Decidim::Assemblies::Admin BulkAccountIssuesController" do
 
   def issued_users
     Decidim::User.where(organization:).where("nickname LIKE ?", "a-high-%")
+  end
+
+  # サイドメニュー「アカウント一括発行」の表示条件（MVP）:
+  # /system でこの組織の発行が有効 かつ スペースが非公開、の両方を満たすときだけ表示する。
+  # メニュー（admin_assembly_menu）を描画する任意の管理ページで確認できる（ここでは添付ファイル一覧）。
+  describe "menu visibility" do
+    let(:menu_page_path) { "/admin/assemblies/#{assembly.slug}/attachments" }
+
+    before { sign_in admin_user }
+
+    it "shows the menu item when the organization is enabled and the space is private" do
+      get menu_page_path
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include(new_path)
+    end
+
+    context "when the assembly is not a private space" do
+      before { assembly.update!(private_space: false) }
+
+      it "hides the menu item" do
+        get menu_page_path
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).not_to include(new_path)
+      end
+    end
+
+    context "when issuing is disabled for the organization" do
+      before { settings.update!(enabled: false) }
+
+      it "hides the menu item" do
+        get menu_page_path
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).not_to include(new_path)
+      end
+    end
+
+    # MenuItem#visible? は if: が nil のとき「条件指定なし＝表示」と解釈するため、
+    # 設定レコードが無い組織で find_by → nil が漏れると全表示になる（過去の不具合の回帰テスト）。
+    context "when the organization has no settings record" do
+      before { settings.destroy! }
+
+      it "hides the menu item" do
+        get menu_page_path
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).not_to include(new_path)
+      end
+    end
+
+    # マルチテナント: 他組織で有効になっていても、この組織には漏れないこと（逆方向も確認する）。
+    context "when only another organization has issuing enabled" do
+      let(:other_organization) { create(:organization, tos_version: Time.current) }
+
+      before do
+        settings.destroy!
+        Decidim::BulkUserImportSetting.create!(organization: other_organization,
+                                               email_domain: "other.test", enabled: true)
+      end
+
+      it "hides the menu item in this organization" do
+        get menu_page_path
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).not_to include(new_path)
+      end
+
+      it "still shows the menu item in the enabled organization" do
+        other_assembly = create(:assembly, organization: other_organization, slug: "b-high",
+                                           private_space: true, is_transparent: false)
+        other_admin = create(:user, :admin, :confirmed, organization: other_organization)
+
+        host! other_organization.host
+        sign_in other_admin
+        get "/admin/assemblies/#{other_assembly.slug}/attachments"
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include("/admin/assemblies/b-high/bulk_account_issue/new")
+      end
+    end
   end
 
   describe "GET new" do
@@ -53,7 +135,7 @@ RSpec.describe "Decidim::Assemblies::Admin BulkAccountIssuesController" do
         expect(response).to have_http_status(:ok)
         expect(response.body).to include("a-high-001")
         expect(response.body).to include("a-high-a001")
-        expect(response.body).to include("chiba-mirai")
+        expect(response.body).to include("chiba-mirai.test")
       end
 
       context "when issuing is disabled for the organization" do
@@ -69,6 +151,22 @@ RSpec.describe "Decidim::Assemblies::Admin BulkAccountIssuesController" do
 
       context "when the assembly is not a private space" do
         before { assembly.update!(private_space: false) }
+
+        it "redirects to the assemblies list with an explanation" do
+          get new_path
+
+          expect(response).to redirect_to("/admin/assemblies")
+          expect(flash[:alert]).to be_present
+        end
+      end
+
+      # 他組織の設定が current_organization の判定に漏れて有効化されないこと。
+      context "when issuing is enabled only for another organization" do
+        before do
+          settings.destroy!
+          Decidim::BulkUserImportSetting.create!(organization: create(:organization, tos_version: Time.current),
+                                                 email_domain: "other.test", enabled: true)
+        end
 
         it "redirects to the assemblies list with an explanation" do
           get new_path
@@ -175,6 +273,23 @@ RSpec.describe "Decidim::Assemblies::Admin BulkAccountIssuesController" do
     context "when issuing is disabled for the organization" do
       before do
         settings.update!(enabled: false)
+        sign_in admin_user
+      end
+
+      it "does not create any user" do
+        post(create_path, params:)
+
+        expect(response).to have_http_status(:redirect)
+        expect(issued_users.count).to eq(0)
+      end
+    end
+
+    # 他組織で有効でも、この組織では発行できないこと（設定の組織スコープの検証）。
+    context "when issuing is enabled only for another organization" do
+      before do
+        settings.destroy!
+        Decidim::BulkUserImportSetting.create!(organization: create(:organization, tos_version: Time.current),
+                                               email_domain: "other.test", enabled: true)
         sign_in admin_user
       end
 
