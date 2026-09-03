@@ -5,7 +5,7 @@ require "decidim/forms/test/factories"
 
 # Regression spec for the survey "publish answers" column chart aggregation.
 #
-# Decidim v0.30's Decidim::Surveys::PublishAnswersHelper#options_column_chart_wrapper
+# Decidim v0.31's Decidim::Surveys::PublishResponsesHelper#options_column_chart_wrapper
 # aggregates with `question.answers.map { ... }.tally`, which counts *combinations*
 # of selected options per answer instead of counting each option. For multiple_option
 # questions where a single answer selects two or more options, the chart is therefore
@@ -17,7 +17,7 @@ require "decidim/forms/test/factories"
 # to `flat_map`.
 module Decidim
   module Surveys
-    describe PublishAnswersHelper do
+    describe PublishResponsesHelper do
       # The :questionnaire_question factory builds a valid questionnaire attached to a
       # participatory space, so we do not need to wire up a survey/component by hand.
       let(:question) do

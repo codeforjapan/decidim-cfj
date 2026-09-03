@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-# Override Decidim::Surveys::PublishAnswersHelper#options_column_chart_wrapper.
+# Override Decidim::Surveys::PublishResponsesHelper#options_column_chart_wrapper.
 #
-# Decidim v0.30's implementation aggregates the published survey column chart with
+# Decidim v0.31's implementation aggregates the published survey column chart with
 #
 #   question.answers.map { |answer| answer.choices.map { ... } }.tally
 #
@@ -16,7 +16,7 @@
 # of option labels, so `.tally` counts each selected option. See the verification
 # report in docs/decidim-survey-chart-verification.md.
 Rails.application.config.to_prepare do
-  Decidim::Surveys::PublishAnswersHelper.module_eval do
+  Decidim::Surveys::PublishResponsesHelper.module_eval do
     def options_column_chart_wrapper(question)
       tally = question.answers.flat_map { |answer| answer.choices.map { |choice| translated_attribute(choice.answer_option.body) } }.tally
 
