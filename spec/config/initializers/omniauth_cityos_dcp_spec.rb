@@ -10,7 +10,7 @@ RSpec.describe "CityOS OmniAuth integration" do
   # config/secrets.yml も 0.31 では廃止されたので、ここで参照している値は
   # line_login と同じ Decidim::Env 方式へ移す必要がある
   # (config/initializers/omniauth_cityos_dcp.rb のコメントを参照)。
-  cityos_gem_available = Gem.loaded_specs.key?("omniauth-cityos-dcp")
+  cityos_gem_available = Gem.loaded_specs.has_key?("omniauth-cityos-dcp")
 
   it "registers the CityOS authorization and callback routes", skip: !cityos_gem_available do
     routes = Decidim::Core::Engine.routes.url_helpers

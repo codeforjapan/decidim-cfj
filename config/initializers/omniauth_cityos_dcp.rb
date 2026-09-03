@@ -29,7 +29,7 @@ end
 # 資格情報そのものは組織ごとの設定から読むため（CityosOmniauthConfiguration#provider_config）、
 # ここで必要なのは「プロバイダを登録するかどうか」だけ。
 Rails.application.config.middleware.use OmniAuth::Builder do
-  if Gem.loaded_specs.key?("omniauth-cityos-dcp")
+  if Gem.loaded_specs.has_key?("omniauth-cityos-dcp")
     require "omniauth-cityos-dcp"
 
     provider(
