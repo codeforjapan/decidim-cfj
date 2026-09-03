@@ -1,0 +1,40 @@
+en:
+  decidim:
+    admin:
+      bulk_user_imports:
+        create:
+          errors:
+            empty_csv: The CSV has no data rows. Add the participants you want to register below the header row.
+            file_too_large: The file is larger than the %{size} limit. Please split it and upload again.
+            invalid_extension: Please choose a file with the .csv extension.
+            malformed_csv: The CSV could not be parsed. Save it again as UTF-8 CSV and try once more.
+            missing_email_header: The CSV header row does not contain an "email" column.
+            missing_file: Please choose a CSV file.
+            missing_tos_version: This organization has no terms of service version yet. Save the terms of service in the admin panel first.
+            too_many_rows: You can import at most %{max} rows at a time. Please split the CSV and upload again.
+        new:
+          format:
+            encoding: The file must be UTF-8. CSV files saved by Excel as UTF-8 with BOM are accepted as they are.
+            example: |-
+              email,name,nickname,password
+              taro.yamada@example.com,Taro Yamada,,
+              hanako@example.com,,,
+            explanation: The "email" column in the header row is required. The "name", "nickname" and "password" columns are optional; blank values are generated automatically.
+            limits: You can upload at most %{max_rows} rows and %{max_size} at a time. The import runs synchronously, so please split larger files.
+            title: CSV format
+          title: Bulk user import
+          upload:
+            explanation: When the import finishes, a result CSV containing the credentials is downloaded. The page stays as it is.
+            file_label: CSV file
+            submit: Import
+            title: Upload a CSV
+          warning:
+            no_email: No confirmation or invitation emails are sent. You have to hand the credentials to the participants yourself.
+            plain_password: The downloaded CSV contains plain text passwords. Handle it with care and delete it as soon as it has been distributed.
+            title: Please read before importing
+            tos_accepted: The created accounts are registered as email confirmed, terms of service accepted and newsletter notifications off.
+      menu:
+        bulk_user_imports: Bulk user import
+    admin_log:
+      organization:
+        bulk_user_import: "%{user_name} imported users in bulk (%{created} created / %{skipped} skipped / %{failed} failed)"

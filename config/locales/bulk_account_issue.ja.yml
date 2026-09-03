@@ -1,0 +1,76 @@
+ja:
+  activerecord:
+    attributes:
+      decidim/bulk_user_import_setting:
+        email_domain: ダミーメールのドメイン
+        enabled: 有効フラグ
+    errors:
+      models:
+        decidim/bulk_user_import_setting:
+          attributes:
+            email_domain:
+              invalid: は「chiba-mirai.test」のような小文字のドット付きドメインにしてください（ログイン画面の形式チェックを通すため TLD 相当が必要です。実在しない .test を推奨）
+  decidim:
+    admin:
+      menu:
+        bulk_account_issue: アカウント一括発行
+    admin_log:
+      assembly:
+        bulk_account_issue: "%{user_name} が参加スペース %{resource_name} にアカウントを一括発行しました（作成 %{created}件 / 失敗 %{failed}件）"
+    assemblies:
+      admin:
+        bulk_account_issues:
+          create:
+            errors:
+              missing_tos_version: 組織の利用規約が未設定です。管理画面で利用規約を保存してから実行してください。
+              negative_counts: 発行数には0以上の数を指定してください。
+              no_accounts: 参加者数か管理者数のどちらかに1以上を指定してください。
+              slug_too_long: このスペースのスラッグは %{max} 文字を超えているため発行できません。スラッグを短く変更してください。
+              too_many_accounts: 一度に発行できるのは合計 %{max} 件までです。複数回に分けて実行してください。
+          new:
+            about:
+              email_domain: メールアドレスのドメインは %{domain} です（実在しないため、メールは一切届きません）
+              id_format: 次に発行されるID — 参加者 %{participant} / 管理者 %{admin}（既存の続きから連番）
+              no_email: 確認メール・招待メール・通知メールは送信されません
+              password: パスワードは読み間違えにくい大文字英字と数字の10桁で自動生成されます
+              spare: パスワードを忘れた場合は予備アカウントを渡す運用です。必要数より多めに発行してください
+              title: 発行されるアカウント
+            form:
+              admin_count: 管理者数（このスペースの管理権限つき）
+              explanation: 一度に発行できるのは合計 %{max} 件までです。発行が終わると、認証情報（パスワードとフリガナ）を含む結果CSVのダウンロードが始まります。
+              participant_count: 参加者数
+              submit: 一括発行する
+              title: 発行数
+            slug_too_long: このスペースのスラッグ「%{slug}」は %{max} 文字を超えているため、この画面からは発行できません。スラッグを短く変更してください（IDの上限20文字から逆算した制限です）。
+            title: アカウント一括発行
+            warning:
+              custody: 結果CSVは予備分を配り終えるまで安全に保管し、不要になったら削除してください
+              title: 運用上の注意
+              furigana: フリガナ列は平文パスワードと同じ機密度です。CSVの取り扱いに注意してください
+              uppercase: パスワードは大文字で入力する必要があります。配布物に「大文字で入力」と明記してください（20回失敗すると1時間ロックされます）
+          unavailable:
+            not_enabled: この組織では一括アカウント発行が有効になっていません。/system の「一括アカウント発行」から設定してください。
+            not_private: このスペースは非公開（プライベート参加スペース）ではないため、一括発行は使えません。スペース設定で「プライベートスペース」を有効にしてください。
+    system:
+      bulk_user_import_settings:
+        edit:
+          back: 一覧に戻る
+          email_domain_help: 小文字英数字と . - のみ。ログイン画面の形式チェックを通すため「chiba-mirai.test」のようにドット付き（TLD相当を含む）である必要があります。実在するドメインと紛れないよう、テスト用に予約されていて絶対に配送されない .test を推奨します。ログインID（メール形式）の一部として配布されるため、短く打ちやすい文字列にしてください。
+          email_domain_label: ダミーメールのドメイン
+          enabled_help: ONにすると、この組織の非公開アセンブリの管理画面に「アカウント一括発行」メニューが表示されます。
+          enabled_label: 一括アカウント発行を有効にする
+          save: 保存
+          title: "一括アカウント発行設定: %{organization}"
+        index:
+          enabled_no: 無効
+          enabled_yes: 有効
+          explanation: 参加スペース単位の匿名アカウント一括発行（bulk_users:issue と管理画面UI）の組織ごとの設定です。詳細は docs/BULK_SPACE_ACCOUNTS.md を参照してください。
+          fields:
+            email_domain: ダミーメールのドメイン
+            enabled: 状態
+          title: 一括アカウント発行
+        update:
+          error: 設定を保存できませんでした。入力内容を確認してください。
+          success: 設定を保存しました。
+      menu:
+        bulk_user_import_settings: 一括アカウント発行

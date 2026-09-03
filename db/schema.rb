@@ -499,6 +499,23 @@ ActiveRecord::Schema[7.2].define(version: 2026_08_05_075273) do
     t.index ["decidim_category_id"], name: "index_decidim_categorizations_on_decidim_category_id"
   end
 
+  create_table "decidim_cfj_bulk_user_import_settings", force: :cascade do |t|
+    t.bigint "decidim_organization_id", null: false
+    t.string "email_domain"
+    t.boolean "enabled", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["decidim_organization_id"], name: "index_cfj_bulk_user_import_settings_on_organization", unique: true
+  end
+
+  create_table "decidim_cfj_survey_orders", force: :cascade do |t|
+    t.integer "decidim_surveys_survey_id", null: false
+    t.integer "weight", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["decidim_surveys_survey_id"], name: "index_decidim_cfj_survey_orders_on_survey", unique: true
+  end
+
   create_table "decidim_coauthorships", force: :cascade do |t|
     t.bigint "decidim_author_id", null: false
     t.bigint "decidim_user_group_id"
@@ -2106,6 +2123,8 @@ ActiveRecord::Schema[7.2].define(version: 2026_08_05_075273) do
   add_foreign_key "decidim_budgets_orders", "decidim_budgets_budgets"
   add_foreign_key "decidim_budgets_projects", "decidim_budgets_budgets"
   add_foreign_key "decidim_categorizations", "decidim_categories"
+  add_foreign_key "decidim_cfj_bulk_user_import_settings", "decidim_organizations"
+  add_foreign_key "decidim_cfj_survey_orders", "decidim_surveys_surveys", on_delete: :cascade
   add_foreign_key "decidim_debates_debates", "decidim_scopes"
   add_foreign_key "decidim_editor_images", "decidim_organizations"
   add_foreign_key "decidim_editor_images", "decidim_users", column: "decidim_author_id"

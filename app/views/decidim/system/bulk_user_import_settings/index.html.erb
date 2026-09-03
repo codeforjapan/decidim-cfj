@@ -1,0 +1,34 @@
+<% add_decidim_page_title(t(".title")) %>
+
+<% provide :title do %>
+  <h1 class="h1"><%= t ".title" %></h1>
+<% end %>
+
+<p><%= t(".explanation") %></p>
+
+<table>
+  <thead>
+    <tr>
+      <th><%= t("models.organization.fields.name", scope: "decidim.system") %></th>
+      <th><%= t(".fields.enabled") %></th>
+      <th><%= t(".fields.email_domain") %></th>
+      <th><%= t("actions.title", scope: "decidim.system") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @organizations.each do |organization| %>
+      <% setting = @settings_by_organization[organization.id] %>
+      <tr>
+        <td>
+          <%= organization_name(organization) %><br>
+          <%= organization.host %>
+        </td>
+        <td><%= setting&.enabled? ? t(".enabled_yes") : t(".enabled_no") %></td>
+        <td><%= setting&.email_domain.presence || "—" %></td>
+        <td>
+          <%= link_to t("actions.edit", scope: "decidim.system"), edit_bulk_user_import_setting_path(organization.id) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

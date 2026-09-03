@@ -1,5 +1,57 @@
 # Change Log
 
+## [1.21.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.20.1...v1.21.0) (2026-09-02)
+
+
+### Features
+
+* add /system settings UI and per-assembly bulk account issuing UI ([8ecbbf9](https://github.com/codeforjapan/decidim-cfj/commit/8ecbbf9bcd373bc896ec413f4924ec2a724a2273))
+* add bulk_users:issue and bulk_users:configure tasks ([90fa242](https://github.com/codeforjapan/decidim-cfj/commit/90fa242911efc99778b10f32d0a44f13fcbccffa))
+* add per-organization settings for bulk account issuing ([65ff3fd](https://github.com/codeforjapan/decidim-cfj/commit/65ff3fd25c489909a1a8e045ef7b441e576019e1))
+* add per-space anonymous account issuer ([36c694f](https://github.com/codeforjapan/decidim-cfj/commit/36c694f88e36c7766fbd6787f849cf74fa520406))
+* narrow the issued password charset to 29 readable characters ([7e9e557](https://github.com/codeforjapan/decidim-cfj/commit/7e9e557ddd1e634a513a00733a73daadc80bc82d))
+
+
+### Bug Fixes
+
+* build the importer only for real runs in the issuer ([a29574b](https://github.com/codeforjapan/decidim-cfj/commit/a29574b9aa502d819959a8ce1c55797060bf878b))
+* CSV 一括登録の行数上限を CloudFront のタイムアウトに収まる値にする ([aa2c59b](https://github.com/codeforjapan/decidim-cfj/commit/aa2c59bd2d9d32759831499c349ed44340f43dd2))
+* **forms:** backport survey in admin panel ([b1399ff](https://github.com/codeforjapan/decidim-cfj/commit/b1399ff240634b331727f68696f346b6d6dab33b))
+* PDF 出力に CJK フォントを導入し、日本語で落ちないようにする ([09734cd](https://github.com/codeforjapan/decidim-cfj/commit/09734cde582ba5e674d5441e4f7ec6bd83c71eb5))
+* **proposals:** backport proposal in admin panel ([006b966](https://github.com/codeforjapan/decidim-cfj/commit/006b9667232da0ad311736ffe1d2fc13db24f3ff))
+* rake の一括登録で入力の取り違えを検知し、出力に BOM を付ける ([50cad07](https://github.com/codeforjapan/decidim-cfj/commit/50cad07067a7849d711f59c509c078bc320d73aa))
+* require a dotted email domain so issued accounts can sign in ([fdd2cdf](https://github.com/codeforjapan/decidim-cfj/commit/fdd2cdf955be31e7d1cd8532c827209f8d4ba242))
+* show the bulk issue menu only for enabled organizations ([f9ed414](https://github.com/codeforjapan/decidim-cfj/commit/f9ed414773f3c6dbcd1230b5dcf2f3c75c7dc673))
+* **system:** backport password confirmation in system admin ([026036b](https://github.com/codeforjapan/decidim-cfj/commit/026036be6a6f6d930a112252735034c3a18dbd6f))
+
+## [1.20.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.20.0...v1.20.1) (2026-08-28)
+
+
+### Bug Fixes
+
+* **meetings:** 管理画面のミーティング複製が必ず 500 になる問題を修正 ([dea1898](https://github.com/codeforjapan/decidim-cfj/commit/dea1898880d1d48ba6a0e5762719b5b9a3603285))
+* **meetings:** 複製オーバーライドの消し忘れを起動時に検知する ([9c30420](https://github.com/codeforjapan/decidim-cfj/commit/9c30420f62878504c535bbedab57814862d375e3))
+* reported_url の生成を rescue して壊れた参照全般に対応 ([caab391](https://github.com/codeforjapan/decidim-cfj/commit/caab39190efe33fdd0b133f929e699873221afe8))
+* rescue の絞り込みで生まれた穴を塞ぎ、ログの誤診を防ぐ ([c4368f6](https://github.com/codeforjapan/decidim-cfj/commit/c4368f6aeca6bfafc9d816b04b4cdf690ca11ba6))
+* rescue 範囲を実際の壊れ方に絞り、ドリフト検知を実効化する ([4ade331](https://github.com/codeforjapan/decidim-cfj/commit/4ade3318daa35220a644e850bce66f950c333fb1))
+* オープンデータのエクスポートが nil の reportable で落ちる問題に対処 ([e6085dc](https://github.com/codeforjapan/decidim-cfj/commit/e6085dc1b1ce779b1d50dd7a1e39382df1aaf83c))
+* コメントの過剰主張を正し、ログレベルを分離する ([ac7ce23](https://github.com/codeforjapan/decidim-cfj/commit/ac7ce2306602c853060dd79f23133b3bc3c34ed2))
+* 一時障害の再送出をやめ、rescue を StandardError に一本化する ([04ecdd0](https://github.com/codeforjapan/decidim-cfj/commit/04ecdd0eeed82de59e02a19e22f4b6f7b44d7b71))
+* 再送出対象を実際の一時障害に限定し、発火しないガードを修正する ([1ef1dc6](https://github.com/codeforjapan/decidim-cfj/commit/1ef1dc61664593bf393a3e747618d8047a46b1d7))
+
+## [1.20.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.19.1...v1.20.0) (2026-08-27)
+
+
+### Features
+
+* **survey:** add weight column(table) for surver to reorder items ([0a3a33a](https://github.com/codeforjapan/decidim-cfj/commit/0a3a33a93413d8922e3252a96e6e29165f541e9f))
+
+
+### Bug Fixes
+
+* PumaWorkerKiller の閾値を CDK のタスク定義から ENV で受け取る ([ebb0668](https://github.com/codeforjapan/decidim-cfj/commit/ebb06689ff504876db657bc372940e3f7c45f71f))
+* オープンデータのエクスポートが nil の blocking で落ちる問題に対処 ([4403fc1](https://github.com/codeforjapan/decidim-cfj/commit/4403fc1168c8d9c4d06fbad49d8b137339481eb9))
+
 ## [1.19.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.19.0...v1.19.1) (2026-08-13)
 
 

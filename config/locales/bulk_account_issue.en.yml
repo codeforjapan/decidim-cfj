@@ -1,0 +1,76 @@
+en:
+  activerecord:
+    attributes:
+      decidim/bulk_user_import_setting:
+        email_domain: Dummy email domain
+        enabled: Enabled
+    errors:
+      models:
+        decidim/bulk_user_import_setting:
+          attributes:
+            email_domain:
+              invalid: must be a lowercase dotted domain such as “chiba-mirai.test” (a TLD-like suffix is required to pass the sign-in form validation; the reserved, never-deliverable .test is recommended)
+  decidim:
+    admin:
+      menu:
+        bulk_account_issue: Bulk account issuing
+    admin_log:
+      assembly:
+        bulk_account_issue: "%{user_name} bulk-issued accounts for the %{resource_name} space (created %{created} / failed %{failed})"
+    assemblies:
+      admin:
+        bulk_account_issues:
+          create:
+            errors:
+              missing_tos_version: The organization has no terms of service version yet. Save the terms of service in the admin panel first.
+              negative_counts: Counts must be zero or more.
+              no_accounts: Enter at least one participant or admin account to issue.
+              slug_too_long: The slug of this space is longer than %{max} characters, so accounts cannot be issued. Shorten the slug first.
+              too_many_accounts: At most %{max} accounts can be issued at once. Split the work into several runs.
+          new:
+            about:
+              email_domain: The email domain is %{domain} (it does not exist, so no mail is ever delivered)
+              id_format: Next ids to be issued — participant %{participant} / admin %{admin} (numbering continues after existing accounts)
+              no_email: No confirmation, invitation or notification emails are sent
+              password: Passwords are auto-generated as 10 readable characters (uppercase letters and digits)
+              spare: Forgotten passwords are handled by handing out spare accounts. Issue more than you strictly need
+              title: About the issued accounts
+            form:
+              admin_count: Admins (with admin rights on this space)
+              explanation: At most %{max} accounts can be issued at once. When done, a result CSV with the credentials (password and furigana) is downloaded.
+              participant_count: Participants
+              submit: Issue accounts
+              title: How many accounts
+            slug_too_long: The slug of this space (“%{slug}”) is longer than %{max} characters, so this page cannot issue accounts. Shorten the slug (the limit derives from the 20 character nickname cap).
+            title: Bulk account issuing
+            warning:
+              custody: Keep the result CSV safe until all spare accounts are handed out, then delete it
+              title: Handle with care
+              furigana: The furigana column is as sensitive as the plaintext password itself
+              uppercase: Passwords must be typed in UPPERCASE. Say so on the handout (20 failed attempts lock the account for an hour)
+          unavailable:
+            not_enabled: Bulk account issuing is not enabled for this organization. Configure it under “Bulk account issuing” in /system.
+            not_private: This space is not a private space, so bulk issuing is not available. Enable “Private space” in the space settings first.
+    system:
+      bulk_user_import_settings:
+        edit:
+          back: Back to the list
+          email_domain_help: Lowercase letters, digits, . and - only. It must contain a dot (a TLD-like suffix) such as “chiba-mirai.test” so that the issued addresses pass the sign-in form validation. The .test TLD (reserved by RFC 2606, never deliverable) is recommended. It is handed out as part of the login id (email format), so keep it short and easy to type.
+          email_domain_label: Dummy email domain
+          enabled_label: Enable bulk account issuing
+          enabled_help: When enabled, the “Bulk account issuing” menu appears in the admin panel of this organization's private assemblies.
+          save: Save
+          title: "Bulk account issuing settings: %{organization}"
+        index:
+          enabled_no: Disabled
+          enabled_yes: Enabled
+          explanation: Per-organization settings for the per-space anonymous account issuing (bulk_users:issue and its admin UI). See docs/BULK_SPACE_ACCOUNTS.md.
+          fields:
+            email_domain: Dummy email domain
+            enabled: Status
+          title: Bulk account issuing
+        update:
+          error: The settings could not be saved. Check the input.
+          success: Settings saved.
+      menu:
+        bulk_user_import_settings: Bulk account issuing

@@ -18,6 +18,7 @@ RUN  apt-get update && \
         p7zip \
         wkhtmltopdf \
         chromium-driver \
+        fonts-ipaexfont-gothic \
         wget && \
     apt-get clean && \
     apt-get autoremove

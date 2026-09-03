@@ -1,0 +1,15 @@
+ja:
+  decidim:
+    system:
+      organizations:
+        omniauth_settings:
+          cityos_dcp_login:
+            client_id: クライアントID
+            client_secret: クライアントシークレット
+            service_id: サービスID
+            policy: ポリシー
+            scope: 認可範囲
+            opt_api_base_url: オプトインAPI用のベースURL
+            optin_url: オプトイン画面のURL
+            authorization_url: 認可エンドポイントのベースURL
+            label: ログインボタン表示名
