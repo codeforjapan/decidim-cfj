@@ -8,37 +8,30 @@ module Decidim
     module DestroyCommandsOverrides
       extend ActiveSupport::Concern
 
-      def call
-        return broadcast(:invalid) unless @form.valid?
-
-        Decidim::User.transaction do
-          destroy_user_account!
-          destroy_user_identities
-          destroy_user_group_memberships
-          destroy_follows
-          destroy_participatory_space_private_user
-          delegate_destroy_to_participatory_spaces
-          destroy_user_extension
-        end
-
-        broadcast(:ok)
-      end
-
       private
+
+      # 本体の destroy_user_account! に続けて user_extension の個人情報を消去する。
+      # Decidim 0.31 の DestroyAccount は authorization を cascade 削除しないため、
+      # 実名・住所などの個人情報を明示的にスクラブする必要がある。
+      # call を再現しないことで、0.31 で追加された各種削除処理を取りこぼさない。
+      def destroy_user_account!
+        super
+        destroy_user_extension
+      end
 
       def destroy_user_extension
         authorization = Decidim::Authorization.find_by(
           user: current_user,
           name: "user_extension"
         )
-        # should be removed privacy data even if current_organization.available_authorization_handlers is empty
-        if authorization
-          authorization.attributes = {
-            unique_id: nil,
-            metadata: {}
-          }
-          authorization.save!
-        end
+        return unless authorization
+
+        # available_authorizations が空でも個人情報は必ず消去する
+        authorization.attributes = {
+          unique_id: nil,
+          metadata: {}
+        }
+        authorization.save!
       end
     end
   end

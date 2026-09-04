@@ -15,8 +15,20 @@ Bundler.require(*Rails.groups)
 
 module DecidimApp
   class Application < Rails::Application
-    # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 6.1
+    # Rails 7.2 のフレームワークデフォルトを使う。
+    #
+    # 0.30 系では decidim のジェネレータ (app_generator.rb#load_defaults_rails61) が
+    # 生成直後に 7.0 -> 6.1 へ書き戻していたため 6.1 のままだった。0.31 でその処理が
+    # 削除された (decidim/decidim#14735) ので、本体の Rails 7.2 に合わせて上げる。
+    config.load_defaults 7.2
+
+    # 7.2 の既定は SHA256 だが、切り替えると既存の暗号化 cookie がすべて無効になり、
+    # ログイン中のユーザーが一斉にログアウトする。移行を別途行うまで SHA1 を維持する。
+    config.active_support.key_generator_hash_digest_class = OpenSSL::Digest::SHA1
+
+    # 7.2 の既定は YJIT 有効。メモリ使用量が増えるため、本番のコンテナ割り当てを
+    # 見直すまでは無効のままにする (docs/superpowers/prd-infra-issues-2026-08.md)。
+    config.yjit = false
 
     config.generators do |g|
       # remove some specs
