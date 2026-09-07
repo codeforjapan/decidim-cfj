@@ -2,7 +2,7 @@
 
 module Decidim
   module System
-    # /system から組織ごとの一括アカウント発行設定（有効フラグ・ダミーメールのドメイン）を編集する。
+    # /system から組織ごとの一括アカウント発行設定（有効フラグ・作成するアカウントのドメイン）を編集する。
     # 認証はルート側の authenticate(:admin)（システム管理者）で行われる。
     class BulkUserImportSettingsController < Decidim::System::ApplicationController
       def index

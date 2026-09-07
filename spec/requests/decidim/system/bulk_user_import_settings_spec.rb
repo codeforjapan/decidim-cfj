@@ -37,23 +37,23 @@ RSpec.describe "Decidim::System BulkUserImportSettingsController" do
     before { sign_in system_admin }
 
     it "lists the organizations with their settings" do
-      Decidim::BulkUserImportSetting.create!(organization:, email_domain: "chiba-mirai.test", enabled: true)
+      Decidim::BulkUserImportSetting.create!(organization:, email_domain: "example.test", enabled: true)
 
       get "/system/bulk_user_import_settings"
 
       expect(response).to have_http_status(:ok)
       expect(response.body).to include(organization.host)
-      expect(response.body).to include("chiba-mirai.test")
+      expect(response.body).to include("example.test")
     end
 
     it "enables issuing with a domain" do
       patch "/system/bulk_user_import_settings/#{organization.id}",
-            params: { bulk_user_import_setting: { email_domain: "chiba-mirai.test", enabled: "1" } }
+            params: { bulk_user_import_setting: { email_domain: "example.test", enabled: "1" } }
 
       expect(response).to redirect_to("/system/bulk_user_import_settings")
       setting = Decidim::BulkUserImportSetting.find_by(decidim_organization_id: organization.id)
       expect(setting.enabled).to be(true)
-      expect(setting.email_domain).to eq("chiba-mirai.test")
+      expect(setting.email_domain).to eq("example.test")
     end
 
     it "rejects enabling without a domain" do
@@ -73,16 +73,16 @@ RSpec.describe "Decidim::System BulkUserImportSettingsController" do
 
     it "rejects a domain without a dot (it would fail the sign-in form validation)" do
       patch "/system/bulk_user_import_settings/#{organization.id}",
-            params: { bulk_user_import_setting: { email_domain: "chiba-mirai", enabled: "1" } }
+            params: { bulk_user_import_setting: { email_domain: "example", enabled: "1" } }
 
       expect(response).to have_http_status(:unprocessable_entity)
     end
 
     it "can disable issuing while keeping the domain" do
-      Decidim::BulkUserImportSetting.create!(organization:, email_domain: "chiba-mirai.test", enabled: true)
+      Decidim::BulkUserImportSetting.create!(organization:, email_domain: "example.test", enabled: true)
 
       patch "/system/bulk_user_import_settings/#{organization.id}",
-            params: { bulk_user_import_setting: { email_domain: "chiba-mirai.test", enabled: "0" } }
+            params: { bulk_user_import_setting: { email_domain: "example.test", enabled: "0" } }
 
       expect(response).to have_http_status(:redirect)
       expect(Decidim::BulkUserImportSetting.find_by(decidim_organization_id: organization.id).enabled).to be(false)

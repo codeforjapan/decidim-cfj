@@ -2,14 +2,14 @@ en:
   activerecord:
     attributes:
       decidim/bulk_user_import_setting:
-        email_domain: Dummy email domain
+        email_domain: Domain for created accounts
         enabled: Enabled
     errors:
       models:
         decidim/bulk_user_import_setting:
           attributes:
             email_domain:
-              invalid: must be a lowercase dotted domain such as “chiba-mirai.test” (a TLD-like suffix is required to pass the sign-in form validation; the reserved, never-deliverable .test is recommended)
+              invalid: must be a lowercase dotted domain such as “example.test” (a TLD-like suffix is required to pass the sign-in form validation; the RFC 2606-reserved “.test” is recommended)
   decidim:
     admin:
       menu:
@@ -55,8 +55,8 @@ en:
       bulk_user_import_settings:
         edit:
           back: Back to the list
-          email_domain_help: Lowercase letters, digits, . and - only. It must contain a dot (a TLD-like suffix) such as “chiba-mirai.test” so that the issued addresses pass the sign-in form validation. The .test TLD (reserved by RFC 2606, never deliverable) is recommended. It is handed out as part of the login id (email format), so keep it short and easy to type.
-          email_domain_label: Dummy email domain
+          email_domain_help: Lowercase letters, digits, . and - only. It must contain a dot (a TLD-like suffix) such as “example.test” so that the issued addresses pass the sign-in form validation. For the TLD, “.test” is recommended - it is reserved for testing by RFC 2606 (BCP 32) and never delegated in the global DNS, so mail to these addresses cannot be delivered. It is handed out as part of the login id (email format), so keep it short and easy to type.
+          email_domain_label: Domain for created accounts
           enabled_label: Enable bulk account issuing
           enabled_help: When enabled, the “Bulk account issuing” menu appears in the admin panel of this organization's private assemblies.
           save: Save
@@ -66,7 +66,7 @@ en:
           enabled_yes: Enabled
           explanation: Per-organization settings for the per-space anonymous account issuing (bulk_users:issue and its admin UI). See docs/BULK_SPACE_ACCOUNTS.md.
           fields:
-            email_domain: Dummy email domain
+            email_domain: Domain for created accounts
             enabled: Status
           title: Bulk account issuing
         update:
