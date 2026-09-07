@@ -17,6 +17,7 @@ module Decidim
   #     そのアカウントごと巻き戻す（ユーザーだけ作られてスペースに入れない状態を残さない）
   class BulkSpaceAccountIssuer
     class ImportFailed < StandardError; end
+
     class Busy < StandardError; end
 
     # 発行のあいだ組織単位の advisory lock を取ることで直列化する。
