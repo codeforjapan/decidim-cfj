@@ -284,6 +284,22 @@ RSpec.describe "Decidim::Assemblies::Admin BulkAccountIssuesController" do
       end
     end
 
+    # 二重送信（結果CSVのダウンロードでは画面が遷移しないため起こりやすい）で採番が衝突しないこと。
+    context "when another issue is already running for the organization" do
+      include_context "with another bulk issue running"
+
+      before { sign_in admin_user }
+
+      it "rejects the request without creating any user" do
+        with_lock_held_elsewhere(organization) do
+          post(create_path, params:)
+
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(issued_users.count).to eq(0)
+        end
+      end
+    end
+
     # 他組織で有効でも、この組織では発行できないこと（設定の組織スコープの検証）。
     context "when issuing is enabled only for another organization" do
       before do

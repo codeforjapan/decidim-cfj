@@ -22,6 +22,7 @@ en:
         bulk_account_issues:
           create:
             errors:
+              busy: Another bulk issue is already running for this organization. No account was created; wait for it to finish and try again.
               missing_tos_version: The organization has no terms of service version yet. Save the terms of service in the admin panel first.
               negative_counts: Counts must be zero or more.
               no_accounts: Enter at least one participant or admin account to issue.

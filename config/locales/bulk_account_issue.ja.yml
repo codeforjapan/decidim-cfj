@@ -22,6 +22,7 @@ ja:
         bulk_account_issues:
           create:
             errors:
+              busy: この組織で別の一括発行が実行中です。アカウントは作成されていません。完了を待ってから実行してください。
               missing_tos_version: 組織の利用規約が未設定です。管理画面で利用規約を保存してから実行してください。
               negative_counts: 発行数には0以上の数を指定してください。
               no_accounts: 参加者数か管理者数のどちらかに1以上を指定してください。

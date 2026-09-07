@@ -183,6 +183,34 @@ RSpec.describe Decidim::BulkSpaceAccountIssuer do
     end
   end
 
+  describe "concurrent issuing" do
+    include_context "with another bulk issue running"
+
+    it "refuses to issue while another issue is running for the same organization" do
+      with_lock_held_elsewhere(organization) do
+        expect { issuer.issue([instruction(role: "participant", count: 2)]) }
+          .to raise_error(described_class::Busy)
+        expect(Decidim::User.where(organization:).where("nickname LIKE ?", "a-high-%").count).to eq(0)
+      end
+    end
+
+    it "issues again after a previous issue finished" do
+      issuer.issue([instruction(role: "participant", count: 1)])
+      results = issuer.issue([instruction(role: "participant", count: 1)])
+
+      expect(results.map(&:account_id)).to eq(%w(a-high-002))
+      expect(results.map(&:status)).to eq([:created])
+    end
+
+    it "does not take the lock for a dry run" do
+      with_lock_held_elsewhere(organization) do
+        dry = described_class.new(organization:, email_domain: "chiba-mirai.test", dry_run: true)
+
+        expect(dry.issue([instruction(role: "participant", count: 1)]).map(&:status)).to eq([:planned])
+      end
+    end
+  end
+
   describe "#initialize" do
     it "requires an email domain" do
       expect { described_class.new(organization:, email_domain: "") }
