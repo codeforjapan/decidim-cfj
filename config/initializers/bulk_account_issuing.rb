@@ -30,10 +30,6 @@ Decidim::Assemblies::AdminEngine.routes.append do
   end
 end
 
-# remixicon には存在するがコアが登録していないアイコンは明示登録が必要（未登録だと dev/test で例外）。
-Decidim.icons.register(name: "user-add-line", icon: "user-add-line", category: "system",
-                       description: "", engine: :decidim_cfj)
-
 # /system のサイドメニュー。
 Decidim.menu :system_menu do |menu|
   menu.add_item :bulk_user_import_settings,
