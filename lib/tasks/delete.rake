@@ -278,7 +278,15 @@ namespace :delete do
     organization = decidim_find_organization
     return unless organization
 
-    Decidim::Metric.where(decidim_organization_id: organization.id).delete_all
+    # Decidim::Metric は 0.31 で削除されたが、decidim_metrics テーブルは残る
+    # （上流に drop する migration が無い）。0.30 時代の行が孤児にならないよう直接消す。
+    connection = ActiveRecord::Base.connection
+    if connection.table_exists?(:decidim_metrics)
+      connection.exec_delete(
+        "DELETE FROM decidim_metrics WHERE decidim_organization_id = #{organization.id.to_i}",
+        "destroy_all_metrics"
+      )
+    end
 
     puts "Finish destroy_all_metrics of #{ENV.fetch("DECIDIM_ORGANIZATION_NAME", nil) || ENV.fetch("DECIDIM_ORGANIZATION_ID", nil)}"
   end
