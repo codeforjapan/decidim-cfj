@@ -7,10 +7,14 @@ RSpec.describe "GraphQL user query" do
   let(:organization) { create(:organization) }
   let!(:user) { create(:user, :confirmed, organization:, nickname: "hanako", name: "山田花子") }
 
+  # 0.31 の Decidim::Api::RequiredScopes#scope_authorized? が context[:scopes] を
+  # 無条件に参照するため、未ログイン相当の api:read を渡す必要がある。
+  let(:api_scopes) { Doorkeeper::OAuth::Scopes.from_string("api:read") }
+
   def execute(query)
     Decidim::Api::Schema.execute(
       query,
-      context: { current_organization: organization, current_user: nil }
+      context: { current_organization: organization, current_user: nil, scopes: api_scopes }
     ).to_h
   end
 
