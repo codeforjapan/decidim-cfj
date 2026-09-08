@@ -66,7 +66,7 @@ RSpec.describe "Decidim::System BulkUserImportSettingsController" do
 
     it "rejects a domain that would break the email format" do
       patch "/system/bulk_user_import_settings/#{organization.id}",
-            params: { bulk_user_import_setting: { email_domain: "Chiba Mirai", enabled: "1" } }
+            params: { bulk_user_import_setting: { email_domain: "Example Test", enabled: "1" } }
 
       expect(response).to have_http_status(:unprocessable_entity)
     end
