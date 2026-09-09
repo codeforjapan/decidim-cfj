@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# 組織ごとの一括アカウント発行の設定（有効フラグとダミーメールのドメイン）。
+# 組織ごとの一括アカウント発行の設定（有効フラグと作成するアカウントのドメイン）。
 # コアの decidim_organizations には手を入れず、cfj 独自のテーブルに分離する。
 class CreateDecidimCfjBulkUserImportSettings < ActiveRecord::Migration[7.0]
   def change

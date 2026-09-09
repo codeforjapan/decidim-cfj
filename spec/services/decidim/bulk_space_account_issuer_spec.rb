@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe Decidim::BulkSpaceAccountIssuer do
-  subject(:issuer) { described_class.new(organization:, email_domain: "chiba-mirai.test") }
+  subject(:issuer) { described_class.new(organization:, email_domain: "example.test") }
 
   let(:organization) { create(:organization, tos_version: Time.current) }
   let!(:assembly) do
@@ -21,7 +21,7 @@ RSpec.describe Decidim::BulkSpaceAccountIssuer do
       it "creates accounts with zero-padded sequential ids" do
         expect(results.map(&:status)).to eq([:created, :created])
         expect(results.map(&:account_id)).to eq(%w(a-high-001 a-high-002))
-        expect(results.map(&:email)).to eq(%w(a-high-001@chiba-mirai.test a-high-002@chiba-mirai.test))
+        expect(results.map(&:email)).to eq(%w(a-high-001@example.test a-high-002@example.test))
       end
 
       it "creates confirmed users that can sign in with the issued password" do
@@ -107,7 +107,7 @@ RSpec.describe Decidim::BulkSpaceAccountIssuer do
     end
 
     context "with dry_run" do
-      subject(:issuer) { described_class.new(organization:, email_domain: "chiba-mirai.test", dry_run: true) }
+      subject(:issuer) { described_class.new(organization:, email_domain: "example.test", dry_run: true) }
 
       it "plans ids without creating anything" do
         results = nil
@@ -164,7 +164,7 @@ RSpec.describe Decidim::BulkSpaceAccountIssuer do
     end
 
     context "when the generated email already exists with a different nickname" do
-      before { create(:user, organization:, email: "a-high-001@chiba-mirai.test", nickname: "someone-else") }
+      before { create(:user, organization:, email: "a-high-001@example.test", nickname: "someone-else") }
 
       it "fails that row instead of hijacking the existing account" do
         results = issuer.issue([instruction(role: "participant", count: 1)])
@@ -192,7 +192,7 @@ RSpec.describe Decidim::BulkSpaceAccountIssuer do
     # ドットなしのドメインだと発行したアカウントがログイン画面の
     # メール形式チェック（Foundation Abide）で弾かれる。
     it "rejects a domain without a dot" do
-      expect { described_class.new(organization:, email_domain: "chiba-mirai") }
+      expect { described_class.new(organization:, email_domain: "example") }
         .to raise_error(ArgumentError, /dotted domain/)
     end
   end

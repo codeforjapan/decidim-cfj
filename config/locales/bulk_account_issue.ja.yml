@@ -2,14 +2,14 @@ ja:
   activerecord:
     attributes:
       decidim/bulk_user_import_setting:
-        email_domain: ダミーメールのドメイン
+        email_domain: 作成するアカウントのドメイン
         enabled: 有効フラグ
     errors:
       models:
         decidim/bulk_user_import_setting:
           attributes:
             email_domain:
-              invalid: は「chiba-mirai.test」のような小文字のドット付きドメインにしてください（ログイン画面の形式チェックを通すため TLD 相当が必要です。実在しない .test を推奨）
+              invalid: は「example.test」のような小文字のドット付きドメインにしてください（ログイン画面の形式チェックを通すため TLD 相当が必要です。RFC 2606 で予約された .test を推奨）
   decidim:
     admin:
       menu:
@@ -55,8 +55,8 @@ ja:
       bulk_user_import_settings:
         edit:
           back: 一覧に戻る
-          email_domain_help: 小文字英数字と . - のみ。ログイン画面の形式チェックを通すため「chiba-mirai.test」のようにドット付き（TLD相当を含む）である必要があります。実在するドメインと紛れないよう、テスト用に予約されていて絶対に配送されない .test を推奨します。ログインID（メール形式）の一部として配布されるため、短く打ちやすい文字列にしてください。
-          email_domain_label: ダミーメールのドメイン
+          email_domain_help: 小文字英数字と . - のみ。ログイン画面の形式チェックを通すため「example.test」のようにドット付き（TLD相当を含む）である必要があります。TLD には、RFC 2606 でテスト用に予約されグローバル DNS に委任されない .test を推奨します（このドメイン宛のメールは外部に配送されません）。ログインID（メール形式）の一部として配布されるため、短く打ちやすい文字列にしてください。
+          email_domain_label: 作成するアカウントのドメイン
           enabled_help: ONにすると、この組織の非公開アセンブリの管理画面に「アカウント一括発行」メニューが表示されます。
           enabled_label: 一括アカウント発行を有効にする
           save: 保存
@@ -66,7 +66,7 @@ ja:
           enabled_yes: 有効
           explanation: 参加スペース単位の匿名アカウント一括発行（bulk_users:issue と管理画面UI）の組織ごとの設定です。詳細は docs/BULK_SPACE_ACCOUNTS.md を参照してください。
           fields:
-            email_domain: ダミーメールのドメイン
+            email_domain: 作成するアカウントのドメイン
             enabled: 状態
           title: 一括アカウント発行
         update:

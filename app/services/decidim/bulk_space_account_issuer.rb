@@ -7,7 +7,7 @@ module Decidim
   #
   #   - アカウントID（= nickname = 表示名 = メールのローカル部）は
   #     参加者: <slug>-<連番3桁> / 管理者: <slug>-a<連番3桁>
-  #   - メールアドレスは実在しないドメイン（組織ごとの設定 email_domain、例: chiba-mirai.test）で
+  #   - メールアドレスは実在しないドメイン（組織ごとの設定 email_domain、例: example.test）で
   #     生成する。ログインフォームのフロント検証を通すため TLD 相当のドットが必須
   #   - パスワードは BulkUserImporter に可読性優先の文字種（PASSWORD_CHARSET）で生成させる
   #   - 管理者にもプライベートユーザー登録を行う。ロール（AssemblyUserRole）は管理画面への
@@ -66,7 +66,7 @@ module Decidim
       # 2ラベル以上を要求するため、ドットなしのドメインで発行するとログインできなくなる。
       # 設定モデルと同じ形式チェックを rake 経由の実行にも適用する。
       unless BulkUserImportSetting::EMAIL_DOMAIN_FORMAT.match?(email_domain)
-        raise ArgumentError, "email_domain must be a lowercase dotted domain such as chiba-mirai.test " \
+        raise ArgumentError, "email_domain must be a lowercase dotted domain such as example.test " \
                              "(got #{email_domain.inspect}); without a dot the issued accounts cannot pass " \
                              "the sign-in form validation"
       end

@@ -21,17 +21,16 @@
               local: true do |form| %>
   <div class="form__wrapper">
     <div>
-      <%= form.label :email_domain, t(".email_domain_label") %>
-      <%= form.text_field :email_domain, placeholder: "chiba-mirai.test" %>
-      <p class="help-text"><%= t(".email_domain_help") %></p>
+      <%= form.text_field :email_domain,
+                          label: t(".email_domain_label"),
+                          help_text: t(".email_domain_help"),
+                          placeholder: "example.test" %>
     </div>
 
     <div>
-      <%= form.label :enabled do %>
-        <%= form.check_box :enabled %>
-        <%= t(".enabled_label") %>
-      <% end %>
-      <p class="help-text"><%= t(".enabled_help") %></p>
+      <%= form.check_box :enabled,
+                         label: t(".enabled_label"),
+                         help_text: t(".enabled_help") %>
     </div>
   </div>
 

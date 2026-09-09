@@ -11,7 +11,7 @@ RSpec.describe "Decidim::Assemblies::Admin BulkAccountIssuesController" do
     create(:assembly, organization:, slug: "a-high", private_space: true, is_transparent: false)
   end
   let!(:settings) do
-    Decidim::BulkUserImportSetting.create!(organization:, email_domain: "chiba-mirai.test", enabled: true)
+    Decidim::BulkUserImportSetting.create!(organization:, email_domain: "example.test", enabled: true)
   end
   let(:admin_user) { create(:user, :admin, :confirmed, organization:) }
   let(:new_path) { "/admin/assemblies/#{assembly.slug}/bulk_account_issue/new" }
@@ -135,7 +135,7 @@ RSpec.describe "Decidim::Assemblies::Admin BulkAccountIssuesController" do
         expect(response).to have_http_status(:ok)
         expect(response.body).to include("a-high-001")
         expect(response.body).to include("a-high-a001")
-        expect(response.body).to include("chiba-mirai.test")
+        expect(response.body).to include("example.test")
       end
 
       context "when issuing is disabled for the organization" do

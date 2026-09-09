@@ -105,9 +105,12 @@ namespace :bulk_users do
     settings = Decidim::BulkUserImportSetting.find_by(decidim_organization_id: organization.id)
     unless settings&.enabled?
       abort "この組織では一括アカウント発行が有効になっていません。" \
-            "bulk_users:configure ENABLED=true EMAIL_DOMAIN=<ドメイン> で設定してください。"
+            "/system の「一括アカウント発行」か bulk_users:configure ENABLED=true EMAIL_DOMAIN=<ドメイン> で設定してください。"
     end
-    abort "email_domain が設定されていません。bulk_users:configure EMAIL_DOMAIN=<ドメイン> で設定してください。" if settings.email_domain.blank?
+    if settings.email_domain.blank?
+      abort "email_domain が設定されていません。" \
+            "/system の「一括アカウント発行」か bulk_users:configure EMAIL_DOMAIN=<ドメイン> で設定してください。"
+    end
     abort "組織に利用規約のバージョンが設定されていません。管理画面で利用規約を保存してから再実行してください。" if organization.tos_version.blank?
 
     dry_run = ENV["DRY_RUN"].present?
@@ -172,10 +175,10 @@ namespace :bulk_users do
     puts "Finish bulk_users:issue"
   end
 
-  # 組織ごとの発行設定の確認・変更。/system の画面から編集できるようにするまでの暫定手段。
+  # 組織ごとの発行設定の確認・変更。
   #
   #   DECIDIM_ORGANIZATION_ID=<id> rails bulk_users:configure                              # 現在値の表示
-  #   DECIDIM_ORGANIZATION_ID=<id> rails bulk_users:configure ENABLED=true EMAIL_DOMAIN=chiba-mirai.test
+  #   DECIDIM_ORGANIZATION_ID=<id> rails bulk_users:configure ENABLED=true EMAIL_DOMAIN=example.test
   desc "Show or update bulk account issuing settings (EMAIL_DOMAIN= ENABLED=true|false)"
   task configure: :environment do
     organization = bulk_users_find_organization
@@ -212,9 +215,10 @@ def bulk_users_find_organization
   unless organization
     abort <<~USAGE
       Organization not found.
-      Usage:
+      Usage (specify the organization with DECIDIM_ORGANIZATION_ID=<id> or DECIDIM_ORGANIZATION_NAME=<name>):
         DECIDIM_ORGANIZATION_ID=<id> rails bulk_users:import IN=tmp/bulk/emails.csv
-        DECIDIM_ORGANIZATION_NAME=<name> rails bulk_users:import IN=tmp/bulk/emails.csv
+        DECIDIM_ORGANIZATION_ID=<id> rails bulk_users:issue IN=tmp/bulk/plan.csv [DRY_RUN=1]
+        DECIDIM_ORGANIZATION_ID=<id> rails bulk_users:configure [ENABLED=true|false] [EMAIL_DOMAIN=example.test]
     USAGE
   end
 
