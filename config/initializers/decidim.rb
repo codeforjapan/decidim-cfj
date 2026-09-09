@@ -55,12 +55,6 @@ Decidim.configure do |config|
   # Currency unit
   config.currency_unit = "円"
 
-  config.sms_gateway_service = "Decidim::Verifications::Sms::ExampleGateway"
-
-  config.timestamp_service = "Decidim::Initiatives::DummyTimestamp"
-
-  config.pdf_signature_service = "Decidim::Initiatives::PdfSignatureExample"
-
   # Etherpad configuration
   if Decidim::Env.new("ETHERPAD_SERVER").to_s.present?
     config.etherpad = {
@@ -75,8 +69,6 @@ Decidim.configure do |config|
 
   # Machine Translation Configuration
   config.enable_machine_translations = false
-
-  config.machine_translation_service = "Decidim::Dev::DummyTranslator"
 
   config.content_security_policies_extra = {
     "default-src" => ["*"],
