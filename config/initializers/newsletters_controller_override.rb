@@ -2,7 +2,7 @@
 
 # Adds the permission check to the recipients_count action
 Rails.application.config.to_prepare do
-  Decidim::Admin::NewslettersController # rubocop:disable Lint/Void
+  Decidim::Admin::NewslettersController
 
   module DecidimAdminNewslettersControllerRecipientsCountPatch
     def recipients_count

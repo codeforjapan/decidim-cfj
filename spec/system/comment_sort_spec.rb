@@ -4,7 +4,7 @@ require "rails_helper"
 
 describe "Comments", :perform_enqueued do
   let!(:component) { create(:debates_component, organization:) }
-  let!(:commentable) { create(:debate, :open_ama, component:) }
+  let!(:commentable) { create(:debate, :ongoing_ama, component:) }
 
   let(:resource_path) { resource_locator(commentable).path }
 

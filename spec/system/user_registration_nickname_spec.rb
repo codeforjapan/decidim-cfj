@@ -21,7 +21,6 @@ describe "User registration with nickname input" do
 
         click_button "アカウントを作成"
       end
-      click_button "確認して続ける"
 
       expect(page).to have_content("確認リンクが記載されたメッセージがあなたのメールアドレスに送信されました")
 
@@ -41,7 +40,6 @@ describe "User registration with nickname input" do
 
         click_button "アカウントを作成"
       end
-      click_button "確認して続ける"
 
       expect(page).to have_content("は不正な値です")
     end
@@ -58,7 +56,6 @@ describe "User registration with nickname input" do
 
         click_button "アカウントを作成"
       end
-      click_button "確認して続ける"
 
       expect(page).to have_content("はすでに存在します")
     end

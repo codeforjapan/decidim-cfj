@@ -1,0 +1,105 @@
+---
+ja:
+  activemodel:
+    attributes:
+      cookie_category:
+        mandatory: 必須
+        slug: ID
+        title: カテゴリー名
+        total_cookies: Cookie 総数
+        visibility: 表示
+      cookie_item:
+        expiration: 有効期限
+        name: Cookie 名
+        service: サービス
+        type: 種別
+        types:
+          cookie: Cookie
+          local_storage: ローカルストレージ
+    errors:
+      models:
+        cookie_item:
+          attributes:
+            base:
+              category_not_found: カテゴリーが見つかりません
+            name:
+              cannot_change_default_item_name: 既定アイテムの名前は変更できません
+              invalid_format: 名前に使用できるのは英数字・アンダースコア(_)・ハイフン(-)のみです。スペースや特殊文字は使用できません
+  decidim:
+    components:
+      proposals:
+        settings:
+          step:
+            awesome_votes_enabled_by_status: 提案のステータスで投票を制限する
+            awesome_votes_enabled_by_status_help: 有効にすると、選択したステータスの提案にのみ投票できます。他のステータスの提案は投票を受け付けません。空欄にすると、ステータスに関わらず全ての提案で投票できます。
+            awesome_votes_enabled_states: 投票を許可するステータス
+            awesome_votes_enabled_states_help: 他のステータスはコンポーネントを保存すると選択可能になります。
+    decidim_awesome:
+      admin:
+        menu:
+          cookie_management: クッキー管理
+        config:
+          title:
+            cookie_management: クッキー管理
+        cookie_categories:
+          cookie_management_warning_html: 'Decidim は iframe を表示するために、ユーザーに全ての Cookie の受け入れを強制する点に注意してください。GDPR に準拠するため、iframe で使用される全ての Cookie を適切な Cookie カテゴリーに追加してください。'
+          create:
+            error: 'Cookie カテゴリーの作成でエラーが発生しました！ %{error}'
+            success: Cookie カテゴリーを作成しました
+          destroy:
+            error: 'Cookie カテゴリーの削除でエラーが発生しました！ %{error}'
+            success: Cookie カテゴリーを削除しました
+          edit:
+            cancel: キャンセル
+            items: カテゴリーのアイテムを編集
+            save: 保存
+            title: Cookie カテゴリーの編集
+          form:
+            slug_help: スクリプトからこのカテゴリーを参照するための一意の識別子です。
+            visibility:
+              hidden: 非表示
+              visible: 表示
+          index:
+            cannot_remove_default: 既定のカテゴリーは削除できません
+            confirm_reset: このカスタマイズを削除してもよろしいですか？
+            description_html: 'Cookie カテゴリーとアイテムは同意 UI とドキュメントの表示のみを制御します。<br>設定を実際に有効にするには、サードパーティのスクリプトやサービスを、同意が得られた後にのみ読み込むよう構成する必要があります。<br>この追加のスクリプト構成は、動画の iframe 埋め込みには不要です。Decidim がそれらの埋め込みに対する同意処理を標準で備えているためです。<br>公式ガイドを参照してください: <a href="https://docs.decidim.org/en/develop/customize/data_consent.html#_adding_scripts_which_require_data_consent" target="_blank" rel="noopener">同意が必要なスクリプトの追加</a>。'
+            edit: カテゴリーを編集
+            items: カテゴリーのアイテム
+            new: 新規カテゴリー
+            reset: カスタマイズを削除
+            title: クッキー管理
+          new:
+            cancel: キャンセル
+            save: 保存
+            title: 新規 Cookie カテゴリー
+          script_config:
+            script_consent_help_html: '<p>このカテゴリーに紐づくスクリプトは、<span class="label">data-consent="%{category}"</span> 属性を付けた script 要素の中に追加した場合にのみ同意設定が反映されます。</p><p>追加先として推奨されるのは <span class="label">app/views/layouts/decidim/_head_extra.html.erb</span>、またはヘッダースニペット(有効な場合)です。</p><p>例:</p><br><pre>%{example}</pre><br><p><span class="label">type="text/plain"</span> を付けないと、ユーザーのデータ同意設定は効果を持ちません。<br>詳しくは <a href="https://docs.decidim.org/en/develop/customize/data_consent.html#_adding_scripts_which_require_data_consent" target="_blank" rel="noopener">同意が必要なスクリプトの追加</a> を参照してください。</p>'
+          update:
+            error: 'Cookie カテゴリーの更新でエラーが発生しました！ %{error}'
+            success: Cookie カテゴリーを更新しました
+      content_blocks:
+        awesome_process_groups:
+          results_count:
+            one: '%{count} 件のプロセスが見つかりました'
+        awesome_processes:
+          move_down: 下へ移動
+          move_up: 上へ移動
+          process_type_mixed_hint: 最大数までの全プロセスを表示します。
+          process_types:
+            all: 全てのプロセス
+      proposals:
+        votes:
+          blocked_by_status: 投票できません
+  layouts:
+    decidim:
+      data_consent:
+        details:
+          columns:
+            expiration: 有効期限
+          items:
+            _session_id:
+              expiration: セッション
+            decidim-consent:
+              expiration: 1年
+            pwaInstallPromptSeen:
+              expiration: 永続

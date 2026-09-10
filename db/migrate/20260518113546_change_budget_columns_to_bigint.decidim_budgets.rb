@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 # This migration comes from decidim_budgets (originally 20250912110213)
-class ChangeBudgetColumnsToBigint < ActiveRecord::Migration[7.0]
+# This file has been modified by `decidim upgrade:migrations` task on 2026-08-05 07:52:42 UTC
+class ChangeBudgetColumnsToBigint < ActiveRecord::Migration[7.1]
   def up
     change_column :decidim_budgets_budgets, :total_budget, :bigint
     change_column :decidim_budgets_projects, :budget_amount, :bigint

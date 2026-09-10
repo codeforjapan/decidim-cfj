@@ -10,7 +10,7 @@
 # `rescue` list converts network-level failures into per-attachment warnings
 # rather than aborting the whole import.
 Rails.application.config.to_prepare do
-  Decidim::ApplicationUploader # rubocop:disable Lint/Void
+  Decidim::ApplicationUploader
 
   module DecidimApplicationUploaderRemoteUrlPatch
     def remote_url=(url)

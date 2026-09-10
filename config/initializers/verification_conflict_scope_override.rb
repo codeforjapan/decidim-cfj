@@ -3,7 +3,7 @@
 # Scopes the authorization looked up when registering a verification conflict to
 # the organization of the user being authorized.
 Rails.application.config.to_prepare do
-  Decidim::Verifications::AuthorizeUser # rubocop:disable Lint/Void
+  Decidim::Verifications::AuthorizeUser
 
   module DecidimVerificationsConflictScopePatch
     private

@@ -2,12 +2,14 @@
 
 # Backport of decidim/decidim#17468 for the GraphQL `user` query.
 #
-# Fixed upstream in 0.31 (#17484) and 0.32 (#17483). release/0.30-stable stopped
-# taking backports before it landed, so it has to live here.
+# Backported to release/0.31-stable (#17484) and release/0.32-stable (#17483),
+# but *not released yet*: v0.31.7 (tagged 2026-07-30) and v0.32.1 both predate
+# the fix, and release/0.30-stable stopped taking backports before it landed.
+# So every version we can actually run still needs this patch.
 #
-# Removal: delete this file and its spec once Decidim is 0.31 or newer. The
-# guard below fails the boot on any other series so the leftover is noticed.
-raise "api_user_query_hardening.rb and its spec should be removed in 0.31.x (decidim/decidim#17468)" if Gem::Version.new(Decidim::Core.version).segments.first(2) != [0, 30]
+# Removal: delete this file and its spec once Decidim is 0.31.8 or newer. The
+# guard below fails the boot from that version on, so the leftover is noticed.
+raise "api_user_query_hardening.rb and its spec should be removed (decidim/decidim#17468)" if Gem::Version.new(Decidim::Core.version) >= Gem::Version.new("0.31.8")
 
 module DecidimCfjApiUserQueryPatch
   def user(id: nil, nickname: nil)
@@ -18,7 +20,7 @@ module DecidimCfjApiUserQueryPatch
 end
 
 Rails.application.config.to_prepare do
-  Decidim::Api::QueryType # rubocop:disable Lint/Void
+  Decidim::Api::QueryType
 
   Decidim::Api::QueryType.prepend(DecidimCfjApiUserQueryPatch)
 end

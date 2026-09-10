@@ -4,26 +4,21 @@ require "rails_helper"
 
 module Decidim
   module Admin
-    describe UpdateOrganizationAppearance do
+    describe UpdateOrganization do
       let(:organization) { create(:organization) }
       let(:user) { create(:user, :admin, organization:) }
-      let(:form_class) { OrganizationAppearanceForm }
-
-      let(:params) do
-        {
-          mobile_logo:,
-          remove_mobile_logo:
-        }
-      end
 
       let(:mobile_logo) { nil }
       let(:remove_mobile_logo) { false }
 
       let(:form) do
-        form_class.from_params(params).with_context(
+        OrganizationForm.from_model(organization).with_context(
           current_organization: organization,
           current_user: user
-        )
+        ).tap do |f|
+          f.mobile_logo = mobile_logo
+          f.remove_mobile_logo = remove_mobile_logo
+        end
       end
 
       let(:command) { described_class.new(form, organization) }

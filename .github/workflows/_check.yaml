@@ -6,7 +6,7 @@ on:
       ruby-version:
         type: string
         required: false
-        default: 3.3.4
+        default: 3.3.11
 
 jobs:
   rubocop:
@@ -74,7 +74,7 @@ jobs:
           which mogrify
           mogrify -version
 
-      - name: Set up Ruby 3.3.4
+      - name: Set up Ruby 3.3.11
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ inputs.ruby-version }}
@@ -84,7 +84,7 @@ jobs:
         id: setup-node
         uses: actions/setup-node@v6
         with:
-          node-version: 20.18.3
+          node-version: 22.14.0
           cache: 'yarn'
 
       - name: node_modules cache
@@ -143,7 +143,7 @@ jobs:
         id: setup-node
         uses: actions/setup-node@v6
         with:
-          node-version: 20.18.3
+          node-version: 22.14.0
           cache: 'yarn'
 
       - name: node_modules cache

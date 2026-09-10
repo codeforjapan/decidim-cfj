@@ -32,8 +32,8 @@ RSpec.describe "Decidim::MultipleAttachmentsMethods scoping override" do
         {
           question_id: files_question.id.to_s,
           body: "",
-          add_documents: [{ id: unrelated_attachment.id, title: "Renamed" }],
-          documents: [unrelated_attachment.id.to_s]
+          add_attachments: [{ id: unrelated_attachment.id, title: "Renamed" }],
+          attachments: [unrelated_attachment.id.to_s]
         }
       ]
     end
@@ -62,8 +62,8 @@ RSpec.describe "Decidim::MultipleAttachmentsMethods scoping override" do
           {
             question_id: files_question.id.to_s,
             body: "",
-            add_documents: [{ id: sibling.id, title: "Renamed" }],
-            documents: [sibling.id.to_s]
+            add_attachments: [{ id: sibling.id, title: "Renamed" }],
+            attachments: [sibling.id.to_s]
           }
         ]
       )
@@ -108,7 +108,7 @@ RSpec.describe "Decidim::MultipleAttachmentsMethods scoping override" do
     end
 
     def rename_payload(record)
-      Struct.new(:add_documents, :documents).new(
+      Struct.new(:add_attachments, :attachments).new(
         [{ id: record.id, title: "Renamed" }.with_indifferent_access],
         [record.id]
       )
@@ -121,7 +121,7 @@ RSpec.describe "Decidim::MultipleAttachmentsMethods scoping override" do
     end
   end
 
-  # keep_ids also decides what document_cleanup! destroys, so the filtering must
+  # keep_ids also decides what attachment_cleanup! destroys, so the filtering must
   # never remove an id the owner actually holds.
   describe "cleanup of the documents held by the record" do
     let(:target_process) { create(:participatory_process, organization:) }
@@ -142,12 +142,12 @@ RSpec.describe "Decidim::MultipleAttachmentsMethods scoping override" do
       end
     end
 
-    let(:form_class) { Struct.new(:add_documents, :documents) }
+    let(:form_class) { Struct.new(:add_attachments, :attachments) }
 
     it "keeps a document the form still references" do
       command = command_class.new(form_class.new([], [held_document.id]), target_process)
 
-      command.send(:document_cleanup!)
+      command.send(:attachment_cleanup!)
 
       expect(Decidim::Attachment.exists?(held_document.id)).to be true
     end
@@ -155,14 +155,14 @@ RSpec.describe "Decidim::MultipleAttachmentsMethods scoping override" do
     it "destroys a document the form no longer references" do
       command = command_class.new(form_class.new([], []), target_process)
 
-      command.send(:document_cleanup!)
+      command.send(:attachment_cleanup!)
 
       expect(Decidim::Attachment.exists?(held_document.id)).to be false
     end
   end
 
   # UpdateDebate and the create commands only assign @attached_to in
-  # run_after_hooks, so documents_attached_to still falls back to the
+  # run_after_hooks, so attachments_attached_to still falls back to the
   # organization while build_attachments runs. Renaming an attachment of the
   # record being edited has to keep working in that case.
   describe "when the command has not assigned the record yet" do
@@ -183,7 +183,7 @@ RSpec.describe "Decidim::MultipleAttachmentsMethods scoping override" do
       end
     end
 
-    let(:form_class) { Struct.new(:add_documents, :documents, :current_organization) }
+    let(:form_class) { Struct.new(:add_attachments, :attachments, :current_organization) }
 
     it "renames a document belonging to the current organization" do
       form = form_class.new(

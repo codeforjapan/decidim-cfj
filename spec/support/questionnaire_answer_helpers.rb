@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Shared setup for the questionnaire answer initializer specs. Drives
-# Decidim::Forms::AnswerQuestionnaire the way the questionnaire answer action
+# Decidim::Forms::ResponseQuestionnaire the way the questionnaire answer action
 # does, using ActionController::Parameters so parameter coercion matches a real
 # request.
 RSpec.shared_context "with a questionnaire answer form" do
@@ -27,7 +27,7 @@ RSpec.shared_context "with a questionnaire answer form" do
 
   def submit(form)
     outcome = nil
-    Decidim::Forms::AnswerQuestionnaire.call(form, questionnaire) do
+    Decidim::Forms::ResponseQuestionnaire.call(form, questionnaire) do
       on(:ok) { outcome = :ok }
       on(:invalid) { outcome = :invalid }
     end

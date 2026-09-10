@@ -1,9 +1,11 @@
 <% add_decidim_meta_tags(
-   title: translated_attribute(current_participatory_space.title),
-   image_url: resolve_meta_image_url(current_participatory_space),
-   description: translated_attribute(current_participatory_space.short_description),
-   url: participatory_process_url(current_participatory_space),
-   resource: current_participatory_space) %>
+  title: translated_attribute(current_participatory_space.title),
+  image_url: resolve_meta_image_url(current_participatory_space),
+  description: translated_attribute(current_participatory_space.short_description),
+  url: participatory_process_url(current_participatory_space),
+  resource: current_participatory_space) %>
+
+<%= append_javascript_pack_tag "decidim_cfj_participatory_processes" %>
 
 <%
   edit_link(
@@ -16,9 +18,7 @@
 
 <%= render partial: "layouts/decidim/header/follow_space_menu_bar_button", locals: { participatory_space: current_participatory_space } %>
 
-<%= append_javascript_pack_tag "decidim_cfj_participatory_processes" %>
-
-<main>
+<main role="main">
   <%# NOTE: this elements goes outside of the .participatory-space__container block %>
   <% if current_participatory_space.private_space? %>
     <section class="participatory-space__block-reference alert">
@@ -39,7 +39,7 @@
 
   </div>
 
-  <section class="participatory-space__block-reference">
-    <%= resource_reference(current_participatory_space) %>
+  <section class="participatory-space__block-reference" aria-label="<%= t("reference", scope: "decidim.participatory_space.labels") %>">
+    <p><%= resource_reference(current_participatory_space) %></p>
   </section>
 </main>

@@ -4,7 +4,7 @@ Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
-  config.cache_classes = true
+  config.enable_reloading = false
 
   # Eager load code on boot. This eager loads most of Rails and
   # your application in memory, allowing both threaded web servers
@@ -78,13 +78,13 @@ Rails.application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = Logger::Formatter.new
   config.action_mailer.smtp_settings = {
-    address: Rails.application.secrets.smtp_address,
-    port: Rails.application.secrets.smtp_port,
-    authentication: Rails.application.secrets.smtp_authentication,
-    user_name: Rails.application.secrets.smtp_username,
-    password: Rails.application.secrets.smtp_password,
-    domain: Rails.application.secrets.smtp_domain,
-    enable_starttls_auto: Rails.application.secrets.smtp_starttls_auto,
+    address: ENV.fetch("SMTP_ADDRESS", nil),
+    port: Decidim::Env.new("SMTP_PORT", 587).to_i,
+    authentication: Decidim::Env.new("SMTP_AUTHENTICATION", "plain").to_s,
+    user_name: ENV.fetch("SMTP_USERNAME", nil),
+    password: ENV.fetch("SMTP_PASSWORD", nil),
+    domain: ENV.fetch("SMTP_DOMAIN", nil),
+    enable_starttls_auto: Decidim::Env.new("SMTP_STARTTLS_AUTO", "true").value != "false",
     openssl_verify_mode: "none"
   }
 
@@ -100,6 +100,10 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # Only use :id for inspections in production.
+  config.active_record.attributes_for_inspect = [:id]
+
   # Specify active_job sidekiq adapter
   config.active_job.queue_adapter = :sidekiq
 end
