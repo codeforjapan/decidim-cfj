@@ -204,7 +204,7 @@ RSpec.describe Decidim::BulkSpaceAccountIssuer do
 
     it "does not take the lock for a dry run" do
       with_lock_held_elsewhere(organization) do
-        dry = described_class.new(organization:, email_domain: "chiba-mirai.test", dry_run: true)
+        dry = described_class.new(organization:, email_domain: "example.test", dry_run: true)
 
         expect(dry.issue([instruction(role: "participant", count: 1)]).map(&:status)).to eq([:planned])
       end
