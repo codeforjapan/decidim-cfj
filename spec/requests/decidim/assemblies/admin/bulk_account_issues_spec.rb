@@ -126,6 +126,22 @@ RSpec.describe "Decidim::Assemblies::Admin BulkAccountIssuesController" do
       end
     end
 
+    context "with an admin of the assembly who is not an organization admin" do
+      let(:space_admin) { create(:user, :confirmed, organization:) }
+
+      before do
+        create(:assembly_user_role, user: space_admin, assembly:, role: :admin)
+        sign_in space_admin
+      end
+
+      it "does not let them reach the form" do
+        get new_path
+
+        expect(response).to have_http_status(:redirect)
+        expect(response.body).not_to include("a-high-001")
+      end
+    end
+
     context "with an organization admin" do
       before { sign_in admin_user }
 
@@ -136,6 +152,14 @@ RSpec.describe "Decidim::Assemblies::Admin BulkAccountIssuesController" do
         expect(response.body).to include("a-high-001")
         expect(response.body).to include("a-high-a001")
         expect(response.body).to include("example.test")
+      end
+
+      it "keeps the assembly admin sidebar" do
+        get new_path
+
+        %w(components user_roles moderations participatory_space_private_users share_tokens).each do |section|
+          expect(response.body).to include("/admin/assemblies/#{assembly.slug}/#{section}")
+        end
       end
 
       context "when issuing is disabled for the organization" do
