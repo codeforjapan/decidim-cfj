@@ -125,7 +125,13 @@ module Decidim
       begin
         yield
       ensure
-        connection.release_advisory_lock(lock_id)
+        # Only the connection errors query_value can raise are caught: anything
+        # else coming out of here is a bug and must not be hidden.
+        begin
+          connection.release_advisory_lock(lock_id)
+        rescue ActiveRecord::ActiveRecordError => e
+          Rails.logger.warn("[bulk_space_account_issuer] failed to release the advisory lock: #{e.class}: #{e.message}")
+        end
       end
     end
 
