@@ -160,7 +160,7 @@ namespace :bulk_users do
     rescue Decidim::BulkSpaceAccountIssuer::Busy
       io.close
       File.delete(output)
-      abort "この組織では別の一括発行が実行中です。アカウントは作成されていません。完了を待ってから再実行してください。"
+      abort "この組織では別の一括発行が実行中です。この実行ではアカウントを作成していませんが、実行中の一括発行がアカウントを作成している可能性があります。管理ログと、先行する発行の結果CSVを確認してから再実行してください。"
     ensure
       io.close
     end
