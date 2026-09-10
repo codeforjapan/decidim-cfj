@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.21.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.21.0...v1.21.1) (2026-09-10)
+
+
+### Bug Fixes
+
+* remove duplicated labels on the /system bulk issuing settings form ([5c056f5](https://github.com/codeforjapan/decidim-cfj/commit/5c056f590cb26cf5cc5578ab11e0646a5647122c))
+
 ## [1.21.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.20.1...v1.21.0) (2026-09-02)
 
 
