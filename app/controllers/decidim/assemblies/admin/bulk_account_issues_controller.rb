@@ -56,8 +56,8 @@ module Decidim
           reject(:busy)
         rescue ArgumentError => e
           # BulkSpaceAccountIssuer#validate! の検証エラー（原則ここには来ない: 上のガードで先に弾く）
-          flash.now[:alert] = e.message
-          render :new, status: :unprocessable_entity
+          flash[:alert] = e.message
+          redirect_to_form
         end
 
         private
@@ -138,11 +138,18 @@ module Decidim
           Decidim::BulkSpaceAccountIssuer.new(organization: current_organization, email_domain: settings.email_domain)
         end
 
-        # 失敗時は new を描画し直す。500 にしないこと自体が要件なので 422 を返す。
+        # 失敗時はフォームへリダイレクトで戻す（PRG）。render で 422 を返すと、その画面自体が
+        # POST のレスポンスになるため、管理者がリロードすると POST が再送される。busy で弾かれた
+        # 直後のリロードは、先行処理が終わってロックが空いた状態で本当に発行してしまう。
+        # 再送の余地を残さないために、失敗経路はすべてリダイレクトに統一する。
         def reject(reason, **params)
-          flash.now[:alert] = t("create.errors.#{reason}", scope: "decidim.assemblies.admin.bulk_account_issues", **params)
-          render :new, status: :unprocessable_entity
+          flash[:alert] = t("create.errors.#{reason}", scope: "decidim.assemblies.admin.bulk_account_issues", **params)
+          redirect_to_form
           nil
+        end
+
+        def redirect_to_form
+          redirect_to decidim_admin_assemblies.new_assembly_bulk_account_issue_path(current_assembly)
         end
 
         # 招待フローと違い「本人がリンクを踏んだ」痕跡が残らないため、誰が・どのスペースに・
