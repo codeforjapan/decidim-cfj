@@ -13,7 +13,7 @@
 const $ = window.$;
 
 import changeReportFormBehavior from "src/decidim/change_report_form_behavior";
-import { initializeCommentsDropdown } from "../../decidim/comments/comments_dropdown";
+import { initializeCommentsDropdown } from "src/decidim/comments/comments_dropdown";
 
 export default class CommentsComponent {
   constructor($element, config) {
