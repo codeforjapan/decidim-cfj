@@ -4,7 +4,7 @@ source "https://rubygems.org"
 
 ruby RUBY_VERSION
 
-gem "decidim", "0.31.7"
+gem "decidim", "0.32.1"
 
 # [0.32 upgrade Phase 1] 本体のみで検証するため一時的に無効化。Phase 6 で1つずつ復帰させる。
 # gem "decidim-decidim_awesome", git: "https://github.com/codeforjapan/decidim-module-decidim_awesome.git", branch: "release/0.31-stable"
@@ -25,6 +25,7 @@ gem "wicked_pdf", "~> 2.1"
 
 gem "deface"
 gem "image_processing"
+gem "mini_magick", "~> 4.13"
 gem "newrelic_rpm"
 
 # gem "omniauth-cityos-dcp", git: "https://github.com/TheDesignium/omniauth-cityos-dcp.git", tag: "v1.4.0"
@@ -41,7 +42,7 @@ group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
   gem "figaro"
 
-  gem "decidim-dev", "0.31.7"
+  gem "decidim-dev", "0.32.1"
   gem "dotenv-rails"
   gem "factory_bot_rails"
   gem "rspec-rails"
@@ -69,12 +70,12 @@ group :production do
   # gem "aws-xray-sdk", require: ["aws-xray-sdk/facets/rails/railtie"]
   gem "fog-aws"
   # gem "oj", platform: :mri
-  gem "sidekiq", "6.5.12"
+  gem "sidekiq", "~> 7.3.10"
 end
 
 gem "rubyzip", ">= 1.0.0"
 gem "zip-zip"
 
-gem "decidim-conferences", "~> 0.31.7"
+gem "decidim-conferences", "~> 0.32.1"
 
-gem "decidim-ai", "~> 0.31.7"
+gem "decidim-ai", "~> 0.32.1"

@@ -1,15 +1,15 @@
 {
   "name": "app",
   "engines": {
-    "node": ">=18.17.1",
+    "node": ">=22.22.2",
     "npm": ">=9.6.7"
   },
   "private": true,
   "packageManager": "yarn@1.22.19",
   "dependencies": {
-    "@decidim/browserslist-config": "^0.31.7",
-    "@decidim/core": "^0.31.7",
-    "@decidim/webpacker": "^0.31.7",
+    "@decidim/browserslist-config": "^0.32.1",
+    "@decidim/core": "^0.32.1",
+    "@decidim/webpacker": "^0.32.1",
     "@geoman-io/leaflet-geoman-free": "^2.18.3",
     "codemirror": "^5.65.19",
     "core-js": "^3.36.0",
@@ -49,10 +49,10 @@
     "@babel/plugin-transform-runtime": "^7.26.9",
     "@babel/preset-env": "^7.26.9",
     "@babel/preset-react": "^7.26.3",
-    "@decidim/dev": "^0.31.7",
-    "@decidim/eslint-config": "^0.31.7",
-    "@decidim/prettier-config": "^0.31.7",
-    "@decidim/stylelint-config": "^0.31.7",
+    "@decidim/dev": "^0.32.1",
+    "@decidim/eslint-config": "^0.32.1",
+    "@decidim/prettier-config": "^0.32.1",
+    "@decidim/stylelint-config": "^0.32.1",
     "@tarekraafat/autocomplete.js": "^10.2.9",
     "babel-jest": "^29.7.0",
     "eslint": "^8.57.0",
@@ -64,7 +64,7 @@
     "jest-environment-jsdom": "^29.7.0",
     "postcss-scss": "^4.0.9",
     "sass-embedded": "^1.93.2",
-    "shakapacker": "~8.3.0",
+    "shakapacker": "~9.7.0",
     "stylelint": "^15.11.0"
   },
   "scripts": {
