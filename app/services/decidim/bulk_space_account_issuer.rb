@@ -18,6 +18,12 @@ module Decidim
   class BulkSpaceAccountIssuer
     class ImportFailed < StandardError; end
 
+    class Busy < StandardError; end
+
+    # 発行のあいだ組織単位の advisory lock を取ることで直列化する。
+    ADVISORY_LOCK_NAMESPACE = 1_112_293_707
+    def self.advisory_lock_id(organization) = (ADVISORY_LOCK_NAMESPACE << 32) | organization.id
+
     SPACE_TYPES = {
       "assemblies" => {
         space_class_name: "Decidim::Assembly",
@@ -98,12 +104,36 @@ module Decidim
     def issue(instructions, &block)
       validate!(instructions)
 
-      normalize(instructions).flat_map { |instruction| issue_instruction(instruction, &block) }
+      with_organization_lock do
+        normalize(instructions).flat_map { |instruction| issue_instruction(instruction, &block) }
+      end
     end
 
     private
 
     attr_reader :organization, :email_domain, :dry_run, :importer
+
+    # セッションレベルの advisory lock。接続が切れれば解放されるため、プロセスが落ちても残らない。
+    # ロックと解放は同じ接続で行う必要がある（リクエスト/rake の実行中は同じ接続が使われる）。
+    def with_organization_lock
+      return yield if dry_run
+
+      connection = ActiveRecord::Base.connection
+      lock_id = self.class.advisory_lock_id(organization)
+      raise Busy, "another issue is already running for organization #{organization.id}" unless connection.get_advisory_lock(lock_id)
+
+      begin
+        yield
+      ensure
+        # Only the connection errors query_value can raise are caught: anything
+        # else coming out of here is a bug and must not be hidden.
+        begin
+          connection.release_advisory_lock(lock_id)
+        rescue ActiveRecord::ActiveRecordError => e
+          Rails.logger.warn("[bulk_space_account_issuer] failed to release the advisory lock: #{e.class}: #{e.message}")
+        end
+      end
+    end
 
     def normalize(instructions)
       instructions.map do |raw|

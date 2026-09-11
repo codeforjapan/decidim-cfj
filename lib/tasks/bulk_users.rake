@@ -160,6 +160,10 @@ namespace :bulk_users do
                 result.password, result.furigana, result.status, result.error]
         io.flush
       end
+    rescue Decidim::BulkSpaceAccountIssuer::Busy
+      io.close
+      File.delete(output)
+      abort "この組織では別の一括発行が実行中です。この実行ではアカウントを作成していませんが、実行中の一括発行がアカウントを作成している可能性があります。管理ログと、先行する発行の結果CSVを確認してから再実行してください。"
     ensure
       io.close
     end

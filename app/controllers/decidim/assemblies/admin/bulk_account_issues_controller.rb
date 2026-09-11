@@ -52,6 +52,8 @@ module Decidim
                     type: "text/csv; charset=utf-8",
                     filename: "issued_accounts_#{Time.current.strftime("%Y%m%d%H%M%S")}.csv",
                     disposition: "attachment"
+        rescue Decidim::BulkSpaceAccountIssuer::Busy
+          reject(:busy)
         rescue ArgumentError => e
           # BulkSpaceAccountIssuer#validate! の検証エラー（原則ここには来ない: 上のガードで先に弾く）
           flash.now[:alert] = e.message
