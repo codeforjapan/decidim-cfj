@@ -88,7 +88,7 @@ module Decidim
           reason =
             if !settings&.enabled? || settings.email_domain.blank?
               :not_enabled
-            elsif !current_assembly.private_space?
+            elsif current_assembly.open?
               :not_private
             end
           return false unless reason

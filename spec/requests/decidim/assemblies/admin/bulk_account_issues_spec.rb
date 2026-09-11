@@ -8,7 +8,7 @@ RSpec.describe "Decidim::Assemblies::Admin BulkAccountIssuesController" do
 
   let(:organization) { create(:organization, tos_version: Time.current) }
   let!(:assembly) do
-    create(:assembly, organization:, slug: "a-high", private_space: true, is_transparent: false)
+    create(:assembly, organization:, slug: "a-high", access_mode: :restricted, has_members: true)
   end
   let!(:settings) do
     Decidim::BulkUserImportSetting.create!(organization:, email_domain: "chiba-mirai.test", enabled: true)
@@ -40,7 +40,7 @@ RSpec.describe "Decidim::Assemblies::Admin BulkAccountIssuesController" do
     end
 
     context "when the assembly is not a private space" do
-      before { assembly.update!(private_space: false) }
+      before { assembly.update!(access_mode: :open) }
 
       it "hides the menu item" do
         get menu_page_path
@@ -93,7 +93,7 @@ RSpec.describe "Decidim::Assemblies::Admin BulkAccountIssuesController" do
 
       it "still shows the menu item in the enabled organization" do
         other_assembly = create(:assembly, organization: other_organization, slug: "b-high",
-                                           private_space: true, is_transparent: false)
+                                           access_mode: :restricted, has_members: true)
         other_admin = create(:user, :admin, :confirmed, organization: other_organization)
 
         host! other_organization.host
@@ -150,7 +150,7 @@ RSpec.describe "Decidim::Assemblies::Admin BulkAccountIssuesController" do
       end
 
       context "when the assembly is not a private space" do
-        before { assembly.update!(private_space: false) }
+        before { assembly.update!(access_mode: :open) }
 
         it "redirects to the assemblies list with an explanation" do
           get new_path
@@ -198,7 +198,7 @@ RSpec.describe "Decidim::Assemblies::Admin BulkAccountIssuesController" do
         post(create_path, params:)
 
         users = issued_users
-        expect(Decidim::ParticipatorySpacePrivateUser.where(user: users, privatable_to: assembly).count).to eq(3)
+        expect(Decidim::ParticipatorySpace::Member.where(user: users, participatory_space: assembly).count).to eq(3)
         expect(Decidim::AssemblyUserRole.where(user: users, assembly:, role: "admin").count).to eq(1)
         users.each { |user| expect(assembly.can_participate?(user)).to be(true) }
       end
@@ -223,34 +223,34 @@ RSpec.describe "Decidim::Assemblies::Admin BulkAccountIssuesController" do
       it "rejects zero accounts" do
         post create_path, params: { bulk_account_issue: { participant_count: 0, admin_count: 0 } }
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
         expect(issued_users.count).to eq(0)
       end
 
       it "rejects negative counts" do
         post create_path, params: { bulk_account_issue: { participant_count: -1, admin_count: 2 } }
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
         expect(issued_users.count).to eq(0)
       end
 
       it "rejects more than the per-request cap" do
         post create_path, params: { bulk_account_issue: { participant_count: 60, admin_count: 41 } }
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
         expect(issued_users.count).to eq(0)
       end
 
       context "when the slug is longer than the id budget allows" do
         let!(:assembly) do
-          create(:assembly, organization:, slug: "a" * 16, private_space: true, is_transparent: false)
+          create(:assembly, organization:, slug: "a" * 16, access_mode: :restricted, has_members: true)
         end
         let(:create_path) { "/admin/assemblies/#{assembly.slug}/bulk_account_issue" }
 
         it "rejects the request" do
           post(create_path, params:)
 
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
           expect(Decidim::User.where(organization:).where("nickname LIKE ?", "aaaa%").count).to eq(0)
         end
       end
@@ -264,7 +264,7 @@ RSpec.describe "Decidim::Assemblies::Admin BulkAccountIssuesController" do
         it "rejects the request instead of creating users that count as not having accepted the TOS" do
           post(create_path, params:)
 
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
           expect(issued_users.count).to eq(0)
         end
       end
