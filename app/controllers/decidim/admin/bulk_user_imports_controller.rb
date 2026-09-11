@@ -92,7 +92,7 @@ module Decidim
 
       # ファイル未添付でもエラー表示に留めるため、ParameterMissing を握って nil を返す。
       def uploaded_file
-        params.require(:bulk_user_import).permit(:file)[:file]
+        params.expect(bulk_user_import: [:file])[:file]
       rescue ActionController::ParameterMissing
         nil
       end
@@ -104,7 +104,7 @@ module Decidim
       # 失敗時は new を描画し直す。500 にしないこと自体が要件なので 422 を返す。
       def reject(reason, **params)
         flash.now[:alert] = t("create.errors.#{reason}", scope: "decidim.admin.bulk_user_imports", **params)
-        render :new, status: :unprocessable_entity
+        render :new, status: :unprocessable_content
         nil
       end
 

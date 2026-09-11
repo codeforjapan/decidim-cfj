@@ -55,7 +55,7 @@ module Decidim
         rescue ArgumentError => e
           # BulkSpaceAccountIssuer#validate! の検証エラー（原則ここには来ない: 上のガードで先に弾く）
           flash.now[:alert] = e.message
-          render :new, status: :unprocessable_entity
+          render :new, status: :unprocessable_content
         end
 
         private
@@ -139,7 +139,7 @@ module Decidim
         # 失敗時は new を描画し直す。500 にしないこと自体が要件なので 422 を返す。
         def reject(reason, **params)
           flash.now[:alert] = t("create.errors.#{reason}", scope: "decidim.assemblies.admin.bulk_account_issues", **params)
-          render :new, status: :unprocessable_entity
+          render :new, status: :unprocessable_content
           nil
         end
 

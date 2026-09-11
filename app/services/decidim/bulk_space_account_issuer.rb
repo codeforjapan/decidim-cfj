@@ -95,10 +95,10 @@ module Decidim
 
     # ブロックを渡すと1アカウント処理するたびに Result を yield する（rake が逐次書き出すため）。
     # dry_run の場合は何も作成せず、採番と生成されるIDだけを status: :planned で返す。
-    def issue(instructions, &block)
+    def issue(instructions, &)
       validate!(instructions)
 
-      normalize(instructions).flat_map { |instruction| issue_instruction(instruction, &block) }
+      normalize(instructions).flat_map { |instruction| issue_instruction(instruction, &) }
     end
 
     private
