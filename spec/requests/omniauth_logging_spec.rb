@@ -18,6 +18,9 @@ RSpec.describe "OmniAuth audit logging" do
   let(:logged) { log_output.string }
 
   let(:callback_path) { "/users/auth/line_login/callback" }
+  # 0.32 で全 URL に /:locale が付いた。OmniAuth の callback だけは Devise の都合で
+  # 上流がロケールスコープ外に置いているが、登録の POST 先はスコープ内になる。
+  let(:locale_prefix) { "/#{organization.default_locale}" }
   let(:uid) { "U1234567890abcdef" }
   let(:email) { "taro@example.org" }
   let(:auth_hash) do
@@ -66,7 +69,7 @@ RSpec.describe "OmniAuth audit logging" do
       expect(logged).to include("[omniauth] phase=callback result=ok")
       expect(logged).to include("[omniauth] phase=registration result=pending")
 
-      post "/omniauth_registrations", params: {
+      post "#{locale_prefix}/omniauth_registrations", params: {
         user: {
           provider: "line_login",
           uid:,

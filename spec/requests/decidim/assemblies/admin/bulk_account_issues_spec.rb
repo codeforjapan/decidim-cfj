@@ -14,8 +14,12 @@ RSpec.describe "Decidim::Assemblies::Admin BulkAccountIssuesController" do
     Decidim::BulkUserImportSetting.create!(organization:, email_domain: "chiba-mirai.test", enabled: true)
   end
   let(:admin_user) { create(:user, :admin, :confirmed, organization:) }
-  let(:new_path) { "/admin/assemblies/#{assembly.slug}/bulk_account_issue/new" }
-  let(:create_path) { "/admin/assemblies/#{assembly.slug}/bulk_account_issue" }
+  # 0.32 で decidim の全 URL に /:locale が付いた。ロケール無しの管理画面パスは
+  # decidim-core の get "/admin/*rest" に捕まって 301 されるため、組織のデフォルト
+  # ロケールを前置する。
+  let(:locale_prefix) { "/#{organization.default_locale}" }
+  let(:new_path) { "#{locale_prefix}/admin/assemblies/#{assembly.slug}/bulk_account_issue/new" }
+  let(:create_path) { "#{locale_prefix}/admin/assemblies/#{assembly.slug}/bulk_account_issue" }
   let(:params) { { bulk_account_issue: { participant_count: 2, admin_count: 1 } } }
 
   before { host! organization.host }
@@ -28,7 +32,7 @@ RSpec.describe "Decidim::Assemblies::Admin BulkAccountIssuesController" do
   # /system でこの組織の発行が有効 かつ スペースが非公開、の両方を満たすときだけ表示する。
   # メニュー（admin_assembly_menu）を描画する任意の管理ページで確認できる（ここでは添付ファイル一覧）。
   describe "menu visibility" do
-    let(:menu_page_path) { "/admin/assemblies/#{assembly.slug}/attachments" }
+    let(:menu_page_path) { "#{locale_prefix}/admin/assemblies/#{assembly.slug}/attachments" }
 
     before { sign_in admin_user }
 
@@ -98,10 +102,10 @@ RSpec.describe "Decidim::Assemblies::Admin BulkAccountIssuesController" do
 
         host! other_organization.host
         sign_in other_admin
-        get "/admin/assemblies/#{other_assembly.slug}/attachments"
+        get "#{locale_prefix}/admin/assemblies/#{other_assembly.slug}/attachments"
 
         expect(response).to have_http_status(:ok)
-        expect(response.body).to include("/admin/assemblies/b-high/bulk_account_issue/new")
+        expect(response.body).to include("#{locale_prefix}/admin/assemblies/b-high/bulk_account_issue/new")
       end
     end
   end
@@ -111,7 +115,7 @@ RSpec.describe "Decidim::Assemblies::Admin BulkAccountIssuesController" do
       it "redirects to the sign in page" do
         get new_path
 
-        expect(response).to redirect_to("/users/sign_in")
+        expect(response).to redirect_to("#{locale_prefix}/users/sign_in")
       end
     end
 
@@ -144,7 +148,7 @@ RSpec.describe "Decidim::Assemblies::Admin BulkAccountIssuesController" do
         it "redirects to the assemblies list with an explanation" do
           get new_path
 
-          expect(response).to redirect_to("/admin/assemblies")
+          expect(response).to redirect_to("#{locale_prefix}/admin/assemblies")
           expect(flash[:alert]).to be_present
         end
       end
@@ -155,7 +159,7 @@ RSpec.describe "Decidim::Assemblies::Admin BulkAccountIssuesController" do
         it "redirects to the assemblies list with an explanation" do
           get new_path
 
-          expect(response).to redirect_to("/admin/assemblies")
+          expect(response).to redirect_to("#{locale_prefix}/admin/assemblies")
           expect(flash[:alert]).to be_present
         end
       end
@@ -171,7 +175,7 @@ RSpec.describe "Decidim::Assemblies::Admin BulkAccountIssuesController" do
         it "redirects to the assemblies list with an explanation" do
           get new_path
 
-          expect(response).to redirect_to("/admin/assemblies")
+          expect(response).to redirect_to("#{locale_prefix}/admin/assemblies")
           expect(flash[:alert]).to be_present
         end
       end
@@ -211,7 +215,7 @@ RSpec.describe "Decidim::Assemblies::Admin BulkAccountIssuesController" do
         expect(log.resource).to eq(assembly)
         expect(log.extra["created"]).to eq(3)
 
-        get "/admin/logs"
+        get "#{locale_prefix}/admin/logs"
         expect(response).to have_http_status(:ok)
         expect(response.body).to include("bulk-issued accounts")
       end
@@ -245,7 +249,7 @@ RSpec.describe "Decidim::Assemblies::Admin BulkAccountIssuesController" do
         let!(:assembly) do
           create(:assembly, organization:, slug: "a" * 16, access_mode: :restricted, has_members: true)
         end
-        let(:create_path) { "/admin/assemblies/#{assembly.slug}/bulk_account_issue" }
+        let(:create_path) { "#{locale_prefix}/admin/assemblies/#{assembly.slug}/bulk_account_issue" }
 
         it "rejects the request" do
           post(create_path, params:)
