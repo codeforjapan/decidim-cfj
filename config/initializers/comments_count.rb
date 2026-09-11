@@ -1,35 +1,30 @@
 # frozen_string_literal: true
 
 Rails.application.config.to_prepare do
-  # Override :comments_count on accountability_component.
-  accountability_component = Decidim.find_component_manifest(:accountability)
-  accountability_component.stats.stats.reject! { |s| s[:name] == :comments_count }
-  accountability_component.register_stat :comments_count, tag: :comments do |components, start_at, end_at|
-    results = Decidim::Accountability::FilteredResults.for(components, start_at, end_at)
-    results.sum(:comments_count)
-  end
+  # 各コンポーネントの comments_count を、実データの合計で上書きする。
+  #
+  # コンポーネントは gem ごと削除されうる（0.32 で decidim-sortitions が消えた）。
+  # 1 件の nil manifest で同じブロック内の他の登録まで道連れにしないよう、
+  # manifest が見つからないものは飛ばす。
+  comments_counters = {
+    accountability: lambda { |components, start_at, end_at|
+      Decidim::Accountability::FilteredResults.for(components, start_at, end_at).sum(:comments_count)
+    },
+    blogs: lambda { |components, start_at, end_at|
+      Decidim::Blogs::FilteredPosts.for(components, start_at, end_at).sum(:comments_count)
+    },
+    debates: lambda { |components, start_at, end_at|
+      Decidim::Debates::FilteredDebates.for(components, start_at, end_at).sum(:comments_count)
+    }
+  }
 
-  # Override :comments_count on blogs_component.
-  blogs_component = Decidim.find_component_manifest(:blogs)
-  blogs_component.stats.stats.reject! { |s| s[:name] == :comments_count }
-  blogs_component.register_stat :comments_count, tag: :comments do |components, start_at, end_at|
-    posts = Decidim::Blogs::FilteredPosts.for(components, start_at, end_at)
-    posts.sum(:comments_count)
-  end
+  comments_counters.each do |manifest_name, counter|
+    manifest = Decidim.find_component_manifest(manifest_name)
+    next if manifest.blank?
 
-  # Override :comments_count on debates_component.
-  debates_component = Decidim.find_component_manifest(:debates)
-  debates_component.stats.stats.reject! { |s| s[:name] == :comments_count }
-  debates_component.register_stat :comments_count, tag: :comments do |components, start_at, end_at|
-    debates = Decidim::Debates::FilteredDebates.for(components, start_at, end_at)
-    debates.sum(:comments_count)
-  end
-
-  # Override :comments_count on sortitions_component.
-  sortitions_component = Decidim.find_component_manifest(:sortitions)
-  sortitions_component.stats.stats.reject! { |s| s[:name] == :comments_count }
-  sortitions_component.register_stat :comments_count, tag: :comments do |components, start_at, end_at|
-    sortitions = Decidim::Sortitions::FilteredSortitions.for(components, start_at, end_at)
-    sortitions.sum(:comments_count)
+    manifest.stats.stats.reject! { |s| s[:name] == :comments_count }
+    manifest.register_stat :comments_count, tag: :comments do |components, start_at, end_at|
+      counter.call(components, start_at, end_at)
+    end
   end
 end
