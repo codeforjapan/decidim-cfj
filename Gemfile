@@ -6,12 +6,13 @@ ruby RUBY_VERSION
 
 gem "decidim", "0.31.7"
 
-gem "decidim-decidim_awesome", git: "https://github.com/codeforjapan/decidim-module-decidim_awesome.git", branch: "release/0.31-stable"
+# [0.32 upgrade Phase 1] 本体のみで検証するため一時的に無効化。Phase 6 で1つずつ復帰させる。
+# gem "decidim-decidim_awesome", git: "https://github.com/codeforjapan/decidim-module-decidim_awesome.git", branch: "release/0.31-stable"
 
-gem "decidim-term_customizer", git: "https://github.com/codeforjapan/decidim-module-term_customizer.git", branch: "031-ja"
+# gem "decidim-term_customizer", git: "https://github.com/codeforjapan/decidim-module-term_customizer.git", branch: "031-ja"
 
-gem "decidim-navigation_maps", git: "https://github.com/codeforjapan/decidim-module-navigation_maps.git", branch: "upgrade-0.31-2026-08-10"
-gem "decidim-polis", git: "https://github.com/codeforjapan/decidim-polis.git", branch: "update-0-31-7"
+# gem "decidim-navigation_maps", git: "https://github.com/codeforjapan/decidim-module-navigation_maps.git", branch: "upgrade-0.31-2026-08-10"
+# gem "decidim-polis", git: "https://github.com/codeforjapan/decidim-polis.git", branch: "update-0-31-7"
 
 gem "bootsnap"
 
@@ -30,7 +31,8 @@ gem "newrelic_rpm"
 gem "omniauth-line_login", path: "omniauth-line_login"
 gem "omniauth-rails_csrf_protection"
 
-gem "decidim-broadlistening-view", git: "https://github.com/codeforjapan/decidim-broadlistening-view.git", branch: "031-stable"
+# [0.32 upgrade Phase 1] 本体のみで検証するため一時的に無効化。Phase 6 で1つずつ復帰させる。
+# gem "decidim-broadlistening-view", git: "https://github.com/codeforjapan/decidim-broadlistening-view.git", branch: "031-stable"
 gem "decidim-user_extension", path: "decidim-user_extension"
 
 gem "slack-ruby-client"
