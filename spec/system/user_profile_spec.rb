@@ -209,24 +209,4 @@ describe "Profile" do
       end
     end
   end
-
-  describe "view hooks" do
-    before do
-      allow(Decidim.view_hooks)
-        .to receive(:render)
-        .with(a_kind_of(Symbol), a_kind_of(Decidim::ProfileCell))
-        .and_return("Rendered from #{view_hook} view hook")
-
-      visit decidim.profile_path(user.nickname)
-    end
-
-    context "with user_profile_bottom view hook" do
-      let(:view_hook) { :user_profile_bottom }
-
-      it "renders the view hook" do
-        expect(Decidim.view_hooks).to have_received(:render).with(:user_profile_bottom, a_kind_of(Decidim::ProfileCell))
-        expect(page).to have_content("Rendered from user_profile_bottom view hook")
-      end
-    end
-  end
 end

@@ -158,7 +158,7 @@ RSpec.describe "Decidim::Admin BulkUserImportsController" do
         it "rejects the file" do
           expect { post(decidim_admin.bulk_user_import_path, params:) }.not_to change(Decidim::User, :count)
 
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
           expect(flash[:alert]).to eq(
             I18n.t(
               "decidim.admin.bulk_user_imports.create.errors.file_too_large",
@@ -174,7 +174,7 @@ RSpec.describe "Decidim::Admin BulkUserImportsController" do
         it "renders an error instead of failing" do
           post decidim_admin.bulk_user_import_path
 
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
           expect(flash[:alert]).to eq(I18n.t("decidim.admin.bulk_user_imports.create.errors.missing_file"))
         end
       end
@@ -185,7 +185,7 @@ RSpec.describe "Decidim::Admin BulkUserImportsController" do
         it "rejects the file" do
           expect { post(decidim_admin.bulk_user_import_path, params:) }.not_to change(Decidim::User, :count)
 
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
           expect(flash[:alert]).to eq(I18n.t("decidim.admin.bulk_user_imports.create.errors.invalid_extension"))
         end
       end
@@ -196,7 +196,7 @@ RSpec.describe "Decidim::Admin BulkUserImportsController" do
         it "renders an error instead of failing" do
           expect { post(decidim_admin.bulk_user_import_path, params:) }.not_to change(Decidim::User, :count)
 
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
           expect(flash[:alert]).to eq(I18n.t("decidim.admin.bulk_user_imports.create.errors.malformed_csv"))
         end
       end
@@ -207,7 +207,7 @@ RSpec.describe "Decidim::Admin BulkUserImportsController" do
         it "rejects the file" do
           expect { post(decidim_admin.bulk_user_import_path, params:) }.not_to change(Decidim::User, :count)
 
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
           expect(flash[:alert]).to eq(I18n.t("decidim.admin.bulk_user_imports.create.errors.missing_email_header"))
         end
       end
@@ -230,7 +230,7 @@ RSpec.describe "Decidim::Admin BulkUserImportsController" do
         it "rejects the file" do
           expect { post(decidim_admin.bulk_user_import_path, params:) }.not_to change(Decidim::User, :count)
 
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
           expect(flash[:alert]).to eq(
             I18n.t("decidim.admin.bulk_user_imports.create.errors.too_many_rows", max: max_rows)
           )

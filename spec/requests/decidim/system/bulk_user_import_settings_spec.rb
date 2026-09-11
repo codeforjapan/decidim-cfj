@@ -60,7 +60,7 @@ RSpec.describe "Decidim::System BulkUserImportSettingsController" do
       patch "/system/bulk_user_import_settings/#{organization.id}",
             params: { bulk_user_import_setting: { email_domain: "", enabled: "1" } }
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(Decidim::BulkUserImportSetting.find_by(decidim_organization_id: organization.id)).to be_nil
     end
 
@@ -68,14 +68,14 @@ RSpec.describe "Decidim::System BulkUserImportSettingsController" do
       patch "/system/bulk_user_import_settings/#{organization.id}",
             params: { bulk_user_import_setting: { email_domain: "Chiba Mirai", enabled: "1" } }
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
     end
 
     it "rejects a domain without a dot (it would fail the sign-in form validation)" do
       patch "/system/bulk_user_import_settings/#{organization.id}",
             params: { bulk_user_import_setting: { email_domain: "chiba-mirai", enabled: "1" } }
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
     end
 
     it "can disable issuing while keeping the domain" do

@@ -191,10 +191,6 @@ ja:
         settings:
           global:
             no_taxonomy_filters_found: 分類フィルタが見つかりません。
-      sortitions:
-        settings:
-          global:
-            no_taxonomy_filters_found: 分類フィルタが見つかりません。
     conferences:
       admin:
         conferences:
@@ -281,20 +277,6 @@ ja:
         proposal:
           fields:
             taxonomies: 分類
-    sortitions:
-      admin:
-        models:
-          sortition:
-            fields:
-              taxonomies: 分類
-        sortitions:
-          form:
-            all_taxonomies: すべての分類
-            select_taxonomies: 抽選を適用したい提案のセットに関連する分類。空のままにすると、その分類内のすべての提案に抽選が適用されます。
-      sortitions:
-        show:
-          any_taxonomy: すべての分類から
-          taxonomies: '%{taxonomies} 分類から'
   layouts:
     decidim:
       decidim_awesome:
