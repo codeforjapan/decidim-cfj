@@ -1,2 +1,2 @@
-<!-- insert_after "div#user-groups" -->
+<!-- insert_bottom "div.card" -->
 <%= render "decidim/user_extension/admin/officializations/show_user_extension_modal" %>

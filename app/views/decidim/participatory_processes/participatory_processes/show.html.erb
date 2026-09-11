@@ -9,21 +9,26 @@
 
 <%
   edit_link(
-    resource_locator(current_participatory_space).edit,
-    :update,
-    :process,
-    process: current_participatory_space
+   decidim_admin_participatory_processes.edit_participatory_process_landing_page_path(current_participatory_space),
+   :update,
+   :process,
+   process: current_participatory_space
   )
 %>
 
 <%= render partial: "layouts/decidim/header/follow_space_menu_bar_button", locals: { participatory_space: current_participatory_space } %>
 
 <main role="main">
-  <%# NOTE: this elements goes outside of the .participatory-space__container block %>
-  <% if current_participatory_space.private_space? %>
-    <section class="participatory-space__block-reference alert">
-      <%= t("private_space", scope: "decidim.participatory_processes.show") %>
-    </section>
+  <% if current_participatory_space.restricted? %>
+    <aside class="layout-container__reference text-sm alert" aria-label="<%= t("restricted", scope: "decidim.participatory_space.labels") %>">
+      <%= t("restricted_space", scope: "decidim.participatory_spaces.show") %>
+    </aside>
+  <% end %>
+
+  <% if current_participatory_space.transparent? %>
+    <aside class="layout-container__reference text-sm alert" aria-label="<%= t("transparent", scope: "decidim.participatory_space.labels") %>">
+      <%= t("transparent_space", scope: "decidim.participatory_spaces.show") %>
+    </aside>
   <% end %>
 
   <div class="participatory-space__container">

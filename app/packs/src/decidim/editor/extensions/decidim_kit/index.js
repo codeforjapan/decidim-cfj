@@ -3,16 +3,17 @@ import { Extension } from "@tiptap/core";
 import StarterKit from "@tiptap/starter-kit";
 import CodeBlock from "@tiptap/extension-code-block";
 import Underline from "@tiptap/extension-underline";
+import Heading from "@tiptap/extension-heading";
 
 import CharacterCount from "src/decidim/editor/extensions/character_count";
 import Bold from "src/decidim/editor/extensions/bold";
 import Dialog from "src/decidim/editor/extensions/dialog";
-import Heading from "@tiptap/extension-heading";
 import OrderedList from "src/decidim/editor/extensions/ordered_list";
 import Image from "src/decidim/editor/extensions/image";
 import Indent from "src/decidim/editor/extensions/indent";
 import Link from "src/decidim/editor/extensions/link";
 import Mention from "src/decidim/editor/extensions/mention";
+import MentionResource from "src/decidim/editor/extensions/mention_resource";
 import VideoEmbed from "src/decidim/editor/extensions/video_embed";
 import Emoji from "src/decidim/editor/extensions/emoji";
 import TagEdit from "src/decidim/cfj/editor/extensions/tag_edit";
@@ -33,8 +34,8 @@ export default Extension.create({
         uploadImagesPath: null,
         contentTypes: /^image\/(jpe?g|png|svg|webp)$/i
       },
-      hashtag: false,
       mention: false,
+      mentionResource: false,
       iframe: true,
       emoji: false
     };
@@ -46,7 +47,10 @@ export default Extension.create({
         heading: false,
         bold: false,
         orderedList: false,
-        codeBlock: false
+        codeBlock: false,
+        link: false,
+        underline: false,
+        trailingNode: false
       }),
       CharacterCount.configure(this.options.characterCount),
       Link.configure({ openOnClick: false, ...this.options.link }),
@@ -73,6 +77,10 @@ export default Extension.create({
 
     if (this.options.mention !== false) {
       extensions.push(Mention.configure(this.options.mention));
+    }
+
+    if (this.options.mentionResource !== false) {
+      extensions.push(MentionResource.configure(this.options.mentionResource));
     }
 
     if (this.options.emoji !== false) {
