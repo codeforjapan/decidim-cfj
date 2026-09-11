@@ -13,9 +13,18 @@ module Decidim
       class BulkAccountIssuesController < Decidim::Assemblies::Admin::ApplicationController
         include Concerns::AssemblyAdmin
 
-        # 独自リソースのため、コアの権限クラスは使わず専用クラスだけをチェーンに登録する。
-        # 理由は Decidim::BulkAccountIssuePermissions のコメントを参照。
+        # AssemblyAdmin と同じコアのクラスに、独自リソース用のクラスを足したチェーン。
+        #
+        # サイドメニューの各項目は allowed_to?(:read, :component, ...) のようにコアの権限を問い、
+        # 未設定は不許可として扱われる（NeedsPermission#allowed_to? が PermissionNotSetError を
+        # rescue して false を返す）。コアのクラスを外すとこの画面だけメニューが消えるため、
+        # 専用クラスだけに差し替えてはいけない。
+        #
+        # 独自の :bulk_account_issue はコアのどのクラスも状態を設定しないので、最後に置いた
+        # BulkAccountIssuePermissions が確定させる。逆にコアの subject には手を出さない。
         register_permissions(::Decidim::Assemblies::Admin::BulkAccountIssuesController,
+                             ::Decidim::Assemblies::Permissions,
+                             ::Decidim::Admin::Permissions,
                              ::Decidim::BulkAccountIssuePermissions)
 
         # 本番の CloudFront は既定30秒でオリジン応答を打ち切る。実測 0.19秒/件（bcrypt支配）から
@@ -60,8 +69,8 @@ module Decidim
 
         private
 
-        # このコントローラのチェーンは :bulk_account_issue 専用（AssemblyAdmin concern の
-        # chain_for(AssemblyAdmin) を上書きする。include より後に定義しているのでこちらが勝つ）。
+        # 上で登録したチェーンを使う（AssemblyAdmin concern の chain_for(AssemblyAdmin) を
+        # 上書きする。include より後に定義しているのでこちらが勝つ）。
         def permission_class_chain
           ::Decidim.permissions_registry.chain_for(::Decidim::Assemblies::Admin::BulkAccountIssuesController)
         end
