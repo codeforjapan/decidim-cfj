@@ -13,7 +13,7 @@
 const $ = window.$;
 
 import changeReportFormBehavior from "src/decidim/change_report_form_behavior";
-import { initializeCommentsDropdown } from "../../decidim/comments/comments_dropdown";
+import { initializeCommentsDropdown } from "src/decidim/comments/comments_dropdown";
 
 export default class CommentsComponent {
   constructor($element, config) {
@@ -432,7 +432,20 @@ export default class CommentsComponent {
       this.order = selectedOption.value;
     });
 
+    mobileOrderSelect.addEventListener("focus", function () {
+      const olderOption = mobileOrderSelect.querySelector('option[value="older"]');
+      if (!mobileOrderSelect.value) {
+        olderOption.style.fontWeight = "bold"
+      }
+    });
+
     mobileOrderSelect.addEventListener("change", (event) => {
+      const olderOption = mobileOrderSelect.querySelector('option[value="older"]');
+
+      if (!olderOption.selected) {
+        olderOption.style.fontWeight = "normal"
+      }
+
       const selectedOption = mobileOrderSelect.querySelector(`[value=${event.target.value}]`);
       const orderUrl = selectedOption.dataset.orderCommentUrl;
 
