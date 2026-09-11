@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.21.2](https://github.com/codeforjapan/decidim-cfj/compare/v1.21.1...v1.21.2) (2026-09-11)
+
+
+### Bug Fixes
+
+* import initializeCommentsDropdown from decidim-comment gem ([8afd9b8](https://github.com/codeforjapan/decidim-cfj/commit/8afd9b859c107f6dc2aa83b2697324970b6a738a))
+
 ## [1.21.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.21.0...v1.21.1) (2026-09-10)
 
 
