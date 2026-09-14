@@ -126,7 +126,7 @@ RSpec.describe "Decidim::Assemblies::Admin BulkAccountIssuesController" do
       end
     end
 
-    context "with an admin of the assembly who is not an organization admin" do
+    context "with a space admin who is not an organization admin" do
       let(:space_admin) { create(:user, :confirmed, :admin_terms_accepted, organization:) }
 
       before do
@@ -137,8 +137,7 @@ RSpec.describe "Decidim::Assemblies::Admin BulkAccountIssuesController" do
       it "does not let them reach the form" do
         get new_path
 
-        expect(response).to have_http_status(:redirect)
-        expect(response.body).not_to include("a-high-001")
+        expect(response).to redirect_to(decidim_admin.root_path)
       end
     end
 
@@ -326,17 +325,17 @@ RSpec.describe "Decidim::Assemblies::Admin BulkAccountIssuesController" do
     end
 
     context "with a space admin who is not an organization admin" do
-      let(:space_admin) { create(:user, :confirmed, organization:) }
+      let(:space_admin) { create(:user, :confirmed, :admin_terms_accepted, organization:) }
 
       before do
-        Decidim::AssemblyUserRole.create!(user: space_admin, assembly:, role: "admin")
+        create(:assembly_user_role, user: space_admin, assembly:, role: :admin)
         sign_in space_admin
       end
 
       it "cannot issue accounts" do
         post(create_path, params:)
 
-        expect(response).to have_http_status(:redirect)
+        expect(response).to redirect_to(decidim_admin.root_path)
         expect(issued_users.count).to eq(0)
       end
     end
