@@ -154,10 +154,9 @@ namespace :bulk_users do
     results = begin
       io.write(BULK_USERS_UTF8_BOM)
       csv = CSV.new(io)
-      csv << %w(space_slug role account_id email password furigana status error)
+      csv << Decidim::BulkSpaceAccountIssuer::RESULT_HEADERS
       issuer.issue(instructions) do |result|
-        csv << [result.space_slug, result.role, result.account_id, result.email,
-                result.password, result.furigana, result.status, result.error]
+        csv << result.to_a
         io.flush
       end
     rescue Decidim::BulkSpaceAccountIssuer::Busy

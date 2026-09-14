@@ -217,7 +217,7 @@ RSpec.describe "Decidim::Admin BulkUserImportsController" do
       # あり、CSV 取り込みは 1 行あたりの処理がアセンブリ側の発行より重い（パスワード生成の
       # リトライと任意項目の検証が乗る）ため、発行側の上限を超えてはならない。
       it "does not allow more rows than the assembly issuing cap" do
-        expect(described_cap).to be <= Decidim::Assemblies::Admin::BulkAccountIssuesController::MAX_ACCOUNTS_PER_REQUEST
+        expect(described_cap).to be <= Decidim::Assemblies::Admin::BulkAccountIssueForm::MAX_ACCOUNTS_PER_REQUEST
       end
 
       context "when the row limit is exceeded" do

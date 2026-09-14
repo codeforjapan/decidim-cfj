@@ -25,7 +25,7 @@ module Decidim
       # 本番の CloudFront は OriginReadTimeout 30秒でオリジン応答を打ち切る（実測値。prd/staging とも）。
       # bcrypt (Devise の既定 stretches=12) が支配的で実測 0.16秒/件のため、30秒で通せるのは
       # 約180件が限界。安全マージンを見て、アセンブリ側の一括発行
-      # (Decidim::Assemblies::Admin::BulkAccountIssuesController::MAX_ACCOUNTS_PER_REQUEST) と
+      # (Decidim::Assemblies::Admin::BulkAccountIssueForm::MAX_ACCOUNTS_PER_REQUEST) と
       # 同じ100件に揃える。
       #
       # 超過すると 504 になるが、その時点でユーザーは作成済みで、平文パスワードは

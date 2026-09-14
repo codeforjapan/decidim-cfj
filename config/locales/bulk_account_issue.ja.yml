@@ -1,4 +1,15 @@
 ja:
+  activemodel:
+    errors:
+      models:
+        bulk_account_issue:
+          attributes:
+            base:
+              missing_tos_version: 組織の利用規約が未設定です。管理画面で利用規約を保存してから実行してください。
+              negative_counts: 発行数には0以上の数を指定してください。
+              no_accounts: 参加者数か管理者数のどちらかに1以上を指定してください。
+              slug_too_long: このスペースのスラッグは %{max} 文字を超えているため発行できません。スラッグを短く変更してください。
+              too_many_accounts: 一度に発行できるのは合計 %{max} 件までです。複数回に分けて実行してください。
   activerecord:
     attributes:
       decidim/bulk_user_import_setting:
@@ -23,11 +34,6 @@ ja:
           create:
             errors:
               busy: この組織で別の一括発行が実行中です。この操作ではアカウントを作成していませんが、実行中の一括発行がアカウントを作成している可能性があります。管理ログと、先行する発行の結果CSVを確認してから実行してください。
-              missing_tos_version: 組織の利用規約が未設定です。管理画面で利用規約を保存してから実行してください。
-              negative_counts: 発行数には0以上の数を指定してください。
-              no_accounts: 参加者数か管理者数のどちらかに1以上を指定してください。
-              slug_too_long: このスペースのスラッグは %{max} 文字を超えているため発行できません。スラッグを短く変更してください。
-              too_many_accounts: 一度に発行できるのは合計 %{max} 件までです。複数回に分けて実行してください。
           new:
             about:
               email_domain: メールアドレスのドメインは %{domain} です（実在しないため、メールは一切届きません）

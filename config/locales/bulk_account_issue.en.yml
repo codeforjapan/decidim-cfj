@@ -1,4 +1,15 @@
 en:
+  activemodel:
+    errors:
+      models:
+        bulk_account_issue:
+          attributes:
+            base:
+              missing_tos_version: The organization has no terms of service version yet. Save the terms of service in the admin panel first.
+              negative_counts: Counts must be zero or more.
+              no_accounts: Enter at least one participant or admin account to issue.
+              slug_too_long: The slug of this space is longer than %{max} characters, so accounts cannot be issued. Shorten the slug first.
+              too_many_accounts: At most %{max} accounts can be issued at once. Split the work into several runs.
   activerecord:
     attributes:
       decidim/bulk_user_import_setting:
@@ -23,11 +34,6 @@ en:
           create:
             errors:
               busy: Another bulk issue is already running for this organization. This request created no account, but the run in progress may be creating some. Check the admin log and the result CSV of that run before trying again.
-              missing_tos_version: The organization has no terms of service version yet. Save the terms of service in the admin panel first.
-              negative_counts: Counts must be zero or more.
-              no_accounts: Enter at least one participant or admin account to issue.
-              slug_too_long: The slug of this space is longer than %{max} characters, so accounts cannot be issued. Shorten the slug first.
-              too_many_accounts: At most %{max} accounts can be issued at once. Split the work into several runs.
           new:
             about:
               email_domain: The email domain is %{domain} (it does not exist, so no mail is ever delivered)

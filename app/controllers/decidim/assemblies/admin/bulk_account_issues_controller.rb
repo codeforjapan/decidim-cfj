@@ -7,7 +7,7 @@ module Decidim
     module Admin
       # 各アセンブリの管理画面から、匿名IDの確定アカウントを一括発行する。
       # スペースはURL（:assembly_slug）から確定するため、入力は「参加者数・管理者数」だけ。
-      # 実際の発行は Decidim::BulkSpaceAccountIssuer が担う（詳細は docs/BULK_SPACE_ACCOUNTS.md）。
+      # （詳細は docs/BULK_SPACE_ACCOUNTS.md）。
       #
       # 同期処理のため1回の発行数に上限を設けている。超える場合は複数回に分けるか rake を使う。
       class BulkAccountIssuesController < Decidim::Assemblies::Admin::ApplicationController
@@ -27,10 +27,6 @@ module Decidim
                              ::Decidim::Admin::Permissions,
                              ::Decidim::BulkAccountIssuePermissions)
 
-        # 本番の CloudFront は既定30秒でオリジン応答を打ち切る。実測 0.19秒/件（bcrypt支配）から
-        # 約150件が限界のため、安全マージンを見て100件とする。
-        MAX_ACCOUNTS_PER_REQUEST = 100
-        RESULT_HEADERS = %w(space_slug role account_id email password furigana status error).freeze
         UTF8_BOM = "\xEF\xBB\xBF"
 
         helper_method :settings, :max_accounts, :slug_too_long?, :next_account_ids
@@ -38,23 +34,18 @@ module Decidim
         def new
           enforce_permission_to(:create, :bulk_account_issue)
           redirect_unless_available
+
+          @form = form(BulkAccountIssueForm).instance
         end
 
         def create
           enforce_permission_to(:create, :bulk_account_issue)
           return if redirect_unless_available
 
-          participant_count = requested_count(:participant_count)
-          admin_count = requested_count(:admin_count)
-          total = participant_count + admin_count
+          @form = form(BulkAccountIssueForm).from_params(params)
+          return render(:new, status: :unprocessable_entity) if @form.invalid?
 
-          return reject(:negative_counts) if participant_count.negative? || admin_count.negative?
-          return reject(:no_accounts) if total.zero?
-          return reject(:too_many_accounts, max: max_accounts) if total > MAX_ACCOUNTS_PER_REQUEST
-          return reject(:slug_too_long, max: Decidim::BulkSpaceAccountIssuer::MAX_SLUG_LENGTH) if slug_too_long?
-          return reject(:missing_tos_version) if current_organization.tos_version.blank?
-
-          results = issuer.issue(build_instructions(participant_count, admin_count))
+          results = issuer.issue(@form.instructions)
           log_issue(results)
 
           send_data results_csv(results),
@@ -62,9 +53,10 @@ module Decidim
                     filename: "issued_accounts_#{Time.current.strftime("%Y%m%d%H%M%S")}.csv",
                     disposition: "attachment"
         rescue Decidim::BulkSpaceAccountIssuer::Busy
-          reject(:busy)
+          flash.now[:alert] = t("create.errors.busy", scope: "decidim.assemblies.admin.bulk_account_issues")
+          render :new, status: :unprocessable_entity
         rescue ArgumentError => e
-          # BulkSpaceAccountIssuer#validate! の検証エラー（原則ここには来ない: 上のガードで先に弾く）
+          # BulkSpaceAccountIssuer#validate! の検証エラー（原則ここには来ない: Form の検証で先に弾く）
           flash.now[:alert] = e.message
           render :new, status: :unprocessable_entity
         end
@@ -113,45 +105,25 @@ module Decidim
         end
 
         def max_accounts
-          MAX_ACCOUNTS_PER_REQUEST
+          BulkAccountIssueForm::MAX_ACCOUNTS_PER_REQUEST
         end
 
         def slug_too_long?
           current_assembly.slug.downcase.length > Decidim::BulkSpaceAccountIssuer::MAX_SLUG_LENGTH
         end
 
-        # 次に採番されるID（形式ごと）。dry_run の発行でIDだけ計算する。
+        # 次に採番されるID（形式ごと）。
         def next_account_ids
-          @next_account_ids ||= begin
-            dry = Decidim::BulkSpaceAccountIssuer.new(organization: current_organization,
-                                                      email_domain: settings.email_domain, dry_run: true)
-            %w(participant admin).index_with do |role|
-              dry.issue([{ space_type: "assemblies", space_slug: current_assembly.slug, role:, count: 1 }])
-                 .first.account_id
-            end
-          end
-        end
-
-        def requested_count(key)
-          params.dig(:bulk_account_issue, key).to_s.strip.to_i
-        end
-
-        def build_instructions(participant_count, admin_count)
-          [
-            { space_type: "assemblies", space_slug: current_assembly.slug, role: "participant", count: participant_count },
-            { space_type: "assemblies", space_slug: current_assembly.slug, role: "admin", count: admin_count }
-          ].select { |instruction| instruction[:count].positive? }
+          @next_account_ids ||= Decidim::BulkSpaceAccountIssuer.preview_account_ids(
+            organization: current_organization,
+            email_domain: settings.email_domain,
+            space_type: "assemblies",
+            space_slug: current_assembly.slug
+          )
         end
 
         def issuer
           Decidim::BulkSpaceAccountIssuer.new(organization: current_organization, email_domain: settings.email_domain)
-        end
-
-        # 失敗時は new を描画し直す。500 にしないこと自体が要件なので 422 を返す。
-        def reject(reason, **params)
-          flash.now[:alert] = t("create.errors.#{reason}", scope: "decidim.assemblies.admin.bulk_account_issues", **params)
-          render :new, status: :unprocessable_entity
-          nil
         end
 
         # 招待フローと違い「本人がリンクを踏んだ」痕跡が残らないため、誰が・どのスペースに・
@@ -172,11 +144,8 @@ module Decidim
         # 平文パスワードとフリガナを含むCSV。Excel で開けるよう BOM を付ける。
         def results_csv(results)
           csv = CSV.generate do |out|
-            out << RESULT_HEADERS
-            results.each do |result|
-              out << [result.space_slug, result.role, result.account_id, result.email,
-                      result.password, result.furigana, result.status, result.error]
-            end
+            out << Decidim::BulkSpaceAccountIssuer::RESULT_HEADERS
+            results.each { |result| out << result.to_a }
           end
 
           "#{UTF8_BOM}#{csv}"

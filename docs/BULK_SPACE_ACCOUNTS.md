@@ -14,6 +14,7 @@
 | `lib/tasks/bulk_users.rake` | `bulk_users:issue` / `bulk_users:configure` |
 | `app/controllers/decidim/system/bulk_user_import_settings_controller.rb` | /system の設定画面 |
 | `app/controllers/decidim/assemblies/admin/bulk_account_issues_controller.rb` | アセンブリ管理画面の発行UI |
+| `app/forms/decidim/assemblies/admin/bulk_account_issue_form.rb` | 発行数の検証と instructions への変換 |
 | `app/permissions/decidim/bulk_account_issue_permissions.rb` | 発行UIの権限（組織admin限定） |
 | `config/initializers/bulk_account_issuing.rb` | ルーティング・メニュー・管理ログ表示の登録 |
 | `config/locales/bulk_account_issue.{ja,en}.yml` | 画面文言 |
