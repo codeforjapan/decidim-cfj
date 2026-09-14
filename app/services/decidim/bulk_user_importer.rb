@@ -20,6 +20,8 @@ module Decidim
 
     Result = Struct.new(:email, :nickname, :name, :password, :status, :error, keyword_init: true)
 
+    RESULT_HEADERS = Result.members.map(&:to_s).freeze
+
     def initialize(organization:, locale: nil, password_length: 16, password_charset: CHARSET)
       # tos_version が無いまま作ると全ユーザーが「規約未同意」になり、ログインのたびに同意画面へ
       # 誘導される。呼び出し側（rake / 管理画面）の検証漏れをここで最終的に止める。

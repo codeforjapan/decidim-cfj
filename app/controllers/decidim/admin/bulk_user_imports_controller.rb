@@ -21,7 +21,6 @@ module Decidim
       register_permissions(::Decidim::Admin::BulkUserImportsController,
                            ::Decidim::BulkUserImportPermissions)
 
-      RESULT_HEADERS = %w(email nickname name password status error).freeze
       UTF8_BOM = "\xEF\xBB\xBF"
 
       def new
@@ -107,10 +106,8 @@ module Decidim
       # 平文パスワードを含むCSV。Excel で開けるよう BOM を付ける。
       def results_csv(results)
         csv = CSV.generate do |out|
-          out << RESULT_HEADERS
-          results.each do |result|
-            out << [result.email, result.nickname, result.name, result.password, result.status, result.error]
-          end
+          out << BulkUserImporter::RESULT_HEADERS
+          results.each { |result| out << result.to_a }
         end
 
         "#{UTF8_BOM}#{csv}"
