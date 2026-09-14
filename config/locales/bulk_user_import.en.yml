@@ -1,17 +1,25 @@
 en:
+  activemodel:
+    attributes:
+      bulk_user_import:
+        file: CSV file
+    errors:
+      models:
+        bulk_user_import:
+          attributes:
+            base:
+              missing_tos_version: This organization has no terms of service version yet. Save the terms of service in the admin panel first.
+            file:
+              blank: Please choose a CSV file.
+              empty_csv: The CSV has no data rows. Add the participants you want to register below the header row.
+              file_too_large: The file is larger than the %{size} limit. Please split it and upload again.
+              invalid_extension: Please choose a file with the .csv extension.
+              malformed_csv: The CSV could not be parsed. Save it again as UTF-8 CSV and try once more.
+              missing_email_header: The CSV header row does not contain an "email" column.
+              too_many_rows: You can import at most %{max} rows at a time. Please split the CSV and upload again.
   decidim:
     admin:
       bulk_user_imports:
-        create:
-          errors:
-            empty_csv: The CSV has no data rows. Add the participants you want to register below the header row.
-            file_too_large: The file is larger than the %{size} limit. Please split it and upload again.
-            invalid_extension: Please choose a file with the .csv extension.
-            malformed_csv: The CSV could not be parsed. Save it again as UTF-8 CSV and try once more.
-            missing_email_header: The CSV header row does not contain an "email" column.
-            missing_file: Please choose a CSV file.
-            missing_tos_version: This organization has no terms of service version yet. Save the terms of service in the admin panel first.
-            too_many_rows: You can import at most %{max} rows at a time. Please split the CSV and upload again.
         new:
           format:
             encoding: The file must be UTF-8. CSV files saved by Excel as UTF-8 with BOM are accepted as they are.
