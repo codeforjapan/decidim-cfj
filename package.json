@@ -9,7 +9,7 @@
     "@decidim/browserslist-config": "^0.30.9",
     "@decidim/core": "^0.30.9",
     "@decidim/webpacker": "^0.30.9",
-    "@geoman-io/leaflet-geoman-free": "^2.18.3",
+    "@geoman-io/leaflet-geoman-free": "^2.20.0",
     "codemirror": "^5.65.19",
     "core-js": "^3.36.0",
     "emojibase": "^15.3.0",
