@@ -90,9 +90,6 @@ ja:
         taxonomies_select:
           select_taxonomy: 分類を選択
           taxonomies: 分類
-      titles:
-        taxonomies: 分類
-        taxonomy_filters: '"%{taxonomy}" の分類フィルター'
     admin_log:
       taxonomy:
         create: '%{user_name} が分類 %{resource_name} を作成しました'
