@@ -127,7 +127,7 @@ RSpec.describe "Decidim::Assemblies::Admin BulkAccountIssuesController" do
     end
 
     context "with an admin of the assembly who is not an organization admin" do
-      let(:space_admin) { create(:user, :confirmed, organization:) }
+      let(:space_admin) { create(:user, :confirmed, :admin_terms_accepted, organization:) }
 
       before do
         create(:assembly_user_role, user: space_admin, assembly:, role: :admin)
