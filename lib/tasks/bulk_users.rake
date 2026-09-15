@@ -67,9 +67,9 @@ namespace :bulk_users do
     results = begin
       io.write(BULK_USERS_UTF8_BOM)
       csv = CSV.new(io)
-      csv << %w(email nickname name password status error)
+      csv << Decidim::BulkUserImporter::RESULT_HEADERS
       importer.import(rows) do |result|
-        csv << [result.email, result.nickname, result.name, result.password, result.status, result.error]
+        csv << result.to_a
         io.flush
       end
     ensure

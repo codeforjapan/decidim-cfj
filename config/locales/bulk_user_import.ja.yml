@@ -1,17 +1,25 @@
 ja:
+  activemodel:
+    attributes:
+      bulk_user_import:
+        file: CSVファイル
+    errors:
+      models:
+        bulk_user_import:
+          attributes:
+            base:
+              missing_tos_version: 組織の利用規約が未設定です。管理画面で利用規約を保存してから実行してください。
+            file:
+              blank: CSVファイルを選択してください。
+              empty_csv: CSVにデータ行がありません。ヘッダ行の下に登録したいユーザーを記入してください。
+              file_too_large: ファイルサイズが上限（%{size}）を超えています。分割してアップロードしてください。
+              invalid_extension: 拡張子が .csv のファイルを選択してください。
+              malformed_csv: CSVを読み取れませんでした。UTF-8 のCSVとして保存し直してから、もう一度お試しください。
+              missing_email_header: CSVのヘッダ行に email 列がありません。
+              too_many_rows: 一度に登録できるのは %{max} 行までです。CSVを分割してアップロードしてください。
   decidim:
     admin:
       bulk_user_imports:
-        create:
-          errors:
-            empty_csv: CSVにデータ行がありません。ヘッダ行の下に登録したいユーザーを記入してください。
-            file_too_large: ファイルサイズが上限（%{size}）を超えています。分割してアップロードしてください。
-            invalid_extension: 拡張子が .csv のファイルを選択してください。
-            malformed_csv: CSVを読み取れませんでした。UTF-8 のCSVとして保存し直してから、もう一度お試しください。
-            missing_email_header: CSVのヘッダ行に email 列がありません。
-            missing_file: CSVファイルを選択してください。
-            missing_tos_version: 組織の利用規約が未設定です。管理画面で利用規約を保存してから実行してください。
-            too_many_rows: 一度に登録できるのは %{max} 行までです。CSVを分割してアップロードしてください。
         new:
           format:
             encoding: 文字コードは UTF-8 です。Excel で保存した BOM 付き UTF-8 のCSVもそのまま読み込めます。

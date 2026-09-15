@@ -5,7 +5,7 @@ require "csv"
 module Decidim
   module Admin
     # 管理画面から CSV をアップロードして、招待メールを経由しない確定ユーザーを一括作成する。
-    # 実際の作成処理は Decidim::BulkUserImporter が担う（詳細は docs/BULK_USER_IMPORT.md）。
+    # （詳細は docs/BULK_USER_IMPORT.md）
     #
     # 同期処理のため、ファイルサイズと行数に上限を設けている。上限を超える規模が必要になったら
     # ActiveJob 化を検討すること。
@@ -20,37 +20,21 @@ module Decidim
                            ::Decidim::Admin::Permissions,
                            ::Decidim::BulkUserImportPermissions)
 
-      MAX_FILE_SIZE = 1.megabyte
-      # 本番の CloudFront は OriginReadTimeout 30秒でオリジン応答を打ち切る（実測値。prd/staging とも）。
-      # bcrypt (Devise の既定 stretches=12) が支配的で実測 0.16秒/件のため、30秒で通せるのは
-      # 約180件が限界。安全マージンを見て、アセンブリ側の一括発行
-      # (Decidim::Assemblies::Admin::BulkAccountIssuesController::MAX_ACCOUNTS_PER_REQUEST) と
-      # 同じ100件に揃える。
-      #
-      # 超過すると 504 になるが、その時点でユーザーは作成済みで、平文パスワードは
-      # レスポンスでしか渡していないため復旧できない（DB にはハッシュしか残らない）。
-      # 上限を超える規模が必要なら ActiveJob 化するか、逐次書き出しを行う rake タスクを使う。
-      MAX_ROWS = 100
-      RESULT_HEADERS = %w(email nickname name password status error).freeze
       UTF8_BOM = "\xEF\xBB\xBF"
 
       def new
         enforce_permission_to(:create, :bulk_user_import)
+
+        @form = form(BulkUserImportForm).instance
       end
 
       def create
         enforce_permission_to(:create, :bulk_user_import)
 
-        file = uploaded_file
-        return reject(:missing_file) unless file.respond_to?(:original_filename)
-        return reject(:invalid_extension) unless csv_extension?(file)
-        return reject(:file_too_large, size: max_file_size) if file.size > MAX_FILE_SIZE
-        return reject(:missing_tos_version) if current_organization.tos_version.blank?
+        @form = form(BulkUserImportForm).from_params(params)
+        return render(:new, status: :unprocessable_entity) if @form.invalid?
 
-        table = parse_csv(file)
-        return if performed?
-
-        import(table)
+        import(@form.rows)
       end
 
       private
@@ -76,63 +60,18 @@ module Decidim
       end
 
       def max_rows
-        MAX_ROWS
+        BulkUserImportForm::MAX_ROWS
       end
 
       def max_file_size
-        ActiveSupport::NumberHelper.number_to_human_size(MAX_FILE_SIZE)
+        ActiveSupport::NumberHelper.number_to_human_size(BulkUserImportForm::MAX_FILE_SIZE)
       end
 
       def permission_class_chain
         ::Decidim.permissions_registry.chain_for(::Decidim::Admin::BulkUserImportsController)
       end
 
-      # ファイル未添付でもエラー表示に留めるため、ParameterMissing を握って nil を返す。
-      def uploaded_file
-        params.require(:bulk_user_import).permit(:file)[:file]
-      rescue ActionController::ParameterMissing
-        nil
-      end
-
-      def csv_extension?(file)
-        File.extname(file.original_filename.to_s).downcase == ".csv"
-      end
-
-      # 失敗時は new を描画し直す。500 にしないこと自体が要件なので 422 を返す。
-      def reject(reason, **params)
-        flash.now[:alert] = t("create.errors.#{reason}", scope: "decidim.admin.bulk_user_imports", **params)
-        render :new, status: :unprocessable_entity
-        nil
-      end
-
-      # 検証に通らなければ reject して nil を返す（呼び出し側は描画済みなので何もしない）。
-      def parse_csv(file)
-        content = read_utf8(file)
-        return reject(:malformed_csv) if content.blank?
-
-        table = CSV.parse(content, headers: true)
-        return reject(:missing_email_header) unless table.headers.include?("email")
-        return reject(:too_many_rows, max: max_rows) if table.size > max_rows
-        return reject(:empty_csv) if table.empty?
-
-        table
-      rescue CSV::MalformedCSVError
-        reject(:malformed_csv)
-      end
-
-      # Excel が書き出す BOM 付き UTF-8 をそのまま受け取れるようにする。不正なバイト列なら nil。
-      def read_utf8(file)
-        content = file.read.to_s.b.delete_prefix(UTF8_BOM.b).force_encoding(Encoding::UTF_8)
-        return unless content.valid_encoding?
-
-        content
-      end
-
-      def import(table)
-        rows = table.map do |row|
-          { email: row["email"], name: row["name"], nickname: row["nickname"], password: row["password"] }
-        end
-
+      def import(rows)
         results = Decidim::BulkUserImporter.new(organization: current_organization).import(rows)
         log_import(results)
 
@@ -164,10 +103,8 @@ module Decidim
       # 平文パスワードを含むCSV。Excel で開けるよう BOM を付ける。
       def results_csv(results)
         csv = CSV.generate do |out|
-          out << RESULT_HEADERS
-          results.each do |result|
-            out << [result.email, result.nickname, result.name, result.password, result.status, result.error]
-          end
+          out << BulkUserImporter::RESULT_HEADERS
+          results.each { |result| out << result.to_a }
         end
 
         "#{UTF8_BOM}#{csv}"

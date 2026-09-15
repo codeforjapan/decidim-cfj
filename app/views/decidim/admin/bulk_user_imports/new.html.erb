@@ -46,6 +46,16 @@
   <div class="card-section p-4">
     <p><%= t(".upload.explanation") %></p>
 
+    <% if @form.errors.any? %>
+      <div class="callout alert">
+        <ul>
+          <% @form.errors.each do |error| %>
+            <li><%= error.message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
     <%= form_with url: bulk_user_import_path,
                   scope: :bulk_user_import,
                   method: :post,
