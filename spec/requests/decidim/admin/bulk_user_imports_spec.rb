@@ -73,6 +73,14 @@ RSpec.describe "Decidim::Admin BulkUserImportsController" do
         expect(response.body).to include(%(enctype="multipart/form-data"))
         expect(response.body).to include(%(name="bulk_user_import[file]"))
       end
+
+      it "keeps the participant admin sidebar" do
+        get decidim_admin.new_bulk_user_import_path
+
+        %w(users officializations impersonatable_users).each do |section|
+          expect(response.body).to include("/admin/#{section}")
+        end
+      end
     end
   end
 

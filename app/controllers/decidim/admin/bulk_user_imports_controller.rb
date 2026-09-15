@@ -16,9 +16,8 @@ module Decidim
 
       helper_method :max_rows, :max_file_size
 
-      # 独自リソースのため、コアの権限クラスは使わず専用のクラスだけをチェーンに登録する。
-      # 理由は Decidim::BulkUserImportPermissions のコメントを参照。
       register_permissions(::Decidim::Admin::BulkUserImportsController,
+                           ::Decidim::Admin::Permissions,
                            ::Decidim::BulkUserImportPermissions)
 
       MAX_FILE_SIZE = 1.megabyte
@@ -71,11 +70,9 @@ module Decidim
       end
       alias user_not_authorized_path user_has_no_permission_path
 
-      # このコントローラの権限チェーンは :bulk_user_import 専用なので、ダッシュボードの可否は
-      # コアの権限クラスに直接聞く（OrganizationDashboardConstraint と同じ判定）。
       def admin_dashboard_allowed?
         current_user.organization == current_organization &&
-          allowed_to?(:read, :admin_dashboard, {}, [::Decidim::Admin::Permissions])
+          allowed_to?(:read, :admin_dashboard)
       end
 
       def max_rows
