@@ -1,3 +1,50 @@
+GIT
+  remote: https://github.com/codeforjapan/decidim-broadlistening-view.git
+  revision: 74ab2ca4cff05d5722b1fd3062d032ff429ddffd
+  branch: 032-stable
+  specs:
+    decidim-broadlistening-view (0.1.3)
+      decidim-admin (>= 0.29.0)
+      decidim-core (>= 0.29.0)
+
+GIT
+  remote: https://github.com/codeforjapan/decidim-module-decidim_awesome.git
+  revision: f24b5934372b12666026f6009ee892ce3727e0ff
+  branch: release/0.32-stable
+  specs:
+    decidim-decidim_awesome (0.15.0)
+      active_hashcash (~> 0.4.0)
+      decidim-admin (>= 0.32, < 0.33)
+      decidim-core (>= 0.32, < 0.33)
+      deface (>= 1.5)
+      sassc (~> 2.3)
+
+GIT
+  remote: https://github.com/codeforjapan/decidim-module-navigation_maps.git
+  revision: d0b17633f46e277d459aca776505c3f231392b9f
+  branch: upgrade-0.32-2026-09-14
+  specs:
+    decidim-navigation_maps (1.9.0)
+      decidim-admin (>= 0.32, < 0.33)
+      decidim-core (>= 0.32, < 0.33)
+
+GIT
+  remote: https://github.com/codeforjapan/decidim-module-term_customizer.git
+  revision: 8f2365b435ff5fb9981f09f5233905f834aa3fdc
+  branch: 032-ja
+  specs:
+    decidim-term_customizer (0.32.0)
+      decidim-admin (~> 0.32.0)
+      decidim-core (~> 0.32.0)
+
+GIT
+  remote: https://github.com/codeforjapan/decidim-polis.git
+  revision: 4fe3a6a84a691592a46861d29067671124a2fe20
+  branch: update-0-32-1
+  specs:
+    decidim-polis (0.32.1)
+      decidim-core (= 0.32.1)
+
 PATH
   remote: decidim-user_extension
   specs:
@@ -61,6 +108,8 @@ GEM
       erubi (~> 1.11)
       rails-dom-testing (~> 2.2)
       rails-html-sanitizer (~> 1.6)
+    active_hashcash (0.4.0)
+      rails (>= 5.2.0)
     active_link_to (1.0.5)
       actionpack
       addressable
@@ -928,6 +977,8 @@ GEM
       google-protobuf (~> 4.31)
     sass-embedded (1.104.0-x86_64-linux-gnu)
       google-protobuf (~> 4.31)
+    sassc (2.4.0)
+      ffi (~> 1.9)
     securerandom (0.4.1)
     selenium-webdriver (4.49.0)
       base64 (~> 0.2)
@@ -1055,8 +1106,13 @@ DEPENDENCIES
   byebug (~> 11.0)
   decidim (= 0.32.1)
   decidim-ai (~> 0.32.1)
+  decidim-broadlistening-view!
   decidim-conferences (~> 0.32.1)
+  decidim-decidim_awesome!
   decidim-dev (= 0.32.1)
+  decidim-navigation_maps!
+  decidim-polis!
+  decidim-term_customizer!
   decidim-user_extension!
   deface
   dotenv-rails

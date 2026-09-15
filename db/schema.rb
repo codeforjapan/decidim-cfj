@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_11_080755) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_14_085035) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "ltree"
   enable_extension "pg_bigm"
@@ -60,6 +60,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_11_080755) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "data_migrations", primary_key: "version", id: :string, force: :cascade do |t|
   end
 
   create_table "decidim_accountability_milestones", id: :serial, force: :cascade do |t|
@@ -330,6 +333,24 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_11_080755) do
     t.index ["unique_id"], name: "index_decidim_authorizations_on_unique_id"
   end
 
+  create_table "decidim_awesome_authorization_groups", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "decidim_organization_id", null: false
+    t.jsonb "name", default: {}, null: false
+    t.jsonb "purpose", default: {}, null: false
+    t.datetime "updated_at", null: false
+    t.index ["decidim_organization_id"], name: "decidim_awesome_authorization_groups_organization_id"
+  end
+
+  create_table "decidim_awesome_authorization_members", force: :cascade do |t|
+    t.bigint "authorization_group_id", null: false
+    t.datetime "created_at", null: false
+    t.string "email", null: false
+    t.datetime "updated_at", null: false
+    t.index ["authorization_group_id", "email"], name: "index_auth_members_group_email", unique: true
+    t.index ["authorization_group_id"], name: "decidim_awesome_authorization_members_authorization_group_id"
+  end
+
   create_table "decidim_awesome_config", force: :cascade do |t|
     t.datetime "created_at", precision: nil, null: false
     t.integer "decidim_organization_id"
@@ -364,12 +385,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_11_080755) do
     t.datetime "created_at", null: false
     t.bigint "decidim_proposal_id", null: false
     t.string "decidim_proposal_type", null: false
+    t.datetime "deleted_at"
     t.string "private_body"
     t.datetime "private_body_updated_at", precision: nil
     t.datetime "updated_at", null: false
     t.jsonb "vote_weight_totals"
     t.integer "weight_total", default: 0
     t.index ["decidim_proposal_id", "decidim_proposal_type"], name: "index_decidim_awesome_proposal_extra_fields_on_decidim_proposal"
+    t.index ["deleted_at"], name: "index_decidim_awesome_proposal_extra_fields_on_deleted_at"
   end
 
   create_table "decidim_awesome_vote_weights", force: :cascade do |t|
@@ -2015,6 +2038,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_11_080755) do
   add_foreign_key "decidim_authorization_transfers", "decidim_users", column: "source_user_id"
   add_foreign_key "decidim_authorization_transfers", "decidim_users", column: "user_id"
   add_foreign_key "decidim_authorizations", "decidim_users"
+  add_foreign_key "decidim_awesome_authorization_groups", "decidim_organizations"
+  add_foreign_key "decidim_awesome_authorization_members", "decidim_awesome_authorization_groups", column: "authorization_group_id"
   add_foreign_key "decidim_awesome_config_constraints", "decidim_awesome_config"
   add_foreign_key "decidim_awesome_editor_images", "decidim_organizations"
   add_foreign_key "decidim_awesome_editor_images", "decidim_users", column: "decidim_author_id"

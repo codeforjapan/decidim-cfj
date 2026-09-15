@@ -36,11 +36,19 @@ ja:
             awesome_votes_enabled_states_help: 他のステータスはコンポーネントを保存すると選択可能になります。
     decidim_awesome:
       admin:
-        menu:
-          cookie_management: クッキー管理
+        checks:
+          index:
+            decidim-verifications: 本人確認モジュールから
         config:
+          disabled: 無効
+          enabled: 有効
           title:
             cookie_management: クッキー管理
+        menu:
+          cookie_management: クッキー管理
+          verifications:
+            force_authorizations: 本人確認の強制付与
+            verifications: 本人確認
         cookie_categories:
           cookie_management_warning_html: 'Decidim は iframe を表示するために、ユーザーに全ての Cookie の受け入れを強制する点に注意してください。GDPR に準拠するため、iframe で使用される全ての Cookie を適切な Cookie カテゴリーに追加してください。'
           create:
@@ -92,6 +100,9 @@ ja:
           blocked_by_status: 投票できません
   layouts:
     decidim:
+      decidim_awesome:
+        awesome_config:
+          awesome_authorization_groups_placeholder: すべてのグループを許可
       data_consent:
         details:
           columns:
