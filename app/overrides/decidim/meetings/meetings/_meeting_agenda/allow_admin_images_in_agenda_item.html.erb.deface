@@ -1,0 +1,17 @@
+<!-- replace "erb[loud]:contains('decidim_sanitize_translated(agenda_item.description)')" -->
+
+<%# Agenda item descriptions are authored through the same admin rich-text %>
+<%# editor as the meeting's own description (image/video upload included), %>
+<%# but this partial always sanitized them with the participant-facing %>
+<%# Decidim::UserInputScrubber, which strips <img>/<iframe> tags outright %>
+<%# regardless of who wrote the content. Match how the meeting body itself %>
+<%# is rendered (Decidim::Meetings::ApplicationHelper#render_meeting_body) %>
+<%# and use the admin scrubber for official meetings, so images/videos %>
+<%# added via the admin agenda editor are not silently dropped here. %>
+<%= (
+      if meeting.official?
+        decidim_sanitize_admin(translated_attribute(agenda_item.description))
+      else
+        decidim_sanitize_translated(agenda_item.description)
+      end
+    ).html_safe %>
