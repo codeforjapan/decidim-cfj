@@ -39,7 +39,10 @@ en:
             form:
               admin_count: Admins (with admin rights on this space)
               explanation: At most %{max} accounts can be issued at once. When done, a result CSV with the credentials (password and furigana) is downloaded.
+              issue_again: reopen the form
+              issuing: Issuing…
               participant_count: Participants
+              single_use: The issue button is disabled once pressed, so that nothing is issued twice by accident. To issue more accounts,
               submit: Issue accounts
               title: How many accounts
             slug_too_long: The slug of this space (“%{slug}”) is longer than %{max} characters, so this page cannot issue accounts. Shorten the slug (the limit derives from the 20 character nickname cap).

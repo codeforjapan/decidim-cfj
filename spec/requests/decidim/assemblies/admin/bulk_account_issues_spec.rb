@@ -161,6 +161,12 @@ RSpec.describe "Decidim::Assemblies::Admin BulkAccountIssuesController" do
         end
       end
 
+      it "spends the submit button on the first click" do
+        get new_path
+
+        expect(response.body).to include("data-disable-with")
+      end
+
       context "when issuing is disabled for the organization" do
         before { settings.update!(enabled: false) }
 
@@ -246,21 +252,21 @@ RSpec.describe "Decidim::Assemblies::Admin BulkAccountIssuesController" do
       it "rejects zero accounts" do
         post create_path, params: { bulk_account_issue: { participant_count: 0, admin_count: 0 } }
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:redirect)
         expect(issued_users.count).to eq(0)
       end
 
       it "rejects negative counts" do
         post create_path, params: { bulk_account_issue: { participant_count: -1, admin_count: 2 } }
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:redirect)
         expect(issued_users.count).to eq(0)
       end
 
       it "rejects more than the per-request cap" do
         post create_path, params: { bulk_account_issue: { participant_count: 60, admin_count: 41 } }
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:redirect)
         expect(issued_users.count).to eq(0)
       end
 
@@ -273,7 +279,7 @@ RSpec.describe "Decidim::Assemblies::Admin BulkAccountIssuesController" do
         it "rejects the request" do
           post(create_path, params:)
 
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:redirect)
           expect(Decidim::User.where(organization:).where("nickname LIKE ?", "aaaa%").count).to eq(0)
         end
       end
@@ -287,7 +293,7 @@ RSpec.describe "Decidim::Assemblies::Admin BulkAccountIssuesController" do
         it "rejects the request instead of creating users that count as not having accepted the TOS" do
           post(create_path, params:)
 
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:redirect)
           expect(issued_users.count).to eq(0)
         end
       end
@@ -313,11 +319,11 @@ RSpec.describe "Decidim::Assemblies::Admin BulkAccountIssuesController" do
 
       before { sign_in admin_user }
 
-      it "rejects the request without creating any user" do
+      it "redirects back to the form without creating any user" do
         with_lock_held_elsewhere(organization) do
           post(create_path, params:)
 
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to redirect_to(new_path)
           expect(issued_users.count).to eq(0)
         end
       end
