@@ -62,6 +62,7 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 
   config.include ActiveStorageHelpers
+  config.include UploadedFileHelpers
 
   # Override organization factory to use correct locales
   config.before(:suite) do

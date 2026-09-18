@@ -22,6 +22,7 @@
 | `app/services/decidim/bulk_user_importer.rb` | 一括登録のコアロジック |
 | `lib/tasks/bulk_users.rake` | CSVを読み込んで実行する rake タスク |
 | `app/controllers/decidim/admin/bulk_user_imports_controller.rb` | 管理画面のCSVアップロード画面 |
+| `app/forms/decidim/admin/bulk_user_import_form.rb` | アップロードされたCSVの検証と行への変換 |
 | `app/permissions/decidim/bulk_user_import_permissions.rb` | 管理画面の権限（組織admin限定） |
 | `app/views/decidim/admin/bulk_user_imports/new.html.erb` | アップロードフォーム |
 | `config/initializers/bulk_user_import.rb` | ルーティング・アイコン・管理メニューの登録 |
