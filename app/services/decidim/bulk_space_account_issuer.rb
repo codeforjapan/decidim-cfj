@@ -60,6 +60,8 @@ module Decidim
 
     Result = Struct.new(:space_slug, :role, :account_id, :email, :password, :furigana, :status, :error, keyword_init: true)
 
+    RESULT_HEADERS = Result.members.map(&:to_s).freeze
+
     Instruction = Struct.new(:space_type, :space_slug, :role, :amount, keyword_init: true) do
       # slug は大文字を許容するが nickname は小文字のみのため、ID の接頭辞は小文字化する
       def prefix = space_slug.to_s.downcase
@@ -106,6 +108,13 @@ module Decidim
 
       with_organization_lock do
         normalize(instructions).flat_map { |instruction| issue_instruction(instruction, &block) }
+      end
+    end
+
+    def self.preview_account_ids(organization:, email_domain:, space_type:, space_slug:)
+      dry = new(organization:, email_domain:, dry_run: true)
+      ROLES.index_with do |role|
+        dry.issue([{ space_type:, space_slug:, role:, count: 1 }]).first.account_id
       end
     end
 
