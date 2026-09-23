@@ -91,4 +91,19 @@ RSpec.describe "Questionnaire respondent identity override" do
       expect(answers.where(question:).count).to eq(2)
     end
   end
+
+  describe DecidimCfjRespondentIdentity do
+    it "keys on the user when logged in" do
+      expect(described_class.for_respondent(user, "some-token")).to eq({ user: })
+    end
+
+    it "keys on the session token when anonymous" do
+      expect(described_class.for_respondent(nil, "some-token")).to eq({ session_token: "some-token" })
+    end
+
+    it "raises when neither a user nor a session token is present" do
+      expect { described_class.for_respondent(nil, nil) }.to raise_error(ArgumentError)
+      expect { described_class.for_respondent(nil, "") }.to raise_error(ArgumentError)
+    end
+  end
 end

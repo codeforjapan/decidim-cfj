@@ -20,8 +20,22 @@
 # regenerated), so the user is matched even if the salt changes.
 module DecidimCfjRespondentIdentity
   # Returns the WHERE conditions that identify a respondent's answers.
+  #
+  # It raises when the respondent cannot be resolved (neither a user nor a
+  # session token) rather than returning a degenerate condition:
+  #
+  # - { session_token: nil } would translate to "session_token IS NULL", an
+  #   implicit and easy-to-widen match for a destructive query.
+  # - returning an empty record would silently reopen the edit form empty, which
+  #   is the very symptom this override fixes.
+  #
+  # An unresolvable identity is a programming error (the form requires a session
+  # token and the edit path requires a user), so it must fail loudly.
   def self.for_respondent(user, session_token)
-    user.present? ? { user: } : { session_token: }
+    return { user: } if user.present?
+    return { session_token: } if session_token.present?
+
+    raise ArgumentError, "cannot resolve the questionnaire respondent: no user and no session token"
   end
 end
 
