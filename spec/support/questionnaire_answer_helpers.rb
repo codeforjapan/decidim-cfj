@@ -12,22 +12,22 @@ RSpec.shared_context "with a questionnaire answer form" do
 
   # NOTE: in 0.30.x the QuestionnaireForm attribute is `responses` even though
   # the persisted model is Decidim::Forms::Answer.
-  def build_form(responses)
+  def build_form(responses, current_user: user, session_token: "session-token-abc", ip_hash: "ip-hash-abc")
     params = ActionController::Parameters.new(
       questionnaire: { tos_agreement: "1", responses: }
     )
 
     Decidim::Forms::QuestionnaireForm.from_params(params).with_context(
       current_organization: organization,
-      current_user: user,
-      session_token: "session-token-abc",
-      ip_hash: "ip-hash-abc"
+      current_user:,
+      session_token:,
+      ip_hash:
     )
   end
 
-  def submit(form)
+  def submit(form, allow_editing_answers: false)
     outcome = nil
-    Decidim::Forms::AnswerQuestionnaire.call(form, questionnaire) do
+    Decidim::Forms::AnswerQuestionnaire.call(form, questionnaire, allow_editing_answers:) do
       on(:ok) { outcome = :ok }
       on(:invalid) { outcome = :invalid }
     end
