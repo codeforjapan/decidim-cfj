@@ -56,7 +56,7 @@ module DecidimCfjAddAnswersByIdentity
     identity = DecidimCfjRespondentIdentity.for_respondent(current_user, session_token)
 
     self.responses = questionnaire.questions.map do |question|
-      Decidim::Forms::AnswerForm.from_model(Decidim::Forms::Answer.where(question:, **identity).first_or_initialize)
+      Decidim::Forms::AnswerForm.from_model(Decidim::Forms::Answer.where(question:, **identity).order(id: :desc).first_or_initialize)
     end
   end
   # rubocop:enable Lint/UnusedMethodArgument
