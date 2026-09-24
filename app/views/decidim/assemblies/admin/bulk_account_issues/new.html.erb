@@ -39,6 +39,16 @@
     <div class="card-section p-4">
       <p><%= t(".form.explanation", max: max_accounts) %></p>
 
+      <% if @form.errors.any? %>
+        <div class="callout alert">
+          <ul>
+            <% @form.errors.each do |error| %>
+              <li><%= error.message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
       <%= form_with url: decidim_admin_assemblies.assembly_bulk_account_issue_path(current_assembly),
                     scope: :bulk_account_issue,
                     method: :post,

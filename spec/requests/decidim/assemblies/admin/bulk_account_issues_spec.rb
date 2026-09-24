@@ -11,7 +11,7 @@ RSpec.describe "Decidim::Assemblies::Admin BulkAccountIssuesController" do
     create(:assembly, organization:, slug: "a-high", access_mode: :restricted, has_members: true)
   end
   let!(:settings) do
-    Decidim::BulkUserImportSetting.create!(organization:, email_domain: "chiba-mirai.test", enabled: true)
+    Decidim::BulkUserImportSetting.create!(organization:, email_domain: "example.test", enabled: true)
   end
   let(:admin_user) { create(:user, :admin, :confirmed, organization:) }
   # 0.32 で decidim の全 URL に /:locale が付いた。ロケール無しの管理画面パスは
@@ -130,6 +130,21 @@ RSpec.describe "Decidim::Assemblies::Admin BulkAccountIssuesController" do
       end
     end
 
+    context "with a space admin who is not an organization admin" do
+      let(:space_admin) { create(:user, :confirmed, :admin_terms_accepted, organization:) }
+
+      before do
+        create(:assembly_user_role, user: space_admin, assembly:, role: :admin)
+        sign_in space_admin
+      end
+
+      it "does not let them reach the form" do
+        get new_path
+
+        expect(response).to redirect_to(decidim_admin.root_path)
+      end
+    end
+
     context "with an organization admin" do
       before { sign_in admin_user }
 
@@ -139,7 +154,15 @@ RSpec.describe "Decidim::Assemblies::Admin BulkAccountIssuesController" do
         expect(response).to have_http_status(:ok)
         expect(response.body).to include("a-high-001")
         expect(response.body).to include("a-high-a001")
-        expect(response.body).to include("chiba-mirai.test")
+        expect(response.body).to include("example.test")
+      end
+
+      it "keeps the assembly admin sidebar" do
+        get new_path
+
+        %w(components user_roles moderations participatory_space_private_users share_tokens).each do |section|
+          expect(response.body).to include("/admin/assemblies/#{assembly.slug}/#{section}")
+        end
       end
 
       context "when issuing is disabled for the organization" do
@@ -288,6 +311,22 @@ RSpec.describe "Decidim::Assemblies::Admin BulkAccountIssuesController" do
       end
     end
 
+    # 二重送信（結果CSVのダウンロードでは画面が遷移しないため起こりやすい）で採番が衝突しないこと。
+    context "when another issue is already running for the organization" do
+      include_context "with another bulk issue running"
+
+      before { sign_in admin_user }
+
+      it "rejects the request without creating any user" do
+        with_lock_held_elsewhere(organization) do
+          post(create_path, params:)
+
+          expect(response).to have_http_status(:unprocessable_content)
+          expect(issued_users.count).to eq(0)
+        end
+      end
+    end
+
     # 他組織で有効でも、この組織では発行できないこと（設定の組織スコープの検証）。
     context "when issuing is enabled only for another organization" do
       before do
@@ -306,17 +345,17 @@ RSpec.describe "Decidim::Assemblies::Admin BulkAccountIssuesController" do
     end
 
     context "with a space admin who is not an organization admin" do
-      let(:space_admin) { create(:user, :confirmed, organization:) }
+      let(:space_admin) { create(:user, :confirmed, :admin_terms_accepted, organization:) }
 
       before do
-        Decidim::AssemblyUserRole.create!(user: space_admin, assembly:, role: "admin")
+        create(:assembly_user_role, user: space_admin, assembly:, role: :admin)
         sign_in space_admin
       end
 
       it "cannot issue accounts" do
         post(create_path, params:)
 
-        expect(response).to have_http_status(:redirect)
+        expect(response).to redirect_to(decidim_admin.root_path)
         expect(issued_users.count).to eq(0)
       end
     end

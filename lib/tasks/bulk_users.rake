@@ -67,9 +67,9 @@ namespace :bulk_users do
     results = begin
       io.write(BULK_USERS_UTF8_BOM)
       csv = CSV.new(io)
-      csv << %w(email nickname name password status error)
+      csv << Decidim::BulkUserImporter::RESULT_HEADERS
       importer.import(rows) do |result|
-        csv << [result.email, result.nickname, result.name, result.password, result.status, result.error]
+        csv << result.to_a
         io.flush
       end
     ensure
@@ -105,9 +105,12 @@ namespace :bulk_users do
     settings = Decidim::BulkUserImportSetting.find_by(decidim_organization_id: organization.id)
     unless settings&.enabled?
       abort "この組織では一括アカウント発行が有効になっていません。" \
-            "bulk_users:configure ENABLED=true EMAIL_DOMAIN=<ドメイン> で設定してください。"
+            "/system の「一括アカウント発行」か bulk_users:configure ENABLED=true EMAIL_DOMAIN=<ドメイン> で設定してください。"
     end
-    abort "email_domain が設定されていません。bulk_users:configure EMAIL_DOMAIN=<ドメイン> で設定してください。" if settings.email_domain.blank?
+    if settings.email_domain.blank?
+      abort "email_domain が設定されていません。" \
+            "/system の「一括アカウント発行」か bulk_users:configure EMAIL_DOMAIN=<ドメイン> で設定してください。"
+    end
     abort "組織に利用規約のバージョンが設定されていません。管理画面で利用規約を保存してから再実行してください。" if organization.tos_version.blank?
 
     dry_run = ENV["DRY_RUN"].present?
@@ -151,12 +154,15 @@ namespace :bulk_users do
     results = begin
       io.write(BULK_USERS_UTF8_BOM)
       csv = CSV.new(io)
-      csv << %w(space_slug role account_id email password furigana status error)
+      csv << Decidim::BulkSpaceAccountIssuer::RESULT_HEADERS
       issuer.issue(instructions) do |result|
-        csv << [result.space_slug, result.role, result.account_id, result.email,
-                result.password, result.furigana, result.status, result.error]
+        csv << result.to_a
         io.flush
       end
+    rescue Decidim::BulkSpaceAccountIssuer::Busy
+      io.close
+      File.delete(output)
+      abort "この組織では別の一括発行が実行中です。この実行ではアカウントを作成していませんが、実行中の一括発行がアカウントを作成している可能性があります。管理ログと、先行する発行の結果CSVを確認してから再実行してください。"
     ensure
       io.close
     end
@@ -172,10 +178,10 @@ namespace :bulk_users do
     puts "Finish bulk_users:issue"
   end
 
-  # 組織ごとの発行設定の確認・変更。/system の画面から編集できるようにするまでの暫定手段。
+  # 組織ごとの発行設定の確認・変更。
   #
   #   DECIDIM_ORGANIZATION_ID=<id> rails bulk_users:configure                              # 現在値の表示
-  #   DECIDIM_ORGANIZATION_ID=<id> rails bulk_users:configure ENABLED=true EMAIL_DOMAIN=chiba-mirai.test
+  #   DECIDIM_ORGANIZATION_ID=<id> rails bulk_users:configure ENABLED=true EMAIL_DOMAIN=example.test
   desc "Show or update bulk account issuing settings (EMAIL_DOMAIN= ENABLED=true|false)"
   task configure: :environment do
     organization = bulk_users_find_organization
@@ -212,9 +218,10 @@ def bulk_users_find_organization
   unless organization
     abort <<~USAGE
       Organization not found.
-      Usage:
+      Usage (specify the organization with DECIDIM_ORGANIZATION_ID=<id> or DECIDIM_ORGANIZATION_NAME=<name>):
         DECIDIM_ORGANIZATION_ID=<id> rails bulk_users:import IN=tmp/bulk/emails.csv
-        DECIDIM_ORGANIZATION_NAME=<name> rails bulk_users:import IN=tmp/bulk/emails.csv
+        DECIDIM_ORGANIZATION_ID=<id> rails bulk_users:issue IN=tmp/bulk/plan.csv [DRY_RUN=1]
+        DECIDIM_ORGANIZATION_ID=<id> rails bulk_users:configure [ENABLED=true|false] [EMAIL_DOMAIN=example.test]
     USAGE
   end
 

@@ -1,5 +1,25 @@
 # Change Log
 
+## [1.21.2](https://github.com/codeforjapan/decidim-cfj/compare/v1.21.1...v1.21.2) (2026-09-19)
+
+
+### Bug Fixes
+
+* extract Decidim::Admin::BulkUserImportForm ([08f79d6](https://github.com/codeforjapan/decidim-cfj/commit/08f79d62da7a553ceae155d119f6ead7a48ef41c))
+* import initializeCommentsDropdown from decidim-comment gem ([8afd9b8](https://github.com/codeforjapan/decidim-cfj/commit/8afd9b859c107f6dc2aa83b2697324970b6a738a))
+* keep the assembly sidebar on the bulk account issue page ([a546a48](https://github.com/codeforjapan/decidim-cfj/commit/a546a48169f71651232cc0deb47e08e509e72f7e))
+* keep the assembly sidebar on the bulk account issue page ([f73eeff](https://github.com/codeforjapan/decidim-cfj/commit/f73eeff7c4d32c0d3f4b365a749ffc3d53cc921a))
+* keep the sidebar on the bulk user import page ([2149709](https://github.com/codeforjapan/decidim-cfj/commit/214970926b5b3a3989e4a73947a56a84fa5a9dec))
+* keep the sidebar on the bulk user import page ([b503062](https://github.com/codeforjapan/decidim-cfj/commit/b50306243081c670aae162979bd8a2525cc58421))
+* serialize bulk account issuing per organization ([27c40ab](https://github.com/codeforjapan/decidim-cfj/commit/27c40ab5b69ac9b42fa4aaf98a94eab2088cf647))
+
+## [1.21.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.21.0...v1.21.1) (2026-09-10)
+
+
+### Bug Fixes
+
+* remove duplicated labels on the /system bulk issuing settings form ([5c056f5](https://github.com/codeforjapan/decidim-cfj/commit/5c056f590cb26cf5cc5578ab11e0646a5647122c))
+
 ## [1.21.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.20.1...v1.21.0) (2026-09-02)
 
 

@@ -12,17 +12,12 @@ RSpec.describe "Decidim::Admin BulkUserImportsController" do
   let(:regular_user) { create(:user, :confirmed, organization:) }
   let(:email) { "taro.yamada@example.com" }
   let(:csv_body) { "email,name\n#{email},山田 太郎\n" }
-  let(:params) { { bulk_user_import: { file: upload(csv_body) } } }
+  let(:params) { { bulk_user_import: { file: uploaded_file_from_string(csv_body) } } }
 
   before { host! organization.host }
 
-  def upload(content, filename: "users.csv", type: "text/csv")
-    file = Tempfile.new(["bulk_user_import", File.extname(filename)])
-    file.binmode
-    file.write(content)
-    file.rewind
-
-    Rack::Test::UploadedFile.new(file.path, type, original_filename: filename)
+  def rendered_file_error(key, **options)
+    ERB::Util.html_escape(I18n.t("activemodel.errors.models.bulk_user_import.attributes.file.#{key}", **options))
   end
 
   describe "GET new" do
@@ -75,6 +70,14 @@ RSpec.describe "Decidim::Admin BulkUserImportsController" do
         # multipart でないとファイルがサーバに届かないため、enctype を固定しておく
         expect(response.body).to include(%(enctype="multipart/form-data"))
         expect(response.body).to include(%(name="bulk_user_import[file]"))
+      end
+
+      it "keeps the participant admin sidebar" do
+        get decidim_admin.new_bulk_user_import_path
+
+        %w(users officializations impersonatable_users).each do |section|
+          expect(response.body).to include("/admin/#{section}")
+        end
       end
     end
   end
@@ -156,17 +159,17 @@ RSpec.describe "Decidim::Admin BulkUserImportsController" do
       end
 
       context "when the file is larger than the size limit" do
-        let(:csv_body) { "email\n#{"a" * Decidim::Admin::BulkUserImportsController::MAX_FILE_SIZE}@example.com\n" }
+        let(:csv_body) { "email\n#{"a" * Decidim::Admin::BulkUserImportForm::MAX_FILE_SIZE}@example.com\n" }
 
         it "rejects the file" do
           expect { post(decidim_admin.bulk_user_import_path, params:) }.not_to change(Decidim::User, :count)
 
           expect(response).to have_http_status(:unprocessable_content)
-          expect(flash[:alert]).to eq(
-            I18n.t(
-              "decidim.admin.bulk_user_imports.create.errors.file_too_large",
+          expect(response.body).to include(
+            rendered_file_error(
+              :file_too_large,
               size: ActiveSupport::NumberHelper.number_to_human_size(
-                Decidim::Admin::BulkUserImportsController::MAX_FILE_SIZE
+                Decidim::Admin::BulkUserImportForm::MAX_FILE_SIZE
               )
             )
           )
@@ -178,18 +181,18 @@ RSpec.describe "Decidim::Admin BulkUserImportsController" do
           post decidim_admin.bulk_user_import_path
 
           expect(response).to have_http_status(:unprocessable_content)
-          expect(flash[:alert]).to eq(I18n.t("decidim.admin.bulk_user_imports.create.errors.missing_file"))
+          expect(response.body).to include(rendered_file_error(:blank))
         end
       end
 
       context "when the extension is not .csv" do
-        let(:params) { { bulk_user_import: { file: upload(csv_body, filename: "users.txt", type: "text/plain") } } }
+        let(:params) { { bulk_user_import: { file: uploaded_file_from_string(csv_body, filename: "users.txt", type: "text/plain") } } }
 
         it "rejects the file" do
           expect { post(decidim_admin.bulk_user_import_path, params:) }.not_to change(Decidim::User, :count)
 
           expect(response).to have_http_status(:unprocessable_content)
-          expect(flash[:alert]).to eq(I18n.t("decidim.admin.bulk_user_imports.create.errors.invalid_extension"))
+          expect(response.body).to include(rendered_file_error(:invalid_extension))
         end
       end
 
@@ -200,7 +203,7 @@ RSpec.describe "Decidim::Admin BulkUserImportsController" do
           expect { post(decidim_admin.bulk_user_import_path, params:) }.not_to change(Decidim::User, :count)
 
           expect(response).to have_http_status(:unprocessable_content)
-          expect(flash[:alert]).to eq(I18n.t("decidim.admin.bulk_user_imports.create.errors.malformed_csv"))
+          expect(response.body).to include(rendered_file_error(:malformed_csv))
         end
       end
 
@@ -211,7 +214,7 @@ RSpec.describe "Decidim::Admin BulkUserImportsController" do
           expect { post(decidim_admin.bulk_user_import_path, params:) }.not_to change(Decidim::User, :count)
 
           expect(response).to have_http_status(:unprocessable_content)
-          expect(flash[:alert]).to eq(I18n.t("decidim.admin.bulk_user_imports.create.errors.missing_email_header"))
+          expect(response.body).to include(rendered_file_error(:missing_email_header))
         end
       end
 
@@ -220,11 +223,11 @@ RSpec.describe "Decidim::Admin BulkUserImportsController" do
       # あり、CSV 取り込みは 1 行あたりの処理がアセンブリ側の発行より重い（パスワード生成の
       # リトライと任意項目の検証が乗る）ため、発行側の上限を超えてはならない。
       it "does not allow more rows than the assembly issuing cap" do
-        expect(described_cap).to be <= Decidim::Assemblies::Admin::BulkAccountIssuesController::MAX_ACCOUNTS_PER_REQUEST
+        expect(described_cap).to be <= Decidim::Assemblies::Admin::BulkAccountIssueForm::MAX_ACCOUNTS_PER_REQUEST
       end
 
       context "when the row limit is exceeded" do
-        let(:max_rows) { Decidim::Admin::BulkUserImportsController::MAX_ROWS }
+        let(:max_rows) { Decidim::Admin::BulkUserImportForm::MAX_ROWS }
         let(:csv_body) do
           rows = Array.new(max_rows + 1) { |index| "user#{index}@example.com" }
           "email\n#{rows.join("\n")}\n"
@@ -234,9 +237,7 @@ RSpec.describe "Decidim::Admin BulkUserImportsController" do
           expect { post(decidim_admin.bulk_user_import_path, params:) }.not_to change(Decidim::User, :count)
 
           expect(response).to have_http_status(:unprocessable_content)
-          expect(flash[:alert]).to eq(
-            I18n.t("decidim.admin.bulk_user_imports.create.errors.too_many_rows", max: max_rows)
-          )
+          expect(response.body).to include(rendered_file_error(:too_many_rows, max: max_rows))
         end
       end
     end
@@ -280,5 +281,5 @@ RSpec.describe "Decidim::Admin BulkUserImportsController" do
     end
   end
 
-  def described_cap = Decidim::Admin::BulkUserImportsController::MAX_ROWS
+  def described_cap = Decidim::Admin::BulkUserImportForm::MAX_ROWS
 end

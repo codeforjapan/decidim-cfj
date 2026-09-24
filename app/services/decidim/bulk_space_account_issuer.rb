@@ -7,7 +7,7 @@ module Decidim
   #
   #   - アカウントID（= nickname = 表示名 = メールのローカル部）は
   #     参加者: <slug>-<連番3桁> / 管理者: <slug>-a<連番3桁>
-  #   - メールアドレスは実在しないドメイン（組織ごとの設定 email_domain、例: chiba-mirai.test）で
+  #   - メールアドレスは実在しないドメイン（組織ごとの設定 email_domain、例: example.test）で
   #     生成する。ログインフォームのフロント検証を通すため TLD 相当のドットが必須
   #   - パスワードは BulkUserImporter に可読性優先の文字種（PASSWORD_CHARSET）で生成させる
   #   - 管理者にもプライベートユーザー登録を行う。ロール（AssemblyUserRole）は管理画面への
@@ -17,6 +17,12 @@ module Decidim
   #     そのアカウントごと巻き戻す（ユーザーだけ作られてスペースに入れない状態を残さない）
   class BulkSpaceAccountIssuer
     class ImportFailed < StandardError; end
+
+    class Busy < StandardError; end
+
+    # 発行のあいだ組織単位の advisory lock を取ることで直列化する。
+    ADVISORY_LOCK_NAMESPACE = 1_112_293_707
+    def self.advisory_lock_id(organization) = (ADVISORY_LOCK_NAMESPACE << 32) | organization.id
 
     SPACE_TYPES = {
       "assemblies" => {
@@ -54,6 +60,8 @@ module Decidim
 
     Result = Struct.new(:space_slug, :role, :account_id, :email, :password, :furigana, :status, :error, keyword_init: true)
 
+    RESULT_HEADERS = Result.members.map(&:to_s).freeze
+
     Instruction = Struct.new(:space_type, :space_slug, :role, :amount, keyword_init: true) do
       # slug は大文字を許容するが nickname は小文字のみのため、ID の接頭辞は小文字化する
       def prefix = space_slug.to_s.downcase
@@ -66,7 +74,7 @@ module Decidim
       # 2ラベル以上を要求するため、ドットなしのドメインで発行するとログインできなくなる。
       # 設定モデルと同じ形式チェックを rake 経由の実行にも適用する。
       unless BulkUserImportSetting::EMAIL_DOMAIN_FORMAT.match?(email_domain)
-        raise ArgumentError, "email_domain must be a lowercase dotted domain such as chiba-mirai.test " \
+        raise ArgumentError, "email_domain must be a lowercase dotted domain such as example.test " \
                              "(got #{email_domain.inspect}); without a dot the issued accounts cannot pass " \
                              "the sign-in form validation"
       end
@@ -98,12 +106,43 @@ module Decidim
     def issue(instructions, &)
       validate!(instructions)
 
-      normalize(instructions).flat_map { |instruction| issue_instruction(instruction, &) }
+      with_organization_lock do
+        normalize(instructions).flat_map { |instruction| issue_instruction(instruction, &) }
+      end
+    end
+
+    def self.preview_account_ids(organization:, email_domain:, space_type:, space_slug:)
+      dry = new(organization:, email_domain:, dry_run: true)
+      ROLES.index_with do |role|
+        dry.issue([{ space_type:, space_slug:, role:, count: 1 }]).first.account_id
+      end
     end
 
     private
 
     attr_reader :organization, :email_domain, :dry_run, :importer
+
+    # セッションレベルの advisory lock。接続が切れれば解放されるため、プロセスが落ちても残らない。
+    # ロックと解放は同じ接続で行う必要がある（リクエスト/rake の実行中は同じ接続が使われる）。
+    def with_organization_lock
+      return yield if dry_run
+
+      connection = ActiveRecord::Base.connection
+      lock_id = self.class.advisory_lock_id(organization)
+      raise Busy, "another issue is already running for organization #{organization.id}" unless connection.get_advisory_lock(lock_id)
+
+      begin
+        yield
+      ensure
+        # Only the connection errors query_value can raise are caught: anything
+        # else coming out of here is a bug and must not be hidden.
+        begin
+          connection.release_advisory_lock(lock_id)
+        rescue ActiveRecord::ActiveRecordError => e
+          Rails.logger.warn("[bulk_space_account_issuer] failed to release the advisory lock: #{e.class}: #{e.message}")
+        end
+      end
+    end
 
     def normalize(instructions)
       instructions.map do |raw|
