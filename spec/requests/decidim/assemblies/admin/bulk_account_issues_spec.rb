@@ -160,7 +160,7 @@ RSpec.describe "Decidim::Assemblies::Admin BulkAccountIssuesController" do
       it "keeps the assembly admin sidebar" do
         get new_path
 
-        %w(components user_roles moderations participatory_space_private_users share_tokens).each do |section|
+        %w(components user_roles moderations members share_tokens).each do |section|
           expect(response.body).to include("/admin/assemblies/#{assembly.slug}/#{section}")
         end
       end
