@@ -16,8 +16,8 @@ RSpec.describe "Decidim::Admin BulkUserImportsController" do
 
   before { host! organization.host }
 
-  def rendered_file_error(key, **options)
-    ERB::Util.html_escape(I18n.t("activemodel.errors.models.bulk_user_import.attributes.file.#{key}", **options))
+  def rendered_file_error(key, **)
+    ERB::Util.html_escape(I18n.t("activemodel.errors.models.bulk_user_import.attributes.file.#{key}", **))
   end
 
   describe "GET new" do
