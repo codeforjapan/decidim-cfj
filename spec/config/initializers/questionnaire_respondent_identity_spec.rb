@@ -57,6 +57,25 @@ RSpec.describe "Questionnaire respondent identity override" do
       response = form.responses.find { |r| r.question_id.to_i == question.id }
       expect(response.body).to eq("first")
     end
+
+    context "when the respondent already has duplicate answers for a question" do
+      let!(:older) { create(:answer, questionnaire:, question:, user:, body: "older", session_token: "token-1", ip_hash: "ip-1") }
+      let!(:newer) { create(:answer, questionnaire:, question:, user:, body: "newer", session_token: "token-1", ip_hash: "ip-2") }
+
+      it "reloads the newest answer for the edit form" do
+        form = build_form(answer_params("ignored"))
+        form.add_answers!(questionnaire:, session_token: "session-token-abc", ip_hash: "ip-hash-abc")
+
+        response = form.responses.find { |r| r.question_id.to_i == question.id }
+        expect(response.body).to eq("newer")
+      end
+
+      it "clears both rows on edit" do
+        expect(submit(build_form(answer_params("edited")), allow_editing_answers: true)).to eq(:ok)
+
+        expect(answers.where(question:).pluck(:body)).to eq(["edited"])
+      end
+    end
   end
 
   context "when an anonymous respondent edits" do
