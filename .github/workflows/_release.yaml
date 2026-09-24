@@ -20,7 +20,7 @@ jobs:
       created: ${{ steps.release.outputs.release_created }}
       tag_name: ${{ env.IMAGE_TAG }}
     steps:
-      - uses: googleapis/release-please-action@v4
+      - uses: googleapis/release-please-action@v5
         id: release
         with:
           release-type: ruby
