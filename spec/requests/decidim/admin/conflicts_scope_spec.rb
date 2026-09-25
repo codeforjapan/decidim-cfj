@@ -34,8 +34,9 @@ RSpec.describe "Decidim::Admin ConflictsController organization scope" do
 
   describe "GET edit" do
     it "does not render a conflict from another organization" do
-      expect { get decidim_admin.edit_conflict_path(other_conflict) }
-        .to raise_error(ActionController::RoutingError)
+      get decidim_admin.edit_conflict_path(other_conflict)
+
+      expect(response).to have_http_status(:not_found)
     end
 
     it "renders a conflict from the current organization" do
@@ -63,8 +64,9 @@ RSpec.describe "Decidim::Admin ConflictsController organization scope" do
     it "does not transfer a managed user in another organization" do
       original_email = mixed_conflict.managed_user.email
 
-      expect { patch decidim_admin.conflict_path(mixed_conflict), params: }
-        .to raise_error(ActionController::RoutingError)
+      patch(decidim_admin.conflict_path(mixed_conflict), params:)
+
+      expect(response).to have_http_status(:not_found)
 
       expect(mixed_conflict.managed_user.reload.email).to eq(original_email)
     end
@@ -76,8 +78,9 @@ RSpec.describe "Decidim::Admin ConflictsController organization scope" do
     it "does not transfer a managed user in another organization" do
       original_email = other_conflict.managed_user.email
 
-      expect { patch decidim_admin.conflict_path(other_conflict), params: }
-        .to raise_error(ActionController::RoutingError)
+      patch(decidim_admin.conflict_path(other_conflict), params:)
+
+      expect(response).to have_http_status(:not_found)
 
       expect(other_conflict.managed_user.reload.email).to eq(original_email)
       expect(other_conflict.reload.solved).to be_falsey

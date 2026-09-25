@@ -20,7 +20,7 @@ RSpec.describe "Decidim::Admin ModeratedUsersController bulk_unreport" do
       before { sign_in user_manager_user, scope: :user }
 
       it "does not dismiss the report" do
-        patch decidim_admin.bulk_unreport_moderated_users_path, params: params
+        patch(decidim_admin.bulk_unreport_moderated_users_path, params:)
 
         expect(Decidim::UserModeration.exists?(user_moderation.id)).to be true
       end
@@ -30,7 +30,7 @@ RSpec.describe "Decidim::Admin ModeratedUsersController bulk_unreport" do
       before { sign_in admin_user, scope: :user }
 
       it "dismisses the report" do
-        patch decidim_admin.bulk_unreport_moderated_users_path, params: params
+        patch(decidim_admin.bulk_unreport_moderated_users_path, params:)
 
         expect(Decidim::UserModeration.exists?(user_moderation.id)).to be false
       end

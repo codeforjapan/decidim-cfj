@@ -4,14 +4,17 @@ source "https://rubygems.org"
 
 ruby RUBY_VERSION
 
-gem "decidim", "0.30.9"
+gem "decidim", "0.32.1"
 
-gem "decidim-decidim_awesome", git: "https://github.com/codeforjapan/decidim-module-decidim_awesome.git", branch: "release/0.30-stable"
+# [0.32 upgrade Phase 1] 本体のみで検証するため一時的に無効化。Phase 6 で1つずつ復帰させる。
+# 上流 decidim-ice の PR #623 (upgrade-32) は draft のまま。マージされて正式な
+# release/0.32-stable が切られたら fork を切り直す。
+gem "decidim-decidim_awesome", git: "https://github.com/codeforjapan/decidim-module-decidim_awesome.git", branch: "release/0.32-stable"
 
-gem "decidim-term_customizer", git: "https://github.com/codeforjapan/decidim-module-term_customizer.git", branch: "030-ja"
+gem "decidim-term_customizer", git: "https://github.com/codeforjapan/decidim-module-term_customizer.git", branch: "032-ja"
 
-gem "decidim-navigation_maps", git: "https://github.com/codeforjapan/decidim-module-navigation_maps.git", branch: "upgrade-0.30-2025-10-04"
-gem "decidim-polis", git: "https://github.com/codeforjapan/decidim-polis.git", branch: "update-0-30-9"
+gem "decidim-navigation_maps", git: "https://github.com/codeforjapan/decidim-module-navigation_maps.git", branch: "upgrade-0.32-2026-09-14"
+gem "decidim-polis", git: "https://github.com/codeforjapan/decidim-polis.git", branch: "update-0-32-1"
 
 gem "bootsnap"
 
@@ -24,13 +27,15 @@ gem "wicked_pdf", "~> 2.1"
 
 gem "deface"
 gem "image_processing"
+gem "mini_magick", "~> 4.13"
 gem "newrelic_rpm"
 
-gem "omniauth-cityos-dcp", git: "https://github.com/TheDesignium/omniauth-cityos-dcp.git", tag: "v1.5.2"
+# gem "omniauth-cityos-dcp", git: "https://github.com/TheDesignium/omniauth-cityos-dcp.git", tag: "v1.4.0"
 gem "omniauth-line_login", path: "omniauth-line_login"
 gem "omniauth-rails_csrf_protection"
 
-gem "decidim-broadlistening-view", git: "https://github.com/takahashim/decidim-broadlistening-view.git", branch: "030-stable"
+# [0.32 upgrade Phase 1] 本体のみで検証するため一時的に無効化。Phase 6 で1つずつ復帰させる。
+gem "decidim-broadlistening-view", git: "https://github.com/codeforjapan/decidim-broadlistening-view.git", branch: "032-stable"
 gem "decidim-user_extension", path: "decidim-user_extension"
 
 gem "slack-ruby-client"
@@ -39,7 +44,7 @@ group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
   gem "figaro"
 
-  gem "decidim-dev", "0.30.9"
+  gem "decidim-dev", "0.32.1"
   gem "dotenv-rails"
   gem "factory_bot_rails"
   gem "rspec-rails"
@@ -49,9 +54,9 @@ group :development do
   gem "brakeman"
   gem "letter_opener_web"
   gem "listen", "~> 3.1"
-  gem "rubocop-factory_bot", "~> 2.26.0", require: false
+  gem "rubocop-factory_bot", "~> 2.27.0", require: false
   gem "rubocop-faker"
-  gem "rubocop-rspec_rails", "~> 2.30.0", require: false
+  gem "rubocop-rspec_rails", "~> 2.31.0", require: false
   gem "web-console", "~> 4.2"
 
   # Profiling gems
@@ -67,12 +72,12 @@ group :production do
   # gem "aws-xray-sdk", require: ["aws-xray-sdk/facets/rails/railtie"]
   gem "fog-aws"
   # gem "oj", platform: :mri
-  gem "sidekiq", "6.5.12"
+  gem "sidekiq", "~> 7.3.10"
 end
 
 gem "rubyzip", ">= 1.0.0"
 gem "zip-zip"
 
-gem "decidim-conferences", "~> 0.30.9"
+gem "decidim-conferences", "~> 0.32.1"
 
-gem "decidim-ai", "~> 0.30.9"
+gem "decidim-ai", "~> 0.32.1"

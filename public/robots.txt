@@ -43,8 +43,13 @@ Disallow: /
 # -------------------------------------------------
 
 User-agent: *
+# decidim 0.32 で全 URL に /:locale が付いた。robots.txt のパス照合はルートからの
+# 前方一致なので、ロケール無しの行だけでは /ja/profiles/ に当たらない。
+# 旧 URL も 301 される前にクロールされうるため両方残す。
 Disallow: /profiles/
+Disallow: /*/profiles/
 Disallow: /search
+Disallow: /*/search
 Disallow: /*/versions
 Disallow: /sitemap.xml
 # フィルタ・並び替えURLはBotの網羅的アクセスによる高負荷の原因

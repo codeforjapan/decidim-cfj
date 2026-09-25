@@ -13,7 +13,7 @@ def setup_provider_proc(provider, config_mapping = {})
 end
 
 Rails.application.config.middleware.use OmniAuth::Builder do
-  omniauth_config = Rails.application.secrets[:omniauth]
+  omniauth_config = Decidim.omniauth_providers
 
   if omniauth_config && omniauth_config[:line_login].present?
     require "omniauth-line_login"

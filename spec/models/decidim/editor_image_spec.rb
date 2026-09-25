@@ -14,8 +14,8 @@ module Decidim
 
         # In test environment, the override is skipped, so we get Rails URLs
         path = uploader.path
-        expect(path).to match(%r{rails/active_storage})
-        expect(path).not_to match(/amazonaws\.com/)
+        expect(path).to include("rails/active_storage")
+        expect(path).not_to include("amazonaws.com")
       end
 
       it "maintains uploader functionality" do

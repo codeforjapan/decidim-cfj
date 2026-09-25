@@ -32,7 +32,7 @@ module Decidim
         enforce_permission_to(:create, :bulk_user_import)
 
         @form = form(BulkUserImportForm).from_params(params)
-        return render(:new, status: :unprocessable_entity) if @form.invalid?
+        return render(:new, status: :unprocessable_content) if @form.invalid?
 
         import(@form.rows)
       end
