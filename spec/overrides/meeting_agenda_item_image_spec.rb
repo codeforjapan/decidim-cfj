@@ -6,7 +6,7 @@ require "rails_helper"
 # アジェンダを描画しており、管理画面のエディタで入れた画像が落ちていた。cfj は deface で
 # decidim_sanitize_editor_admin に差し替えて対処していた(PR #902)。
 #
-# 0.31 で上流が同じ設計を取り込んだため、その deface は 0.32 で不要になり削除した。
+# 0.31 で上流が同じ設計を取り込んだため、その deface は 0.31 の時点で不要になり削除した。
 #   - AgendaItemPresenter が新設され、テンプレートが render_meeting_sanitize_field に置換
 #   - safe_content_admin? == @meeting.official? で admin スクラバに分岐
 #     (decidim-meetings/app/helpers/decidim/meetings/application_helper.rb)

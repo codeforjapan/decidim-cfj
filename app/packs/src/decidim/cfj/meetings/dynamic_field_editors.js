@@ -14,7 +14,7 @@
  *    `[data-dialog]` on page load, so without this the editor's image button
  *    silently does nothing.
  *
- * Still needed on 0.32.1. Checked against upstream rather than assumed:
+ * Still needed on 0.31.7 (and on 0.32.1). Checked against upstream rather than assumed:
  *   - `upload_options[:modal_id] ||= "upload_#{SecureRandom.uuid}"` is
  *     byte for byte the same in v0.30.9, v0.31.7 and v0.32.1 (form_builder.rb),
  *     so the id is still random and still duplicated by cloning
