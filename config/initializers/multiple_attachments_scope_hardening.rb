@@ -12,7 +12,7 @@
 # - When no owner can be resolved the original behaviour is used, so the patch
 #   can never drop an update that used to succeed.
 # - keep_ids only ever drops ids that are definitely out of scope, so
-#   document_cleanup! keeps destroying exactly what it destroyed before.
+#   attachment_cleanup! keeps destroying exactly what it destroyed before.
 module MultipleAttachmentsScopeHardening
   private
 
@@ -25,8 +25,8 @@ module MultipleAttachmentsScopeHardening
 
   # Drops only ids whose attachment definitely belongs to another organization,
   # so the weight assignment in create_attachments cannot reach them. Anything
-  # the check cannot resolve is kept. document_cleanup! also reads this, but it
-  # only iterates attachments of documents_attached_to, which always share its
+  # the check cannot resolve is kept. attachment_cleanup! also reads this, but it
+  # only iterates attachments of attachments_attached_to, which always share its
   # organization, so nothing it would have kept can be dropped here.
   def keep_ids
     super.reject { |id| foreign_attachment?(id) }
@@ -44,13 +44,13 @@ module MultipleAttachmentsScopeHardening
   # should express. Commands that assign @attached_to before build_attachments
   # runs make it available, and those are checked that way.
   #
-  # The rest only assign it in run_after_hooks, leaving documents_attached_to
+  # The rest only assign it in run_after_hooks, leaving attachments_attached_to
   # to fall back to the organization. There the record is not knowable yet, so
   # the check drops to the organization: weaker than the rule, but still the
   # tenant boundary, and never stricter than what the command can actually
   # verify.
   def attachment_in_scope?(record)
-    owner = documents_attached_to
+    owner = attachments_attached_to
     return true if owner.blank?
     return record.organization == owner if owner.is_a?(Decidim::Organization)
 
@@ -59,7 +59,7 @@ module MultipleAttachmentsScopeHardening
 end
 
 Rails.application.config.to_prepare do
-  Decidim::MultipleAttachmentsMethods # rubocop:disable Lint/Void
+  Decidim::MultipleAttachmentsMethods
 
   Decidim::MultipleAttachmentsMethods.prepend(MultipleAttachmentsScopeHardening) unless Decidim::MultipleAttachmentsMethods.include?(MultipleAttachmentsScopeHardening)
 end

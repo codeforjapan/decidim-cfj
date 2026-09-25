@@ -6,9 +6,9 @@
 #   return sanitized output before being rendered as HTML-safe strings.
 
 Rails.application.config.to_prepare do
-  Decidim::UserBaseEntity # rubocop:disable Lint/Void
-  Decidim::UserPresenter # rubocop:disable Lint/Void
-  Decidim::Log::UserPresenter # rubocop:disable Lint/Void
+  Decidim::UserBaseEntity
+  Decidim::UserPresenter
+  Decidim::Log::UserPresenter
 
   Decidim::UserBaseEntity.send(:remove_const, :REGEXP_NAME) if Decidim::UserBaseEntity.const_defined?(:REGEXP_NAME, false)
   Decidim::UserBaseEntity.const_set(:REGEXP_NAME, /\A(?!.*[<>?%&\^*#@()\[\]=+:;"{}\\|\n\r])/m)

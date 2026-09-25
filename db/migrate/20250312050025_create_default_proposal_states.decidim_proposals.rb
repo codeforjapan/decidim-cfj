@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # This migration comes from decidim_proposals (originally 20240110203504)
-# This file has been modified by `decidim upgrade:migrations` task on 2025-08-05 08:11:54 UTC
+# This file has been modified by `decidim upgrade:migrations` task on 2026-08-05 07:52:42 UTC
 class CreateDefaultProposalStates < ActiveRecord::Migration[6.1]
   class CustomProposal < ApplicationRecord
     belongs_to :proposal_state,
@@ -12,7 +12,7 @@ class CreateDefaultProposalStates < ActiveRecord::Migration[6.1]
 
     self.table_name = :decidim_proposals_proposals
     STATES = { not_answered: 0, evaluating: 10, accepted: 20, rejected: -10 }.freeze
-    enum old_state: STATES, _default: "not_answered"
+    enum :old_state, STATES, default: "not_answered"
   end
 
   def up

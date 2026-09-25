@@ -8,29 +8,14 @@ module Decidim
     module UpdateCommandsOverrides
       extend ActiveSupport::Concern
 
-      def call
-        return broadcast(:invalid, @form.password) unless @form.valid?
-
-        update_personal_data
-        update_avatar
-        update_password
-        update_user_extension
-
-        if current_user.valid?
-          changes = current_user.changed
-          current_user.save!
-          notify_followers
-          send_update_summary!(changes)
-          broadcast(:ok, current_user.unconfirmed_email.present?)
-        else
-          [:avatar, :password].each do |key|
-            @form.errors.add key, current_user.errors[key] if current_user.errors.has_key? key
-          end
-          broadcast(:invalid, @form.password)
-        end
-      end
-
       private
+
+      # 本体の update_personal_data に続けて user_extension を保存する。
+      # call を再現しないことで、0.31 の with_events による更新イベント発行を維持する。
+      def update_personal_data
+        super
+        update_user_extension
+      end
 
       def update_user_extension
         # ignore if user_extension is disable
