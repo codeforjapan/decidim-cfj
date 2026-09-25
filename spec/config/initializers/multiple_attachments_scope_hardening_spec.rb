@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe "Decidim::MultipleAttachmentsMethods scoping override" do
-  include_context "with a questionnaire answer form"
+  include_context "with a questionnaire response form"
 
   let(:other_organization) { create(:organization) }
   let(:other_process) { create(:participatory_process, organization: other_organization) }
