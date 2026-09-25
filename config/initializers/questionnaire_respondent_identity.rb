@@ -63,8 +63,8 @@ module DecidimCfjAddResponsesByIdentity
 end
 
 Rails.application.config.to_prepare do
-  Decidim::Forms::ResponseQuestionnaire # rubocop:disable Lint/Void
-  Decidim::Forms::QuestionnaireForm # rubocop:disable Lint/Void
+  Decidim::Forms::ResponseQuestionnaire
+  Decidim::Forms::QuestionnaireForm
 
   Decidim::Forms::ResponseQuestionnaire.prepend(DecidimCfjClearResponsesByIdentity) unless Decidim::Forms::ResponseQuestionnaire.include?(DecidimCfjClearResponsesByIdentity)
   Decidim::Forms::QuestionnaireForm.prepend(DecidimCfjAddResponsesByIdentity) unless Decidim::Forms::QuestionnaireForm.include?(DecidimCfjAddResponsesByIdentity)
