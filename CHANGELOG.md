@@ -1,5 +1,14 @@
 # Change Log
 
+## [1.21.3](https://github.com/codeforjapan/decidim-cfj/compare/v1.21.2...v1.21.3) (2026-09-25)
+
+
+### Bug Fixes
+
+* match questionnaire answers by respondent, not by ip_hash ([35cf326](https://github.com/codeforjapan/decidim-cfj/commit/35cf326557212b06824513ae1835e980ad7ba322))
+* match questionnaire answers by respondent, not by ip_hash ([adba3eb](https://github.com/codeforjapan/decidim-cfj/commit/adba3eb949bbc5517aa0311d600e69656ae998f6))
+* raise ArgumentError when user and session_token are not present ([c42f345](https://github.com/codeforjapan/decidim-cfj/commit/c42f34583b059e6a95a3caab22dfffb61bae994d))
+
 ## [1.21.2](https://github.com/codeforjapan/decidim-cfj/compare/v1.21.1...v1.21.2) (2026-09-19)
 
 
