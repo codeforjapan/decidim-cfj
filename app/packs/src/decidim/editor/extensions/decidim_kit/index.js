@@ -50,7 +50,17 @@ export default Extension.create({
         codeBlock: false
       }),
       CharacterCount.configure(this.options.characterCount),
-      Link.configure({ openOnClick: false, ...this.options.link }),
+      // Decidim は本文中のリソース URL を保存時に gid:// へ書き換える(意図した仕様。
+      // slug が変わってもリンクが切れないようにするため)。一方 tiptap の Link は
+      // parseHTML / renderHTML の両方で href のスキームを検査し、許可外なら
+      // リンクごと破棄する。gid は既定の許可一覧に無いため、編集画面を開いて
+      // 保存しただけで、無関係な編集でもリンクが静かに消えていた。
+      //
+      // gid を許可してリンクを保持する。読みやすい URL への変換は
+      // config/initializers/editor_resource_link_override.rb が別途行うが、
+      // そちらが扱えない種類の gid(ユーザーメンション等)に対する保険として
+      // ここでも受け付ける。
+      Link.configure({ openOnClick: false, protocols: ["gid"], ...this.options.link }),
       Bold,
       Dialog,
       Indent,
