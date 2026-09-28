@@ -1,0 +1,9 @@
+<!-- replace "erb[loud]:contains('scope_name')" -->
+
+<%# Backport of decidim/decidim#16978 (itself a backport of #16831). The %>
+<%# taxonomies column header pointed at the non-existent :scope_name sort %>
+<%# key, so it could not sort. Sort through the taxonomies association %>
+<%# instead, which the Filterable concern already expects %>
+<%# (ransack_params[:s].include?("taxonomies_name")). %>
+<%# Removal: delete this file once Decidim is 0.31 or newer. %>
+<%= sort_link(query, :taxonomies_name, t("models.meeting.fields.taxonomies", scope: "decidim.meetings") ) %>
