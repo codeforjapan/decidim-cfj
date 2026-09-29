@@ -106,5 +106,23 @@ describe "Editor resource link override" do
       expect(form.body_en).to include(proposal_url)
       expect(form.body_ja).not_to include("gid://")
     end
+
+    describe "BlobRendererでのBlob GID対応との共存" do
+      let(:blob) do
+        ActiveStorage::Blob.create_and_upload!(
+          io: File.open(Decidim::Dev.asset("city.jpeg")),
+          filename: "city.jpeg",
+          content_type: "image/jpeg"
+        )
+      end
+      let(:html) { %(<img src="#{blob.to_global_id}">) }
+
+      it "Blob GID も従来通り添付ファイルURLに変換される" do
+        form = form_class.new(body: { "ja" => html })
+
+        expect(form.body_ja).not_to include("gid://")
+        expect(form.body_ja).to match(%r{/rails/active_storage/})
+      end
+    end
   end
 end
