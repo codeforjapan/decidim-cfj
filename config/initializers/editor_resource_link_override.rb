@@ -89,7 +89,7 @@ module DecidimCfjEditorResourceLink
 end
 
 Rails.application.config.to_prepare do
-  Decidim::Attributes::RichText
+  Decidim::Attributes::RichText # rubocop:disable Lint/Void
 
   Decidim::Attributes::RichText.class_eval do
     # DB → フォームオブジェクト方向。form_builder#editor が出力する hidden_field は
