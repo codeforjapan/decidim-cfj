@@ -88,15 +88,15 @@ module DecidimCfjEditorResourceLink
   end
 end
 
-Rails.application.config.to_prepare do
-  Decidim::Attributes::RichText # rubocop:disable Lint/Void
-
-  Decidim::Attributes::RichText.class_eval do
-    # DB → フォームオブジェクト方向。form_builder#editor が出力する hidden_field は
-    # このゲッターを通るため、エディタに渡る値はここを必ず経由する
-    # (多言語フィールドの場合はロケールごとの String に対して1回ずつ呼ばれる)。
-    def cast_value(value)
-      DecidimCfjEditorResourceLink.rewrite(super)
-    end
+# DB → フォームオブジェクト方向。form_builder#editor が出力する hidden_field は
+# このゲッターを通るため、エディタに渡る値はここを必ず経由する
+# (多言語フィールドの場合はロケールごとの String に対して1回ずつ呼ばれる)。
+module DecidimCfjEditorResourceLinkCastValue
+  def cast_value(value)
+    DecidimCfjEditorResourceLink.rewrite(super)
   end
+end
+
+Rails.application.config.to_prepare do
+  Decidim::Attributes::RichText.prepend(DecidimCfjEditorResourceLinkCastValue) unless Decidim::Attributes::RichText.include?(DecidimCfjEditorResourceLinkCastValue)
 end
