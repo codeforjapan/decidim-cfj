@@ -82,6 +82,47 @@ module Decidim
           expect(assembly_scoped_query).to have_received(:limit).with(18)
         end
       end
+
+      # Comments are collected here but linked to by the activity cell. A
+      # comment we cannot build a link for has to be dropped at this point, so
+      # that the buffered query refills its slot instead of leaving the block
+      # with a heading and no activities under it.
+      describe "#visible_comment?" do
+        subject(:visible) { my_cell.send(:visible_comment?, action_log) }
+
+        let(:scope_name) { :assembly_homepage }
+        let(:scoped_resource_id) { assembly.id }
+        let(:assembly) { create(:assembly, organization:) }
+        let(:debates_component) { create(:debates_component, participatory_space: assembly) }
+        let(:debate) { create(:debate, component: debates_component) }
+        let(:comment) { create(:comment, commentable: debate) }
+        let(:action_log) do
+          create(
+            :action_log,
+            organization:,
+            participatory_space: assembly,
+            component: debates_component,
+            resource: comment,
+            user: create(:user, organization:),
+            action: "create",
+            visibility: "public-only"
+          )
+        end
+
+        before { action_log }
+
+        it "keeps a comment whose resource can still be linked to" do
+          expect(visible).to be(true)
+        end
+
+        context "when the component of the commented resource has been trashed" do
+          before { debates_component.destroy }
+
+          it "drops the comment" do
+            expect(visible).to be(false)
+          end
+        end
+      end
     end
   end
 end

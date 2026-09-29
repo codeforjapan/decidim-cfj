@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "rails_helper"
+require "decidim/budgets/test/factories"
 
 module Decidim
   module Comments
@@ -54,6 +55,29 @@ module Decidim
 
         it "renders nothing" do
           expect(my_cell.call).to have_no_css("[data-activity]")
+        end
+      end
+
+      # Budgets projects reach their path through `polymorphic_resource_path`
+      # instead of `resource_locator`, but that route is built from the budget's
+      # component and so breaks in exactly the same way. The project reads its
+      # component through `has_one :component, through: :budget`.
+      context "when the commented resource is a budgets project" do
+        let(:component) { create(:budgets_component, participatory_space: assembly) }
+        let(:budget) { create(:budget, component:) }
+        let(:project) { create(:project, budget:) }
+        let(:comment) { create(:comment, commentable: project) }
+
+        it "renders a link to the project" do
+          expect(my_cell.call).to have_css("a[href^='#{project.polymorphic_resource_path({})}']")
+        end
+
+        context "when its component has been trashed" do
+          before { component.destroy }
+
+          it "renders nothing" do
+            expect(my_cell.call).to have_no_css("[data-activity]")
+          end
         end
       end
     end

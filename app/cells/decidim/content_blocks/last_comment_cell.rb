@@ -6,6 +6,7 @@ module Decidim
     # in a Decidim Organization.
     class LastCommentCell < Decidim::ViewModel
       include Decidim::Core::Engine.routes.url_helpers
+      include Decidim::RoutableRootCommentable
 
       def show
         return if valid_comments.empty?
@@ -72,10 +73,15 @@ module Decidim
       # has access to the space. ActionLog#visible_for? is too restrictive here
       # because its lazy_relation applies .published scope, which excludes
       # unpublished spaces even for admins. We use a simpler check instead.
+      #
+      # Either way a comment we cannot link to is dropped here rather than in
+      # the activity cell, so that the slot it would have taken is refilled
+      # from the buffer instead of leaving a gap in the rendered block.
       def visible_comment?(action_log)
+        resource = action_log.resource_lazy
+        return false unless routable_root_commentable?(resource.try(:root_commentable))
         return action_log.visible_for?(current_user) if participatory_space_filter.blank?
 
-        resource = action_log.resource_lazy
         resource.present? && !resource.try(:deleted?) && !resource.try(:hidden?)
       end
 
