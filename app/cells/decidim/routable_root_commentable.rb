@@ -16,6 +16,8 @@ module Decidim
     def routable_root_commentable?(commentable)
       return false if commentable.blank?
       # Participatory spaces route themselves rather than through a component.
+      # No commentable in this installation takes this path today; it is here
+      # for the upstream modules that make a space itself commentable.
       return true if commentable.respond_to?(:mounted_engine)
 
       commentable.try(:component).present?

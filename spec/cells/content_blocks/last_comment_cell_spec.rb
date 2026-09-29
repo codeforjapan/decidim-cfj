@@ -123,6 +123,45 @@ module Decidim
           end
         end
       end
+
+      # The point of dropping unlinkable comments here rather than at render
+      # time: the query buffers six times what it shows, so a dropped comment
+      # gives its slot back instead of leaving the block a heading with a gap
+      # underneath it.
+      describe "#valid_comments" do
+        let(:scope_name) { :assembly_homepage }
+        let(:scoped_resource_id) { assembly.id }
+        let(:assembly) { create(:assembly, organization:) }
+        let(:trashed_component) { create(:debates_component, participatory_space: assembly) }
+        let(:live_component) { create(:debates_component, participatory_space: assembly) }
+
+        let(:trashed_log) { comment_log_in(trashed_component) }
+        let(:live_logs) { Array.new(3) { comment_log_in(live_component) } }
+
+        def comment_log_in(component)
+          debate = create(:debate, component:)
+          create(
+            :action_log,
+            organization:,
+            participatory_space: assembly,
+            component:,
+            resource: create(:comment, commentable: debate),
+            user: create(:user, organization:),
+            action: "create",
+            visibility: "public-only"
+          )
+        end
+
+        before do
+          ids = [trashed_log, *live_logs].map(&:id)
+          trashed_component.destroy
+          allow(my_cell).to receive(:comments).and_return(Decidim::ActionLog.where(id: ids).order(:id))
+        end
+
+        it "fills every slot from the buffer, skipping the unlinkable comment" do
+          expect(my_cell.send(:valid_comments)).to match_array(live_logs)
+        end
+      end
     end
   end
 end

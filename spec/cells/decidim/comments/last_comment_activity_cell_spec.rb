@@ -36,6 +36,10 @@ module Decidim
       end
 
       context "when the commented resource is reachable" do
+        it "is renderable" do
+          expect(my_cell.renderable?).to be(true)
+        end
+
         it "renders a link to the commented resource" do
           expect(my_cell.call).to have_css("a[href^='#{Decidim::ResourceLocatorPresenter.new(debate).path}']")
         end
@@ -48,6 +52,14 @@ module Decidim
       # so the activity still reaches this cell.
       context "when the component of the commented resource has been trashed" do
         before { component.destroy }
+
+        # Asserted separately from the rendering below: Decidim::ActivityCell#show
+        # rescues NoMethodError, so rendering would come out empty even without
+        # this guard — at the cost of an error log on every request. Pinning
+        # renderable? keeps the guard from silently rotting away.
+        it "is not renderable" do
+          expect(my_cell.renderable?).to be(false)
+        end
 
         it "does not raise" do
           expect { my_cell.call }.not_to raise_error
@@ -74,6 +86,10 @@ module Decidim
 
         context "when its component has been trashed" do
           before { component.destroy }
+
+          it "is not renderable" do
+            expect(my_cell.renderable?).to be(false)
+          end
 
           it "renders nothing" do
             expect(my_cell.call).to have_no_css("[data-activity]")

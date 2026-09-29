@@ -78,11 +78,23 @@ module Decidim
       # the activity cell, so that the slot it would have taken is refilled
       # from the buffer instead of leaving a gap in the rendered block.
       def visible_comment?(action_log)
-        resource = action_log.resource_lazy
-        return false unless routable_root_commentable?(resource.try(:root_commentable))
+        return false unless linkable_comment?(action_log)
         return action_log.visible_for?(current_user) if participatory_space_filter.blank?
 
+        resource = action_log.resource_lazy
         resource.present? && !resource.try(:deleted?) && !resource.try(:hidden?)
+      end
+
+      # Resolving the commented resource constantizes a polymorphic type that
+      # may belong to a module no longer installed. ActionLog#visible_for?
+      # guards its own resolution the same way; without this we would move that
+      # failure out from under its rescue and back onto the page.
+      def linkable_comment?(action_log)
+        routable_root_commentable?(action_log.resource_lazy.try(:root_commentable))
+      rescue NameError => e
+        Rails.logger.warn "Failed resource for #{action_log.class.name}(id=#{action_log.id}): #{e.message}"
+
+        false
       end
 
       def comments_to_show
