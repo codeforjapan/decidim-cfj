@@ -11,7 +11,7 @@ module Decidim
   #     生成する。ログインフォームのフロント検証を通すため TLD 相当のドットが必須
   #   - パスワードは BulkUserImporter に可読性優先の文字種（PASSWORD_CHARSET）で生成させる
   #   - 管理者にもプライベートユーザー登録を行う。ロール（AssemblyUserRole）は管理画面への
-  #     アクセス権であって参加権ではなく、can_participate? は private_users しか見ないため、
+  #     アクセス権であって参加権ではなく、can_participate? は members しか見ないため、
   #     登録しないと「管理者なのに自分のスペースに入れない」状態になる
   #   - ユーザー作成とスペース登録は1アカウントずつトランザクションで束ね、途中で失敗したら
   #     そのアカウントごと巻き戻す（ユーザーだけ作られてスペースに入れない状態を残さない）
@@ -103,11 +103,11 @@ module Decidim
 
     # ブロックを渡すと1アカウント処理するたびに Result を yield する（rake が逐次書き出すため）。
     # dry_run の場合は何も作成せず、採番と生成されるIDだけを status: :planned で返す。
-    def issue(instructions, &block)
+    def issue(instructions, &)
       validate!(instructions)
 
       with_organization_lock do
-        normalize(instructions).flat_map { |instruction| issue_instruction(instruction, &block) }
+        normalize(instructions).flat_map { |instruction| issue_instruction(instruction, &) }
       end
     end
 
@@ -235,7 +235,7 @@ module Decidim
 
     def link_space(space, instruction, user)
       # published: false のため公開メンバー一覧には載らない。can_participate? には影響しない。
-      Decidim::ParticipatorySpacePrivateUser.create!(user:, privatable_to: space, published: false) if space.private_space?
+      Decidim::ParticipatorySpace::Member.create!(user:, participatory_space: space, published: false) unless space.open?
 
       return unless instruction.role == "admin"
 

@@ -27,7 +27,7 @@ export default Node.create({
           }
 
           const newTagsrc = tagEditDialog.getValue("tagsrc");
-          this.editor.commands.setContent(newTagsrc, true);
+          this.editor.commands.setContent(newTagsrc, { emitUpdate: true });
           this.editor.commands.focus(null, { scrollIntoView: false });
           return false;
         }

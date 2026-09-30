@@ -4,7 +4,7 @@
 #
 # cf. decidim-core/app/views/decidim/devise/shared/_omniauth_buttons.html.erb, decidim-core/app/helpers/decidim/omniauth_helper.rb
 Rails.application.config.to_prepare do
-  Decidim::OmniauthHelper # rubocop:disable Lint/Void
+  Decidim::OmniauthHelper
 
   module CityosOmniauthButtonPatch
     def oauth_icon(provider)

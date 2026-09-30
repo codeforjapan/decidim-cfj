@@ -10,48 +10,20 @@ module Decidim
 
       private
 
+      # 本体の create_or_find_user をそのまま活かし（名前サニタイズ・ToS 同意の
+      # 強制など Decidim 側の挙動を維持したまま）、user_extension だけを追加で永続化する。
       def create_or_find_user
-        @user = User.find_or_initialize_by(
-          email: verified_email,
-          organization:
-        )
-
-        if @user.persisted?
-          # If user has left the account unconfirmed and later on decides to sign
-          # in with omniauth with an already verified account, the account needs
-          # to be marked confirmed.
-          update_existing_user
-        else
-          create_new_user
-        end
-
+        super
         update_user_extension if form.user_extension.present?
       end
 
-      def update_existing_user
-        if !@user.confirmed? && @user.email == verified_email
-          @user.skip_confirmation!
-          @user.after_confirmation
-        end
-        @user.tos_agreement = "1"
-        @user.save!
+      def update_user_extension
+        @user.update!(user_extension: form.user_extension)
       end
 
-      def create_new_user
-        @user.email = (verified_email || form.email)
-        @user.name = form.name
-        @user.nickname = form.normalized_nickname
-        @user.newsletter_notifications_at = nil
-        @user.password = SecureRandom.hex
-        attach_remote_avatar(form.avatar_url)
-        @user.skip_confirmation! if verified_email
-        @user.tos_agreement = "1"
-        @user.save!
-
-        @user.after_confirmation if verified_email
-      end
-
-      def attach_remote_avatar(avatar_url)
+      # 本体の attach_avatar は avatar_url を url.open で直接取得するため SSRF に対して
+      # 無防備。プライベート IP 遮断・サイズ/リダイレクト制限付きの AvatarFetcher で上書きする。
+      def attach_avatar(avatar_url)
         return if avatar_url.blank?
 
         io, filename = Decidim::UserExtension::AvatarFetcher.call(avatar_url)
@@ -61,26 +33,6 @@ module Decidim
         end
 
         @user.avatar.attach(io:, filename:)
-      end
-
-      def update_user_extension
-        @user.update!(user_extension: form.user_extension)
-      end
-
-      def trigger_omniauth_registration
-        ActiveSupport::Notifications.publish(
-          "decidim.user.omniauth_registration",
-          user_id: @user.id,
-          identity_id: @identity.id,
-          provider: form.provider,
-          uid: form.uid,
-          email: form.email,
-          name: form.name,
-          nickname: form.normalized_nickname,
-          avatar_url: form.avatar_url,
-          raw_data: form.raw_data,
-          user_extension: form.user_extension
-        )
       end
     end
   end

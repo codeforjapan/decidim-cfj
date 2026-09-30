@@ -21,7 +21,7 @@
 # 元は decidim-core/app/serializers/decidim/exporters/open_data_blocked_user_serializer.rb
 # の v0.30.9 時点の実装で、v0.31.7 / v0.32.1 とも差分なし。
 Rails.application.config.to_prepare do
-  Decidim::Exporters::OpenDataBlockedUserSerializer # rubocop:disable Lint/Void
+  Decidim::Exporters::OpenDataBlockedUserSerializer
 
   module DecidimExportersOpenDataBlockedUserSerializerNilBlockingPatch
     def serialize

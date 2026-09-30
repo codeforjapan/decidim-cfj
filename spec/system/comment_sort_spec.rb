@@ -4,9 +4,11 @@ require "rails_helper"
 
 describe "Comments", :perform_enqueued do
   let!(:component) { create(:debates_component, organization:) }
-  let!(:commentable) { create(:debate, :open_ama, component:) }
+  let!(:commentable) { create(:debate, :ongoing_ama, component:) }
 
-  let(:resource_path) { resource_locator(commentable).path }
+  # 0.32 で全 URL に /:locale が付いた。この spec は日本語ラベルで並び順を選ぶので、
+  # 組織のデフォルト (en) ではなく ja のページを開く必要がある。
+  let(:resource_path) { resource_locator(commentable).path(locale: :ja) }
 
   let!(:organization) { create(:organization) }
   let!(:user) { create(:user, :confirmed, organization:) }
@@ -37,7 +39,7 @@ describe "Comments", :perform_enqueued do
     end
 
     # show other page
-    visit "/"
+    visit "/ja"
 
     # back to resource page
     visit resource_path
@@ -51,7 +53,7 @@ describe "Comments", :perform_enqueued do
     end
 
     # show other page
-    visit "/"
+    visit "/ja"
 
     # back to resource page
     visit resource_path

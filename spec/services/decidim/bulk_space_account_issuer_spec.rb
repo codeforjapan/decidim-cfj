@@ -7,7 +7,7 @@ RSpec.describe Decidim::BulkSpaceAccountIssuer do
 
   let(:organization) { create(:organization, tos_version: Time.current) }
   let!(:assembly) do
-    create(:assembly, organization:, slug: "a-high", private_space: true, is_transparent: false)
+    create(:assembly, organization:, slug: "a-high", access_mode: :restricted, has_members: true)
   end
 
   def instruction(role:, count:, slug: "a-high", type: "assemblies")
@@ -49,7 +49,7 @@ RSpec.describe Decidim::BulkSpaceAccountIssuer do
         users = results.map { |r| Decidim::User.find_by(organization:, email: r.email) }
 
         users.each do |user|
-          record = Decidim::ParticipatorySpacePrivateUser.find_by(user:, privatable_to: assembly)
+          record = Decidim::ParticipatorySpace::Member.find_by(user:, participatory_space: assembly)
           expect(record).to be_present
           expect(record.published).to be(false)
           expect(assembly.can_participate?(user)).to be(true)
@@ -94,7 +94,7 @@ RSpec.describe Decidim::BulkSpaceAccountIssuer do
 
     context "with a public space" do
       let!(:assembly) do
-        create(:assembly, organization:, slug: "a-high", private_space: false)
+        create(:assembly, organization:, slug: "a-high", access_mode: :open)
       end
 
       it "does not create private user registrations" do
@@ -102,7 +102,7 @@ RSpec.describe Decidim::BulkSpaceAccountIssuer do
         user = Decidim::User.find_by(organization:, email: result.email)
 
         expect(result.status).to eq(:created)
-        expect(Decidim::ParticipatorySpacePrivateUser.where(user:)).to be_empty
+        expect(Decidim::ParticipatorySpace::Member.where(user:)).to be_empty
       end
     end
 
@@ -150,7 +150,7 @@ RSpec.describe Decidim::BulkSpaceAccountIssuer do
 
     context "when linking the space fails" do
       before do
-        allow(Decidim::ParticipatorySpacePrivateUser).to receive(:create!).and_raise(ActiveRecord::RecordInvalid)
+        allow(Decidim::ParticipatorySpace::Member).to receive(:create!).and_raise(ActiveRecord::RecordInvalid)
       end
 
       it "rolls the whole account back instead of leaving an unlinked user" do

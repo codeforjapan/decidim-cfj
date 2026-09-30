@@ -25,7 +25,7 @@ module Decidim
           redirect_to bulk_user_import_settings_path
         else
           flash.now[:alert] = t("update.error", scope: "decidim.system.bulk_user_import_settings")
-          render :edit, status: :unprocessable_entity
+          render :edit, status: :unprocessable_content
         end
       end
 
@@ -36,7 +36,7 @@ module Decidim
       end
 
       def setting_params
-        params.require(:bulk_user_import_setting).permit(:email_domain, :enabled)
+        params.expect(bulk_user_import_setting: [:email_domain, :enabled])
       end
     end
   end

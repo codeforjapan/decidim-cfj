@@ -28,7 +28,7 @@ RSpec.describe "Decidim::Admin BlockUserController bulk actions" do
       before { sign_in user_manager_user, scope: :user }
 
       it "does not block the target users" do
-        post decidim_admin.bulk_create_moderated_users_path, params: params
+        post(decidim_admin.bulk_create_moderated_users_path, params:)
 
         expect(target_user.reload.blocked).to be false
         expect(other_target.reload.blocked).to be false
@@ -36,7 +36,7 @@ RSpec.describe "Decidim::Admin BlockUserController bulk actions" do
 
       it "does not create UserBlock records" do
         expect do
-          post decidim_admin.bulk_create_moderated_users_path, params: params
+          post decidim_admin.bulk_create_moderated_users_path, params:
         end.not_to change(Decidim::UserBlock, :count)
       end
     end
@@ -45,7 +45,7 @@ RSpec.describe "Decidim::Admin BlockUserController bulk actions" do
       before { sign_in admin_user, scope: :user }
 
       it "blocks the target users" do
-        post decidim_admin.bulk_create_moderated_users_path, params: params
+        post(decidim_admin.bulk_create_moderated_users_path, params:)
 
         expect(target_user.reload.blocked).to be true
         expect(other_target.reload.blocked).to be true
@@ -69,7 +69,7 @@ RSpec.describe "Decidim::Admin BlockUserController bulk actions" do
       end
 
       it "does not unblock the target user" do
-        delete decidim_admin.bulk_destroy_moderated_users_path, params: params
+        delete(decidim_admin.bulk_destroy_moderated_users_path, params:)
 
         expect(blocked_target.reload.blocked).to be true
       end
@@ -82,7 +82,7 @@ RSpec.describe "Decidim::Admin BlockUserController bulk actions" do
       end
 
       it "unblocks the target user" do
-        delete decidim_admin.bulk_destroy_moderated_users_path, params: params
+        delete(decidim_admin.bulk_destroy_moderated_users_path, params:)
 
         expect(blocked_target.reload.blocked).to be false
       end

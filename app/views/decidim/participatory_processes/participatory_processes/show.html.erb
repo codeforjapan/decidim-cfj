@@ -1,29 +1,34 @@
 <% add_decidim_meta_tags(
-   title: translated_attribute(current_participatory_space.title),
-   image_url: resolve_meta_image_url(current_participatory_space),
-   description: translated_attribute(current_participatory_space.short_description),
-   url: participatory_process_url(current_participatory_space),
-   resource: current_participatory_space) %>
+  title: translated_attribute(current_participatory_space.title),
+  image_url: resolve_meta_image_url(current_participatory_space),
+  description: translated_attribute(current_participatory_space.short_description),
+  url: participatory_process_url(current_participatory_space),
+  resource: current_participatory_space) %>
+
+<%= append_javascript_pack_tag "decidim_cfj_participatory_processes" %>
 
 <%
   edit_link(
-    resource_locator(current_participatory_space).edit,
-    :update,
-    :process,
-    process: current_participatory_space
+   decidim_admin_participatory_processes.edit_participatory_process_landing_page_path(current_participatory_space),
+   :update,
+   :process,
+   process: current_participatory_space
   )
 %>
 
 <%= render partial: "layouts/decidim/header/follow_space_menu_bar_button", locals: { participatory_space: current_participatory_space } %>
 
-<%= append_javascript_pack_tag "decidim_cfj_participatory_processes" %>
+<main role="main">
+  <% if current_participatory_space.restricted? %>
+    <aside class="layout-container__reference text-sm alert" aria-label="<%= t("restricted", scope: "decidim.participatory_space.labels") %>">
+      <%= t("restricted_space", scope: "decidim.participatory_spaces.show") %>
+    </aside>
+  <% end %>
 
-<main>
-  <%# NOTE: this elements goes outside of the .participatory-space__container block %>
-  <% if current_participatory_space.private_space? %>
-    <section class="participatory-space__block-reference alert">
-      <%= t("private_space", scope: "decidim.participatory_processes.show") %>
-    </section>
+  <% if current_participatory_space.transparent? %>
+    <aside class="layout-container__reference text-sm alert" aria-label="<%= t("transparent", scope: "decidim.participatory_space.labels") %>">
+      <%= t("transparent_space", scope: "decidim.participatory_spaces.show") %>
+    </aside>
   <% end %>
 
   <div class="participatory-space__container">
@@ -39,7 +44,7 @@
 
   </div>
 
-  <section class="participatory-space__block-reference">
-    <%= resource_reference(current_participatory_space) %>
+  <section class="participatory-space__block-reference" aria-label="<%= t("reference", scope: "decidim.participatory_space.labels") %>">
+    <p><%= resource_reference(current_participatory_space) %></p>
   </section>
 </main>

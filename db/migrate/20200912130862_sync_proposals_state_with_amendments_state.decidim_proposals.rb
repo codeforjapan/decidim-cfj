@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 # This migration comes from decidim_proposals (originally 20200212120110)
-# This file has been modified by `decidim upgrade:migrations` task on 2025-08-05 08:11:54 UTC
+# This file has been modified by `decidim upgrade:migrations` task on 2026-09-11 08:07:32 UTC
 class SyncProposalsStateWithAmendmentsState < ActiveRecord::Migration[5.2]
   def up
-    execute <<-SQL.squish
+    execute <<~SQL.squish
       UPDATE decidim_proposals_proposals AS proposals
       SET state = amendments.state
       FROM decidim_amendments AS amendments
@@ -17,7 +17,7 @@ class SyncProposalsStateWithAmendmentsState < ActiveRecord::Migration[5.2]
   end
 
   def down
-    execute <<-SQL.squish
+    execute <<~SQL.squish
       UPDATE decidim_proposals_proposals AS proposals
       SET state = NULL
       FROM decidim_amendments AS amendments
