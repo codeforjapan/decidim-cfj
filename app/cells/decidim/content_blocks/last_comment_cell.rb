@@ -6,7 +6,7 @@ module Decidim
     # in a Decidim Organization.
     class LastCommentCell < Decidim::ViewModel
       include Decidim::Core::Engine.routes.url_helpers
-      include Decidim::RoutableRootCommentable
+      include Decidim::Comments::RoutableRootCommentable
 
       def show
         return if valid_comments.empty?
