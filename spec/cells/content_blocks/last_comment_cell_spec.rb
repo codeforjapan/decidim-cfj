@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "rails_helper"
+require "decidim/conferences/test/factories"
 
 module Decidim
   module ContentBlocks
@@ -29,6 +30,7 @@ module Decidim
       context "when content block belongs to homepage scope" do
         before do
           allow(resource_type_query).to receive(:where).and_return(resource_type_query)
+          allow(resource_type_query).to receive(:or).and_return(resource_type_query)
           allow(resource_type_query).to receive(:limit).and_return(final_query)
         end
 
@@ -48,6 +50,8 @@ module Decidim
 
         before do
           allow(resource_type_query).to receive(:where).and_return(process_scoped_query)
+          allow(process_scoped_query).to receive(:where).and_return(process_scoped_query)
+          allow(process_scoped_query).to receive(:or).and_return(process_scoped_query)
           allow(process_scoped_query).to receive(:limit).and_return(final_query)
         end
 
@@ -69,6 +73,8 @@ module Decidim
 
         before do
           allow(resource_type_query).to receive(:where).and_return(assembly_scoped_query)
+          allow(assembly_scoped_query).to receive(:where).and_return(assembly_scoped_query)
+          allow(assembly_scoped_query).to receive(:or).and_return(assembly_scoped_query)
           allow(assembly_scoped_query).to receive(:limit).and_return(final_query)
         end
 
@@ -83,83 +89,109 @@ module Decidim
         end
       end
 
-      # Comments are collected here but linked to by the activity cell. A
-      # comment we cannot build a link for has to be dropped at this point, so
-      # that the buffered query refills its slot instead of leaving the block
-      # with a heading and no activities under it.
-      describe "#visible_comment?" do
-        subject(:visible) { my_cell.send(:visible_comment?, action_log) }
+      # Trashing a component (or a space, which trashes its components) leaves
+      # all of its comments unlinkable at once. They are dropped in SQL so that
+      # they cannot use up the buffer that #valid_comments refills from.
+      describe "#comments" do
+        subject(:comments) { my_cell.send(:comments) }
 
-        let(:scope_name) { :assembly_homepage }
-        let(:scoped_resource_id) { assembly.id }
+        let(:user) { create(:user, organization:) }
         let(:assembly) { create(:assembly, organization:) }
-        let(:debates_component) { create(:debates_component, participatory_space: assembly) }
-        let(:debate) { create(:debate, component: debates_component) }
-        let(:comment) { create(:comment, commentable: debate) }
-        let(:action_log) do
-          create(
-            :action_log,
-            organization:,
-            participatory_space: assembly,
-            component: debates_component,
-            resource: comment,
-            user: create(:user, organization:),
-            action: "create",
-            visibility: "public-only"
-          )
+        let(:live_component) { create(:debates_component, participatory_space: assembly) }
+        let(:trashed_component) { create(:debates_component, participatory_space: assembly) }
+        let(:live_comment) { create(:comment, commentable: create(:debate, component: live_component)) }
+        let(:trashed_comment) { create(:comment, commentable: create(:debate, component: trashed_component)) }
+
+        # Older than every trashed log and outnumbered by them beyond the
+        # buffer, so it only makes it into the query if they are dropped in SQL.
+        let!(:live_log) do
+          create(:action_log, user:, participatory_space: assembly, component: live_component,
+                              resource: live_comment, visibility: "public-only")
+        end
+        let!(:trashed_logs) do
+          create_list(:action_log, 20, user:, participatory_space: assembly, component: trashed_component,
+                                       resource: trashed_comment, visibility: "public-only")
         end
 
-        before { action_log }
-
-        it "keeps a comment whose resource can still be linked to" do
-          expect(visible).to be(true)
+        before do
+          allow(Decidim::LastActivity).to receive(:new).and_call_original
+          trashed_component.destroy
         end
 
-        context "when the component of the commented resource has been trashed" do
-          before { debates_component.destroy }
+        context "when content block belongs to homepage scope" do
+          it "drops every comment in the trashed component" do
+            expect(comments).to contain_exactly(live_log)
+          end
+        end
 
-          it "drops the comment" do
-            expect(visible).to be(false)
+        context "when content block belongs to assembly scope" do
+          let(:scope_name) { :assembly_homepage }
+          let(:scoped_resource_id) { assembly.id }
+
+          it "drops every comment in the trashed component" do
+            expect(comments).to contain_exactly(live_log)
+          end
+        end
+
+        # Decidim::LastActivity#filter_spaces drops logs of trashed spaces only
+        # when they have private users, which conferences do not. They are
+        # dropped anyway because trashing a space trashes its components.
+        context "when a conference has been trashed" do
+          let(:conference) { create(:conference, organization:) }
+          let(:conference_component) { create(:debates_component, participatory_space: conference) }
+          let(:conference_comment) { create(:comment, commentable: create(:debate, component: conference_component)) }
+          let!(:conference_log) do
+            create(:action_log, user:, participatory_space: conference, component: conference_component,
+                                resource: conference_comment, visibility: "public-only")
+          end
+
+          before { conference.destroy }
+
+          it "drops the comments in it" do
+            expect(comments).not_to include(conference_log)
           end
         end
       end
 
-      # The point of dropping unlinkable comments here rather than at render
-      # time: the query buffers six times what it shows, so a dropped comment
-      # gives its slot back instead of leaving the block a heading with a gap
-      # underneath it.
+      # A commented resource can also be trashed on its own, which SQL does not
+      # see. Such a comment has to be dropped here rather than at render time,
+      # so that the buffered query refills its slot instead of leaving the
+      # block with a gap or with a heading and no activities under it.
       describe "#valid_comments" do
-        let(:scope_name) { :assembly_homepage }
-        let(:scoped_resource_id) { assembly.id }
-        let(:assembly) { create(:assembly, organization:) }
-        let(:trashed_component) { create(:debates_component, participatory_space: assembly) }
-        let(:live_component) { create(:debates_component, participatory_space: assembly) }
-
-        let(:trashed_log) { comment_log_in(trashed_component) }
-        let(:live_logs) { Array.new(3) { comment_log_in(live_component) } }
-
-        def comment_log_in(component)
-          debate = create(:debate, component:)
-          create(
-            :action_log,
-            organization:,
-            participatory_space: assembly,
-            component:,
-            resource: create(:comment, commentable: debate),
-            user: create(:user, organization:),
-            action: "create",
-            visibility: "public-only"
-          )
+        let(:user) { create(:user, organization:) }
+        let(:assembly) { create(:assembly, :published, organization:) }
+        let(:component) { create(:debates_component, :published, participatory_space: assembly) }
+        let(:trashed_debate) { create(:debate, component:) }
+        let(:trashed_comment) { create(:comment, commentable: trashed_debate) }
+        let(:live_comment) { create(:comment, commentable: create(:debate, component:)) }
+        let(:trashed_log) do
+          create(:action_log, user:, participatory_space: assembly, component:,
+                              resource: trashed_comment, visibility: "public-only")
+        end
+        let(:live_logs) do
+          create_list(:action_log, 3, user:, participatory_space: assembly, component:,
+                                      resource: live_comment, visibility: "public-only")
         end
 
         before do
           ids = [trashed_log, *live_logs].map(&:id)
-          trashed_component.destroy
+          trashed_debate.destroy
           allow(my_cell).to receive(:comments).and_return(Decidim::ActionLog.where(id: ids).order(:id))
         end
 
-        it "fills every slot from the buffer, skipping the unlinkable comment" do
-          expect(my_cell.send(:valid_comments)).to match_array(live_logs)
+        context "when content block belongs to homepage scope" do
+          it "fills every slot from the buffer, skipping the unlinkable comment" do
+            expect(my_cell.send(:valid_comments)).to match_array(live_logs)
+          end
+        end
+
+        context "when content block belongs to assembly scope" do
+          let(:scope_name) { :assembly_homepage }
+          let(:scoped_resource_id) { assembly.id }
+
+          it "fills every slot from the buffer, skipping the unlinkable comment" do
+            expect(my_cell.send(:valid_comments)).to match_array(live_logs)
+          end
         end
       end
     end

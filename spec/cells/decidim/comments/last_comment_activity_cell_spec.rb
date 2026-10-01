@@ -70,6 +70,20 @@ module Decidim
         end
       end
 
+      # Trashing the commented resource on its own leaves its component in
+      # place, but the comment's root_commentable now resolves to nil.
+      context "when the commented resource itself has been trashed" do
+        before { debate.destroy }
+
+        it "is not renderable" do
+          expect(my_cell.renderable?).to be(false)
+        end
+
+        it "renders nothing" do
+          expect(my_cell.call).to have_no_css("[data-activity]")
+        end
+      end
+
       # Budgets projects reach their path through `polymorphic_resource_path`
       # instead of `resource_locator`, but that route is built from the budget's
       # component and so breaks in exactly the same way. The project reads its
