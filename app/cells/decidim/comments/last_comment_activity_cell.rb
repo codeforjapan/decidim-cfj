@@ -5,11 +5,13 @@ module Decidim
     # A cell to display when a comment has been created.
     class LastCommentActivityCell < ActivityCell
       include CommentCellsHelper
+      include Decidim::Comments::RoutableRootCommentable
 
-      def show
-        return unless renderable?
-
-        render
+      # A comment whose commented resource sits in a trashed component cannot
+      # be linked to, and building that link is what renders this cell. Skip it
+      # rather than let it raise, which would take the surrounding page down.
+      def renderable?
+        super && routable_root_commentable?(root_commentable)
       end
 
       def title

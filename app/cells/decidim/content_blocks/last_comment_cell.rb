@@ -6,6 +6,7 @@ module Decidim
     # in a Decidim Organization.
     class LastCommentCell < Decidim::ViewModel
       include Decidim::Core::Engine.routes.url_helpers
+      include Decidim::Comments::RoutableRootCommentable
 
       def show
         return if valid_comments.empty?
@@ -63,20 +64,50 @@ module Decidim
           ).query.where(resource_type: "Decidim::Comments::Comment")
 
           query = query.where(participatory_space_filter) if participatory_space_filter.present?
+          query = without_trashed_components(query)
 
           query.limit(comments_to_show * 6)
         end
+      end
+
+      # Trashing a component leaves every comment in it unlinkable at once.
+      # Dropping those in SQL keeps them from using up the buffer above, which a
+      # busy trashed component would otherwise exhaust. Trashing a participatory
+      # space trashes its components along with it, so this covers spaces too.
+      #
+      # Decidim::Component's default scope leaves trashed components out. Logs
+      # without a component are kept explicitly, as IN never matches NULL.
+      def without_trashed_components(query)
+        query.where(decidim_component_id: nil)
+             .or(query.where(decidim_component_id: Decidim::Component.select(:id)))
       end
 
       # When displayed on a participatory space landing page, the user already
       # has access to the space. ActionLog#visible_for? is too restrictive here
       # because its lazy_relation applies .published scope, which excludes
       # unpublished spaces even for admins. We use a simpler check instead.
+      #
+      # Either way a comment we cannot link to is dropped here rather than in
+      # the activity cell, so that the slot it would have taken is refilled
+      # from the buffer instead of leaving a gap in the rendered block.
       def visible_comment?(action_log)
+        return false unless linkable_comment?(action_log)
         return action_log.visible_for?(current_user) if participatory_space_filter.blank?
 
         resource = action_log.resource_lazy
         resource.present? && !resource.try(:deleted?) && !resource.try(:hidden?)
+      end
+
+      # Resolving the commented resource constantizes a polymorphic type that
+      # may belong to a module no longer installed. ActionLog#visible_for?
+      # guards its own resolution the same way; without this we would move that
+      # failure out from under its rescue and back onto the page.
+      def linkable_comment?(action_log)
+        routable_root_commentable?(action_log.resource_lazy.try(:root_commentable))
+      rescue NameError => e
+        Rails.logger.warn "Failed resource for #{action_log.class.name}(id=#{action_log.id}): #{e.message}"
+
+        false
       end
 
       def comments_to_show
