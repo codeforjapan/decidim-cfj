@@ -5,7 +5,7 @@ module Decidim
     # A cell to display when a comment has been created.
     class LastCommentActivityCell < ActivityCell
       include CommentCellsHelper
-      include Decidim::RoutableRootCommentable
+      include Decidim::Comments::RoutableRootCommentable
 
       # A comment whose commented resource sits in a trashed component cannot
       # be linked to, and building that link is what renders this cell. Skip it
