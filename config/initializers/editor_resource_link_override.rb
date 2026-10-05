@@ -35,10 +35,9 @@
 # 瞬間に上流の同名メソッドへ切り替わり、シグネチャ差が silent breakage になる。
 # 必要なのは属性の走査だけなので自前で持つ。
 module DecidimCfjEditorResourceLink
-  # gid://<app>/<Class>/<id> 。リソース種別は絞らない。
-  # Proposal / Meeting 以外(ユーザーメンション等)も href に入りうるため、
-  # 「URL を持つものは戻す」という規則で統一する。
-  GID_PATTERN = %r{gid://[\w-]+/[A-Za-z0-9:_]+/\d+}
+  # gid://<app>/<Class>/<id> 。
+  GID_PATTERN = %r{\Agid://[\w-]+/[A-Za-z0-9:_]+/\d+\z}
+  RESOLVABLE_MODELS = %w(Decidim::Proposals::Proposal Decidim::Meetings::Meeting).freeze
   # href / src 以外にリンク先が入る属性は Decidim のエディタでは使わない。
   LINK_ATTRIBUTES = %w(href src).freeze
 
@@ -65,26 +64,37 @@ module DecidimCfjEditorResourceLink
 
   def rewrite_attribute(node, attribute)
     value = node[attribute]
-    return false if value.blank? || value.exclude?("gid://")
+    return false unless value && GID_PATTERN.match?(value)
 
-    replaced = value.gsub(GID_PATTERN) { |gid| resource_url(gid) || gid }
-    return false if replaced == value
+    url = resource_url(value)
+    return false if url.blank?
 
-    node[attribute] = replaced
+    node[attribute] = url
     true
   end
 
-  # 解決できない gid(削除済みリソース、URL を持たない種別)は nil を返し、
+  # 解決できない gid(削除済み、対象外の種別、公開されていないリソース)は nil を返し、
   # 呼び出し側が元の gid を温存する。href を空にするとリンクが消えてしまうため。
   def resource_url(gid)
-    resource = GlobalID::Locator.locate(gid)
-    return if resource.blank?
+    global_id = GlobalID.parse(gid)
+    return unless global_id && RESOLVABLE_MODELS.include?(global_id.model_name)
+
+    resource = GlobalID::Locator.locate(global_id)
+    return unless publicly_visible?(resource)
 
     Decidim::ResourceLocatorPresenter.new(resource).url
   rescue StandardError
     # locate の失敗(RecordNotFound など)も、ルーティングを引けない種別も、
     # ここでは同じく「戻せなかった」として扱う。エディタを開けなくする方が害が大きい。
     nil
+  end
+
+  # Same conditions as ResourceParser#find_resource_by_id plus the resource's own visibility
+  def publicly_visible?(resource)
+    return false if resource.blank?
+
+    resource.published? && resource.resource_visible? &&
+      resource.component.published? && resource.participatory_space.visible?
   end
 end
 

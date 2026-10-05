@@ -52,6 +52,74 @@ describe "Editor resource link override" do
     end
   end
 
+  describe "公開されていないリソースの gid" do
+    let(:html) { %(<a href="#{target.to_global_id}">x</a>) }
+    let(:meetings_component) { create(:meeting_component, participatory_space: participatory_process) }
+
+    # A hand-typed gid must not reveal URLs the reader cannot see.
+    describe "下書きの提案" do
+      let(:target) { create(:proposal, :draft, component:) }
+
+      it "解決せず gid を残す" do
+        expect(rewrite).to eq(html)
+      end
+    end
+
+    describe "非表示にされた提案" do
+      let(:target) { create(:proposal, :hidden, component:) }
+
+      it "解決せず gid を残す" do
+        expect(rewrite).to eq(html)
+      end
+    end
+
+    describe "非公開の会議" do
+      let(:target) { create(:meeting, :published, component: meetings_component, private_meeting: true, transparent: false) }
+
+      it "解決せず gid を残す" do
+        expect(rewrite).to eq(html)
+      end
+    end
+
+    describe "未公開コンポーネントの提案" do
+      let(:target) { create(:proposal, component: create(:proposal_component, :unpublished, participatory_space: participatory_process)) }
+
+      it "解決せず gid を残す" do
+        expect(rewrite).to eq(html)
+      end
+    end
+
+    describe "非公開スペースの提案" do
+      let(:private_process) { create(:participatory_process, organization:, private_space: true) }
+      let(:target) { create(:proposal, component: create(:proposal_component, participatory_space: private_process)) }
+
+      it "解決せず gid を残す" do
+        expect(rewrite).to eq(html)
+      end
+    end
+  end
+
+  describe "提案・会議以外の gid" do
+    let(:user) { create(:user, organization:) }
+    let(:html) { %(<a href="#{user.to_global_id}">x</a>) }
+
+    # Only types ResourceParser produces are looked up; others never hit the DB.
+    it "DB を引かずに gid を残す" do
+      allow(GlobalID::Locator).to receive(:locate).and_call_original
+
+      expect(rewrite).to eq(html)
+      expect(GlobalID::Locator).not_to have_received(:locate)
+    end
+  end
+
+  describe "属性値の一部に含まれる gid" do
+    let(:html) { %(<a href="https://example.com/?ref=#{proposal_gid}">x</a>) }
+
+    it "外部 URL を書き換えない" do
+      expect(rewrite).to eq(html)
+    end
+  end
+
   describe "gid を含まない本文" do
     let(:html) { %(<p>ふつうの<a href="https://example.com">リンク</a></p>) }
 
@@ -63,7 +131,7 @@ describe "Editor resource link override" do
 
   describe "複数のリソース種別" do
     let(:meetings_component) { create(:meeting_component, participatory_space: participatory_process) }
-    let(:meeting) { create(:meeting, component: meetings_component) }
+    let(:meeting) { create(:meeting, :published, component: meetings_component) }
     let(:html) do
       %(<p><a href="#{proposal_gid}">p</a><a href="#{meeting.to_global_id}">m</a></p>)
     end
