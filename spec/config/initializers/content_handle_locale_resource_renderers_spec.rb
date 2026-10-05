@@ -39,6 +39,15 @@ describe "content_handle_locale のリソース Global ID 解決" do
     end
   end
 
+  describe "非表示にされた提案への gid" do
+    let(:hidden_proposal) { create(:proposal, :hidden, component: proposal_component) }
+    let(:body) { %(<p><a href="#{hidden_proposal.to_global_id}">x</a></p>) }
+
+    it "公開画面では URL に戻さない" do
+      expect(rendered).not_to include(Decidim::ResourceLocatorPresenter.new(hidden_proposal).url)
+    end
+  end
+
   describe "本文テキスト中の gid" do
     let(:body) { %(<p>参考 #{proposal.to_global_id} です</p>) }
 

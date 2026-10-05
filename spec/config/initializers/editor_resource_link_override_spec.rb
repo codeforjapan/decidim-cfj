@@ -52,49 +52,83 @@ describe "Editor resource link override" do
     end
   end
 
+  describe "gid の後ろに続く部分" do
+    # ResourceParser stops the gid at the id, so a query or fragment can follow it.
+    %w(?order=random #comment_5 /versions/3).each do |suffix|
+      describe suffix do
+        let(:html) { %(<a href="#{proposal_gid}#{suffix}">x</a>) }
+
+        it "残したまま URL に戻す" do
+          expect(rewrite).to include(%(href="#{proposal_url}#{suffix}"))
+        end
+      end
+    end
+  end
+
   describe "公開されていないリソースの gid" do
     let(:html) { %(<a href="#{target.to_global_id}">x</a>) }
-    let(:meetings_component) { create(:meeting_component, participatory_space: participatory_process) }
+    let(:target) { create(:proposal, :hidden, component:) }
 
-    # A hand-typed gid must not reveal URLs the reader cannot see.
-    describe "下書きの提案" do
-      let(:target) { create(:proposal, :draft, component:) }
-
-      it "解決せず gid を残す" do
-        expect(rewrite).to eq(html)
-      end
+    # tiptap drops a gid href, so saving the form would delete the link.
+    it "エディタ向けには URL に戻す" do
+      expect(rewrite).to include(%(href="#{Decidim::ResourceLocatorPresenter.new(target).url}"))
     end
 
-    describe "非表示にされた提案" do
-      let(:target) { create(:proposal, :hidden, component:) }
+    describe "公開画面向け" do
+      subject(:rewrite) { DecidimCfjEditorResourceLink.rewrite(html, public_only: true) }
 
-      it "解決せず gid を残す" do
-        expect(rewrite).to eq(html)
+      let(:meetings_component) { create(:meeting_component, participatory_space: participatory_process) }
+
+      # A hand-typed gid must not reveal URLs the reader cannot see.
+      describe "下書きの提案" do
+        let(:target) { create(:proposal, :draft, component:) }
+
+        it "解決せず gid を残す" do
+          expect(rewrite).to eq(html)
+        end
       end
-    end
 
-    describe "非公開の会議" do
-      let(:target) { create(:meeting, :published, component: meetings_component, private_meeting: true, transparent: false) }
-
-      it "解決せず gid を残す" do
-        expect(rewrite).to eq(html)
+      describe "非表示にされた提案" do
+        it "解決せず gid を残す" do
+          expect(rewrite).to eq(html)
+        end
       end
-    end
 
-    describe "未公開コンポーネントの提案" do
-      let(:target) { create(:proposal, component: create(:proposal_component, :unpublished, participatory_space: participatory_process)) }
+      describe "非公開の会議" do
+        let(:target) { create(:meeting, :published, component: meetings_component, private_meeting: true, transparent: false) }
 
-      it "解決せず gid を残す" do
-        expect(rewrite).to eq(html)
+        it "解決せず gid を残す" do
+          expect(rewrite).to eq(html)
+        end
       end
-    end
 
-    describe "非公開スペースの提案" do
-      let(:private_process) { create(:participatory_process, organization:, private_space: true) }
-      let(:target) { create(:proposal, component: create(:proposal_component, participatory_space: private_process)) }
+      describe "未公開コンポーネントの提案" do
+        let(:target) { create(:proposal, component: create(:proposal_component, :unpublished, participatory_space: participatory_process)) }
 
-      it "解決せず gid を残す" do
-        expect(rewrite).to eq(html)
+        it "解決せず gid を残す" do
+          expect(rewrite).to eq(html)
+        end
+      end
+
+      describe "非公開スペースの提案" do
+        let(:private_process) { create(:participatory_process, organization:, private_space: true) }
+        let(:target) { create(:proposal, component: create(:proposal_component, participatory_space: private_process)) }
+
+        it "解決せず gid を残す" do
+          expect(rewrite).to eq(html)
+        end
+      end
+
+      describe "提案・会議以外" do
+        let(:target) { create(:user, organization:) }
+
+        # Only types ResourceParser produces are looked up; others never hit the DB.
+        it "DB を引かずに gid を残す" do
+          allow(GlobalID::Locator).to receive(:locate).and_call_original
+
+          expect(rewrite).to eq(html)
+          expect(GlobalID::Locator).not_to have_received(:locate)
+        end
       end
     end
   end
@@ -103,20 +137,22 @@ describe "Editor resource link override" do
     let(:user) { create(:user, organization:) }
     let(:html) { %(<a href="#{user.to_global_id}">x</a>) }
 
-    # Only types ResourceParser produces are looked up; others never hit the DB.
-    it "DB を引かずに gid を残す" do
+    # The editor does not narrow types; anything with a URL is resolved.
+    it "エディタ向けには解決を試みる" do
       allow(GlobalID::Locator).to receive(:locate).and_call_original
 
-      expect(rewrite).to eq(html)
-      expect(GlobalID::Locator).not_to have_received(:locate)
+      rewrite
+
+      expect(GlobalID::Locator).to have_received(:locate)
     end
   end
 
   describe "属性値の一部に含まれる gid" do
-    let(:html) { %(<a href="https://example.com/?ref=#{proposal_gid}">x</a>) }
+    let(:html) { %(<a href="mailto:?body=#{proposal_gid}">x</a>) }
 
-    it "外部 URL を書き換えない" do
-      expect(rewrite).to eq(html)
+    # ResourceParser also turns a URL in the middle of an attribute into a gid.
+    it "その部分だけ URL に戻す" do
+      expect(rewrite).to include(%(href="mailto:?body=#{proposal_url}"))
     end
   end
 

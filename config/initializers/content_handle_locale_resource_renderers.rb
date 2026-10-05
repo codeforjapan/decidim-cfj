@@ -13,7 +13,7 @@ module DecidimCfjContentHandleLocaleResourceRenderers
     when Hash
       body.transform_values { |value| resolve_resource_gids(value) }
     else
-      DecidimCfjEditorResourceLink.rewrite(body)
+      DecidimCfjEditorResourceLink.rewrite(body, public_only: true)
     end
   end
 end

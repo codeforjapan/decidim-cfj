@@ -36,15 +36,15 @@
 # 必要なのは属性の走査だけなので自前で持つ。
 module DecidimCfjEditorResourceLink
   # gid://<app>/<Class>/<id> 。
-  GID_PATTERN = %r{\Agid://[\w-]+/[A-Za-z0-9:_]+/\d+\z}
-  RESOLVABLE_MODELS = %w(Decidim::Proposals::Proposal Decidim::Meetings::Meeting).freeze
+  GID_PATTERN = %r{gid://[\w-]+/[A-Za-z0-9:_]+/\d+}
+  PUBLIC_MODELS = %w(Decidim::Proposals::Proposal Decidim::Meetings::Meeting).freeze
   # href / src 以外にリンク先が入る属性は Decidim のエディタでは使わない。
   LINK_ATTRIBUTES = %w(href src).freeze
 
   module_function
 
   # 属性内の gid だけを絶対 URL に置き換える。解決できないものは元のまま残す。
-  def rewrite(html)
+  def rewrite(html, public_only: false)
     # 大半の本文には gid が無い。cast_value は属性読み出しのたびに走るため、
     # Nokogiri のパースに入る前に弾く。
     return html unless html.is_a?(String) && html.include?("gid://")
@@ -52,35 +52,37 @@ module DecidimCfjEditorResourceLink
     fragment = Nokogiri::HTML.fragment(html)
     # Nokogiri の traverse は Enumerator を返さないためブロックで受ける。
     modified = false
-    fragment.traverse { |node| modified = true if node.element? && rewrite_node(node) }
+    fragment.traverse { |node| modified = true if node.element? && rewrite_node(node, public_only:) }
 
     modified ? fragment.to_html : html
   end
 
   # 1要素ぶんの href / src を書き換える。実際に変わったら true。
-  def rewrite_node(node)
-    LINK_ATTRIBUTES.count { |attribute| rewrite_attribute(node, attribute) }.positive?
+  def rewrite_node(node, public_only:)
+    LINK_ATTRIBUTES.count { |attribute| rewrite_attribute(node, attribute, public_only:) }.positive?
   end
 
-  def rewrite_attribute(node, attribute)
+  def rewrite_attribute(node, attribute, public_only:)
     value = node[attribute]
-    return false unless value && GID_PATTERN.match?(value)
+    return false if value.blank? || value.exclude?("gid://")
 
-    url = resource_url(value)
-    return false if url.blank?
+    replaced = value.gsub(GID_PATTERN) { |gid| resource_url(gid, public_only:) || gid }
+    return false if replaced == value
 
-    node[attribute] = url
+    node[attribute] = replaced
     true
   end
 
-  # 解決できない gid(削除済み、対象外の種別、公開されていないリソース)は nil を返し、
+  # 解決できない gid(削除済みリソース、URL を持たない種別)は nil を返し、
   # 呼び出し側が元の gid を温存する。href を空にするとリンクが消えてしまうため。
-  def resource_url(gid)
+  def resource_url(gid, public_only:)
     global_id = GlobalID.parse(gid)
-    return unless global_id && RESOLVABLE_MODELS.include?(global_id.model_name)
+    return if global_id.nil?
+    return if public_only && PUBLIC_MODELS.exclude?(global_id.model_name)
 
     resource = GlobalID::Locator.locate(global_id)
-    return unless publicly_visible?(resource)
+    return if resource.blank?
+    return if public_only && !publicly_visible?(resource)
 
     Decidim::ResourceLocatorPresenter.new(resource).url
   rescue StandardError
@@ -91,8 +93,6 @@ module DecidimCfjEditorResourceLink
 
   # Same conditions as ResourceParser#find_resource_by_id plus the resource's own visibility
   def publicly_visible?(resource)
-    return false if resource.blank?
-
     resource.published? && resource.resource_visible? &&
       resource.component.published? && resource.participatory_space.visible?
   end
