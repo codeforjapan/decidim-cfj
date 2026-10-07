@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.21.4](https://github.com/codeforjapan/decidim-cfj/compare/v1.21.3...v1.21.4) (2026-10-07)
+
+
+### Bug Fixes
+
+* 未導入の decidim-initiatives で学習タスクが途中停止する問題を修正する ([#914](https://github.com/codeforjapan/decidim-cfj/issues/914)) ([c36b8c9](https://github.com/codeforjapan/decidim-cfj/commit/c36b8c9dd659cab46a97ed4c87b7f888fbe55251))
+
 ## [1.21.3](https://github.com/codeforjapan/decidim-cfj/compare/v1.21.2...v1.21.3) (2026-10-06)
 
 
