@@ -2,6 +2,12 @@ x-custom:
   app:
     - &rails_env "development"
     - &redis_cache_url "${REDIS_CACHE_URL:-redis://redis:6379/0}"
+    # スパム検知の学習データはキャッシュ・Sidekiq と同じ db0 に置かない。
+    # decidim:ai:spam:reset が FLUSHDB を発行するため巻き添えで消える。
+    # user と resource も別 db にする。同一 db だと学習データが混ざる。
+    # 番号はアプリ側の既定値 (config/initializers/decidim_ai.rb) と揃えた。
+    - &redis_spam_user_url "${DECIDIM_SPAM_DETECTION_BACKEND_USER_REDIS_URL:-redis://redis:6379/3}"
+    - &redis_spam_resource_url "${DECIDIM_SPAM_DETECTION_BACKEND_RESOURCE_REDIS_URL:-redis://redis:6379/2}"
   postgres:
     - &postgres_user "${DATABASE_USERNAME:-postgres}"
     - &postgres_password "${DATABASE_PASSWORD:-password}"
@@ -43,8 +49,8 @@ services:
       RAILS_ENV: *rails_env
       REDIS_URL: *redis_cache_url
       REDIS_CACHE_URL: *redis_cache_url
-      DECIDIM_SPAM_DETECTION_BACKEND_USER_REDIS_URL: *redis_cache_url
-      DECIDIM_SPAM_DETECTION_BACKEND_RESOURCE_REDIS_URL: *redis_cache_url
+      DECIDIM_SPAM_DETECTION_BACKEND_USER_REDIS_URL: *redis_spam_user_url
+      DECIDIM_SPAM_DETECTION_BACKEND_RESOURCE_REDIS_URL: *redis_spam_resource_url
     links:
       - pg
       - redis
