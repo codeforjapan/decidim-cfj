@@ -53,16 +53,34 @@ Decidim::Ai::SpamDetection.resource_detection_service = "Decidim::Ai::SpamDetect
 
 # Customize here what are the analyzed models. You may want to use this to
 # override what we register by default, or to register your own resources.
-
+#
+# NOTE: 上流の既定値は未導入モジュールを `Decidim.module_installed?` で弾いているが
+# (decidim-ai/lib/decidim/ai/spam_detection/spam_detection.rb)、ここはハッシュを丸ごと
+# 上書きするためそのガードが効かない。
+#
+# 未導入のモデルを混ぜると decidim:ai:spam:train_application_database が途中で止まる。
+# 落ちるのはハンドラ名の解決ではない。ハンドラ (Resource::Initiative) は gem が
+# オートロードするので未導入でも解決できる。NameError はその中の
+# `Resource::Initiative#query` が参照する Decidim::Initiative で起きる。
+# Importer::Database はハッシュを定義順に回すため、先頭の Comment だけ学習された
+# 中途半端な状態で落ちる。
 Decidim::Ai::SpamDetection.resource_models = {
   "Decidim::Comments::Comment" => "Decidim::Ai::SpamDetection::Resource::Comment",
-  "Decidim::Initiative" => "Decidim::Ai::SpamDetection::Resource::Initiative",
   "Decidim::Debates::Debate" => "Decidim::Ai::SpamDetection::Resource::Debate",
   "Decidim::Meetings::Meeting" => "Decidim::Ai::SpamDetection::Resource::Meeting",
   "Decidim::Proposals::Proposal" => "Decidim::Ai::SpamDetection::Resource::Proposal",
   "Decidim::Proposals::CollaborativeDraft" => "Decidim::Ai::SpamDetection::Resource::CollaborativeDraft",
   "Decidim::User" => "Decidim::Ai::SpamDetection::Resource::UserBaseEntity"
 }
+
+# decidim-initiatives は未導入 (Gemfile に無い)。導入したら自動で対象に入るよう上流と
+# 同じガードを置いておく。
+if Decidim.module_installed?("initiatives")
+  Decidim::Ai::SpamDetection.resource_models =
+    Decidim::Ai::SpamDetection.resource_models.merge(
+      "Decidim::Initiative" => "Decidim::Ai::SpamDetection::Resource::Initiative"
+    )
+end
 
 Decidim::Ai::SpamDetection.user_score_threshold = 0.75 # default
 
