@@ -483,6 +483,9 @@ Devise.allow_unconfirmed_access_for = Decidim.unconfirmed_access_for
 # Set max_complexity of GraphQL::Schema
 Rails.application.config.to_prepare do
   Decidim::Api::Schema.max_complexity = 100_000
+end
+
+Rails.application.config.after_initialize do
   if Decidim.config.content_security_policies_extra["frame-src"].blank?
     Decidim.config.content_security_policies_extra["frame-src"] = %w(www.youtube.com docs.google.com www.slideshare.net www.loom.com)
   else
