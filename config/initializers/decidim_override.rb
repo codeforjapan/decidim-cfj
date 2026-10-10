@@ -107,22 +107,10 @@ Rails.application.config.to_prepare do
   end
 
   # Insert `app/views` into Cell::ViewModel.view_paths to load application's views
-  Cell::ViewModel.view_paths.insert(1, Rails.root.join("app/views"))
+  app_views_path = Rails.root.join("app/views")
+  Cell::ViewModel.view_paths.insert(1, app_views_path) unless Cell::ViewModel.view_paths.include?(app_views_path)
 
   # ----------------------------------------
-
-  # add settings for comments
-  [:proposals, :debates].each do |component_module|
-    manifest = Decidim.find_component_manifest(component_module)
-    manifest.settings(:global) do |settings|
-      settings.attribute :share_button_disabled, type: :boolean, default: false
-      settings.attribute :comment_opinion_disabled, type: :boolean, default: false
-    end
-
-    manifest.on(:update) do |component|
-      PurgeComponentCacheJob.perform_later(component.id)
-    end
-  end
 
   # ---------------------------------
   # support logo for mobile
@@ -230,6 +218,21 @@ Rails.application.config.to_prepare do
       class CloseMeetingReminderGenerator
         prepend DecidimMeetingsCloseMeetingReminderGeneratorPatch
       end
+    end
+  end
+end
+
+Rails.application.config.after_initialize do
+  # add settings for comments
+  [:proposals, :debates].each do |component_module|
+    manifest = Decidim.find_component_manifest(component_module)
+    manifest.settings(:global) do |settings|
+      settings.attribute :share_button_disabled, type: :boolean, default: false
+      settings.attribute :comment_opinion_disabled, type: :boolean, default: false
+    end
+
+    manifest.on(:update) do |component|
+      PurgeComponentCacheJob.perform_later(component.id)
     end
   end
 end

@@ -66,27 +66,27 @@ end
 # 管理ログで一括発行（action: "bulk_account_issue"）の行を専用の文言で表示する。
 # resource はアセンブリなので AssemblyPresenter が使われる。未知の action のままだと
 # 「Assembly を更新しました」相当の文言になってしまうため、この action だけ差し替える。
-Rails.application.config.to_prepare do
-  module DecidimAssemblyPresenterBulkAccountIssuePatch
-    BULK_ACCOUNT_ISSUE_ACTION = "bulk_account_issue"
+module DecidimAssemblyPresenterBulkAccountIssuePatch
+  BULK_ACCOUNT_ISSUE_ACTION = "bulk_account_issue"
 
-    private
+  private
 
-    def action_string
-      return "decidim.admin_log.assembly.bulk_account_issue" if action.to_s == BULK_ACCOUNT_ISSUE_ACTION
+  def action_string
+    return "decidim.admin_log.assembly.bulk_account_issue" if action.to_s == BULK_ACCOUNT_ISSUE_ACTION
 
-      super
-    end
-
-    def i18n_params
-      return super unless action.to_s == BULK_ACCOUNT_ISSUE_ACTION
-
-      super.merge(
-        created: action_log.extra["created"].to_i,
-        failed: action_log.extra["failed"].to_i
-      )
-    end
+    super
   end
 
+  def i18n_params
+    return super unless action.to_s == BULK_ACCOUNT_ISSUE_ACTION
+
+    super.merge(
+      created: action_log.extra["created"].to_i,
+      failed: action_log.extra["failed"].to_i
+    )
+  end
+end
+
+Rails.application.config.to_prepare do
   Decidim::Assemblies::AdminLog::AssemblyPresenter.prepend(DecidimAssemblyPresenterBulkAccountIssuePatch)
 end
