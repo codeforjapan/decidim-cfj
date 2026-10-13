@@ -55,7 +55,12 @@ Rails.application.configure do
     url: ENV.fetch("REDIS_CACHE_URL", nil),
     expires_in: ENV.fetch("REDIS_CACHE_EXPIRES_IN", 60.minutes).to_i
   }
-  config.session_store(:cache_store, key: "decidim_session", expire_after: Decidim.config.expire_session_after)
+  # NOTE: ここで Decidim.config.expire_session_after を読んではいけない。
+  # config/initializers/decidim.rb が secrets から値を上書きするのは
+  # :load_config_initializers で、:load_environment_config である当ファイルより後に走る。
+  # セッションミドルウェアは :build_middleware_stack で確定するため、ここで読むと
+  # Decidim の既定値 30 分が渡ってしまい、DECIDIM_EXPIRE_SESSION_AFTER が効かない。
+  config.session_store(:cache_store, key: "decidim_session", expire_after: Rails.application.secrets.decidim[:expire_session_after].to_i.minutes)
   config.active_storage.resolve_model_to_route = :rails_storage_proxy
 
   # Use a real queuing backend for Active Job (and separate queues per environment)
