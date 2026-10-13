@@ -267,11 +267,11 @@ RSpec.describe "Decidim::Admin BulkUserImportsController" do
         expect(Decidim::User.find_by(email:)).to be_nil
       end
 
-      # 他組織のadminは /admin/ にも入れないため、管理画面ではなく公開側に戻す
+      # 他組織のadminはこの組織ではログアウト扱いになるため、ログイン画面に戻す
       it "redirects to a routable path" do
         post(decidim_admin.bulk_user_import_path, params:)
 
-        expect(response).to redirect_to(decidim.root_path)
+        expect(response).to redirect_to(decidim.new_user_session_path)
         expect { follow_redirect! }.not_to raise_error
         expect(response).to have_http_status(:ok)
       end
