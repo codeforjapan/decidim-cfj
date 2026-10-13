@@ -55,16 +55,10 @@ Rails.application.configure do
     url: ENV.fetch("REDIS_CACHE_URL", nil),
     expires_in: ENV.fetch("REDIS_CACHE_EXPIRES_IN", 60.minutes).to_i
   }
-  # NOTE: ここで Decidim.config.expire_session_after を読んではいけない。
-  # config/initializers/decidim.rb が secrets から値を上書きするのは
-  # :load_config_initializers で、:load_environment_config である当ファイルより後に走る。
-  # セッションミドルウェアは :build_middleware_stack で確定するため、ここで読むと
-  # Decidim の既定値 30 分が渡ってしまい、DECIDIM_EXPIRE_SESSION_AFTER が効かない。
+  # Decidim.config.expire_session_after はまだ既定値。secrets からの上書きは
+  # config/initializers/decidim.rb (このファイルより後) なので secrets を直接読む。
   session_expire_after = Rails.application.secrets.decidim[:expire_session_after].to_i
-  # 数値にならない値 (例: "two") は 0 になる。0.minutes を渡すと cookie が即時失効して
-  # 誰もセッションを維持できなくなるため、Decidim の既定値と同じ 30 分に落とす。
-  # NOTE: "2h" のような先頭が数字の不正値は secrets.yml の時点で 2 に切り詰められるので
-  # ここでは検出できない。検出するなら secrets.yml 側で弾く必要がある。
+  # 数値以外は 0 になる。0.minutes は cookie 即時失効 = ログイン不可。
   session_expire_after = 30 unless session_expire_after.positive?
   config.session_store(:cache_store, key: "decidim_session", expire_after: session_expire_after.minutes)
   config.active_storage.resolve_model_to_route = :rails_storage_proxy

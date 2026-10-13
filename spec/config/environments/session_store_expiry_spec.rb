@@ -2,25 +2,11 @@
 
 require "rails_helper"
 
-# config/environments/production.rb / development.rb の session_store
-#
-# セッションの有効期限は :build_middleware_stack の時点で確定する。環境設定ファイルは
-# :load_environment_config で読まれ、config/initializers/decidim.rb が secrets から
-# Decidim.config.expire_session_after を上書きする :load_config_initializers は
-# その後に走る。そのため環境設定ファイルで Decidim.config.expire_session_after を
-# 読むと、Decidim の既定値 30 分が渡り DECIDIM_EXPIRE_SESSION_AFTER が効かない。
-#
-# 本番で実際に起きていた。環境変数に 120 を入れても Devise の timeoutable だけが
-# 120 分で、cookie と Redis のセッション TTL は 30 分のままだった。
-#
-# NOTE: 挙動そのものを spec で検証できない。config/environments/test.rb は
-# session_store を設定せず、cache_store を使う経路に入らないため。
-# 代わりに「secrets から読んでいること」を設定の不変条件として見張る。
-# 挙動は development で DECIDIM_EXPIRE_SESSION_AFTER を変えて実測済み
-# (30 -> expire_after 30 minutes / 120 -> 120 minutes)。
+# 環境設定ファイルで Decidim.config.expire_session_after を読むと、secrets からの上書き
+# (config/initializers/decidim.rb) より前に評価されるため常に既定値 30 分になる。本番で発生した。
+# test.rb は session_store を設定せず挙動を再現できないので、設定の不変条件として見張る。
 describe "session store expiry configuration" do
-  # session_expire_after の算出から config.session_store の呼び出しまでをひとまとまりで見る。
-  # コメント行は落とす。説明文に .minutes 等が出てくると検査が素通りするため。
+  # コメント行は落とす。説明文の .minutes を拾うと検査が素通りするため。
   let(:session_store_lines) do
     %w(production development).to_h do |env|
       src = Rails.root.join("config/environments/#{env}.rb").read
@@ -39,8 +25,7 @@ describe "session store expiry configuration" do
   end
 
   context "when configuring the session store" do
-    # .minutes を落とすと Rack::Session は秒として解釈する。=120 が 120 秒になり、
-    # 本 PR が防ごうとしたバグの悪化版になるので単位まで固定する。
+    # .minutes を落とすと Rack::Session は秒として解釈する (=120 が 120 秒)。
     it "環境設定ファイルが secrets から分単位で expire_after を組み立てている" do
       session_store_lines.each do |env, source|
         expect(source).to match(/secrets\.decidim\[:expire_session_after\]\.to_i/),
@@ -50,7 +35,6 @@ describe "session store expiry configuration" do
       end
     end
 
-    # これを読むと :load_environment_config 時点の既定値 30 分が渡ってしまう。
     it "Decidim.config.expire_session_after を読んでいない" do
       session_store_lines.each do |env, line|
         expect(line).not_to include("Decidim.config.expire_session_after"),
