@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-Rails.application.config.to_prepare do
+Rails.application.config.after_initialize do
   # Add :comments_count to accountability_component's stat
   accountability_component = Decidim.find_component_manifest(:accountability)
   accountability_component.register_stat :comments_count, tag: :comments do |components, start_at, end_at|
