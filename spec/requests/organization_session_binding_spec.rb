@@ -7,7 +7,7 @@ RSpec.describe "Session bound to the organization" do
   let(:organization) { create(:organization) }
   let(:other_organization) { create(:organization) }
   let(:password) { "decidim123456789" }
-  let(:user) { create(:user, :confirmed, :admin, organization:, password:) }
+  let(:user) { create(:user, :confirmed, organization:, password:) }
   let(:remember_me) { "0" }
   let(:replayed_cookies) { [Rails.application.config.session_options[:key]] }
   let(:cookie_header) { replayed_cookies.map { |name| "#{name}=#{CGI.escape(cookies[name])}" }.join("; ") }
@@ -17,14 +17,13 @@ RSpec.describe "Session bound to the organization" do
     host! organization.host
     post "/users/sign_in", params: { user: { email: user.email, password:, remember_me: } }
     host! target_host
+    post "/api", params: { query: "{ session { user { id } } }" }, headers: { "Cookie" => cookie_header }
   end
 
   context "when the session is replayed on the user's organization" do
     let(:target_host) { organization.host }
 
     it "keeps the user signed in on the API" do
-      post "/api", params: { query: "{ session { user { id } } }" }, headers: { "Cookie" => cookie_header }
-
       expect(session_data).to eq("user" => { "id" => user.id.to_s })
     end
   end
@@ -33,8 +32,6 @@ RSpec.describe "Session bound to the organization" do
     let(:target_host) { other_organization.host }
 
     it "treats the user as signed out on the API" do
-      post "/api", params: { query: "{ session { user { id } } }" }, headers: { "Cookie" => cookie_header }
-
       expect(session_data).to be_nil
     end
 
@@ -42,6 +39,13 @@ RSpec.describe "Session bound to the organization" do
       get "/account", headers: { "Cookie" => cookie_header }
 
       expect(response).to redirect_to("/users/sign_in")
+    end
+
+    it "keeps the session valid on the user's organization" do
+      host! organization.host
+      post "/api", params: { query: "{ session { user { id } } }" }, headers: { "Cookie" => cookie_header }
+
+      expect(session_data).to eq("user" => { "id" => user.id.to_s })
     end
   end
 
@@ -51,8 +55,6 @@ RSpec.describe "Session bound to the organization" do
     let(:replayed_cookies) { %w(remember_user_token) }
 
     it "keeps the user signed in" do
-      post "/api", params: { query: "{ session { user { id } } }" }, headers: { "Cookie" => cookie_header }
-
       expect(session_data).to eq("user" => { "id" => user.id.to_s })
     end
   end
@@ -63,9 +65,15 @@ RSpec.describe "Session bound to the organization" do
     let(:replayed_cookies) { %w(remember_user_token) }
 
     it "treats the user as signed out" do
-      post "/api", params: { query: "{ session { user { id } } }" }, headers: { "Cookie" => cookie_header }
-
       expect(session_data).to be_nil
+    end
+
+    it "does not forget the user on the user's organization" do
+      expect(user.reload.remember_created_at).to be_present
+    end
+
+    it "does not record a sign-in" do
+      expect(user.reload.sign_in_count).to eq(1)
     end
   end
 end
