@@ -19,8 +19,11 @@
 #
 # Password sign-in (Decidim::User.find_for_authentication) and OmniAuth
 # (identities are looked up per organization) are already scoped upstream.
-# Paths that call sign_in directly (e.g. invitation acceptance) may store a
-# cross-organization user once; the next request's fetch rejects them.
+# Email confirmation, invitation acceptance and password reset find the user
+# by token alone and then call sign_in. The sign_in override below ends the
+# request through Warden's failure app for a user of another organization,
+# before Warden is involved and before the action goes on to redirect or
+# touch the user as if they were signed in.
 #
 # Decidim::Middleware::CurrentOrganization runs before Warden::Manager, so the
 # organization is already resolved. System admins use the :admin scope and are
@@ -56,5 +59,16 @@ module DecidimCfjOrganizationBoundRememberable
   end
 end
 
+module DecidimCfjOrganizationBoundSignIn
+  def sign_in(resource_or_scope, *args)
+    scope = Devise::Mapping.find_scope!(resource_or_scope)
+    resource = args.grep_v(Hash).last || resource_or_scope
+    throw :warden, scope: :user if scope == :user && !DecidimCfjOrganizationSessionBinding.member?(resource, request.env)
+
+    super
+  end
+end
+
 Warden::SessionSerializer.prepend(DecidimCfjOrganizationBoundSessionSerializer)
 Devise::Strategies::Rememberable.prepend(DecidimCfjOrganizationBoundRememberable)
+Devise::Controllers::SignInOut.prepend(DecidimCfjOrganizationBoundSignIn)
