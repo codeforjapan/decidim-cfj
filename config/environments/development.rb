@@ -29,7 +29,13 @@ Rails.application.configure do
       # :load_config_initializers で、:load_environment_config である当ファイルより後に走る。
       # セッションミドルウェアは :build_middleware_stack で確定するため、ここで読むと
       # Decidim の既定値 30 分が渡ってしまい、DECIDIM_EXPIRE_SESSION_AFTER が効かない。
-      config.session_store(:cache_store, key: "decidim_session", expire_after: Rails.application.secrets.decidim[:expire_session_after].to_i.minutes)
+      session_expire_after = Rails.application.secrets.decidim[:expire_session_after].to_i
+      # 数値にならない値 (例: "two") は 0 になる。0.minutes を渡すと cookie が即時失効して
+      # 誰もセッションを維持できなくなるため、Decidim の既定値と同じ 30 分に落とす。
+      # NOTE: "2h" のような先頭が数字の不正値は secrets.yml の時点で 2 に切り詰められるので
+      # ここでは検出できない。検出するなら secrets.yml 側で弾く必要がある。
+      session_expire_after = 30 unless session_expire_after.positive?
+      config.session_store(:cache_store, key: "decidim_session", expire_after: session_expire_after.minutes)
     else
       config.cache_store = :memory_store
     end

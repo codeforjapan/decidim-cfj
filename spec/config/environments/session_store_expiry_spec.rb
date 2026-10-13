@@ -19,11 +19,13 @@ require "rails_helper"
 # 挙動は development で DECIDIM_EXPIRE_SESSION_AFTER を変えて実測済み
 # (30 -> expire_after 30 minutes / 120 -> 120 minutes)。
 describe "session store expiry configuration" do
+  # session_expire_after の算出から config.session_store の呼び出しまでをひとまとまりで見る。
+  # コメント行は落とす。説明文に .minutes 等が出てくると検査が素通りするため。
   let(:session_store_lines) do
     %w(production development).to_h do |env|
-      line = Rails.root.join("config/environments/#{env}.rb").readlines
-                  .find { |l| l.include?("config.session_store(") }
-      [env, line.to_s]
+      src = Rails.root.join("config/environments/#{env}.rb").read
+      region = src[/session_expire_after =.*?config\.session_store\([^\n]*/m].to_s
+      [env, region.lines.grep_v(/\A\s*#/).join]
     end
   end
 
@@ -37,10 +39,14 @@ describe "session store expiry configuration" do
   end
 
   context "when configuring the session store" do
-    it "環境設定ファイルが secrets から expire_after を組み立てている" do
-      session_store_lines.each do |env, line|
-        expect(line).to include("Rails.application.secrets.decidim[:expire_session_after]"),
-                        "#{env}.rb の session_store が secrets を読んでいない"
+    # .minutes を落とすと Rack::Session は秒として解釈する。=120 が 120 秒になり、
+    # 本 PR が防ごうとしたバグの悪化版になるので単位まで固定する。
+    it "環境設定ファイルが secrets から分単位で expire_after を組み立てている" do
+      session_store_lines.each do |env, source|
+        expect(source).to match(/secrets\.decidim\[:expire_session_after\]\.to_i/),
+                          "#{env}.rb が secrets から読んでいない"
+        expect(source).to match(/\.minutes\b/),
+                          "#{env}.rb が expire_after を分単位で渡していない（秒と解釈される）"
       end
     end
 
