@@ -55,7 +55,12 @@ Rails.application.configure do
     url: ENV.fetch("REDIS_CACHE_URL", nil),
     expires_in: ENV.fetch("REDIS_CACHE_EXPIRES_IN", 60.minutes).to_i
   }
-  config.session_store(:cache_store, key: "decidim_session", expire_after: Decidim.config.expire_session_after)
+  # Decidim.config.expire_session_after はまだ既定値。secrets からの上書きは
+  # config/initializers/decidim.rb (このファイルより後) なので secrets を直接読む。
+  session_expire_after = Rails.application.secrets.decidim[:expire_session_after].to_i
+  # 数値以外は 0 になる。0.minutes は cookie 即時失効 = ログイン不可。
+  session_expire_after = 30 unless session_expire_after.positive?
+  config.session_store(:cache_store, key: "decidim_session", expire_after: session_expire_after.minutes)
   config.active_storage.resolve_model_to_route = :rails_storage_proxy
 
   # Use a real queuing backend for Active Job (and separate queues per environment)
