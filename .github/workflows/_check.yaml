@@ -107,7 +107,7 @@ jobs:
             public/packs-test
             tmp/cache/assets
             tmp/shakapacker
-          key: asset-precompile-cache-${{ hashFiles('app/packs/**', 'config/webpack/**', 'config/shakapacker.yml', 'package.json', 'yarn.lock', 'Gemfile.lock') }}
+          key: asset-precompile-cache-${{ hashFiles('app/packs/**', 'config/webpack/**', 'config/shakapacker.yml', 'config/initializers/shakapacker_watched_paths.rb', 'package.json', 'yarn.lock', 'Gemfile.lock') }}
           restore-keys: |
             asset-precompile-cache-
 

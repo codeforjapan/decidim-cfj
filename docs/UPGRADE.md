@@ -131,6 +131,10 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 `Decidim::Map::Provider::StaticMap::CfjOsm`という独自のstatic map providerを定義するためのものです。
 `config/initializers/decidim.rb`のconfig.maps以下のstaticのところで導入されています。
 
+* `config/initializers/shakapacker_watched_paths.rb`
+
+  Shakapackerがpacksの更新を判定するときの監視対象から`node_modules`を外すもの。Shakapackerの`BaseStrategy#default_watched_paths`（private）を上書きしているので、Shakapacker更新時には元のメソッドが変わっていないか確認してください。
+
 #### `decidim-user_extension`について
 
 `decidim-user_extension`はカスタムモジュールとして追加されているものです。このモジュール内にもDecidim本体に依存している箇所があります。
