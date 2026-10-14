@@ -16,6 +16,28 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    # Major updates are intentionally left as individual PRs.
+    # @decidim/* must move in lockstep with the decidim gem, so it is
+    # excluded from the groups and keeps its own PR.
+    groups:
+      npm-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+        exclude-patterns:
+          - "@decidim/*"
+        update-types:
+          - "minor"
+          - "patch"
+      npm-minor-patch:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        exclude-patterns:
+          - "@decidim/*"
+        update-types:
+          - "minor"
+          - "patch"
 
   # GitHub Actions
   - package-ecosystem: "github-actions"
