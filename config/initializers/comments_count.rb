@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-Rails.application.config.to_prepare do
+Rails.application.config.after_initialize do
   # Override :comments_count on accountability_component.
   accountability_component = Decidim.find_component_manifest(:accountability)
   accountability_component.stats.stats.reject! { |s| s[:name] == :comments_count }

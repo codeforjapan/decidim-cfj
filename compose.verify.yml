@@ -1,0 +1,4 @@
+services:
+  app:
+    environment:
+      DATABASE_DBNAME_DEV: decidim_v030_verify

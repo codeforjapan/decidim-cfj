@@ -1,5 +1,20 @@
 # Change Log
 
+## [1.21.3](https://github.com/codeforjapan/decidim-cfj/compare/v1.21.2...v1.21.3) (2026-10-06)
+
+
+### Bug Fixes
+
+* backport admin table column sorting (decidim/decidim[#16978](https://github.com/codeforjapan/decidim-cfj/issues/16978)) ([380b6c1](https://github.com/codeforjapan/decidim-cfj/commit/380b6c1e13046e4efae1c3861afcc85c429f973c))
+* backport admin table column sorting (decidim/decidim[#16978](https://github.com/codeforjapan/decidim-cfj/issues/16978)) ([74671ec](https://github.com/codeforjapan/decidim-cfj/commit/74671ec49701763d03a3fa35e8af4531ad98abc2))
+* backport context-aware content renderers (decidim/decidim[#16545](https://github.com/codeforjapan/decidim-cfj/issues/16545)) ([#909](https://github.com/codeforjapan/decidim-cfj/issues/909)) ([e33f271](https://github.com/codeforjapan/decidim-cfj/commit/e33f2714424865203b4dbf516bf500ac2f6479be))
+* match questionnaire answers by respondent, not by ip_hash ([35cf326](https://github.com/codeforjapan/decidim-cfj/commit/35cf326557212b06824513ae1835e980ad7ba322))
+* match questionnaire answers by respondent, not by ip_hash ([adba3eb](https://github.com/codeforjapan/decidim-cfj/commit/adba3eb949bbc5517aa0311d600e69656ae998f6))
+* raise ArgumentError when user and session_token are not present ([c42f345](https://github.com/codeforjapan/decidim-cfj/commit/c42f34583b059e6a95a3caab22dfffb61bae994d))
+* エディタでリンクが消える問題に対処する ([e33f271](https://github.com/codeforjapan/decidim-cfj/commit/e33f2714424865203b4dbf516bf500ac2f6479be))
+* ゴミ箱に入れたコンポーネントのコメントで参加空間のトップページが 500 になる問題を修正 ([#911](https://github.com/codeforjapan/decidim-cfj/issues/911)) ([96fb16c](https://github.com/codeforjapan/decidim-cfj/commit/96fb16c2b74bca1764fe85bc419e68a5f3de23e3))
+* 本文のリンクが gid のまま sanitize されて href を失う問題を修正 ([#912](https://github.com/codeforjapan/decidim-cfj/issues/912)) ([ca02655](https://github.com/codeforjapan/decidim-cfj/commit/ca0265524dae1cbfec7240c852f279945df03163))
+
 ## [1.21.2](https://github.com/codeforjapan/decidim-cfj/compare/v1.21.1...v1.21.2) (2026-09-19)
 
 

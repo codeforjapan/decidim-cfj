@@ -1,0 +1,11 @@
+services:
+  app:
+    env_file:
+      - .env
+    extra_hosts:
+      - host.docker.internal:host-gateway
+
+  # ホストの 5433 は別プロジェクトのコンテナが使用しているため公開しない。
+  # app コンテナは Docker ネットワーク内で pg:5432 に接続するので支障はない。
+  pg:
+    ports: !reset []
