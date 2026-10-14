@@ -6,7 +6,7 @@
   },
   "private": true,
   "dependencies": {
-    "@decidim/browserslist-config": "^0.30.9",
+    "@decidim/browserslist-config": "^0.32.1",
     "@decidim/core": "^0.30.9",
     "@decidim/webpacker": "^0.30.9",
     "@geoman-io/leaflet-geoman-free": "^2.18.3",
