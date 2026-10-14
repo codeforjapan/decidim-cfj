@@ -58,6 +58,16 @@ RSpec.describe "Questionnaire respondent identity override" do
       expect(response.body).to eq("first")
     end
 
+    # 上流の add_responses! は組み立てた ResponseForm に .with_context(context) を付ける
+    # (0.31 で追加)。落とすと子フォームの context が nil になり、context.responses を読む
+    # display_conditions_fulfilled? が NoMethodError になる。
+    it "keeps the questionnaire form context on the reloaded response forms" do
+      form = build_form(response_params("first"))
+      form.add_responses!(questionnaire:, session_token: "session-token-abc", ip_hash: "ip-hash-abc")
+
+      expect(form.responses.map(&:context)).to all(be(form.context))
+    end
+
     context "when the respondent already has duplicate responses for a question" do
       let!(:older) { create(:response, questionnaire:, question:, user:, body: "older", session_token: "token-1", ip_hash: "ip-1") }
       let!(:newer) { create(:response, questionnaire:, question:, user:, body: "newer", session_token: "token-1", ip_hash: "ip-2") }
