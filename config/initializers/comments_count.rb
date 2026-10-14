@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-Rails.application.config.to_prepare do
+Rails.application.config.after_initialize do
   # 各コンポーネントの comments_count を、実データの合計で上書きする。
   #
   # コンポーネントは gem ごと削除されうる（0.32 で decidim-sortitions が消えた）。
