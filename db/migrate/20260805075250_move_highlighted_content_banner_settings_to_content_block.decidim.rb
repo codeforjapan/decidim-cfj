@@ -14,6 +14,11 @@ class MoveHighlightedContentBannerSettingsToContentBlock < ActiveRecord::Migrati
 
     Organization.find_each do |organization|
       content_block = Decidim::ContentBlock.find_by(organization:, scope_name: :homepage, manifest_name: :highlighted_content_banner)
+
+      # 上流は全組織に highlighted_content_banner のコンテンツブロックがある前提で書かれており、
+      # 無い組織では find_by が nil を返して落ちる。ブロックが無い = バナーが存在しない組織なので
+      # 移送対象が無い。decidim 本体は develop / 0.31-stable / 0.32-stable いずれも未修正(2026-10-15)。
+      next if content_block.nil?
       settings = extract_settings(organization)
 
       # We need to do a workaround for getting the image, as ActiveStorage is polymorphic and expects that the `record_type` is the class name of the model
