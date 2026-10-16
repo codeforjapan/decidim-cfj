@@ -18,6 +18,9 @@ describe "User registration with nickname input" do
         fill_in "アカウントID", with: "shinagawa_taro"
         fill_in "パスワード", with: "DfyvHn425mYAy2HL"
         check "ユーザ登録することで、 利用規約 に同意したことになります。"
+        # 未チェックのまま送信すると user-registration-form コントローラが確認モーダルを
+        # 出して送信を止める（上流の仕様）。この spec の対象はニックネームなので回避する。
+        check "関連するお知らせを受け取る"
 
         click_button "アカウントを作成"
       end
@@ -37,6 +40,9 @@ describe "User registration with nickname input" do
         fill_in "アカウントID", with: "invalid@nickname"
         fill_in "パスワード", with: "DfyvHn425mYAy2HL"
         check "ユーザ登録することで、 利用規約 に同意したことになります。"
+        # 未チェックのまま送信すると user-registration-form コントローラが確認モーダルを
+        # 出して送信を止める（上流の仕様）。この spec の対象はニックネームなので回避する。
+        check "関連するお知らせを受け取る"
 
         click_button "アカウントを作成"
       end
@@ -53,6 +59,9 @@ describe "User registration with nickname input" do
         fill_in "アカウントID", with: "existing_user"
         fill_in "パスワード", with: "DfyvHn425mYAy2HL"
         check "ユーザ登録することで、 利用規約 に同意したことになります。"
+        # 未チェックのまま送信すると user-registration-form コントローラが確認モーダルを
+        # 出して送信を止める（上流の仕様）。この spec の対象はニックネームなので回避する。
+        check "関連するお知らせを受け取る"
 
         click_button "アカウントを作成"
       end
