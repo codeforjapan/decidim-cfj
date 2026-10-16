@@ -61,7 +61,23 @@ RSpec.describe "OmniAuth audit logging" do
     it "callback と registration の両方を記録する" do
       get callback_path
 
+      # CreateOmniauthRegistration raises NeedTosAcceptance and renders new_tos_fields,
+      # so registration is pending.
       expect(logged).to include("[omniauth] phase=callback result=ok")
+      expect(logged).to include("[omniauth] phase=registration result=pending")
+
+      post "/omniauth_registrations", params: {
+        user: {
+          provider: "line_login",
+          uid:,
+          name: "山田太郎",
+          nickname: "taro",
+          email:,
+          oauth_signature: Decidim::OmniauthRegistrationForm.create_signature("line_login", uid),
+          tos_agreement: "1"
+        }
+      }
+
       expect(logged).to include("[omniauth] phase=registration result=ok")
     end
 

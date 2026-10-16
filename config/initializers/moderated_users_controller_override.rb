@@ -2,7 +2,7 @@
 
 # Adds the permission check to the bulk_unreport action
 Rails.application.config.to_prepare do
-  Decidim::Admin::ModeratedUsersController # rubocop:disable Lint/Void
+  Decidim::Admin::ModeratedUsersController
 
   module DecidimAdminModeratedUsersControllerBulkUnreportPatch
     def bulk_unreport

@@ -51,8 +51,8 @@
 # サブクラスのメソッドのほうが祖先チェーンで先に来る。ApplicationJob への prepend だけでは
 # 効かないため、同クラスにも個別に prepend する。
 Rails.application.config.to_prepare do
-  Decidim::Ai::SpamDetection::ApplicationJob # rubocop:disable Lint/Void
-  Decidim::Ai::SpamDetection::UserSpamAnalyzerJob # rubocop:disable Lint/Void
+  Decidim::Ai::SpamDetection::ApplicationJob
+  Decidim::Ai::SpamDetection::UserSpamAnalyzerJob
 
   module DecidimAiSpamDetectionIsolatedClassifier
     private
