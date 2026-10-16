@@ -38,7 +38,7 @@ module Decidim
         private
 
         def add_issue(level, message, detail: nil)
-          @issues << { level: level, message: message }
+          @issues << { level:, message: }
           tag = level == :error ? "ERROR" : "WARNING"
           @logger.info "    [#{tag}] #{message}"
           @logger.info "            #{detail}" if detail

@@ -27,10 +27,6 @@ en:
         view_all: View all
     devise:
       registrations:
-        new:
-          username_placeholder: Ayumu Kyoso
-    devise:
-      registrations:
         user_extension:
           address_help: 'e.g. "Kakogawa-cho, Kakogawa, Hyogo"'
         new:
@@ -55,7 +51,3 @@ en:
         male: Male
         not_applicable: Not Applicable
         not_known: Not Known
-  layouts:
-    decidim:
-      header:
-        hello: Hello, %{name}!

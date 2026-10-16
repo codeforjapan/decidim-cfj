@@ -1,6 +1,6 @@
-FROM node:20.18.3-bookworm-slim AS node
+FROM node:22.23.2-bookworm-slim AS node
 
-FROM ruby:3.3.4-slim-bookworm
+FROM ruby:3.4.7-slim-bookworm
 
 # for build-dep
 RUN  apt-get update && \
@@ -13,6 +13,7 @@ RUN  apt-get update && \
         libopenjp2-7-dev \
         librsvg2-dev \
         libde265-dev \
+        libvips42 \
         git \
         curl \
         p7zip \
@@ -52,7 +53,7 @@ ARG RAILS_ENV="production"
 ENV LANG=C.UTF-8 \
     LC_ALL=C.UTF-8 \
     BUNDLER_JOBS=4 \
-    BUNDLER_VERSION=2.5.15 \
+    BUNDLER_VERSION=2.6.9 \
     APP_HOME=/app \
     RAILS_ENV=${RAILS_ENV} \
     RAILS_LOG_TO_STDOUT=true \

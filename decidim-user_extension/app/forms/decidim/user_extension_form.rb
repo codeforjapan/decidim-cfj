@@ -40,7 +40,7 @@ module Decidim
     # real_name && address && birth_year should be unique??
     def unique_id
       Digest::MD5.hexdigest(
-        "#{address}-#{birth_year}-#{real_name}-#{Rails.application.secrets.secret_key_base}"
+        "#{address}-#{birth_year}-#{real_name}-#{Rails.application.secret_key_base}"
       )
     end
 

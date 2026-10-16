@@ -63,7 +63,7 @@ namespace :decidim do
         locale = organization.default_locale
         logger.info "=== Organization: #{organization.name[locale]} (id: #{organization.id}, host: #{organization.host}) ==="
 
-        flattener = Decidim::Cfj::TaxonomyFlattener.new(organization, logger: logger)
+        flattener = Decidim::Cfj::TaxonomyFlattener.new(organization, logger:)
         result = flattener.check!
         has_issues = true unless result
 
@@ -86,7 +86,7 @@ namespace :decidim do
         locale = organization.default_locale
         logger.info "Processing organization: #{organization.name[locale]} (id: #{organization.id}, host: #{organization.host})"
 
-        flattener = Decidim::Cfj::TaxonomyFlattener.new(organization, logger: logger)
+        flattener = Decidim::Cfj::TaxonomyFlattener.new(organization, logger:)
         flattener.flatten!
       end
     end

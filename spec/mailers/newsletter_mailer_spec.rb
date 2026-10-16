@@ -54,7 +54,7 @@ module Decidim
         it "HTML-escapes the organization name in the newsletter template" do
           body = email_body(mail)
           expect(body).to include("&lt;a")
-          expect(body).not_to match(%r{<a href="http://evil\.example"})
+          expect(body).not_to include('<a href="http://evil.example"')
         end
       end
 

@@ -10,6 +10,8 @@ RSpec.describe "Sign-in bound to the organization" do
   let(:other_organization) { create(:organization) }
   let(:password) { "decidim123456789" }
   let(:new_password) { "a-brand-new-decidim-password" }
+  # 0.32 で全 URL がロケール接頭辞つきになったため、パスはルートヘルパーから引く。
+  let(:decidim_routes) { Decidim::Core::Engine.routes.url_helpers }
   let(:session_key) { request.session["warden.user.user.key"] }
 
   before { host! target_host }
@@ -17,7 +19,7 @@ RSpec.describe "Sign-in bound to the organization" do
   describe "email confirmation" do
     let(:user) { create(:user, organization:) }
 
-    before { get "/users/confirmation", params: { confirmation_token: user.confirmation_token } }
+    before { get decidim_routes.user_confirmation_path, params: { confirmation_token: user.confirmation_token } }
 
     context "when opened on the user's organization" do
       let(:target_host) { organization.host }
@@ -34,7 +36,7 @@ RSpec.describe "Sign-in bound to the organization" do
 
       it "confirms the user without signing them in" do
         expect(user.reload).to be_confirmed
-        expect(response).to redirect_to("/users/sign_in")
+        expect(response).to redirect_to(decidim_routes.new_user_session_path)
         expect(session_key).to be_nil
         expect(user.sign_in_count).to eq(0)
       end
@@ -46,7 +48,7 @@ RSpec.describe "Sign-in bound to the organization" do
     let(:token) { user.send_reset_password_instructions }
 
     before do
-      put "/users/password", params: { user: { reset_password_token: token, password: new_password, password_confirmation: new_password } }
+      put decidim_routes.user_password_path, params: { user: { reset_password_token: token, password: new_password, password_confirmation: new_password } }
     end
 
     context "when submitted on the user's organization" do
@@ -63,7 +65,7 @@ RSpec.describe "Sign-in bound to the organization" do
 
       it "changes the password without signing in the user" do
         expect(user.reload.valid_password?(new_password)).to be(true)
-        expect(response).to redirect_to("/users/sign_in")
+        expect(response).to redirect_to(decidim_routes.new_user_session_path)
         expect(session_key).to be_nil
         expect(user.sign_in_count).to eq(0)
       end
@@ -78,7 +80,7 @@ RSpec.describe "Sign-in bound to the organization" do
     end
 
     before do
-      put "/users/invitation", params: { user: { invitation_token: token, password: new_password, password_confirmation: new_password } }
+      put decidim_routes.user_invitation_path, params: { user: { invitation_token: token, password: new_password, password_confirmation: new_password } }
     end
 
     context "when submitted on the user's organization" do
@@ -95,7 +97,7 @@ RSpec.describe "Sign-in bound to the organization" do
 
       it "accepts the invitation without signing in the user" do
         expect(user.reload).to be_invitation_accepted
-        expect(response).to redirect_to("/users/sign_in")
+        expect(response).to redirect_to(decidim_routes.new_user_session_path)
         expect(session_key).to be_nil
         expect(user.sign_in_count).to eq(0)
       end

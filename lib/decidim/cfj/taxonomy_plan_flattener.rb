@@ -46,7 +46,7 @@ module Decidim
 
           Entry.new(
             original_name: intermediate_name,
-            new_root_name: new_root_name,
+            new_root_name:,
             children: intermediate_data["children"] || {},
             filter_data: build_filter(new_root_name, matching_filter)
           )
@@ -113,7 +113,7 @@ module Decidim
             taxonomies: taxonomies.map do |tax_name, tax_data|
               { name: tax_name, children_count: (tax_data["children"] || {}).size }
             end,
-            filter_items_count: filter_items_count
+            filter_items_count:
           }
         end
       end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # This migration comes from decidim_debates (originally 20200902133452)
-# This file has been modified by `decidim upgrade:migrations` task on 2025-08-05 08:11:54 UTC
+# This file has been modified by `decidim upgrade:migrations` task on 2026-09-11 08:07:31 UTC
 class AddCachedCommentMetadataToDebates < ActiveRecord::Migration[5.2]
   def change
     add_column :decidim_debates_debates, :last_comment_at, :datetime
@@ -11,7 +11,7 @@ class AddCachedCommentMetadataToDebates < ActiveRecord::Migration[5.2]
     # rubocop:disable Rails/SkipsModelValidations
     Decidim::Debates::Debate.reset_column_information
     Decidim::Debates::Debate.unscoped.includes(comments: [:author, :user_group]).find_each do |debate|
-      last_comment = debate.comments.order("created_at DESC").first
+      last_comment = debate.comments.order(created_at: :desc).first
       next unless last_comment
 
       debate.update_columns(
