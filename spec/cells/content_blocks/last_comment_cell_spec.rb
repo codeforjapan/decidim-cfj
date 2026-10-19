@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "rails_helper"
+require "decidim/blogs/test/factories"
 require "decidim/conferences/test/factories"
 
 module Decidim
@@ -191,6 +192,157 @@ module Decidim
 
           it "fills every slot from the buffer, skipping the unlinkable comment" do
             expect(my_cell.send(:valid_comments)).to match_array(live_logs)
+          end
+        end
+
+        context "when content block belongs to the scope of an unpublished assembly" do
+          let(:assembly) { create(:assembly, :unpublished, organization:) }
+          let(:scope_name) { :assembly_homepage }
+          let(:scoped_resource_id) { assembly.id }
+
+          it "shows no comment" do
+            expect(my_cell.send(:valid_comments)).to be_empty
+          end
+        end
+      end
+
+      # On a space landing page the commented resource decides who may see the
+      # comment, as ActionLog#visible_for? does on the homepage.
+      describe "#valid_comments for a private meeting on a space landing page" do
+        let(:scope_name) { :participatory_process_homepage }
+        let(:scoped_resource_id) { participatory_process.id }
+        let(:participatory_process) { create(:participatory_process, organization:, published_at:) }
+        let(:published_at) { Time.current }
+        let(:component) { create(:meeting_component, :published, participatory_space: participatory_process) }
+        let(:meeting) { create(:meeting, :published, component:, private_meeting: true, transparent: false) }
+        let(:registered_user) { create(:user, :confirmed, organization:) }
+        let(:log) do
+          create(:action_log, user: registered_user, participatory_space: participatory_process, component:,
+                              resource: create(:comment, commentable: meeting), visibility: "public-only")
+        end
+
+        before do
+          create(:registration, meeting:, user: registered_user)
+          allow(my_cell).to receive(:comments).and_return(Decidim::ActionLog.where(id: log.id))
+        end
+
+        context "when the visitor is not signed in" do
+          it "does not show the comment" do
+            expect(my_cell.send(:valid_comments)).to be_empty
+          end
+        end
+
+        context "when the visitor is signed in but not registered to the meeting" do
+          before { allow(controller).to receive(:current_user).and_return(create(:user, :confirmed, organization:)) }
+
+          it "does not show the comment" do
+            expect(my_cell.send(:valid_comments)).to be_empty
+          end
+        end
+
+        context "when the visitor is registered to the meeting" do
+          before { allow(controller).to receive(:current_user).and_return(registered_user) }
+
+          it "shows the comment" do
+            expect(my_cell.send(:valid_comments)).to contain_exactly(log)
+          end
+        end
+
+        context "when the space is not published" do
+          let(:published_at) { nil }
+
+          before { allow(controller).to receive(:current_user).and_return(create(:user, :admin, :confirmed, organization:)) }
+
+          it "does not show the comment, even to an admin" do
+            expect(my_cell.send(:valid_comments)).to be_empty
+          end
+        end
+      end
+
+      # ActionLog#visible_for? only checks the comment for moderation, not the
+      # resource it is on.
+      describe "#valid_comments for a hidden resource" do
+        let(:scope_name) { :participatory_process_homepage }
+        let(:scoped_resource_id) { participatory_process.id }
+        let(:participatory_process) { create(:participatory_process, :published, organization:) }
+        let(:proposal) { create(:proposal, component: create(:proposal_component, :published, participatory_space: participatory_process)) }
+        let(:log) do
+          create(:action_log, user: create(:user, :confirmed, organization:), participatory_space: participatory_process,
+                              component: proposal.component, resource: create(:comment, commentable: proposal), visibility: "public-only")
+        end
+
+        before { allow(my_cell).to receive(:comments).and_return(Decidim::ActionLog.where(id: log.id)) }
+
+        it "shows the comment while the proposal is visible" do
+          expect(my_cell.send(:valid_comments)).to contain_exactly(log)
+        end
+
+        context "when the proposal is hidden by moderation" do
+          before { create(:moderation, reportable: proposal, hidden_at: Time.current) }
+
+          it "does not show the comment" do
+            expect(my_cell.send(:valid_comments)).to be_empty
+          end
+        end
+      end
+
+      # A blog post can be unpublished again by moving its publication date to
+      # the future, which ActionLog#visible_for? does not see.
+      describe "#valid_comments for a post that is no longer published" do
+        let(:scope_name) { :participatory_process_homepage }
+        let(:scoped_resource_id) { participatory_process.id }
+        let(:participatory_process) { create(:participatory_process, :published, organization:) }
+        let(:post) { create(:post, :published, component: create(:post_component, :published, participatory_space: participatory_process)) }
+        let(:log) do
+          create(:action_log, user: create(:user, :confirmed, organization:), participatory_space: participatory_process,
+                              component: post.component, resource: create(:comment, commentable: post), visibility: "public-only")
+        end
+
+        before { allow(my_cell).to receive(:comments).and_return(Decidim::ActionLog.where(id: log.id)) }
+
+        it "shows the comment while the post is published" do
+          expect(my_cell.send(:valid_comments)).to contain_exactly(log)
+        end
+
+        context "when the publication date is moved to the future" do
+          before { post.update!(published_at: 1.day.from_now) }
+
+          it "does not show the comment" do
+            expect(my_cell.send(:valid_comments)).to be_empty
+          end
+        end
+      end
+
+      # ActionLog#visible_for? lets every comment of a transparent space
+      # through without asking the meeting.
+      describe "#valid_comments for a private meeting in a transparent assembly" do
+        let(:scope_name) { :assembly_homepage }
+        let(:scoped_resource_id) { assembly.id }
+        let(:assembly) { create(:assembly, :published, organization:, private_space: true, is_transparent: true) }
+        let(:component) { create(:meeting_component, :published, participatory_space: assembly) }
+        let(:meeting) { create(:meeting, :published, component:, private_meeting: true, transparent: false) }
+        let(:registered_user) { create(:user, :confirmed, organization:) }
+        let(:log) do
+          create(:action_log, user: registered_user, participatory_space: assembly, component:,
+                              resource: create(:comment, commentable: meeting), visibility: "public-only")
+        end
+
+        before do
+          create(:registration, meeting:, user: registered_user)
+          allow(my_cell).to receive(:comments).and_return(Decidim::ActionLog.where(id: log.id))
+        end
+
+        context "when the visitor is not signed in" do
+          it "does not show the comment" do
+            expect(my_cell.send(:valid_comments)).to be_empty
+          end
+        end
+
+        context "when the visitor is registered to the meeting" do
+          before { allow(controller).to receive(:current_user).and_return(registered_user) }
+
+          it "shows the comment" do
+            expect(my_cell.send(:valid_comments)).to contain_exactly(log)
           end
         end
       end
