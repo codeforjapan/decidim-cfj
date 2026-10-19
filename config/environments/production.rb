@@ -89,8 +89,10 @@ Rails.application.configure do
     user_name: Rails.application.secrets.smtp_username,
     password: Rails.application.secrets.smtp_password,
     domain: Rails.application.secrets.smtp_domain,
-    enable_starttls_auto: Rails.application.secrets.smtp_starttls_auto,
-    openssl_verify_mode: "none"
+    # Require STARTTLS and verify the certificate, so the credentials and the
+    # tokens in outgoing mail cannot be read on the way to the SMTP server.
+    enable_starttls: :always,
+    openssl_verify_mode: "peer"
   }
 
   # Use a different logger for distributed setups.
