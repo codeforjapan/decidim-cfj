@@ -90,9 +90,10 @@ module Decidim
         end
       end
 
-      # Trashing a component (or a space, which trashes its components) leaves
-      # all of its comments unlinkable at once. They are dropped in SQL so that
-      # they cannot use up the buffer that #valid_comments refills from.
+      # Comments in an unpublished component must not be shown, and trashing a
+      # component (or a space, which trashes its components) leaves all of its
+      # comments unlinkable at once. They are dropped in SQL so that they cannot
+      # use up the buffer that #valid_comments refills from.
       describe "#comments" do
         subject(:comments) { my_cell.send(:comments) }
 
@@ -102,6 +103,8 @@ module Decidim
         let(:trashed_component) { create(:debates_component, participatory_space: assembly) }
         let(:live_comment) { create(:comment, commentable: create(:debate, component: live_component)) }
         let(:trashed_comment) { create(:comment, commentable: create(:debate, component: trashed_component)) }
+        let(:unpublished_component) { create(:debates_component, :unpublished, participatory_space: assembly) }
+        let(:unpublished_comment) { create(:comment, commentable: create(:debate, component: unpublished_component)) }
 
         # Older than every trashed log and outnumbered by them beyond the
         # buffer, so it only makes it into the query if they are dropped in SQL.
@@ -113,6 +116,10 @@ module Decidim
           create_list(:action_log, 20, user:, participatory_space: assembly, component: trashed_component,
                                        resource: trashed_comment, visibility: "public-only")
         end
+        let!(:unpublished_logs) do
+          create_list(:action_log, 20, user:, participatory_space: assembly, component: unpublished_component,
+                                       resource: unpublished_comment, visibility: "public-only")
+        end
 
         before do
           allow(Decidim::LastActivity).to receive(:new).and_call_original
@@ -120,7 +127,7 @@ module Decidim
         end
 
         context "when content block belongs to homepage scope" do
-          it "drops every comment in the trashed component" do
+          it "drops every comment in the trashed and unpublished components" do
             expect(comments).to contain_exactly(live_log)
           end
         end
@@ -129,7 +136,7 @@ module Decidim
           let(:scope_name) { :assembly_homepage }
           let(:scoped_resource_id) { assembly.id }
 
-          it "drops every comment in the trashed component" do
+          it "drops every comment in the trashed and unpublished components" do
             expect(comments).to contain_exactly(live_log)
           end
         end

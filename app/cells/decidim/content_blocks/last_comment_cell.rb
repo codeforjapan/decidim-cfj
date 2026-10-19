@@ -64,22 +64,22 @@ module Decidim
           ).query.where(resource_type: "Decidim::Comments::Comment")
 
           query = query.where(participatory_space_filter) if participatory_space_filter.present?
-          query = without_trashed_components(query)
+          query = in_published_components(query)
 
           query.limit(comments_to_show * 6)
         end
       end
 
-      # Trashing a component leaves every comment in it unlinkable at once.
-      # Dropping those in SQL keeps them from using up the buffer above, which a
-      # busy trashed component would otherwise exhaust. Trashing a participatory
-      # space trashes its components along with it, so this covers spaces too.
+      # Keeps only comments in published components, or in none. Comments in an
+      # unpublished component must not be shown, and those in a trashed one
+      # (including those of a trashed space) cannot be linked to. Dropping them
+      # here rather than per comment keeps them from using up the buffer above.
       #
       # Decidim::Component's default scope leaves trashed components out. Logs
       # without a component are kept explicitly, as IN never matches NULL.
-      def without_trashed_components(query)
+      def in_published_components(query)
         query.where(decidim_component_id: nil)
-             .or(query.where(decidim_component_id: Decidim::Component.select(:id)))
+             .or(query.where(decidim_component_id: Decidim::Component.published.select(:id)))
       end
 
       # A comment is dropped here rather than in the activity cell, so that its
