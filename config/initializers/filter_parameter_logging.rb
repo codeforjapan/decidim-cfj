@@ -11,9 +11,9 @@ Rails.application.config.filter_parameters += [
 
 # Redirect locations can carry a token or an OAuth authorization code: back to
 # an invitation or reset password URL (e.g. after POST /locale), or to an OAuth
-# client after authorization. Copies URL-encoded inside another parameter are
-# matched too.
-Rails.application.config.filter_redirect << /(?:token|code)(?:=|%3D)/i
+# client after authorization. Copies URL-encoded inside another parameter, once
+# or more, are matched too.
+Rails.application.config.filter_redirect << /(?:token|code)(?:=|%(?:25)*3D)/i
 
 Rails.application.config.after_initialize do
   # ActiveRecord copies filter_parameters when it is loaded, which happens

@@ -54,6 +54,12 @@ RSpec.describe "filter_parameter_logging initializer" do
       it { expect(filtered_location).to eq("[FILTERED]") }
     end
 
+    context "with a token URL-encoded twice" do
+      let(:location) { "https://example.org/?next=%252Fusers%252Fpassword%252Fedit%253Freset_password_token%253D#{token}" }
+
+      it { expect(filtered_location).to eq("[FILTERED]") }
+    end
+
     context "without a token or code" do
       let(:location) { "https://example.org/processes?filter=all" }
 
