@@ -11,13 +11,19 @@ RSpec.describe "Sidekiq::Web access" do
   let(:organization) { create(:organization) }
   let(:system_admin_sign_in_url) { "http://#{organization.host}/system/admins/sign_in" }
 
-  before { host! organization.host }
+  # Sidekiq::Web itself reads Redis, which the test environment does not run.
+  # Only whether the request reaches it matters here.
+  before do
+    allow(Sidekiq::Web).to receive(:call).and_return([200, {}, ["Sidekiq"]])
+    host! organization.host
+  end
 
   context "when not signed in" do
     before { get "/sidekiq" }
 
     it "redirects to the system admin sign in" do
       expect(response).to redirect_to(system_admin_sign_in_url)
+      expect(Sidekiq::Web).not_to have_received(:call)
     end
   end
 
@@ -31,6 +37,7 @@ RSpec.describe "Sidekiq::Web access" do
 
     it "redirects to the system admin sign in" do
       expect(response).to redirect_to(system_admin_sign_in_url)
+      expect(Sidekiq::Web).not_to have_received(:call)
     end
   end
 
@@ -44,19 +51,21 @@ RSpec.describe "Sidekiq::Web access" do
 
     it "redirects to the system admin sign in" do
       expect(response).to redirect_to(system_admin_sign_in_url)
+      expect(Sidekiq::Web).not_to have_received(:call)
     end
   end
 
   context "when signed in as a system admin" do
-    let(:system_admin) { create(:user, :admin, :confirmed, organization:) }
+    let(:system_admin) { create(:admin) }
 
     before do
       sign_in system_admin, scope: :admin
       get "/sidekiq"
     end
 
-    it "shows the dashboard" do
+    it "passes the request to Sidekiq::Web" do
       expect(response).to have_http_status(:ok)
+      expect(Sidekiq::Web).to have_received(:call)
     end
   end
 end
