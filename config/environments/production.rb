@@ -84,8 +84,10 @@ Rails.application.configure do
     user_name: ENV.fetch("SMTP_USERNAME", nil),
     password: ENV.fetch("SMTP_PASSWORD", nil),
     domain: ENV.fetch("SMTP_DOMAIN", nil),
-    enable_starttls_auto: Decidim::Env.new("SMTP_STARTTLS_AUTO", "true").value != "false",
-    openssl_verify_mode: "none"
+    # Require STARTTLS unless SMTP_STARTTLS=false, so the credentials and the
+    # tokens in outgoing mail cannot be read on the way to the SMTP server.
+    enable_starttls: Decidim::Env.new("SMTP_STARTTLS", "true").value != "false",
+    openssl_verify_mode: "peer"
   }
 
   # Use a different logger for distributed setups.
