@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 
-require "ipaddr"
-require "net/http"
-require "resolv"
-require "uri"
+require "ssrf_filter"
 
 module Decidim
   module UserExtension
-    # Fetches a remote avatar image with SSRF protections.
+    # Fetches a remote avatar image. SsrfFilter resolves the host, refuses
+    # private, loopback and link-local addresses (including IPv4 embedded in
+    # IPv6), connects to the checked address and checks again on every redirect.
     #
     # Returns [body_io, filename] on success, or nil when the URL is blank,
     # rejected, unreachable, oversized, or the response is non-2xx.
@@ -15,30 +14,48 @@ module Decidim
       MAX_BYTES = 5 * 1024 * 1024
       TIMEOUT = 5
       MAX_REDIRECTS = 3
+      # SsrfFilter tries the next address on a connection failure, timeouts
+      # included, so the wait per hop grows with the number of addresses.
+      MAX_ADDRESSES = 2
 
       ALLOWED_CONTENT_TYPES = %w(image/png image/jpeg image/gif image/webp).freeze
 
-      EXTRA_BLOCKED_RANGES = [
-        IPAddr.new("0.0.0.0/8"),
-        IPAddr.new("100.64.0.0/10"),
-        IPAddr.new("192.0.0.0/24"),
-        IPAddr.new("198.18.0.0/15"),
-        IPAddr.new("224.0.0.0/4"),
-        IPAddr.new("240.0.0.0/4"),
-        IPAddr.new("::/128"),
-        IPAddr.new("ff00::/8")
-      ].freeze
-
       NETWORK_ERRORS = [
-        URI::InvalidURIError,
+        URI::Error,
         SocketError,
-        Errno::ECONNREFUSED,
-        Errno::EHOSTUNREACH,
+        SystemCallError,
         Net::OpenTimeout,
         Net::ReadTimeout,
         IOError,
         OpenSSL::SSL::SSLError
       ].freeze
+
+      HTTP_OPTIONS = { open_timeout: TIMEOUT, read_timeout: TIMEOUT }.freeze
+
+      # Hostless URLs such as "https:foo" make Resolv raise ArgumentError.
+      # SsrfFilter only connects to the addresses returned here, so limiting
+      # them does not let any other address through.
+      RESOLVER = lambda do |hostname|
+        hostname.blank? ? [] : SsrfFilter::DEFAULT_RESOLVER.call(hostname).first(MAX_ADDRESSES)
+      end
+
+      # SsrfFilter 1.6.0 writes IPv6 hosts into the Host header without
+      # brackets. Fixed upstream (arkadiyt/ssrf_filter#100), not yet released.
+      SET_HOST_HEADER = ->(request) { request["host"] = request.uri.authority }
+
+      # Redirects are followed in #call so that relative Locations resolve
+      # against the current URL (also fixed in arkadiyt/ssrf_filter#100); every
+      # hop still goes through SsrfFilter.
+      SSRF_OPTIONS = {
+        max_redirects: 0,
+        allow_unfollowed_redirects: true,
+        resolver: RESOLVER,
+        request_proc: SET_HOST_HEADER,
+        http_options: HTTP_OPTIONS
+      }.freeze
+
+      # Raised from the response block to stop reading the body.
+      class Rejected < StandardError; end
 
       def self.call(url, allowed_content_types: ALLOWED_CONTENT_TYPES, default_filename: "avatar")
         new(url, allowed_content_types:, default_filename:).call
@@ -53,87 +70,61 @@ module Decidim
       def call
         return nil if @url.blank?
 
-        body, filename = fetch(@url, MAX_REDIRECTS)
-        return nil if body.blank?
+        url = @url
+        (MAX_REDIRECTS + 1).times do
+          body = nil
+          response = SsrfFilter.get(url, SSRF_OPTIONS) { |res| body = read_response(res) }
+          unless response.is_a?(Net::HTTPRedirection)
+            return nil if body.blank?
 
-        [StringIO.new(body), filename]
-      end
-
-      private
-
-      def fetch(url, redirects_remaining)
-        uri = URI.parse(url)
-        return skip("unsafe_uri") unless safe_uri?(uri)
-
-        Net::HTTP.start(
-          uri.hostname,
-          uri.port,
-          use_ssl: uri.scheme == "https",
-          open_timeout: TIMEOUT,
-          read_timeout: TIMEOUT
-        ) do |http|
-          http.request(Net::HTTP::Get.new(uri.request_uri)) do |response|
-            return handle_response(response, uri, redirects_remaining)
+            return [StringIO.new(body), File.basename(response.uri&.path.presence || @default_filename)]
           end
+
+          location = response["location"]
+          return skip("redirect_without_location") if location.blank?
+
+          url = URI.join(url, location).to_s
         end
+        skip("too_many_redirects")
+      rescue Rejected => e
+        skip(e.message)
+      rescue SsrfFilter::Error, Resolv::ResolvError
+        skip("unsafe_uri")
       rescue *NETWORK_ERRORS => e
         skip("network_error: #{e.class}")
       end
 
-      def handle_response(response, uri, redirects_remaining)
+      private
+
+      # Net::HTTP reads any body left unread after the block, so every
+      # response is either read within the limit or rejected here.
+      def read_response(response)
         case response
-        when Net::HTTPSuccess
-          read_success(response, uri)
-        when Net::HTTPRedirection
-          follow_redirect(response, uri, redirects_remaining)
-        else
-          skip("http_status_#{response.code}")
+        when Net::HTTPSuccess then read_success(response)
+        when Net::HTTPRedirection then discard_body(response)
+        else raise Rejected, "http_status_#{response.code}"
         end
       end
 
-      def read_success(response, uri)
-        return skip("unexpected_content_type: #{response["content-type"]}") unless acceptable_content_type?(response["content-type"])
-        return skip("content_length_exceeded") if response["content-length"].to_i > MAX_BYTES
+      def read_success(response)
+        raise Rejected, "unexpected_content_type: #{response["content-type"]}" unless acceptable_content_type?(response["content-type"])
+        raise Rejected, "content_length_exceeded" if response["content-length"].to_i > MAX_BYTES
 
-        body = String.new(capacity: MAX_BYTES)
+        body = String.new
         response.read_body do |chunk|
           body << chunk
-          return skip("streamed_body_exceeded") if body.bytesize > MAX_BYTES
+          raise Rejected, "streamed_body_exceeded" if body.bytesize > MAX_BYTES
         end
-
-        [body, File.basename(uri.path.presence || @default_filename)]
+        body
       end
 
-      def follow_redirect(response, uri, redirects_remaining)
-        return skip("too_many_redirects") if redirects_remaining <= 0
-
-        location = response["location"]
-        return skip("redirect_without_location") if location.blank?
-
-        fetch(URI.join(uri, location).to_s, redirects_remaining - 1)
-      end
-
-      def safe_uri?(uri)
-        return false unless uri.is_a?(URI::HTTP) || uri.is_a?(URI::HTTPS)
-        return false if uri.host.blank?
-
-        addresses = Resolv.getaddresses(uri.host)
-        return false if addresses.empty?
-
-        addresses.all? { |address| public_ip_address?(address) }
-      rescue Resolv::ResolvError
-        false
-      end
-
-      def public_ip_address?(address)
-        ip = IPAddr.new(address)
-        return false if ip.loopback?
-        return false if ip.private?
-        return false if ip.link_local?
-
-        EXTRA_BLOCKED_RANGES.none? { |range| range.include?(ip) }
-      rescue IPAddr::InvalidAddressError
-        false
+      def discard_body(response)
+        bytes = 0
+        response.read_body do |chunk|
+          bytes += chunk.bytesize
+          raise Rejected, "redirect_body_exceeded" if bytes > MAX_BYTES
+        end
+        nil
       end
 
       def acceptable_content_type?(content_type)

@@ -10,7 +10,7 @@ RSpec.describe "Decidim::ApplicationUploader#remote_url= override" do
   let(:uploader) { model.attached_uploader(:file) }
   let(:url) { "https://cdn.example.com/file.png" }
   let(:host) { "cdn.example.com" }
-  let(:public_ip) { "203.0.113.10" }
+  let(:public_ip) { "93.184.216.34" }
   let(:body) { "FILEDATA" }
   let(:original_filename) { model.file.filename.to_s }
 

@@ -25,6 +25,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "decidim-admin"
   spec.add_dependency "decidim-core"
   spec.add_dependency "rails"
+  spec.add_dependency "ssrf_filter"
 
   spec.metadata["rubygems_mfa_required"] = "true"
 end
