@@ -9,10 +9,11 @@
 #
 # - `find` is kept rather than `find_by`, so a missing id still raises exactly
 #   as upstream does.
-# - When no owner can be resolved the original behaviour is used, so the patch
-#   can never drop an update that used to succeed.
-# - keep_ids only ever drops ids that are definitely out of scope, so
-#   document_cleanup! keeps destroying exactly what it destroyed before.
+# - When the edited record cannot be resolved (create commands), no existing
+#   attachment is in scope.
+# - keep_ids only drops ids that are not attachments of the edited record, so
+#   document_cleanup!, which only iterates those, keeps destroying exactly what
+#   it destroyed before.
 module MultipleAttachmentsScopeHardening
   private
 
@@ -23,38 +24,43 @@ module MultipleAttachmentsScopeHardening
     record.update(title: title_for(attachment))
   end
 
-  # Drops only ids whose attachment definitely belongs to another organization,
-  # so the weight assignment in create_attachments cannot reach them. Anything
-  # the check cannot resolve is kept. document_cleanup! also reads this, but it
-  # only iterates attachments of documents_attached_to, which always share its
-  # organization, so nothing it would have kept can be dropped here.
+  # Keeps the order of the submitted ids, which create_attachments turns into
+  # weights.
   def keep_ids
-    super.reject { |id| foreign_attachment?(id) }
+    ids = super
+    owner = attachment_owner
+    return [] if owner.blank?
+
+    ids & attachments_of(owner).where(id: ids).ids
   end
 
-  def foreign_attachment?(id)
-    record = Decidim::Attachment.find_by(id:)
-    return false if record.blank?
+  # Compares the stored type and id rather than loading attached_to, which
+  # would raise for an attachment whose owner class is no longer loaded.
+  def attachment_in_scope?(record)
+    owner = attachment_owner
+    owner.present? && record.attached_to_type == owner.class.polymorphic_name && record.attached_to_id == owner.id
+  end
 
-    !attachment_in_scope?(record)
+  def attachments_of(owner)
+    Decidim::Attachment.where(attached_to_type: owner.class.polymorphic_name, attached_to_id: owner.id)
   end
 
   # Decidim derives the right to touch an attachment from the right to edit the
-  # record it hangs off, so comparing against that record is the rule this
-  # should express. Commands that assign @attached_to before build_attachments
-  # runs make it available, and those are checked that way.
+  # record it hangs off, so only attachments of that record are in scope.
   #
-  # The rest only assign it in run_after_hooks, leaving documents_attached_to
-  # to fall back to the organization. There the record is not knowable yet, so
-  # the check drops to the organization: weaker than the rule, but still the
-  # tenant boundary, and never stricter than what the command can actually
-  # verify.
-  def attachment_in_scope?(record)
-    owner = documents_attached_to
-    return true if owner.blank?
-    return record.organization == owner if owner.is_a?(Decidim::Organization)
+  # Commands that assign @attached_to before build_attachments runs make the
+  # record available that way. Update commands built on
+  # Decidim::Commands::UpdateResource only assign it in run_after_hooks, but
+  # already hold the record as resource. Create commands have no persisted
+  # record yet, so no existing attachment can be theirs.
+  #
+  # resource is only read from UpdateResource: Decidim::Command forwards
+  # unknown methods to the calling controller, which may define its own.
+  def attachment_owner
+    return @attached_to if @attached_to.present?
+    return unless is_a?(Decidim::Commands::UpdateResource)
 
-    record.attached_to == owner
+    resource if resource&.persisted?
   end
 end
 
