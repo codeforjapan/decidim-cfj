@@ -91,6 +91,12 @@ RSpec.describe "Decidim::MultipleAttachmentsMethods scoping override" do
     let!(:attached_document) do
       create(:attachment, attached_to: target_process, title: { "en" => "Attached document" })
     end
+    let(:rename_payload) do
+      Struct.new(:add_attachments, :attachments).new(
+        [{ id: attached_document.id, title: "Renamed" }.with_indifferent_access],
+        [attached_document.id]
+      )
+    end
 
     # Stands in for the commands that assign @attached_to before calling
     # build_attachments (AnswerQuestionnaire, UpdateProposal, ...).
@@ -107,15 +113,8 @@ RSpec.describe "Decidim::MultipleAttachmentsMethods scoping override" do
       end
     end
 
-    def rename_payload(record)
-      Struct.new(:add_attachments, :attachments).new(
-        [{ id: record.id, title: "Renamed" }.with_indifferent_access],
-        [record.id]
-      )
-    end
-
     it "updates the title of a document attached to that record" do
-      command_class.new(rename_payload(attached_document), target_process).send(:build_attachments)
+      command_class.new(rename_payload, target_process).send(:build_attachments)
 
       expect(translated_attribute(attached_document.reload.title)).to eq("Renamed")
     end
@@ -161,70 +160,105 @@ RSpec.describe "Decidim::MultipleAttachmentsMethods scoping override" do
     end
   end
 
-  # UpdateDebate and the create commands only assign @attached_to in
-  # run_after_hooks, so attachments_attached_to still falls back to the
-  # organization while build_attachments runs. Renaming an attachment of the
-  # record being edited has to keep working in that case.
-  describe "when the command has not assigned the record yet" do
+  # UpdateDebate only assigns @attached_to in run_after_hooks, so the edited
+  # record has to be taken from resource while build_attachments runs.
+  describe "when an update command has not assigned the record yet" do
     let(:target_process) { create(:participatory_process, organization:) }
     let!(:own_document) do
       create(:attachment, attached_to: target_process, title: { "en" => "Own document" }, weight: 5)
     end
-
-    let(:command_class) do
-      Class.new do
-        include Decidim::MultipleAttachmentsMethods
-
-        attr_reader :form
-
-        def initialize(form)
-          @form = form
-        end
+    let(:second_document) { create(:attachment, attached_to: target_process, title: { "en" => "Second document" }) }
+    let(:sibling) do
+      create(:attachment, attached_to: create(:participatory_process, organization:), title: { "en" => "Sibling document" }, weight: 7)
+    end
+    # An attachment whose owner class is no longer loaded, e.g. of a removed module.
+    let(:orphan) do
+      create(:attachment, attached_to: create(:participatory_process, organization:), title: { "en" => "Orphan document" }).tap do |attachment|
+        attachment.update_columns(attached_to_type: "Decidim::RemovedModule::Resource") # rubocop:disable Rails/SkipsModelValidations
       end
     end
-
-    let(:form_class) { Struct.new(:add_attachments, :attachments, :current_organization) }
-
-    it "renames a document belonging to the current organization" do
-      form = form_class.new(
-        [{ id: own_document.id, title: "Renamed" }.with_indifferent_access],
-        [own_document.id],
-        organization
+    let(:submitted) { own_document }
+    let(:form) do
+      Struct.new(:add_attachments, :attachments, :current_organization).new(
+        [{ id: submitted.id, title: "Renamed" }.with_indifferent_access], [submitted.id], organization
       )
+    end
+    let(:command) { Class.new(Decidim::Commands::UpdateResource) { include Decidim::MultipleAttachmentsMethods }.new(form, target_process) }
 
-      command_class.new(form).send(:build_attachments)
+    it "renames a document of the record being edited" do
+      command.send(:build_attachments)
 
       expect(translated_attribute(own_document.reload.title)).to eq("Renamed")
     end
 
-    it "does not rename a document belonging to another organization" do
-      form = form_class.new(
-        [{ id: unrelated_attachment.id, title: "Renamed" }.with_indifferent_access],
-        [unrelated_attachment.id],
-        organization
-      )
+    context "with a document of another record in the same organization" do
+      let(:submitted) { sibling }
 
-      command_class.new(form).send(:build_attachments)
+      it "does not rename it" do
+        command.send(:build_attachments)
 
-      expect(translated_attribute(unrelated_attachment.reload.title)).to eq("Unrelated document")
+        expect(translated_attribute(sibling.reload.title)).to eq("Sibling document")
+        expect(command.send(:keep_ids)).to be_empty
+      end
     end
 
-    # The check compares organizations, so a document attached to a different
-    # record of the same organization is still in scope. Pinned here so the
-    # boundary is explicit.
-    it "renames a document of another record in the same organization" do
-      other_record = create(:participatory_process, organization:)
-      sibling = create(:attachment, attached_to: other_record, title: { "en" => "Sibling document" })
+    context "with a document whose owner class is not loaded" do
+      let(:submitted) { orphan }
 
-      form = form_class.new(
-        [{ id: sibling.id, title: "Renamed" }.with_indifferent_access],
-        [sibling.id],
-        organization
+      it "skips it without raising" do
+        expect { command.send(:build_attachments) }.not_to raise_error
+
+        expect(translated_attribute(orphan.reload.title)).to eq("Orphan document")
+        expect(command.send(:keep_ids)).to be_empty
+      end
+    end
+
+    context "with several documents of the record" do
+      let(:form) do
+        Struct.new(:add_attachments, :attachments, :current_organization).new(
+          [], [second_document.id, sibling.id, own_document.id], organization
+        )
+      end
+
+      it "keeps them in the submitted order" do
+        expect(command.send(:keep_ids)).to eq([second_document.id, own_document.id])
+      end
+    end
+  end
+
+  # Create commands only assign @attached_to once the record is saved, so while
+  # build_attachments runs there is no record whose attachments could be edited.
+  describe "when a create command has no record yet" do
+    let(:sibling_process) { create(:participatory_process, organization:) }
+    let(:sibling) do
+      create(:attachment, attached_to: sibling_process, title: { "en" => "Sibling document" }, weight: 7)
+    end
+    let(:form) do
+      Struct.new(:add_attachments, :attachments, :current_organization).new(
+        [{ id: sibling.id, title: "Renamed" }.with_indifferent_access], [sibling.id], organization
       )
+    end
+    let(:command) do
+      Class.new(Decidim::Command) do
+        include Decidim::MultipleAttachmentsMethods
 
-      command_class.new(form).send(:build_attachments)
+        def initialize(form)
+          @form = form
+        end
+      end.new(form)
+    end
+    # Decidim::Command forwards unknown methods to the caller of the block given
+    # to .call, here this example. A controller defining resource is the case
+    # this stands for.
+    let(:resource) { sibling_process }
 
-      expect(translated_attribute(sibling.reload.title)).to eq("Renamed")
+    before { command.evaluate { nil } }
+
+    it "does not rename a document of the same organization" do
+      command.send(:build_attachments)
+
+      expect(translated_attribute(sibling.reload.title)).to eq("Sibling document")
+      expect(command.send(:keep_ids)).to be_empty
     end
   end
 end
