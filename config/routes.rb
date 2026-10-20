@@ -11,8 +11,8 @@ Rails.application.routes.draw do
   match "/profiles/:nickname/conversations(/*path)", to: redirect("/", status: 301), via: :all
 
   mount Decidim::Core::Engine => "/"
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  authenticate :user, ->(u) { u.admin? } do
+  # Sidekiq::Web exposes the queue to system admins only.
+  authenticate :admin do
     mount Sidekiq::Web => "/sidekiq"
   end
 
