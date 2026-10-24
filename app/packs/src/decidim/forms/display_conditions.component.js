@@ -81,7 +81,8 @@ class DisplayCondition {
   }
 
   checkMatchCondition(value) {
-    let regexp = new RegExp(this.value, "i");
+    // cfj: match the value as plain text, as the server side does
+    let regexp = new RegExp(this.value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i");
 
     if (typeof (value) !== "object") {
       return Boolean(value.match(regexp));
