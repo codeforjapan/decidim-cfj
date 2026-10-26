@@ -6,7 +6,7 @@ on:
       ruby-version:
         type: string
         required: false
-        default: 3.4.7
+        default: 3.4.12
 
 jobs:
   rubocop:
