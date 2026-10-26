@@ -1,5 +1,26 @@
 # Change Log
 
+## [1.21.4](https://github.com/codeforjapan/decidim-cfj/compare/v1.21.3...v1.21.4) (2026-10-20)
+
+
+### Bug Fixes
+
+* DECIDIM_EXPIRE_SESSION_AFTER が本番で効いていない問題を修正する ([#923](https://github.com/codeforjapan/decidim-cfj/issues/923)) ([fb1d816](https://github.com/codeforjapan/decidim-cfj/commit/fb1d8165aa3de26343d6b4b06d7d483227574d90))
+* keep tokens out of request, model, job and Sidekiq logs ([#936](https://github.com/codeforjapan/decidim-cfj/issues/936)) ([139af8d](https://github.com/codeforjapan/decidim-cfj/commit/139af8dae39724a948be9ab06df2e8f685f4438a))
+* limit attachment title and weight edits to the edited record ([#934](https://github.com/codeforjapan/decidim-cfj/issues/934)) ([e19fca3](https://github.com/codeforjapan/decidim-cfj/commit/e19fca3d74c0ddd2748442f6f66d93ab5702fe26))
+* prevent to_prepare from aborting or duplicating on development reload ([#916](https://github.com/codeforjapan/decidim-cfj/issues/916)) ([aca994f](https://github.com/codeforjapan/decidim-cfj/commit/aca994f2ea5e97722db26df8c120148b5112eb0c))
+* refuse sign_in for users of another organization ([#927](https://github.com/codeforjapan/decidim-cfj/issues/927)) ([01a59a4](https://github.com/codeforjapan/decidim-cfj/commit/01a59a416df0dc89cb5c173c79a93b9aabd426ca))
+* require STARTTLS and verify the certificate for SMTP in production ([#935](https://github.com/codeforjapan/decidim-cfj/issues/935)) ([da1ae11](https://github.com/codeforjapan/decidim-cfj/commit/da1ae11f1e9692ec79f4b6b30c14680294dc9a09))
+* restrict Sidekiq::Web to system admins ([#933](https://github.com/codeforjapan/decidim-cfj/issues/933)) ([b980833](https://github.com/codeforjapan/decidim-cfj/commit/b9808335ebe4e5662e1e1ba13ef2fc037ba45bb4))
+* scope user_extension postages to pending authorizations of the organization ([#937](https://github.com/codeforjapan/decidim-cfj/issues/937)) ([7fa7f69](https://github.com/codeforjapan/decidim-cfj/commit/7fa7f69a8b19378f054d5db8bec1853e5327f01f))
+* スパム判定が sidekiq の並行実行で混線する問題を修正する ([#913](https://github.com/codeforjapan/decidim-cfj/issues/913)) ([f18dbad](https://github.com/codeforjapan/decidim-cfj/commit/f18dbad532653b5ccc780848c956e5406a82f0a2))
+* 未導入の decidim-initiatives で学習タスクが途中停止する問題を修正する ([#914](https://github.com/codeforjapan/decidim-cfj/issues/914)) ([c36b8c9](https://github.com/codeforjapan/decidim-cfj/commit/c36b8c9dd659cab46a97ed4c87b7f888fbe55251))
+
+
+### Performance Improvements
+
+* exclude node_modules from Shakapacker staleness check ([#917](https://github.com/codeforjapan/decidim-cfj/issues/917)) ([2d7520b](https://github.com/codeforjapan/decidim-cfj/commit/2d7520b6d4c992c85293b978615eb24c8ed50c81))
+
 ## [1.21.3](https://github.com/codeforjapan/decidim-cfj/compare/v1.21.2...v1.21.3) (2026-10-06)
 
 
