@@ -6,7 +6,7 @@ on:
       ruby-version:
         type: string
         required: false
-        default: 3.3.4
+        default: 3.3.13
 
 jobs:
   rubocop:
@@ -74,7 +74,7 @@ jobs:
           which mogrify
           mogrify -version
 
-      - name: Set up Ruby 3.3.4
+      - name: Set up Ruby 3.3.13
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ inputs.ruby-version }}
