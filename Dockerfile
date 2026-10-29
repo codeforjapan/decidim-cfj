@@ -1,6 +1,6 @@
 FROM node:22.23.2-bookworm-slim AS node
 
-FROM ruby:3.4.7-slim-bookworm
+FROM ruby:3.4.12-slim-bookworm
 
 # for build-dep
 RUN  apt-get update && \
