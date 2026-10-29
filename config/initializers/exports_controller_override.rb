@@ -3,9 +3,9 @@
 # Looks up the resource_id of a component export within the exported component.
 module DecidimAdminExportsResourceScopePatch
   EXPORT_RESOURCES = {
-    %w(surveys survey_user_answers) => ->(component) { Decidim::Surveys::Survey.where(component:) },
+    %w(surveys survey_user_responses) => ->(component) { Decidim::Surveys::Survey.where(component:) },
     %w(budgets projects) => ->(component) { Decidim::Budgets::Budget.where(component:) },
-    %w(meetings answers) => lambda { |component|
+    %w(meetings responses) => lambda { |component|
       polls = Decidim::Meetings::Poll.where(meeting: Decidim::Meetings::Meeting.where(component:))
       Decidim::Meetings::Questionnaire.where(questionnaire_for: polls)
     }

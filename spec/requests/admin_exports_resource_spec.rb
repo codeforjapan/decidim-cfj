@@ -15,7 +15,7 @@ RSpec.describe "Admin component exports with a resource_id" do
   let(:process) { create(:participatory_process, organization:) }
   let(:other_organization) { create(:organization) }
   let(:other_process) { create(:participatory_process, organization: other_organization) }
-  let(:exports_path) { "/admin/participatory_processes/#{process.slug}/components/#{component.id}/exports" }
+  let(:exports_path) { "/#{organization.default_locale}/admin/participatory_processes/#{process.slug}/components/#{component.id}/exports" }
   let(:export_request) { post exports_path, params: { id: export_name, format: "CSV", resource_id: } }
 
   before do
@@ -23,9 +23,9 @@ RSpec.describe "Admin component exports with a resource_id" do
     sign_in admin_user, scope: :user
   end
 
-  describe "survey answers" do
+  describe "survey responses" do
     let(:component) { create(:surveys_component, participatory_space: process) }
-    let(:export_name) { "survey_user_answers" }
+    let(:export_name) { "survey_user_responses" }
     let(:own_survey) { create(:survey, component:) }
     let(:other_survey) { create(:survey, component: create(:surveys_component, participatory_space: other_process)) }
 
@@ -42,7 +42,9 @@ RSpec.describe "Admin component exports with a resource_id" do
       let(:resource_id) { other_survey.id }
 
       it "does not export" do
-        expect { export_request }.to raise_error(ActiveRecord::RecordNotFound)
+        export_request
+
+        expect(response).to have_http_status(:not_found)
         expect(Decidim::ExportJob).not_to have_been_enqueued
       end
     end
@@ -67,7 +69,9 @@ RSpec.describe "Admin component exports with a resource_id" do
       let(:resource_id) { other_budget.id }
 
       it "does not export" do
-        expect { export_request }.to raise_error(ActiveRecord::RecordNotFound)
+        export_request
+
+        expect(response).to have_http_status(:not_found)
         expect(Decidim::ExportJob).not_to have_been_enqueued
       end
     end
@@ -76,14 +80,16 @@ RSpec.describe "Admin component exports with a resource_id" do
       let(:resource_id) { create(:budget, component: create(:budgets_component, participatory_space: process)).id }
 
       it "does not export" do
-        expect { export_request }.to raise_error(ActiveRecord::RecordNotFound)
+        export_request
+
+        expect(response).to have_http_status(:not_found)
       end
     end
   end
 
-  describe "meeting poll answers" do
+  describe "meeting poll responses" do
     let(:component) { create(:meeting_component, participatory_space: process) }
-    let(:export_name) { "answers" }
+    let(:export_name) { "responses" }
     let(:own_questionnaire) { create(:meetings_poll_questionnaire, questionnaire_for: create(:poll, meeting: create(:meeting, component:))) }
     let(:other_meeting) { create(:meeting, component: create(:meeting_component, participatory_space: other_process)) }
     let(:other_questionnaire) { create(:meetings_poll_questionnaire, questionnaire_for: create(:poll, meeting: other_meeting)) }
@@ -91,7 +97,7 @@ RSpec.describe "Admin component exports with a resource_id" do
     context "when the poll belongs to the component" do
       let(:resource_id) { own_questionnaire.id }
 
-      it "exports the poll answers" do
+      it "exports the poll responses" do
         expect { export_request }.to have_enqueued_job(Decidim::ExportJob)
           .with(admin_user, component, export_name, "CSV", own_questionnaire.id, anything)
       end
@@ -101,7 +107,9 @@ RSpec.describe "Admin component exports with a resource_id" do
       let(:resource_id) { other_questionnaire.id }
 
       it "does not export" do
-        expect { export_request }.to raise_error(ActiveRecord::RecordNotFound)
+        export_request
+
+        expect(response).to have_http_status(:not_found)
         expect(Decidim::ExportJob).not_to have_been_enqueued
       end
     end
@@ -110,11 +118,12 @@ RSpec.describe "Admin component exports with a resource_id" do
   describe "a user who cannot export" do
     let(:admin_user) { create(:process_collaborator, :confirmed, participatory_process: process, password_updated_at: Time.current) }
     let(:component) { create(:surveys_component, participatory_space: process) }
-    let(:export_name) { "survey_user_answers" }
+    let(:export_name) { "survey_user_responses" }
     let(:resource_id) { create(:survey, component: create(:surveys_component, participatory_space: other_process)).id }
 
     it "is rejected before the resource is looked up" do
-      expect { export_request }.not_to raise_error
+      export_request
+
       expect(response).to have_http_status(:redirect)
       expect(Decidim::ExportJob).not_to have_been_enqueued
     end
@@ -122,11 +131,13 @@ RSpec.describe "Admin component exports with a resource_id" do
 
   describe "a non-scalar resource_id" do
     let(:component) { create(:surveys_component, participatory_space: process) }
-    let(:export_name) { "survey_user_answers" }
+    let(:export_name) { "survey_user_responses" }
     let(:resource_id) { [create(:survey, component:).id] }
 
     it "does not export" do
-      expect { export_request }.to raise_error(ActiveRecord::RecordNotFound)
+      export_request
+
+      expect(response).to have_http_status(:not_found)
       expect(Decidim::ExportJob).not_to have_been_enqueued
     end
   end
