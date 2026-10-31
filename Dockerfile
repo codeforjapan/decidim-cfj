@@ -1,4 +1,4 @@
-FROM node:20.18.3-bookworm-slim AS node
+FROM node:22.23.4-bookworm-slim AS node
 
 FROM ruby:3.3.13-slim-bookworm
 
