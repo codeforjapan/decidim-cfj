@@ -3,7 +3,7 @@ FROM node:22.23.4-bookworm-slim AS node
 FROM ruby:3.3.13-slim-bookworm
 
 # for build-dep
-RUN  apt-get update && apt-get upgrade -y && \
+RUN  apt-get update && \
      apt-get install -y --no-install-recommends \
         build-essential \
         libpq-dev \
