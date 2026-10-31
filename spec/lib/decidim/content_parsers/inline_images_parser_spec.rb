@@ -23,8 +23,8 @@ module Decidim
 
           # Check that the subject contains Global ID instead of signed URL
           expect(subject).to include("img src=\"#{editor_image.file.blob.to_global_id}\"")
-          expect(subject).not_to match(/amazonaws\.com/)
-          expect(subject).not_to match(/signature=/)
+          expect(subject).not_to include("amazonaws.com")
+          expect(subject).not_to include("signature=")
         end
 
         it "preserves other HTML content" do

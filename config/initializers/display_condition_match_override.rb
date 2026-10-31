@@ -23,12 +23,12 @@ module DecidimCfjDisplayConditionMatchOverride
 
   private
 
-  def answer_form_matches?(answer_form, value)
+  def response_form_matches?(response_form, value)
     search = js_case_fold(value)
-    if answer_form.body
-      js_case_fold(answer_form.body).include?(search)
+    if response_form.body
+      js_case_fold(response_form.body).include?(search)
     else
-      answer_form.choices.any? do |choice_value|
+      response_form.choices.any? do |choice_value|
         # The client side checks custom_body if present, otherwise body
         text = choice_value.custom_body.presence || choice_value.body
         text.present? && js_case_fold(text).include?(search)

@@ -1,5 +1,5 @@
 /**
- * Unit spec for activateEditors.
+ * Unit spec for prepareClonedEditors.
  *
  * The fixture mirrors the markup FormBuilder#editor / #editor_upload
  * (Decidim::UploadModalCell + decidim_modal) render server-side: an
@@ -10,7 +10,7 @@
  * input/label pair.
  */
 
-import { activateEditors } from "src/decidim/cfj/meetings/dynamic_field_editors";
+import { prepareClonedEditors } from "src/decidim/cfj/meetings/dynamic_field_editors";
 
 const buildEditor = (modalId) => `
   <div class="editor">
@@ -38,18 +38,14 @@ const dialogIdOf = (container) => JSON.parse(container.dataset.options).uploadDi
 // collaborators stubbed so each call can be inspected.
 const activate = (html) => {
   document.body.innerHTML = `<div id="field">${html}</div>`;
-  // Read at call time, not afterwards: the container is mutated in place, so
-  // asserting on it later would pass whatever the order turned out to be.
-  const selectorsWhenBuilt = [];
-  const createEditor = jest.fn((container) => selectorsWhenBuilt.push(container.dataset.options));
   const createDialog = jest.fn();
 
-  activateEditors(document.getElementById("field"), { createEditor, createDialog });
+  prepareClonedEditors(document.getElementById("field"), { createDialog });
 
-  return { createEditor, createDialog, selectorsWhenBuilt };
+  return { createDialog };
 };
 
-describe("activateEditors", () => {
+describe("prepareClonedEditors", () => {
   it("points the editor's uploadDialogSelector at a fresh id", () => {
     activate(buildEditor("upload_abc"));
 
@@ -93,12 +89,26 @@ describe("activateEditors", () => {
     expect(JSON.parse(container.dataset.options).contentTypes).toEqual({ image: ["image/png"] });
   });
 
-  it("rekeys before building the editor, which resolves the selector once", () => {
-    const { createEditor, selectorsWhenBuilt } = activate(buildEditor("upload_abc"));
+  // On 0.31+ Stimulus builds the editor, and its image extension resolves
+  // uploadDialogSelector once while doing so. Stimulus reacts to a
+  // MutationObserver, so it cannot run until the current synchronous work is
+  // over - this pins that the rekey is finished by then.
+  it("finishes rekeying before any MutationObserver callback can run", async () => {
+    document.body.innerHTML = `<div id="field">${buildEditor("upload_abc")}</div>`;
+    const field = document.getElementById("field");
 
-    expect(createEditor).toHaveBeenCalledTimes(1);
-    expect(selectorsWhenBuilt[0]).not.toContain("#upload_abc\"");
-    expect(selectorsWhenBuilt[0]).toMatch(/"uploadDialogSelector":"#upload_abc-\d+"/);
+    let optionsWhenObserverRan = null;
+    new MutationObserver(() => {
+      optionsWhenObserverRan = field.querySelector(".editor-container").dataset.options;
+    }).observe(field, { attributes: true, childList: true, subtree: true });
+
+    prepareClonedEditors(field, { createDialog: jest.fn() });
+
+    await new Promise((resolve) => setTimeout(resolve, 0));
+
+    expect(optionsWhenObserverRan).not.toBeNull();
+    expect(optionsWhenObserverRan).not.toContain("#upload_abc\"");
+    expect(optionsWhenObserverRan).toMatch(/"uploadDialogSelector":"#upload_abc-\d+"/);
   });
 
   it("registers every dialog in the field", () => {

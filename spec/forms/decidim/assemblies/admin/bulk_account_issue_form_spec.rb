@@ -14,7 +14,7 @@ module Decidim
         end
 
         let(:organization) { create(:organization, tos_version: Time.current) }
-        let(:assembly) { create(:assembly, organization:, slug: "a-high", private_space: true, is_transparent: false) }
+        let(:assembly) { create(:assembly, organization:, slug: "a-high", access_mode: :restricted, has_members: true) }
         let(:params) { { bulk_account_issue: { participant_count: 2, admin_count: 1 } } }
 
         it { is_expected.to be_valid }
@@ -48,7 +48,7 @@ module Decidim
           end
 
           context "with a slug longer than the id budget" do
-            let(:assembly) { create(:assembly, organization:, slug: "a" * 16, private_space: true, is_transparent: false) }
+            let(:assembly) { create(:assembly, organization:, slug: "a" * 16, access_mode: :restricted, has_members: true) }
 
             it "rejects the request" do
               expect(form).not_to be_valid

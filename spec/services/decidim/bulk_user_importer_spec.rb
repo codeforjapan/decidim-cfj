@@ -119,7 +119,7 @@ RSpec.describe Decidim::BulkUserImporter do
 
       it "normalizes the nickname" do
         expect(result.status).to eq(:created)
-        expect(result.nickname).to match(/\A[a-z0-9_\-]+\z/)
+        expect(result.nickname).to match(/\A[a-z0-9_-]+\z/)
         expect(result.nickname.length).to be <= 20
       end
     end

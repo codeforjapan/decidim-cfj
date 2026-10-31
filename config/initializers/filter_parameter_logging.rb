@@ -20,9 +20,10 @@ Rails.application.config.after_initialize do
   # before this file runs, so #inspect of models would still show them.
   ActiveRecord::Base.filter_attributes |= Rails.application.config.filter_parameters
 
-  # These jobs receive raw tokens as arguments, which ActiveJob logs on enqueue
-  # and perform: Devise mails (reset password, invitation, confirmation) and
-  # the newsletter opt-in confirmation.
+  # Devise mails (reset password, invitation, confirmation) and the newsletter
+  # opt-in confirmation carry raw tokens as arguments, which ActiveJob logs on
+  # enqueue and perform. 0.32 delivers all of them through MailDeliveryJob:
+  # Decidim::NewslettersOptInJob is gone and decidim_newsletterable calls
+  # NewslettersOptInMailer#notify with deliver_later.
   ActionMailer::MailDeliveryJob.log_arguments = false
-  Decidim::NewslettersOptInJob.log_arguments = false
 end

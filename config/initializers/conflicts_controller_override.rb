@@ -3,7 +3,7 @@
 # Scopes the conflict looked up by edit/update to the current organization,
 # matching the scope already applied to #collection.
 Rails.application.config.to_prepare do
-  Decidim::Admin::ConflictsController # rubocop:disable Lint/Void
+  Decidim::Admin::ConflictsController
 
   module DecidimAdminConflictsOrganizationScopePatch
     def self.prepended(base)
