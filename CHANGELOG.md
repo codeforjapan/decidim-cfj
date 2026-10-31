@@ -1,5 +1,15 @@
 # Change Log
 
+## [1.21.5](https://github.com/codeforjapan/decidim-cfj/compare/v1.21.4...v1.21.5) (2026-10-31)
+
+
+### Bug Fixes
+
+* look up export resource_id within the exported component ([#948](https://github.com/codeforjapan/decidim-cfj/issues/948)) ([81ff98c](https://github.com/codeforjapan/decidim-cfj/commit/81ff98c160df24b363c5c33e1e4a43e71bf35282))
+* resolve decidim_awesome admin records within the current organization ([#947](https://github.com/codeforjapan/decidim-cfj/issues/947)) ([ca2cd02](https://github.com/codeforjapan/decidim-cfj/commit/ca2cd023753ea074d5858b5b0dfafb1865514004))
+* resolve included_in and previous_space among visible records of the organization ([#949](https://github.com/codeforjapan/decidim-cfj/issues/949)) ([7a0f10b](https://github.com/codeforjapan/decidim-cfj/commit/7a0f10b5132b65df15d4d45f0e9cb020a56dbe2a))
+* フォームの表示方法を修正 ([#942](https://github.com/codeforjapan/decidim-cfj/issues/942)) ([425e9d9](https://github.com/codeforjapan/decidim-cfj/commit/425e9d9d2f1a866ae5693a7be512ed0d4af422ff))
+
 ## [1.21.4](https://github.com/codeforjapan/decidim-cfj/compare/v1.21.3...v1.21.4) (2026-10-20)
 
 
