@@ -8,9 +8,10 @@
 
 <%
   doc = Nokogiri::HTML(translated_attribute(post.body))
-  img = doc.css('img')&.first
-  add_decidim_meta_image_url(img['src']) if img
-  %>
+  img = doc.css("img")&.first
+  add_decidim_meta_image_url(img["src"]) if img
+%>
+
 <%
   edit_link(
     resource_locator(post).edit,

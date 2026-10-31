@@ -1,5 +1,5 @@
 export default () => {
-  const accordions = document.querySelectorAll('[data-component="accordion"]');
+  const accordions = document.querySelectorAll('[data-controller~="accordion"]');
 
   accordions.forEach(accordion => {
     const button = accordion.querySelector('[data-controls]');

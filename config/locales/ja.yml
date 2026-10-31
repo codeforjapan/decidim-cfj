@@ -11,6 +11,11 @@ ja:
         validate_title_max_marks_together: タイトルで許容される最多連続記号文字数
         validate_title_min_length: タイトルに必要な最小文字数
         validate_title_start_with_caps: タイトルを大文字で始めることを強制する
+      member:
+        published: 公開
+        role: 肩書き
+      newsletter:
+        send_to_members: メンバーに送信
       organization:
         mobile_logo: "モバイル版ロゴ"
       decidim/user:
@@ -80,6 +85,13 @@ ja:
       debates:
         versions:
           too_large_changeset: 履歴のサイズが大きすぎるため表示できません
+    decidim_awesome:
+      admin:
+        menu:
+          verifications:
+            awesome_authorizations: Awesome 本人認証
+            force_authorizations: 本人認証の強制
+            verifications: 本人認証
     devise:
       registrations:
         user_extension:

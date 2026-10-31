@@ -35,9 +35,12 @@ RSpec.describe "User extension postages" do
   context "when the authorization belongs to another organization" do
     let(:authorization_organization) { create(:organization, available_authorizations: ["user_extension"]) }
 
+    # Rails 7.1 以降 show_exceptions の既定が :rescuable になり、
+    # RecordNotFound は送出されず 404 として描画される。
     it "does not touch the authorization" do
-      expect { post postage_path }.to raise_error(ActiveRecord::RecordNotFound)
+      post postage_path
 
+      expect(response).to have_http_status(:not_found)
       expect(authorization.reload.verification_metadata).to eq(verification_metadata)
     end
   end

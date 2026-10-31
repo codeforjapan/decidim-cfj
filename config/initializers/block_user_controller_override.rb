@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.config.to_prepare do
-  Decidim::Admin::BlockUserController # rubocop:disable Lint/Void
+  Decidim::Admin::BlockUserController
 
   module DecidimAdminBlockUserControllerBulkActionsPatch
     def bulk_create
