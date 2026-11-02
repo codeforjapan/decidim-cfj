@@ -30,7 +30,7 @@ gem "image_processing"
 gem "mini_magick", "~> 4.13"
 gem "newrelic_rpm"
 
-# gem "omniauth-cityos-dcp", git: "https://github.com/TheDesignium/omniauth-cityos-dcp.git", tag: "v1.4.0"
+gem "omniauth-cityos-dcp", git: "https://github.com/TheDesignium/omniauth-cityos-dcp.git", tag: "v1.5.2"
 gem "omniauth-line_login", path: "omniauth-line_login"
 gem "omniauth-rails_csrf_protection"
 

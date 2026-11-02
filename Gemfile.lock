@@ -1,4 +1,12 @@
 GIT
+  remote: https://github.com/TheDesignium/omniauth-cityos-dcp.git
+  revision: aa41ecb68155ae1cbc6316562a2f85952b26c80e
+  tag: v1.5.2
+  specs:
+    omniauth-cityos-dcp (1.5.2)
+      omniauth-oauth2
+
+GIT
   remote: https://github.com/codeforjapan/decidim-broadlistening-view.git
   revision: 74ab2ca4cff05d5722b1fd3062d032ff429ddffd
   branch: 032-stable
@@ -1127,6 +1135,7 @@ DEPENDENCIES
   memory_profiler
   mini_magick (~> 4.13)
   newrelic_rpm
+  omniauth-cityos-dcp!
   omniauth-line_login!
   omniauth-rails_csrf_protection
   puma (>= 6.3.1)
@@ -1145,7 +1154,7 @@ DEPENDENCIES
   zip-zip
 
 RUBY VERSION
-   ruby 3.4.12p148
+   ruby 3.4.7p58
 
 BUNDLED WITH
    2.6.9

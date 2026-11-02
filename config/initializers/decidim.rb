@@ -86,6 +86,20 @@ Decidim.config.omniauth_providers = Decidim.omniauth_providers.merge(
     enabled: Decidim::Env.new("OMNIAUTH_LINE_LOGIN_CHANNEL_ID").present?,
     client_id: Decidim::Env.new("OMNIAUTH_LINE_LOGIN_CHANNEL_ID", nil),
     client_secret: Decidim::Env.new("OMNIAUTH_LINE_LOGIN_CHANNEL_SECRET", nil)
+  },
+  # 接続情報は組織ごとにシステム管理画面で設定する。ここでの値は既定値で、全体では無効にしておく。
+  cityos_dcp_login: {
+    enabled: false,
+    client_id: Decidim::Env.new("OMNIAUTH_CITYOS_DCP_CLIENT_ID", ENV.fetch("OMNIAUTH_CITYOS_DCP_LOGIN_CLIENT_ID", nil)).value,
+    client_secret: Decidim::Env.new("OMNIAUTH_CITYOS_DCP_CLIENT_SECRET", ENV.fetch("OMNIAUTH_CITYOS_DCP_LOGIN_CLIENT_SECRET", nil)).value,
+    service_id: Decidim::Env.new("OMNIAUTH_CITYOS_DCP_SERVICE_ID").value,
+    policy: Decidim::Env.new("OMNIAUTH_CITYOS_DCP_POLICY").value,
+    scope: Decidim::Env.new("OMNIAUTH_CITYOS_DCP_SCOPE").value,
+    opt_api_base_url: Decidim::Env.new("OMNIAUTH_CITYOS_DCP_OPT_API_BASE_URL").value,
+    optin_url: Decidim::Env.new("OMNIAUTH_CITYOS_DCP_OPTIN_URL").value,
+    authorization_url: Decidim::Env.new("OMNIAUTH_CITYOS_DCP_AUTHORIZATION_URL").value,
+    label: Decidim::Env.new("OMNIAUTH_CITYOS_DCP_LABEL").value,
+    icon_path: Decidim::Env.new("OMNIAUTH_CITYOS_DCP_ICON_PATH").value
   }
 )
 
