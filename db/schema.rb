@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_08_26_030000) do
+ActiveRecord::Schema[7.0].define(version: 2026_11_02_000000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "ltree"
   enable_extension "pg_bigm"
@@ -490,6 +490,18 @@ ActiveRecord::Schema[7.0].define(version: 2026_08_26_030000) do
     t.datetime "updated_at", precision: nil, null: false
     t.index ["categorizable_type", "categorizable_id"], name: "decidim_categorizations_categorizable_id_and_type"
     t.index ["decidim_category_id"], name: "index_decidim_categorizations_on_decidim_category_id"
+  end
+
+  create_table "decidim_cfj_admin_login_codes", force: :cascade do |t|
+    t.bigint "decidim_user_id", null: false
+    t.string "code_digest"
+    t.datetime "sent_at"
+    t.integer "failed_attempts", default: 0, null: false
+    t.integer "total_failed_attempts", default: 0, null: false
+    t.datetime "locked_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["decidim_user_id"], name: "index_cfj_admin_login_codes_on_user", unique: true
   end
 
   create_table "decidim_cfj_bulk_user_import_settings", force: :cascade do |t|
@@ -2127,6 +2139,7 @@ ActiveRecord::Schema[7.0].define(version: 2026_08_26_030000) do
   add_foreign_key "decidim_budgets_orders", "decidim_budgets_budgets"
   add_foreign_key "decidim_budgets_projects", "decidim_budgets_budgets"
   add_foreign_key "decidim_categorizations", "decidim_categories"
+  add_foreign_key "decidim_cfj_admin_login_codes", "decidim_users", on_delete: :cascade
   add_foreign_key "decidim_cfj_bulk_user_import_settings", "decidim_organizations"
   add_foreign_key "decidim_cfj_survey_orders", "decidim_surveys_surveys", on_delete: :cascade
   add_foreign_key "decidim_debates_debates", "decidim_scopes"

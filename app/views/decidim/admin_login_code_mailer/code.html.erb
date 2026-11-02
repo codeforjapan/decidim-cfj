@@ -1,0 +1,9 @@
+<p class="email-greeting"><%= t(".hello", name: @user.name) %></p>
+
+<p class="email-instructions"><%= t(".body", organization_name: organization_name(@organization)) %></p>
+
+<p class="email-instructions" style="font-size: 28px; font-weight: bold; letter-spacing: 6px;"><%= @code %></p>
+
+<p class="email-instructions"><%= t(".expiry", minutes: @expires_in) %></p>
+
+<p class="email-instructions"><%= t(".not_you") %></p>

@@ -1,0 +1,37 @@
+<% add_decidim_page_title(t("decidim.admin_login_codes.new.title")) %>
+
+<%= render layout: "layouts/decidim/shared/layout_center" do %>
+
+  <div class="flex justify-center">
+    <h1 class="title-decorator my-12"><%= t("decidim.admin_login_codes.new.title") %></h1>
+  </div>
+
+  <% if login_code&.usable? %>
+    <p class="mb-6"><%= t("decidim.admin_login_codes.new.instructions", email: masked_email, minutes: Decidim::AdminLoginCode::EXPIRES_IN.in_minutes.to_i) %></p>
+
+    <%= decidim_form_for(@form, url: decidim.admin_login_code_path, method: :post) do |f| %>
+      <div class="form__wrapper">
+        <%= f.text_field :code, autofocus: true, required: true, value: "",
+                                autocomplete: "one-time-code", inputmode: "numeric" %>
+      </div>
+
+      <div class="form__wrapper-block">
+        <button type="submit" class="button button__lg button__secondary">
+          <%= t("decidim.admin_login_codes.new.submit") %>
+          <%= icon "arrow-right-line", class: "fill-current" %>
+        </button>
+      </div>
+    <% end %>
+
+    <div class="login__links">
+      <%= button_to t("decidim.admin_login_codes.new.resend"), decidim.deliver_admin_login_code_path, method: :post, class: "button button__sm button__text-secondary" %>
+    </div>
+  <% else %>
+    <p class="mb-6"><%= t("decidim.admin_login_codes.new.send_instructions", email: masked_email) %></p>
+
+    <div class="form__wrapper-block">
+      <%= button_to t("decidim.admin_login_codes.new.send"), decidim.deliver_admin_login_code_path, method: :post, class: "button button__lg button__secondary" %>
+    </div>
+  <% end %>
+
+<% end %>

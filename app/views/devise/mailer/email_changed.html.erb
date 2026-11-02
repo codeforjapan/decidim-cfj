@@ -1,0 +1,5 @@
+<p class="email-greeting"><%= t(".greeting", recipient: @email) %></p>
+
+<p class="email-instructions"><%= t(".message", email: @resource.unconfirmed_email.presence || @resource.email) %></p>
+
+<p class="email-instructions"><%= t(".not_you") %></p>
