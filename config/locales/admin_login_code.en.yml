@@ -1,0 +1,50 @@
+en:
+  activemodel:
+    attributes:
+      admin_login_code:
+        code: Code
+  decidim:
+    admin_login_code_mailer:
+      code:
+        body: Here is your code to enter the admin panel of %{organization_name}.
+        expiry: This code expires in %{minutes} minutes.
+        hello: Hello %{name},
+        not_you: If you did not request this code, someone else may be signed in to your account. Please change your password and contact your organization's administrator.
+        subject: "[%{organization_name}] Your admin panel code"
+      locked:
+        body: After %{attempts} wrong codes in a row for the admin panel of %{organization_name}, your account can no longer enter the admin panel.
+        hello: Hello %{name},
+        not_you: If you did not try to sign in, someone else may be signed in to your account. Please change your password.
+        subject: "[%{organization_name}] Admin panel locked"
+        unlock: To unlock it, please contact the system administrator.
+      locked_notice:
+        body: After %{attempts} wrong codes in a row for the admin panel of %{organization_name}, the following user can no longer enter the admin panel. Someone else may have signed in to this account.
+        locked_at: Time
+        organization: Organization
+        subject: "[%{organization_name}] Admin panel locked"
+        unlock: After checking with the user, you can unlock it with the following command. Please ask the user to change their password.
+        user: User
+    admin_login_codes:
+      create:
+        invalid: The code is wrong. If it has expired or you have entered a wrong code %{attempts} times, please request a new code.
+      deliver:
+        sent: We sent you a code.
+        too_soon: Please wait a moment before requesting a new code.
+      email_change:
+        required: To change the email of an account that can enter the admin panel, you need to enter a code first. Please change it again after entering the code.
+      locked:
+        body: After too many wrong codes, this account can no longer enter the admin panel. To unlock it, please contact the system administrator.
+        title: Admin panel locked
+      new:
+        instructions: We sent a code to %{email}. Enter the 6-digit code from the email. It expires in %{minutes} minutes.
+        resend: Send a new code
+        send: Send the code
+        send_instructions: To enter the admin panel, you need to enter a code sent by email. We will send it to %{email}.
+        submit: Verify
+        title: Admin panel code
+      send_code:
+        failed: We could not send the code. Please wait a moment and request a new code.
+  devise:
+    mailer:
+      email_changed:
+        not_you: If you did not make this change, someone else may be signed in to your account. Please contact your organization's administrator right away.

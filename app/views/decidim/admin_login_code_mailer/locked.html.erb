@@ -1,0 +1,7 @@
+<p class="email-greeting"><%= t(".hello", name: @user.name) %></p>
+
+<p class="email-instructions"><%= t(".body", organization_name: organization_name(@organization), attempts: Decidim::AdminLoginCode::MAX_TOTAL_FAILED_ATTEMPTS) %></p>
+
+<p class="email-instructions"><%= t(".unlock") %></p>
+
+<p class="email-instructions"><%= t(".not_you") %></p>

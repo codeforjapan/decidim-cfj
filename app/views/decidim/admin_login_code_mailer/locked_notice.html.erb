@@ -1,0 +1,11 @@
+<p class="email-instructions"><%= t(".body", organization_name: organization_name(@organization), attempts: Decidim::AdminLoginCode::MAX_TOTAL_FAILED_ATTEMPTS) %></p>
+
+<ul>
+  <li><%= t(".organization") %>: <%= organization_name(@organization) %> (<%= @organization.host %>, ID <%= @organization.id %>)</li>
+  <li><%= t(".user") %>: <%= @user.name %> &lt;<%= @user.email %>&gt; (ID <%= @user.id %>)</li>
+  <li><%= t(".locked_at") %>: <%= l(@locked_at.in_time_zone(@organization.time_zone), format: :long) %></li>
+</ul>
+
+<p class="email-instructions"><%= t(".unlock") %></p>
+
+<p class="email-instructions"><code>bin/rails admin_login_code:unlock DECIDIM_ORGANIZATION_ID=<%= @organization.id %> EMAIL=<%= Shellwords.escape(@user.email) %></code></p>

@@ -1,0 +1,50 @@
+ja:
+  activemodel:
+    attributes:
+      admin_login_code:
+        code: 確認コード
+  decidim:
+    admin_login_code_mailer:
+      code:
+        body: "%{organization_name} の管理画面に入るための確認コードです。"
+        expiry: このコードの有効期限は %{minutes} 分です。
+        hello: "%{name} 様"
+        not_you: このメールに心当たりがない場合は、第三者があなたのアカウントでログインしている可能性があります。パスワードを変更し、組織の管理者に連絡してください。
+        subject: "[%{organization_name}] 管理画面の確認コード"
+      locked:
+        body: "%{organization_name} の管理画面で確認コードの誤入力が %{attempts} 回続いたため、あなたのアカウントでは管理画面に入れないようにしました。"
+        hello: "%{name} 様"
+        not_you: 心当たりがない場合は、第三者があなたのアカウントでログインしている可能性があります。パスワードを変更してください。
+        subject: "[%{organization_name}] 管理画面をロックしました"
+        unlock: 解除するには、システム管理者に連絡してください。
+      locked_notice:
+        body: "%{organization_name} の管理画面で確認コードの誤入力が %{attempts} 回続いたため、次のユーザが管理画面に入れないようにしました。第三者による不正ログインの可能性があります。"
+        locked_at: 日時
+        organization: 組織
+        subject: "[%{organization_name}] 管理画面のロック"
+        unlock: 本人に確認したうえで、次のコマンドで解除できます。本人にはパスワードの変更を依頼してください。
+        user: ユーザ
+    admin_login_codes:
+      create:
+        invalid: 確認コードが正しくありません。有効期限が切れたときや、%{attempts} 回間違えたときは、コードを再送してください。
+      deliver:
+        sent: 確認コードを送りました。
+        too_soon: しばらく待ってから再送してください。
+      email_change:
+        required: 管理画面に入れるアカウントのメールアドレスを変更するには、確認コードの入力が必要です。確認後、もう一度変更してください。
+      locked:
+        body: 確認コードの誤入力が続いたため、このアカウントでは管理画面に入れなくなっています。解除するには、システム管理者に連絡してください。
+        title: 管理画面がロックされています
+      new:
+        instructions: "%{email} に確認コードを送りました。メールに記載された 6 桁のコードを入力してください。有効期限は %{minutes} 分です。"
+        resend: コードを再送する
+        send: 確認コードを送る
+        send_instructions: 管理画面に入るには、メールで届く確認コードの入力が必要です。%{email} にコードを送ります。
+        submit: 確認する
+        title: 管理画面のコード認証
+      send_code:
+        failed: 確認コードのメールを送信できませんでした。しばらくしてから再送してください。
+  devise:
+    mailer:
+      email_changed:
+        not_you: 心当たりがない場合は、第三者があなたのアカウントにログインしている可能性があります。すぐに組織の管理者に連絡してください。
