@@ -1,0 +1,3 @@
+<!-- replace "erb[loud]:contains('f.text_field :nickname')" -->
+
+<%= f.text_field :nickname, autocomplete: "nickname", help_text: t("decidim.devise.registrations.new.nickname_help") %>
