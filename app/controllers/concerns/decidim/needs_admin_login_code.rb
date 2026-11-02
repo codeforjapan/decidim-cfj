@@ -19,7 +19,8 @@ module Decidim
       return if admin_login_code_verified?
       return reject_admin_login_code unless admin_panel_allowed?
 
-      redirect_to_admin_login_code(return_to: (request.fullpath if request.get?))
+      # Only a page that can be opened again is a place to return to (not a form submission).
+      redirect_to_admin_login_code(return_to: (request.fullpath if request.get? || request.head?))
     end
   end
 end
