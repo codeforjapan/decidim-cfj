@@ -1,0 +1,49 @@
+<!--
+  Additional ImageMagick policy, applied on top of the host's policy.xml through
+  MAGICK_CONFIGURE_PATH (see config/initializers/imagemagick_policy.rb).
+  Same rules as activestorage/lib/active_storage/image_magick/policy.xml in Rails 8.0.
+
+  Do not put a backtick anywhere in this file. ImageMagick's tokenizer treats a backtick as an
+  opening quote and silently drops every rule up to the next apostrophe.
+-->
+<policymap>
+  <policy domain="coder" rights="none" pattern="MSL"/>
+
+  <policy domain="coder" rights="none" pattern="EPHEMERAL"/>
+  <policy domain="coder" rights="none" pattern="TEXT"/>
+
+  <policy domain="coder" rights="none" pattern="MPC"/>
+
+  <policy domain="coder" rights="none" pattern="SHOW"/>
+  <policy domain="coder" rights="none" pattern="WIN"/>
+  <policy domain="coder" rights="none" pattern="PLT"/>
+
+  <policy domain="coder" rights="none" pattern="URL"/>
+  <policy domain="coder" rights="none" pattern="HTTP"/>
+  <policy domain="coder" rights="none" pattern="HTTPS"/>
+  <policy domain="coder" rights="none" pattern="FTP"/>
+  <policy domain="coder" rights="none" pattern="FILE"/>
+
+  <policy domain="delegate" rights="none" pattern="gs"/>
+  <policy domain="coder" rights="none" pattern="PS"/>
+  <policy domain="coder" rights="none" pattern="PS2"/>
+  <policy domain="coder" rights="none" pattern="PS3"/>
+  <policy domain="coder" rights="none" pattern="EPS"/>
+  <policy domain="coder" rights="none" pattern="EPS2"/>
+  <policy domain="coder" rights="none" pattern="EPS3"/>
+  <policy domain="coder" rights="none" pattern="EPI"/>
+  <policy domain="coder" rights="none" pattern="EPSF"/>
+  <policy domain="coder" rights="none" pattern="EPSI"/>
+  <policy domain="coder" rights="none" pattern="EPT"/>
+  <policy domain="coder" rights="none" pattern="EPT2"/>
+  <policy domain="coder" rights="none" pattern="EPT3"/>
+  <policy domain="coder" rights="none" pattern="PDF"/>
+  <policy domain="coder" rights="none" pattern="AI"/>
+  <policy domain="coder" rights="none" pattern="EPDF"/>
+  <policy domain="coder" rights="none" pattern="PDFA"/>
+  <policy domain="coder" rights="none" pattern="POCKETMOD"/>
+  <policy domain="coder" rights="none" pattern="XPS"/>
+  <policy domain="coder" rights="none" pattern="PCL"/>
+
+  <policy domain="path" rights="none" pattern="@*"/>
+</policymap>
