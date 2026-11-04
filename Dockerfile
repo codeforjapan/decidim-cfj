@@ -1,6 +1,6 @@
-FROM node:22.23.4-bookworm-slim AS node
+FROM node:22.23.4-trixie-slim AS node
 
-FROM ruby:3.4.12-slim-bookworm
+FROM ruby:3.4.12-slim-trixie
 
 # for build-dep
 RUN  apt-get update && \
@@ -9,35 +9,18 @@ RUN  apt-get update && \
         libpq-dev \
         postgresql-client \
         libicu-dev \
-        libwebp-dev \
-        libopenjp2-7-dev \
-        librsvg2-dev \
-        libde265-dev \
-        libvips42 \
+        zlib1g-dev \
+        imagemagick \
+        libvips42t64 \
         git \
         curl \
         p7zip \
-        wkhtmltopdf \
         chromium-driver \
         fonts-ipaexfont-gothic \
         wget && \
     apt-get clean && \
-    apt-get autoremove
-
-RUN echo "deb http://deb.debian.org/debian trixie main" \
-      > /etc/apt/sources.list.d/trixie.list \
- && printf '%s\n' \
-      'Package: *' \
-      'Pin: release a=trixie' \
-      'Pin-Priority: 100' \
-      '' \
-      'Package: imagemagick*' \
-      'Pin: release a=trixie' \
-      'Pin-Priority: 990' \
-      > /etc/apt/preferences.d/99-trixie \
- && apt-get update \
- && apt-get install -y -t trixie imagemagick \
- && rm -rf /var/lib/apt/lists/*
+    apt-get autoremove && \
+    rm -rf /var/lib/apt/lists/*
 
 # node install
 COPY --from=node /usr/local/bin/node /usr/local/bin/node
