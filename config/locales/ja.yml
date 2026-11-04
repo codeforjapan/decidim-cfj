@@ -93,6 +93,9 @@ ja:
             force_authorizations: 本人認証の強制
             verifications: 本人認証
     devise:
+      omniauth_registrations:
+        new:
+          nickname_help: アルファベット小文字、数字、'-' および '_' を使用できます。
       registrations:
         user_extension:
           address_help: 例) 兵庫県加古川市加古川町
@@ -227,7 +230,7 @@ ja:
   devise:
     invitations:
       edit:
-        nickname_help: "%{organization} のニックネーム。"
+        nickname_help: アルファベット小文字、数字、'-' および '_' を使用できます。
         subtitle: |-
           招待を受け入れたくない場合は、このメールを無視してください。<br />
           上記のリンクにアクセスし、アカウントIDとパスワードを設定するまで、あなたのアカウントは作成されません。
