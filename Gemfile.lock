@@ -999,9 +999,6 @@ GEM
       base64
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
-    wicked_pdf (2.8.2)
-      activesupport
-      ostruct
     wisper (3.0.0)
     wisper-rspec (1.1.0)
     xpath (3.2.0)
@@ -1058,7 +1055,6 @@ DEPENDENCIES
   slack-ruby-client
   stackprof
   web-console (~> 4.2)
-  wicked_pdf (~> 2.1)
   zip-zip
 
 RUBY VERSION

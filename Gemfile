@@ -20,8 +20,6 @@ gem "puma_worker_killer"
 
 gem "faker"
 
-gem "wicked_pdf", "~> 2.1"
-
 gem "deface"
 gem "image_processing"
 gem "newrelic_rpm"
