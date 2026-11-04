@@ -17,6 +17,9 @@ module Decidim
       # SsrfFilter tries the next address on a connection failure, timeouts
       # included, so the wait per hop grows with the number of addresses.
       MAX_ADDRESSES = 2
+      # Upper bound in seconds for the whole fetch, DNS lookups and redirects
+      # included.
+      DEADLINE = 10
 
       ALLOWED_CONTENT_TYPES = %w(image/png image/jpeg image/gif image/webp).freeze
 
@@ -70,6 +73,14 @@ module Decidim
       def call
         return nil if @url.blank?
 
+        Timeout.timeout(DEADLINE) { fetch }
+      rescue Timeout::Error
+        skip("deadline_exceeded")
+      end
+
+      private
+
+      def fetch
         url = @url
         (MAX_REDIRECTS + 1).times do
           body = nil
@@ -93,8 +104,6 @@ module Decidim
       rescue *NETWORK_ERRORS => e
         skip("network_error: #{e.class}")
       end
-
-      private
 
       # Net::HTTP reads any body left unread after the block, so every
       # response is either read within the limit or rejected here.

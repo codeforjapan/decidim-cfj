@@ -368,6 +368,18 @@ RSpec.describe Decidim::UserExtension::AvatarFetcher do
       it { is_expected.to be_nil }
     end
 
+    context "when the fetch takes longer than the deadline" do
+      before do
+        stub_const("#{described_class}::DEADLINE", 0.05)
+        stub_request(:get, url).to_return do
+          sleep 0.5
+          { status: 200, body:, headers: image_headers }
+        end
+      end
+
+      it { is_expected.to be_nil }
+    end
+
     context "when a fetch is rejected" do
       let(:url) { "file:///etc/passwd" }
 
