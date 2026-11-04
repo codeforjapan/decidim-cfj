@@ -7,3 +7,21 @@
 # the account has been given admin rights.
 confirm_within_days = Rails.application.secrets.dig(:decidim, :confirm_within_days).to_i
 Devise.confirm_within = confirm_within_days.positive? ? confirm_within_days.days : nil
+
+Rails.application.config.to_prepare do
+  Decidim::User # rubocop:disable Lint/Void
+
+  # The resend form at /users/confirmation/new does not require signing in, and Devise
+  # issues a fresh link there once the old one has expired. For a pending email change
+  # that would bring the expired change back, so only the signed-in resend on the
+  # account page may do it.
+  module DecidimUserExpiredReconfirmationPatch
+    def resend_confirmation_instructions
+      return false if pending_reconfirmation? && confirmation_period_expired?
+
+      super
+    end
+  end
+
+  Decidim::User.prepend(DecidimUserExpiredReconfirmationPatch)
+end
