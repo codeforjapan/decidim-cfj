@@ -6,7 +6,7 @@
 #   コアの組織編集フォームには手を入れない（フォーム/コマンド/ビューへのパッチはバージョン
 #   アップで壊れやすいため、自前のページで完結させる）。
 # - 管理画面: 各アセンブリのサイドメニューに「アカウント一括発行」を追加。
-#   組織の設定が有効 かつ スペースが非公開（private_space）のときだけ表示する。
+#   組織の設定が有効 かつ スペースが非公開（access_mode が open 以外）のときだけ表示する。
 #
 # ルートを to_prepare ではなく初期化時に一度だけ append する理由は
 # bulk_user_import.rb（#866）と同じ: ルート定義は再読み込み対象の定数を参照しない。
@@ -51,7 +51,7 @@ end
 # 各項を必ず true/false に確定させること。
 Decidim.menu :admin_assembly_menu do |menu|
   issuing_available = current_user.present? && current_user.admin? &&
-                      current_participatory_space.private_space? &&
+                      !current_participatory_space.open? &&
                       Decidim::BulkUserImportSetting.exists?(decidim_organization_id: current_organization.id,
                                                              enabled: true)
 

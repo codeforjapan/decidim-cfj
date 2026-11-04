@@ -4,20 +4,21 @@ require "rails_helper"
 
 RSpec.describe "sidekiq initializer" do
   let(:token) { "secret-token-value" }
-  let(:other_handler) { ->(_exception, _context) {} }
-  let!(:original_handlers) { Sidekiq.error_handlers.dup }
+  let(:other_handler) { ->(_exception, _context, _config) {} }
+  let(:sidekiq_config) { Sidekiq.default_configuration }
+  let!(:original_handlers) { sidekiq_config.error_handlers.dup }
 
-  after { Sidekiq.error_handlers.replace(original_handlers) }
+  after { sidekiq_config.error_handlers.replace(original_handlers) }
 
   describe "SidekiqErrorContextFilter.install" do
     before do
-      Sidekiq.error_handlers.replace([other_handler, Sidekiq.method(:default_error_handler)])
-      SidekiqErrorContextFilter.install(Sidekiq)
-      SidekiqErrorContextFilter.install(Sidekiq)
+      sidekiq_config.error_handlers.replace([other_handler, Sidekiq::Config::ERROR_HANDLER])
+      SidekiqErrorContextFilter.install(sidekiq_config)
+      SidekiqErrorContextFilter.install(sidekiq_config)
     end
 
     it "replaces only the default error handler, once" do
-      expect(Sidekiq.error_handlers).to eq([other_handler, SidekiqErrorContextFilter])
+      expect(sidekiq_config.error_handlers).to eq([other_handler, SidekiqErrorContextFilter])
     end
   end
 
@@ -25,13 +26,13 @@ RSpec.describe "sidekiq initializer" do
   # Sidekiq.server? tells from Sidekiq::CLI being defined.
   describe "booting a Sidekiq server" do
     before do
-      Sidekiq.error_handlers.replace([Sidekiq.method(:default_error_handler)])
+      sidekiq_config.error_handlers.replace([Sidekiq::Config::ERROR_HANDLER])
       allow(Sidekiq).to receive(:server?).and_return(true)
       load Rails.root.join("config/initializers/sidekiq.rb")
     end
 
     it "installs the filter in place of the default error handler" do
-      expect(Sidekiq.error_handlers).to eq([SidekiqErrorContextFilter])
+      expect(sidekiq_config.error_handlers).to eq([SidekiqErrorContextFilter])
     end
   end
 
@@ -60,7 +61,7 @@ RSpec.describe "sidekiq initializer" do
     end
 
     before do
-      allow(Sidekiq).to receive(:logger).and_return(Logger.new(output))
+      allow(sidekiq_config).to receive(:logger).and_return(Logger.new(output))
       SidekiqErrorContextFilter.call(StandardError.new("boom"), { context: "Job raised exception", job:, jobstr: Sidekiq.dump_json(job) })
     end
 

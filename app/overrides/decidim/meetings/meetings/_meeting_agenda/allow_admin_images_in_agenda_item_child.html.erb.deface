@@ -1,9 +1,0 @@
-<!-- replace "erb[loud]:contains('decidim_sanitize_translated(agenda_item_child.description)')" -->
-
-<%# See allow_admin_images_in_agenda_item.html.erb.deface: agenda item %>
-<%# child descriptions have the same admin editor / scrubber mismatch. %>
-<%= if meeting.official?
-      decidim_sanitize_editor_admin(translated_attribute(agenda_item_child.description))
-    else
-      decidim_sanitize_translated(agenda_item_child.description)
-    end %>

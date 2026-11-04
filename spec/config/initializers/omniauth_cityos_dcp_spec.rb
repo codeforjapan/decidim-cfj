@@ -10,6 +10,21 @@ RSpec.describe "CityOS OmniAuth integration" do
     expect(routes).to respond_to(:user_cityos_dcp_login_omniauth_callback_path)
   end
 
+  it "keeps the CityOS login paths without a locale prefix" do
+    routes = Decidim::Core::Engine.routes.url_helpers
+
+    expect(routes.user_cityos_dcp_login_omniauth_authorize_path).to eq("/users/auth/cityos_dcp_login")
+    expect(routes.user_cityos_dcp_login_omniauth_callback_path).to eq("/users/auth/cityos_dcp_login/callback")
+  end
+
+  it "is disabled by default and configured per organization" do
+    provider = Decidim.omniauth_providers[:cityos_dcp_login]
+
+    expect(provider[:enabled]).to be(false)
+    expect(provider.keys).to include(*Decidim::Cfj::CityosOmniauthConfiguration::REQUIRED_KEYS, :label, :icon_path)
+    expect(Decidim::System::UpdateOrganizationForm.new).to respond_to(:omniauth_settings_cityos_dcp_login_client_id)
+  end
+
   it "uses Decidim's standard icon path labels" do
     key = "decidim.system.organizations.omniauth_settings.icon_path"
 
@@ -18,14 +33,14 @@ RSpec.describe "CityOS OmniAuth integration" do
   end
 
   it "does not require a CityOS icon by default" do
-    expect(Rails.application.secrets.dig(:omniauth, :cityos_dcp_login, :icon_path)).to be_nil
+    expect(Decidim.omniauth_providers.dig(:cityos_dcp_login, :icon_path)).to be_nil
   end
 
   it "keeps the legacy client credential environment names as fallbacks" do
-    secrets = Rails.root.join("config/secrets.yml").read
+    initializer = Rails.root.join("config/initializers/decidim.rb").read
 
-    expect(secrets).to include("OMNIAUTH_CITYOS_DCP_LOGIN_CLIENT_ID")
-    expect(secrets).to include("OMNIAUTH_CITYOS_DCP_LOGIN_CLIENT_SECRET")
+    expect(initializer).to include("OMNIAUTH_CITYOS_DCP_LOGIN_CLIENT_ID")
+    expect(initializer).to include("OMNIAUTH_CITYOS_DCP_LOGIN_CLIENT_SECRET")
   end
 
   it "reports missing required settings without exposing their values" do

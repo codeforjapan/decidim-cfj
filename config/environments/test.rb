@@ -24,8 +24,10 @@ Rails.application.configure do
   config.consider_all_requests_local = true
   config.action_controller.perform_caching = false
 
-  # Raise exceptions instead of rendering exception templates.
-  config.action_dispatch.show_exceptions = false
+  # Rescue only the exceptions that map to an HTTP status in rescue_responses
+  # (RoutingError, RecordNotFound, ...) so request specs see the same response a
+  # user would get, and let everything else raise. Rails 7.2 default.
+  config.action_dispatch.show_exceptions = :rescuable
 
   # Disable request forgery protection in test environment.
   config.action_controller.allow_forgery_protection = false

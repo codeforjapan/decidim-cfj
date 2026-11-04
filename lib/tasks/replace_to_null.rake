@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 namespace :replace_to_null do
+  # NOTE: decidim 0.32 でスペースの announcement は content block へ移設された
+  # (move_announcement_to_content_block_on_assemblies / _participatory_processes)。
+  # カラム自体は残っているのでこれらのタスクは落ちないが、announcement を空にしても
+  # 表示には影響しない。残った旧カラムを掃除する用途でのみ意味がある。
   desc "fix space edit bug.Make all announcement columns of decidim_assemblies table null"
   task decidim_assemblies_announcement: :environment do
     Decidim::Assembly.update_all(announcement: nil) # rubocop:disable Rails/SkipsModelValidations

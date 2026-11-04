@@ -1,0 +1,10 @@
+// 上流のビューは .layout-container__reference を出力するが、スタイルは
+// .layout-container__block-reference にしか定義されていない（0.30〜0.32 共通）。
+// クラス名が食い違っているため、制限スペースの案内が無装飾で表示される。
+.layout-container__reference {
+  @apply py-4 bg-background text-center text-gray-2 text-xs font-normal;
+
+  &.alert {
+    @apply bg-alert/25;
+  }
+}
