@@ -26,6 +26,7 @@ describe "ImageMagick policy" do
   it "still converts ordinary images" do
     MiniMagick::Tool::Convert.new { |c| c << "rose:" << output.to_s }
 
-    expect(MiniMagick::Image.open(output.to_s).type).to eq("PNG")
+    # Check the signature directly; the ImageMagick on CI ships no identify command.
+    expect(output.binread(8)).to eq("\x89PNG\r\n\x1A\n".b)
   end
 end
