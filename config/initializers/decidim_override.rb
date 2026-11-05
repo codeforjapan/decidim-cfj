@@ -85,6 +85,8 @@ Rails.application.config.to_prepare do
       normalized_uri = uri.normalize
       normalized_uri.query = original_query
       normalized_uri.to_s
+    rescue Addressable::URI::InvalidURIError, ArgumentError, TypeError => e
+      raise ::URI::InvalidURIError, e.message
     end
   end
 
