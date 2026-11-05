@@ -47,7 +47,7 @@ GIT
 
 GIT
   remote: https://github.com/codeforjapan/decidim-polis.git
-  revision: 4fe3a6a84a691592a46861d29067671124a2fe20
+  revision: 6d7c3f53e2d510a13375ef032cb4314e3b92efad
   branch: update-0-32-1
   specs:
     decidim-polis (0.32.1)
