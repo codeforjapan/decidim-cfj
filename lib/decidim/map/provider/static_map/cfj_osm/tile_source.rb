@@ -19,6 +19,7 @@ module Decidim
                 request_url = tile_url(tile)
                 response = Faraday.get(request_url) do |req|
                   req.headers["Referer"] = organization.host
+                  req.headers["User-Agent"] = "Decidim/#{Decidim.version} (#{organization.host})"
                 end
 
                 response.body

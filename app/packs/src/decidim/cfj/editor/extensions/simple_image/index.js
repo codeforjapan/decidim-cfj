@@ -38,6 +38,23 @@ export const SimpleImage = Node.create({
       title: {
         default: null,
       },
+      // Preserved so authors editing HTML directly do not lose layout intent
+      // and basic styling hooks. All four pass Loofah's UserInputScrubber /
+      // AdminInputScrubber allowlists, so they round-trip through display as
+      // well — provided the surrounding context allows <img> at all
+      // (admin scope; user scope still strips img regardless).
+      width: {
+        default: null,
+      },
+      height: {
+        default: null,
+      },
+      class: {
+        default: null,
+      },
+      id: {
+        default: null,
+      },
     }
   },
 

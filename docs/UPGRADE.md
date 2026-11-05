@@ -118,13 +118,6 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 
   https://github.com/codeforjapan/decidim-cfj/pull/675 で追加したもの。候補が一つしかないフィルタを表示しないようにする
 
-* `config/application.rb`
-
-  https://github.com/codeforjapan/decidim-cfj/pull/638 で追加したものです。
-  `config.before_initialize`ブロックで、`Decidim::Core::Engine`内のinitializerのうち`"Expire sessions"`というinitializerをスキップするよう修正しています。
-  これは`session_store`を`cookie_store`に強制していたものを無効化するものです。
-  Decidim v0.28では本体に修正が入っており、アプリ側でsession_storeを指定している場合には自動で無効化されるため、このブロックは不要になります（削除するべきです）。
-
 * `lib/tasks/delete.rake`
 
   `delete:destroy_all`タスク。https://github.com/codeforjapan/decidim-cfj/pull/501 で追加されたものです。
@@ -137,6 +130,10 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 
 `Decidim::Map::Provider::StaticMap::CfjOsm`という独自のstatic map providerを定義するためのものです。
 `config/initializers/decidim.rb`のconfig.maps以下のstaticのところで導入されています。
+
+* `config/initializers/shakapacker_watched_paths.rb`
+
+  Shakapackerがpacksの更新を判定するときの監視対象から`node_modules`を外すもの。Shakapackerの`BaseStrategy#default_watched_paths`（private）を上書きしているので、Shakapacker更新時には元のメソッドが変わっていないか確認してください。
 
 #### `decidim-user_extension`について
 

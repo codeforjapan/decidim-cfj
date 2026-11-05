@@ -63,7 +63,9 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: <%= ENV.fetch("DATABASE_DBNAME_TEST") { "decidim-app_test" } %>
+  # TEST_ENV_NUMBER gives each parallel_tests process its own database
+  # (blank for the first, "2", "3", ... for the rest). Empty in single-process runs.
+  database: <%= ENV.fetch("DATABASE_DBNAME_TEST") { "decidim-app_test" } %><%= ENV["TEST_ENV_NUMBER"] %>
 
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is

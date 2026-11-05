@@ -1,0 +1,13 @@
+<!-- replace "erb[loud]:contains('decidim_sanitize_translated(agenda_item.description)')" -->
+
+<%# Agenda items are written in the same admin editor as the meeting body, %>
+<%# so sanitize them the way it is (Decidim::Meetings::ApplicationHelper %>
+<%# #render_meeting_body). It has to be the editor_ variant: uploaded %>
+<%# images are stored as ActiveStorage gids, and only its decidim_rich_text %>
+<%# step turns those back into URLs. %>
+<%# Removal: delete this file once Decidim is 0.31 or newer. %>
+<%= if meeting.official?
+      decidim_sanitize_editor_admin(translated_attribute(agenda_item.description))
+    else
+      decidim_sanitize_translated(agenda_item.description)
+    end %>

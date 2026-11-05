@@ -1,0 +1,6 @@
+<!-- insert_bottom "div#panel-visibility" -->
+
+<%# Replaces decidim-decidim_awesome's same-named override. Upstream fixed this %>
+<%# in https://github.com/decidim-ice/decidim-module-decidim_awesome/commit/9ce4aca %>
+<%# (PR #497/#498) but the fix is not in the v0.30 branch of codeforjapan's fork. %>
+<%= render "decidim/decidim_awesome/admin/shared/visibility_notice", participatory_space: participatory_process_group rescue nil %>

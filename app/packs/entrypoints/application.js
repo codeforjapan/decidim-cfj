@@ -17,4 +17,14 @@
 // Activate Active Storage
 // import * as ActiveStorage from "@rails/activestorage"
 // ActiveStorage.start()
-import "src/decidim/decidim_awesome/awesome_admin"
+
+// import "src/decidim/decidim_awesome/awesome_admin"
+
+// Leaflet initialization entrypoint
+// This must be loaded BEFORE any other scripts that use Leaflet (e.g., decidim_map, awesome_map)
+// to ensure all modules share the same Leaflet instance with plugins properly attached.
+
+// Import leaflet_setup FIRST - it sets window.L before any plugins are loaded
+// ES6 imports are executed in order, and leaflet_setup.js will run completely
+// before the subsequent plugin imports are evaluated
+import "src/decidim/leaflet_global";

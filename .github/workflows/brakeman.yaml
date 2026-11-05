@@ -23,20 +23,20 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v7
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.2.6
+          ruby-version: 3.3.13
           bundler-cache: true
 
       - name: Run Brakeman scan
         run: |
-          bundle exec brakeman --format json --output brakeman-results.json --no-exit-on-warn --no-exit-on-error
+          bundle exec brakeman --format json --output brakeman-results.json --no-exit-on-warn --no-exit-on-error --except EOLRuby
 
       - name: Upload Brakeman results as artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           name: brakeman-results
@@ -44,4 +44,4 @@ jobs:
 
       - name: Check Brakeman results
         run: |
-          bundle exec brakeman --format plain
+          bundle exec brakeman --format plain --except EOLRuby

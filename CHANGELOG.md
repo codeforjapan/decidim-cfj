@@ -1,5 +1,218 @@
 # Change Log
 
+## [1.21.5](https://github.com/codeforjapan/decidim-cfj/compare/v1.21.4...v1.21.5) (2026-10-31)
+
+
+### Bug Fixes
+
+* look up export resource_id within the exported component ([#948](https://github.com/codeforjapan/decidim-cfj/issues/948)) ([81ff98c](https://github.com/codeforjapan/decidim-cfj/commit/81ff98c160df24b363c5c33e1e4a43e71bf35282))
+* resolve decidim_awesome admin records within the current organization ([#947](https://github.com/codeforjapan/decidim-cfj/issues/947)) ([ca2cd02](https://github.com/codeforjapan/decidim-cfj/commit/ca2cd023753ea074d5858b5b0dfafb1865514004))
+* resolve included_in and previous_space among visible records of the organization ([#949](https://github.com/codeforjapan/decidim-cfj/issues/949)) ([7a0f10b](https://github.com/codeforjapan/decidim-cfj/commit/7a0f10b5132b65df15d4d45f0e9cb020a56dbe2a))
+* フォームの表示方法を修正 ([#942](https://github.com/codeforjapan/decidim-cfj/issues/942)) ([425e9d9](https://github.com/codeforjapan/decidim-cfj/commit/425e9d9d2f1a866ae5693a7be512ed0d4af422ff))
+
+## [1.21.4](https://github.com/codeforjapan/decidim-cfj/compare/v1.21.3...v1.21.4) (2026-10-20)
+
+
+### Bug Fixes
+
+* DECIDIM_EXPIRE_SESSION_AFTER が本番で効いていない問題を修正する ([#923](https://github.com/codeforjapan/decidim-cfj/issues/923)) ([fb1d816](https://github.com/codeforjapan/decidim-cfj/commit/fb1d8165aa3de26343d6b4b06d7d483227574d90))
+* keep tokens out of request, model, job and Sidekiq logs ([#936](https://github.com/codeforjapan/decidim-cfj/issues/936)) ([139af8d](https://github.com/codeforjapan/decidim-cfj/commit/139af8dae39724a948be9ab06df2e8f685f4438a))
+* limit attachment title and weight edits to the edited record ([#934](https://github.com/codeforjapan/decidim-cfj/issues/934)) ([e19fca3](https://github.com/codeforjapan/decidim-cfj/commit/e19fca3d74c0ddd2748442f6f66d93ab5702fe26))
+* prevent to_prepare from aborting or duplicating on development reload ([#916](https://github.com/codeforjapan/decidim-cfj/issues/916)) ([aca994f](https://github.com/codeforjapan/decidim-cfj/commit/aca994f2ea5e97722db26df8c120148b5112eb0c))
+* refuse sign_in for users of another organization ([#927](https://github.com/codeforjapan/decidim-cfj/issues/927)) ([01a59a4](https://github.com/codeforjapan/decidim-cfj/commit/01a59a416df0dc89cb5c173c79a93b9aabd426ca))
+* require STARTTLS and verify the certificate for SMTP in production ([#935](https://github.com/codeforjapan/decidim-cfj/issues/935)) ([da1ae11](https://github.com/codeforjapan/decidim-cfj/commit/da1ae11f1e9692ec79f4b6b30c14680294dc9a09))
+* restrict Sidekiq::Web to system admins ([#933](https://github.com/codeforjapan/decidim-cfj/issues/933)) ([b980833](https://github.com/codeforjapan/decidim-cfj/commit/b9808335ebe4e5662e1e1ba13ef2fc037ba45bb4))
+* scope user_extension postages to pending authorizations of the organization ([#937](https://github.com/codeforjapan/decidim-cfj/issues/937)) ([7fa7f69](https://github.com/codeforjapan/decidim-cfj/commit/7fa7f69a8b19378f054d5db8bec1853e5327f01f))
+* スパム判定が sidekiq の並行実行で混線する問題を修正する ([#913](https://github.com/codeforjapan/decidim-cfj/issues/913)) ([f18dbad](https://github.com/codeforjapan/decidim-cfj/commit/f18dbad532653b5ccc780848c956e5406a82f0a2))
+* 未導入の decidim-initiatives で学習タスクが途中停止する問題を修正する ([#914](https://github.com/codeforjapan/decidim-cfj/issues/914)) ([c36b8c9](https://github.com/codeforjapan/decidim-cfj/commit/c36b8c9dd659cab46a97ed4c87b7f888fbe55251))
+
+
+### Performance Improvements
+
+* exclude node_modules from Shakapacker staleness check ([#917](https://github.com/codeforjapan/decidim-cfj/issues/917)) ([2d7520b](https://github.com/codeforjapan/decidim-cfj/commit/2d7520b6d4c992c85293b978615eb24c8ed50c81))
+
+## [1.21.3](https://github.com/codeforjapan/decidim-cfj/compare/v1.21.2...v1.21.3) (2026-10-06)
+
+
+### Bug Fixes
+
+* backport admin table column sorting (decidim/decidim[#16978](https://github.com/codeforjapan/decidim-cfj/issues/16978)) ([380b6c1](https://github.com/codeforjapan/decidim-cfj/commit/380b6c1e13046e4efae1c3861afcc85c429f973c))
+* backport admin table column sorting (decidim/decidim[#16978](https://github.com/codeforjapan/decidim-cfj/issues/16978)) ([74671ec](https://github.com/codeforjapan/decidim-cfj/commit/74671ec49701763d03a3fa35e8af4531ad98abc2))
+* backport context-aware content renderers (decidim/decidim[#16545](https://github.com/codeforjapan/decidim-cfj/issues/16545)) ([#909](https://github.com/codeforjapan/decidim-cfj/issues/909)) ([e33f271](https://github.com/codeforjapan/decidim-cfj/commit/e33f2714424865203b4dbf516bf500ac2f6479be))
+* match questionnaire answers by respondent, not by ip_hash ([35cf326](https://github.com/codeforjapan/decidim-cfj/commit/35cf326557212b06824513ae1835e980ad7ba322))
+* match questionnaire answers by respondent, not by ip_hash ([adba3eb](https://github.com/codeforjapan/decidim-cfj/commit/adba3eb949bbc5517aa0311d600e69656ae998f6))
+* raise ArgumentError when user and session_token are not present ([c42f345](https://github.com/codeforjapan/decidim-cfj/commit/c42f34583b059e6a95a3caab22dfffb61bae994d))
+* エディタでリンクが消える問題に対処する ([e33f271](https://github.com/codeforjapan/decidim-cfj/commit/e33f2714424865203b4dbf516bf500ac2f6479be))
+* ゴミ箱に入れたコンポーネントのコメントで参加空間のトップページが 500 になる問題を修正 ([#911](https://github.com/codeforjapan/decidim-cfj/issues/911)) ([96fb16c](https://github.com/codeforjapan/decidim-cfj/commit/96fb16c2b74bca1764fe85bc419e68a5f3de23e3))
+* 本文のリンクが gid のまま sanitize されて href を失う問題を修正 ([#912](https://github.com/codeforjapan/decidim-cfj/issues/912)) ([ca02655](https://github.com/codeforjapan/decidim-cfj/commit/ca0265524dae1cbfec7240c852f279945df03163))
+
+## [1.21.2](https://github.com/codeforjapan/decidim-cfj/compare/v1.21.1...v1.21.2) (2026-09-19)
+
+
+### Bug Fixes
+
+* extract Decidim::Admin::BulkUserImportForm ([08f79d6](https://github.com/codeforjapan/decidim-cfj/commit/08f79d62da7a553ceae155d119f6ead7a48ef41c))
+* import initializeCommentsDropdown from decidim-comment gem ([8afd9b8](https://github.com/codeforjapan/decidim-cfj/commit/8afd9b859c107f6dc2aa83b2697324970b6a738a))
+* keep the assembly sidebar on the bulk account issue page ([a546a48](https://github.com/codeforjapan/decidim-cfj/commit/a546a48169f71651232cc0deb47e08e509e72f7e))
+* keep the assembly sidebar on the bulk account issue page ([f73eeff](https://github.com/codeforjapan/decidim-cfj/commit/f73eeff7c4d32c0d3f4b365a749ffc3d53cc921a))
+* keep the sidebar on the bulk user import page ([2149709](https://github.com/codeforjapan/decidim-cfj/commit/214970926b5b3a3989e4a73947a56a84fa5a9dec))
+* keep the sidebar on the bulk user import page ([b503062](https://github.com/codeforjapan/decidim-cfj/commit/b50306243081c670aae162979bd8a2525cc58421))
+* serialize bulk account issuing per organization ([27c40ab](https://github.com/codeforjapan/decidim-cfj/commit/27c40ab5b69ac9b42fa4aaf98a94eab2088cf647))
+
+## [1.21.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.21.0...v1.21.1) (2026-09-10)
+
+
+### Bug Fixes
+
+* remove duplicated labels on the /system bulk issuing settings form ([5c056f5](https://github.com/codeforjapan/decidim-cfj/commit/5c056f590cb26cf5cc5578ab11e0646a5647122c))
+
+## [1.21.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.20.1...v1.21.0) (2026-09-02)
+
+
+### Features
+
+* add /system settings UI and per-assembly bulk account issuing UI ([8ecbbf9](https://github.com/codeforjapan/decidim-cfj/commit/8ecbbf9bcd373bc896ec413f4924ec2a724a2273))
+* add bulk_users:issue and bulk_users:configure tasks ([90fa242](https://github.com/codeforjapan/decidim-cfj/commit/90fa242911efc99778b10f32d0a44f13fcbccffa))
+* add per-organization settings for bulk account issuing ([65ff3fd](https://github.com/codeforjapan/decidim-cfj/commit/65ff3fd25c489909a1a8e045ef7b441e576019e1))
+* add per-space anonymous account issuer ([36c694f](https://github.com/codeforjapan/decidim-cfj/commit/36c694f88e36c7766fbd6787f849cf74fa520406))
+* narrow the issued password charset to 29 readable characters ([7e9e557](https://github.com/codeforjapan/decidim-cfj/commit/7e9e557ddd1e634a513a00733a73daadc80bc82d))
+
+
+### Bug Fixes
+
+* build the importer only for real runs in the issuer ([a29574b](https://github.com/codeforjapan/decidim-cfj/commit/a29574b9aa502d819959a8ce1c55797060bf878b))
+* CSV 一括登録の行数上限を CloudFront のタイムアウトに収まる値にする ([aa2c59b](https://github.com/codeforjapan/decidim-cfj/commit/aa2c59bd2d9d32759831499c349ed44340f43dd2))
+* **forms:** backport survey in admin panel ([b1399ff](https://github.com/codeforjapan/decidim-cfj/commit/b1399ff240634b331727f68696f346b6d6dab33b))
+* PDF 出力に CJK フォントを導入し、日本語で落ちないようにする ([09734cd](https://github.com/codeforjapan/decidim-cfj/commit/09734cde582ba5e674d5441e4f7ec6bd83c71eb5))
+* **proposals:** backport proposal in admin panel ([006b966](https://github.com/codeforjapan/decidim-cfj/commit/006b9667232da0ad311736ffe1d2fc13db24f3ff))
+* rake の一括登録で入力の取り違えを検知し、出力に BOM を付ける ([50cad07](https://github.com/codeforjapan/decidim-cfj/commit/50cad07067a7849d711f59c509c078bc320d73aa))
+* require a dotted email domain so issued accounts can sign in ([fdd2cdf](https://github.com/codeforjapan/decidim-cfj/commit/fdd2cdf955be31e7d1cd8532c827209f8d4ba242))
+* show the bulk issue menu only for enabled organizations ([f9ed414](https://github.com/codeforjapan/decidim-cfj/commit/f9ed414773f3c6dbcd1230b5dcf2f3c75c7dc673))
+* **system:** backport password confirmation in system admin ([026036b](https://github.com/codeforjapan/decidim-cfj/commit/026036be6a6f6d930a112252735034c3a18dbd6f))
+
+## [1.20.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.20.0...v1.20.1) (2026-08-28)
+
+
+### Bug Fixes
+
+* **meetings:** 管理画面のミーティング複製が必ず 500 になる問題を修正 ([dea1898](https://github.com/codeforjapan/decidim-cfj/commit/dea1898880d1d48ba6a0e5762719b5b9a3603285))
+* **meetings:** 複製オーバーライドの消し忘れを起動時に検知する ([9c30420](https://github.com/codeforjapan/decidim-cfj/commit/9c30420f62878504c535bbedab57814862d375e3))
+* reported_url の生成を rescue して壊れた参照全般に対応 ([caab391](https://github.com/codeforjapan/decidim-cfj/commit/caab39190efe33fdd0b133f929e699873221afe8))
+* rescue の絞り込みで生まれた穴を塞ぎ、ログの誤診を防ぐ ([c4368f6](https://github.com/codeforjapan/decidim-cfj/commit/c4368f6aeca6bfafc9d816b04b4cdf690ca11ba6))
+* rescue 範囲を実際の壊れ方に絞り、ドリフト検知を実効化する ([4ade331](https://github.com/codeforjapan/decidim-cfj/commit/4ade3318daa35220a644e850bce66f950c333fb1))
+* オープンデータのエクスポートが nil の reportable で落ちる問題に対処 ([e6085dc](https://github.com/codeforjapan/decidim-cfj/commit/e6085dc1b1ce779b1d50dd7a1e39382df1aaf83c))
+* コメントの過剰主張を正し、ログレベルを分離する ([ac7ce23](https://github.com/codeforjapan/decidim-cfj/commit/ac7ce2306602c853060dd79f23133b3bc3c34ed2))
+* 一時障害の再送出をやめ、rescue を StandardError に一本化する ([04ecdd0](https://github.com/codeforjapan/decidim-cfj/commit/04ecdd0eeed82de59e02a19e22f4b6f7b44d7b71))
+* 再送出対象を実際の一時障害に限定し、発火しないガードを修正する ([1ef1dc6](https://github.com/codeforjapan/decidim-cfj/commit/1ef1dc61664593bf393a3e747618d8047a46b1d7))
+
+## [1.20.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.19.1...v1.20.0) (2026-08-27)
+
+
+### Features
+
+* **survey:** add weight column(table) for surver to reorder items ([0a3a33a](https://github.com/codeforjapan/decidim-cfj/commit/0a3a33a93413d8922e3252a96e6e29165f541e9f))
+
+
+### Bug Fixes
+
+* PumaWorkerKiller の閾値を CDK のタスク定義から ENV で受け取る ([ebb0668](https://github.com/codeforjapan/decidim-cfj/commit/ebb06689ff504876db657bc372940e3f7c45f71f))
+* オープンデータのエクスポートが nil の blocking で落ちる問題に対処 ([4403fc1](https://github.com/codeforjapan/decidim-cfj/commit/4403fc1168c8d9c4d06fbad49d8b137339481eb9))
+
+## [1.19.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.19.0...v1.19.1) (2026-08-13)
+
+
+### Bug Fixes
+
+* apply the same scope to the attachment weight assignment ([75869d6](https://github.com/codeforjapan/decidim-cfj/commit/75869d6f2e3302b30bfc6a784a3f2d6a62f5752b))
+* check both sides of a verification conflict against the organization ([b592fa8](https://github.com/codeforjapan/decidim-cfj/commit/b592fa8063b41c58e08358e5f39b4a075e63ae23))
+* compare the attachment against the record or organization in scope ([68908f2](https://github.com/codeforjapan/decidim-cfj/commit/68908f2db44d4962935ba44318b5b7e59a9afa90))
+* hardening MultipleAttachments ([ed2a257](https://github.com/codeforjapan/decidim-cfj/commit/ed2a257442b28dbbd7136a9be99694e6360fde2d))
+* scope admin conflicts to the current organization ([7f0b1ea](https://github.com/codeforjapan/decidim-cfj/commit/7f0b1ea9fd8ae5ff04aa361646bd2dd633322e76))
+* scope publish answers to the authorised survey ([281770d](https://github.com/codeforjapan/decidim-cfj/commit/281770d53e71d9373e39c0c8d6a2cf20003e7995))
+* scope verification conflict lookup to the user's organization ([05aba3a](https://github.com/codeforjapan/decidim-cfj/commit/05aba3af4d339de247e5b053548742fa766e4d10))
+
+## [1.19.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.18.6...v1.19.0) (2026-07-30)
+
+
+### Features
+
+* add profilers in development ([3f7bb87](https://github.com/codeforjapan/decidim-cfj/commit/3f7bb87a289b4173b55e28bf852086bd0e1c5f47))
+
+
+### Bug Fixes
+
+* **initializers:** remove unused parameters ([ffddc5f](https://github.com/codeforjapan/decidim-cfj/commit/ffddc5f2505d1d6db819128ea3efd2b5bbab6070))
+* remove Decidim::ContentParsers::BlobParserUpstreamFix ([53a55e9](https://github.com/codeforjapan/decidim-cfj/commit/53a55e914d8a5b6f37194403f8cf0fa633acc585))
+* remove invalid packages ([bf6f5dc](https://github.com/codeforjapan/decidim-cfj/commit/bf6f5dc088f4b2115d22e2c2ecef18dc419e3fdd))
+* update content_security_policies_extra in initializers ([0213fad](https://github.com/codeforjapan/decidim-cfj/commit/0213fad758654599b54372942ebde5bf79c94a45))
+
+## [1.18.6](https://github.com/codeforjapan/decidim-cfj/compare/v1.18.5...v1.18.6) (2026-07-01)
+
+
+### Bug Fixes
+
+* delete:destroy_all タスクの修正と拡張 ([85da592](https://github.com/codeforjapan/decidim-cfj/commit/85da59231c969a2298130f67b72daf3d73d2f419))
+* RuboCop違反を修正 ([03b9418](https://github.com/codeforjapan/decidim-cfj/commit/03b9418df4619e7dbce075d6b24cf2166d3b8144))
+
+## [1.18.5](https://github.com/codeforjapan/decidim-cfj/compare/v1.18.4...v1.18.5) (2026-05-28)
+
+
+### Bug Fixes
+
+* CloseMeetingReminderGenerator の space_admins メモ化バグを修正 ([3455fd0](https://github.com/codeforjapan/decidim-cfj/commit/3455fd01e9997841aca7c8280301709e59d084bd))
+* space_admins のメモ化をコンポーネント単位のハッシュに変更 ([b0d280f](https://github.com/codeforjapan/decidim-cfj/commit/b0d280ff1e4c1d398b003f0cb07bc508eb11a177))
+* テストをクロス組織の順序依存なしに改善 ([f7e3cdd](https://github.com/codeforjapan/decidim-cfj/commit/f7e3cdd8b2177655afa9cd1f6d39eef6d52de8ec))
+
+## [1.18.4](https://github.com/codeforjapan/decidim-cfj/compare/v1.18.3...v1.18.4) (2026-05-26)
+
+
+### Bug Fixes
+
+* DecidimAwesome::Config#sub_configs_for のN+1クエリを解消 ([293ba1e](https://github.com/codeforjapan/decidim-cfj/commit/293ba1ee7c6e82542ddd4e0d57fe09048c162b24))
+* redefine invalid BLOB_REGEX and replace_blobs in decidim-core ([96894ed](https://github.com/codeforjapan/decidim-cfj/commit/96894ed87da76033a249e81c656762ee14e88d0b))
+
+## [1.18.3](https://github.com/codeforjapan/decidim-cfj/compare/v1.18.2...v1.18.3) (2026-05-15)
+
+
+### Bug Fixes
+
+* do not use html_safe for text and icon ([ff10e06](https://github.com/codeforjapan/decidim-cfj/commit/ff10e0694284e8f2e14f745802c96c4eaeb2c5f7))
+* enforce permission to newsletter ([d0de4bd](https://github.com/codeforjapan/decidim-cfj/commit/d0de4bdfbe0c7fd46bf53ad9c8b7d80488c7d179))
+* orerride organization_name() to html_escape ([5af8877](https://github.com/codeforjapan/decidim-cfj/commit/5af8877eb10d4f4e4c465788ef90b24644cd5b3d))
+* use AvatarFetcher for secure access ([5e2acf8](https://github.com/codeforjapan/decidim-cfj/commit/5e2acf8cda4d7965a9d44f2869005e85a92351dd))
+* use AvatarFetcher in ApplicationUploader#remote_url= ([cb32d4a](https://github.com/codeforjapan/decidim-cfj/commit/cb32d4a6f012dbbaa064d389096ca07bf835f60b))
+* 削除済みユーザーによる extra_data ブロックの 500 エラーを修正 ([5bc43b1](https://github.com/codeforjapan/decidim-cfj/commit/5bc43b1e830c8a969a947c683b4f491497cc63af))
+
+## [1.18.2](https://github.com/codeforjapan/decidim-cfj/compare/v1.18.1...v1.18.2) (2026-04-18)
+
+
+### Bug Fixes
+
+* harden BlobRenderer variation Hash ([40138a4](https://github.com/codeforjapan/decidim-cfj/commit/40138a4720d08df9da262dc43f9491e6b911cb22))
+* increase PumaWorkerKiller RAM limit to 3072 MB ([39e73de](https://github.com/codeforjapan/decidim-cfj/commit/39e73de666f6b67cb87a2edf5ece79279faf7404))
+
+## [1.18.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.18.0...v1.18.1) (2026-03-08)
+
+
+### Bug Fixes
+
+* update decidim-broadlistening-view to v0.1.2 ([67c3728](https://github.com/codeforjapan/decidim-cfj/commit/67c37281dd4e13068240bcd474011262be67dfc8))
+
+## [1.18.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.17.0...v1.18.0) (2026-03-03)
+
+
+### Features
+
+* **GA:** disable EOLRuby checks ([1149075](https://github.com/codeforjapan/decidim-cfj/commit/11490750fa162e51806aa83e2a72e3415d1a7f4b))
+
+
+### Bug Fixes
+
+* show recent activities on unpublished/private space landing pages ([3f568ec](https://github.com/codeforjapan/decidim-cfj/commit/3f568ecb2e8812981c8cddc97778fc9a5ef97023))
+* show recent comments on unpublished/private space landing pages ([fda5eb9](https://github.com/codeforjapan/decidim-cfj/commit/fda5eb93bbbb0110c56d79c9c807f4fdb807cf85))
+* update PostgreSQL image to version 16 in docker-compose ([a2ecca5](https://github.com/codeforjapan/decidim-cfj/commit/a2ecca50fc704cc8e7f629ddc8300eaa942421ba))
+* update PostgreSQL image to version 16 in GitHub Actions workflow ([7849d55](https://github.com/codeforjapan/decidim-cfj/commit/7849d557530b37079e762f4ea1dec196ad8512d6))
+
 ## [1.17.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.16.1...v1.17.0) (2026-02-17)
 
 

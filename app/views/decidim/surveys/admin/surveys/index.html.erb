@@ -1,0 +1,69 @@
+<%#
+  Copy of decidim-surveys' admin index with drag and drop reordering, following
+  the components table (decidim-admin/app/views/decidim/admin/components/_components_table.html.erb).
+
+  The order is stored in the decidim_cfj_survey_orders side table, see
+  config/initializers/surveys_ordering_override.rb for the removal steps.
+
+  This index is paginated, so the sortable list only sends the ids of the
+  current page. Decidim::Cfj::ReorderSurveys resolves their absolute positions
+  server side.
+%>
+<% add_decidim_page_title(t(".title")) %>
+<div class="card">
+  <div class="item_show__header item_show__header--with-action-options">
+    <h1 class="item_show__header-title">
+      <%= t(".title") %>
+      <%= link_to t("actions.new_survey", scope: "decidim.surveys"), surveys_path, method: :post, class: "button button__sm button__secondary" %>
+      <%= render partial: "decidim/admin/components/resource_action" %>
+    </h1>
+  </div>
+  <div class="table-scroll mt-8">
+    <table class="table-list">
+      <thead>
+        <tr>
+          <th class="w-12"><span class="sr-only"><%= t("decidim.cfj.surveys.reorder") %></span></th>
+          <th><%= t("models.survey.fields.title", scope: "decidim.surveys") %></th>
+          <th><%= t("models.survey.fields.questions", scope: "decidim.surveys") %></th>
+          <th><%= t("models.survey.fields.answers", scope: "decidim.surveys") %></th>
+          <th><%= t("models.survey.fields.status", scope: "decidim.surveys") %></th>
+          <th><%= t("actions.title", scope: "decidim.surveys") %></th>
+        </tr>
+      </thead>
+      <tbody class="draggable-table" data-sort-url="<%= reorder_surveys_path %>" data-draggable-table>
+        <% surveys.each do |survey| %>
+          <tr class="draggable-content" draggable="true" data-record-id="<%= survey.id %>">
+            <td class="text-center dragging-handle">
+              <%= icon("draggable", class: "dragger") %>
+            </td>
+            <td><%= decidim_sanitize_translated(survey.title) %></td>
+            <td><%= survey.questionnaire.question_types.size %></td>
+            <td><%= survey.questionnaire.count_participants %></td>
+            <td><%= survey.open? ? t("models.survey.status.open", scope: "decidim.surveys") : t("models.survey.status.closed", scope: "decidim.surveys") %></td>
+            <td class="table-list__actions">
+              <% if survey.questionnaire.answers.any? %>
+                <%= icon_link_to "draft-line", survey_answers_path(survey), t("actions.answers", scope: "decidim.surveys") %>
+              <% end %>
+              <%= icon_link_to "pencil-line", edit_survey_path(survey), t("actions.edit", scope: "decidim.surveys"), class: "action-icon--edit" %>
+              <%= icon_link_to "survey-line", edit_questions_survey_path(survey), t("actions.manage_questions", scope: "decidim.surveys"), class: "action-icon--copy" %>
+              <% if allowed_to? :preview, :questionnaire %>
+              <%= icon_link_to "eye-line", resource_locator(survey).path, t("actions.preview", scope: "decidim.surveys"), class: "action-icon--preview", target: :blank, data: { "external-link": false } %>
+              <% end %>
+              <% if allowed_to?(:update, :questionnaire) %>
+                <% if survey.published? %>
+                  <%= icon_link_to "close-circle-line", unpublish_survey_path(survey), t("actions.unpublish", scope: "decidim.admin"), method: :put, class: "action-icon--unpublish" %>
+                <% elsif survey.clean_after_publish? %>
+                  <%= icon_link_to "check-line", publish_survey_path(survey), t("actions.publish", scope: "decidim.admin"), method: :put, class: "action-icon--publish", data: { confirm: t("actions.answers_alert", scope: "decidim.surveys", answers_count: survey.questionnaire.answers.size) } %>
+                <% else %>
+                  <%= icon_link_to "check-line", publish_survey_path(survey), t("actions.publish", scope: "decidim.admin"), method: :put, class: "action-icon--publish" %>
+                <% end %>
+              <% end %>
+              <%= resource_permissions_link(survey) %>
+              <%= icon_link_to "delete-bin-line", survey_path(survey), t("actions.destroy", scope: "decidim.surveys"), method: :delete, class: "action-icon--remove", data: { confirm: t("actions.confirm_destroy", scope: "decidim.surveys") } %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

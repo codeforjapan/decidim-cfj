@@ -10,6 +10,8 @@ module Decidim
         class PostagesController < Decidim::Admin::ApplicationController
           layout "decidim/admin/users"
 
+          include Decidim::Verifications::Admin::PendingAuthorizationLoader
+
           before_action :load_pending_authorization
 
           def create
@@ -32,7 +34,7 @@ module Decidim
           private
 
           def load_pending_authorization
-            @pending_authorization = Authorization.find(params[:pending_authorization_id])
+            @pending_authorization = load_pending_authorization!("user_extension", params[:pending_authorization_id])
           end
         end
       end

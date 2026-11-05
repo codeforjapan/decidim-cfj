@@ -64,6 +64,7 @@ ja:
           postages:
             create:
               error: エラーマーキング文字を送信しました
+              success: 送信済みとして記録しました。
         authorizations:
           edit:
             title: アカウントの検証

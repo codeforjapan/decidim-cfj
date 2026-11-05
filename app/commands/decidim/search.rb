@@ -3,7 +3,6 @@
 module Decidim
   # A command that will act as a search service, with all the business logic for performing searches.
   class Search < Decidim::Command
-    ACCEPTED_FILTERS = [:decidim_scope_id_in].freeze
     HIGHLIGHTED_RESULTS_COUNT = 4
 
     # Public: Initializes the command.
@@ -22,7 +21,7 @@ module Decidim
     # Executes the command. Broadcasts these events:
     #
     # - :ok when everything is valid, together with the search results.
-    # - :invalid if something failed and couldn't proceed.
+    # - :invalid if something failed and could not proceed.
     #
     # Returns nothing.
     def call
@@ -37,6 +36,12 @@ module Decidim
                   else
                     klass.order_by_id_list(result_ids.take(HIGHLIGHTED_RESULTS_COUNT))
                   end
+
+        uncommentable_resources = uncommentable_resources(results) if results.present?
+        if uncommentable_resources.present?
+          results -= uncommentable_resources
+          results_count -= uncommentable_resources.count
+        end
 
         results_by_type.update(class_name => {
                                  count: results_count,
@@ -54,12 +59,6 @@ module Decidim
       return collection if page_params.blank?
 
       collection.page(page_params[:page]).per(page_params[:per_page])
-    end
-
-    def clean_filters
-      @clean_filters ||= filters.select do |attribute_name, value|
-        ACCEPTED_FILTERS.include?(attribute_name.to_sym) && value.present?
-      end.compact
     end
 
     def spaces_to_filter
@@ -89,11 +88,18 @@ module Decidim
       if (spaces = spaces_to_filter)
         query = query.where(decidim_participatory_space: spaces)
       end
-      query = query.ransack(clean_filters).result if clean_filters.any?
 
       query = query.order("datetime DESC")
       query = query.global_search(I18n.transliterate(term)) if term.present?
       query
+    end
+
+    def uncommentable_resources(results)
+      results.where(id: results.select { |obj| related_uncommentable_resources?(obj) }.map(&:id))
+    end
+
+    def related_uncommentable_resources?(object)
+      object.respond_to?(:commentable) && !object.commentable.commentable?
     end
   end
 end

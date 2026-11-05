@@ -1,6 +1,7 @@
 # frozen_string_literal: true
-# This migration comes from decidim_comments (originally 20170504085413)
 
+# This migration comes from decidim_comments (originally 20170504085413)
+# This file has been modified by `decidim upgrade:migrations` task on 2025-08-05 08:11:54 UTC
 class AddRootCommentableToComments < ActiveRecord::Migration[5.0]
   def change
     change_table :decidim_comments_comments do |t|

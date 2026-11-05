@@ -1,45 +1,25 @@
-FROM node:20.18.3-bookworm-slim AS node
+FROM node:22.23.4-trixie-slim AS node
 
-FROM ruby:3.2.6-slim-bookworm
+FROM ruby:3.3.13-slim-trixie
 
 # for build-dep
-RUN echo "deb-src http://deb.debian.org/debian bullseye main" >> /etc/apt/sources.list
-RUN echo "deb-src http://deb.debian.org/debian-security bullseye-security main" >> /etc/apt/sources.list
-RUN echo "deb-src http://deb.debian.org/debian bullseye-updates main" >> /etc/apt/sources.list
-
 RUN  apt-get update && \
      apt-get install -y --no-install-recommends \
         build-essential \
         libpq-dev \
         postgresql-client \
         libicu-dev \
-        libwebp-dev \
-        libopenjp2-7-dev \
-        librsvg2-dev \
-        libde265-dev \
+        zlib1g-dev \
+        imagemagick \
         git \
         curl \
         p7zip \
-        wkhtmltopdf \
         chromium-driver \
+        fonts-ipaexfont-gothic \
         wget && \
     apt-get clean && \
-    apt-get autoremove
-
-RUN echo "deb http://deb.debian.org/debian trixie main" \
-      > /etc/apt/sources.list.d/trixie.list \
- && printf '%s\n' \
-      'Package: *' \
-      'Pin: release a=trixie' \
-      'Pin-Priority: 100' \
-      '' \
-      'Package: imagemagick*' \
-      'Pin: release a=trixie' \
-      'Pin-Priority: 990' \
-      > /etc/apt/preferences.d/99-trixie \
- && apt-get update \
- && apt-get install -y -t trixie imagemagick \
- && rm -rf /var/lib/apt/lists/*
+    apt-get autoremove && \
+    rm -rf /var/lib/apt/lists/*
 
 # node install
 COPY --from=node /usr/local/bin/node /usr/local/bin/node
@@ -55,7 +35,7 @@ ARG RAILS_ENV="production"
 ENV LANG=C.UTF-8 \
     LC_ALL=C.UTF-8 \
     BUNDLER_JOBS=4 \
-    BUNDLER_VERSION=2.4.21 \
+    BUNDLER_VERSION=2.5.15 \
     APP_HOME=/app \
     RAILS_ENV=${RAILS_ENV} \
     RAILS_LOG_TO_STDOUT=true \
@@ -86,7 +66,7 @@ RUN cp ./entrypoint /usr/bin/entrypoint \
     && chmod -R +x ./bin/
 
 RUN yarn install \
-    && ./bin/rails assets:precompile \
+    && SKIP_REDIS_SETUP=true ./bin/rails assets:precompile \
     && yarn cache clean
 
 ENTRYPOINT ["entrypoint"]

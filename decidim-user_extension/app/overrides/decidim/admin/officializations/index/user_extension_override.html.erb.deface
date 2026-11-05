@@ -1,5 +1,5 @@
 <!-- insert_bottom "td.table-list__actions" -->
 <% if allowed_to? :show_user_extension, :user, user: user %>
-  <%= icon_link_to "user-line", Decidim::UserExtension::AdminEngine.routes.url_helpers.officializations_show_user_extension_path(user.id), t("show_user_extension", scope: "decidim.admin.officializations.index"), class: "action-icon action-icon--show-user", data: { full_name: user.name, dialog_open: "show-user-modal" } %>
+  <%= icon_link_to "user-line", decidim_admin_user_extension_details.officializations_show_user_extension_path(user.id), t("show_user_extension", scope: "decidim.admin.officializations.index"), class: "action-icon action-icon--show-user", data: { full_name: user.name, dialog_open: "show-user-modal" } %>
 <% end %>
 

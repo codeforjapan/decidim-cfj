@@ -1,0 +1,114 @@
+# frozen_string_literal: true
+
+require "csv"
+
+module Decidim
+  module Admin
+    # 管理画面から CSV をアップロードして、招待メールを経由しない確定ユーザーを一括作成する。
+    # （詳細は docs/BULK_USER_IMPORT.md）
+    #
+    # 同期処理のため、ファイルサイズと行数に上限を設けている。上限を超える規模が必要になったら
+    # ActiveJob 化を検討すること。
+    class BulkUserImportsController < Decidim::Admin::ApplicationController
+      layout "decidim/admin/users"
+
+      add_breadcrumb_item_from_menu :admin_user_menu
+
+      helper_method :max_rows, :max_file_size
+
+      register_permissions(::Decidim::Admin::BulkUserImportsController,
+                           ::Decidim::Admin::Permissions,
+                           ::Decidim::BulkUserImportPermissions)
+
+      UTF8_BOM = "\xEF\xBB\xBF"
+
+      def new
+        enforce_permission_to(:create, :bulk_user_import)
+
+        @form = form(BulkUserImportForm).instance
+      end
+
+      def create
+        enforce_permission_to(:create, :bulk_user_import)
+
+        @form = form(BulkUserImportForm).from_params(params)
+        return render(:new, status: :unprocessable_entity) if @form.invalid?
+
+        import(@form.rows)
+      end
+
+      private
+
+      # 権限が無かったときの戻り先。
+      #
+      # コアの Decidim::Admin::ApplicationController は decidim_admin.root_path を返すが、
+      # 管理ダッシュボードのルートは OrganizationDashboardConstraint の内側にあるため、そこへ
+      # 入れない相手を /admin/ に送るとルートが一致せず、フォールバックした先の別エンジンの
+      # root（`redirect("../edit")`）に拾われて /admin/../edit へ 301 され、Routing Error になる。
+      # 管理画面に入れる相手だけダッシュボードへ戻し、それ以外は必ず解決できるパスへ戻す。
+      def user_has_no_permission_path
+        return decidim.new_user_session_path if current_user.blank?
+        return decidim_admin.root_path if admin_dashboard_allowed?
+
+        decidim.root_path
+      end
+      alias user_not_authorized_path user_has_no_permission_path
+
+      def admin_dashboard_allowed?
+        current_user.organization == current_organization &&
+          allowed_to?(:read, :admin_dashboard)
+      end
+
+      def max_rows
+        BulkUserImportForm::MAX_ROWS
+      end
+
+      def max_file_size
+        ActiveSupport::NumberHelper.number_to_human_size(BulkUserImportForm::MAX_FILE_SIZE)
+      end
+
+      def permission_class_chain
+        ::Decidim.permissions_registry.chain_for(::Decidim::Admin::BulkUserImportsController)
+      end
+
+      def import(rows)
+        results = Decidim::BulkUserImporter.new(organization: current_organization).import(rows)
+        log_import(results)
+
+        send_data results_csv(results),
+                  type: "text/csv; charset=utf-8",
+                  filename: "created_users_#{Time.current.strftime("%Y%m%d%H%M%S")}.csv",
+                  disposition: "attachment"
+      end
+
+      # 招待フローと違い「本人がリンクを踏んだ」痕跡が残らないため、誰が・いつ・何件作成したかを管理ログに残す。
+      #
+      # Decidim::ActionLog は resource の presence を検証し、ActionLogger も resource.id を参照するため
+      # resource に nil は渡せない。作成されたユーザーごとに残すと件数分のログで管理ログが埋まるので、
+      # 実行単位で1件だけ、組織を resource として記録する（ログの organization は user.organization から引かれる）。
+      def log_import(results)
+        tally = results.group_by(&:status).transform_values(&:count)
+
+        Decidim::ActionLogger.log(
+          "bulk_user_import",
+          current_user,
+          current_organization,
+          nil,
+          created: tally[:created].to_i,
+          skipped: tally[:skipped].to_i,
+          failed: tally[:failed].to_i
+        )
+      end
+
+      # 平文パスワードを含むCSV。Excel で開けるよう BOM を付ける。
+      def results_csv(results)
+        csv = CSV.generate do |out|
+          out << BulkUserImporter::RESULT_HEADERS
+          results.each { |result| out << result.to_a }
+        end
+
+        "#{UTF8_BOM}#{csv}"
+      end
+    end
+  end
+end

@@ -11,14 +11,14 @@ module Decidim
       routes do
         namespace :officializations do
           get "user_extensions/:user_id" => "user_extensions#show",
-              :constraints => (->(request) { Decidim::Admin::OrganizationDashboardConstraint.new(request).matches? }),
+              :constraints => ->(request) { Decidim::Admin::OrganizationDashboardConstraint.new(request).matches? },
               :as => "show_user_extension"
         end
       end
 
       initializer "decidim_user_extension.admin_mount_routes" do
         Decidim::Core::Engine.routes do
-          mount Decidim::UserExtension::AdminEngine, at: "/admin/user_extension", as: "decidim_admin_user_extension"
+          mount Decidim::UserExtension::AdminEngine, at: "/admin/user_extension_details", as: "decidim_admin_user_extension_details"
         end
       end
 

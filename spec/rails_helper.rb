@@ -62,6 +62,16 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 
   config.include ActiveStorageHelpers
+  config.include UploadedFileHelpers
+
+  # Override organization factory to use correct locales
+  config.before(:suite) do
+    FactoryBot.modify do
+      factory :organization, class: "Decidim::Organization" do
+        available_locales { [:ja, :en] }
+      end
+    end
+  end
 
   config.append_before do
     ## XXX: Override CSP settings
