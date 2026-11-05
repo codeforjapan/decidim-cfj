@@ -1,5 +1,19 @@
 # Change Log
 
+## [1.22.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.21.5...v1.22.0) (2026-11-05)
+
+
+### Features
+
+* expire confirmation links after one day ([#955](https://github.com/codeforjapan/decidim-cfj/issues/955)) ([6513162](https://github.com/codeforjapan/decidim-cfj/commit/65131621f7dc65ff90c69a3fbcf29b1914449144))
+
+
+### Bug Fixes
+
+* fetch remote avatars and attachments through SsrfFilter ([#938](https://github.com/codeforjapan/decidim-cfj/issues/938)) ([15d6e92](https://github.com/codeforjapan/decidim-cfj/commit/15d6e92cb0f9d68100f88b6c85ff5aeabac68aa5))
+* redirect to root on unparsable URLs in the link page ([#957](https://github.com/codeforjapan/decidim-cfj/issues/957)) ([1e09624](https://github.com/codeforjapan/decidim-cfj/commit/1e09624ec66d374efc597e25d7b6e7a71835c14d))
+* アカウントIDの説明を全画面で通常の登録画面とそろえる ([#951](https://github.com/codeforjapan/decidim-cfj/issues/951)) ([fb26329](https://github.com/codeforjapan/decidim-cfj/commit/fb26329c3e1b241ae01ab9aa853765e259abd85f))
+
 ## [1.21.5](https://github.com/codeforjapan/decidim-cfj/compare/v1.21.4...v1.21.5) (2026-10-31)
 
 
