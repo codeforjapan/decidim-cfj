@@ -167,6 +167,44 @@ RSpec.describe "OmniAuth audit logging" do
     end
   end
 
+  describe "リクエストから来た値で行を偽装された場合" do
+    let(:forged) { "x\n[omniauth] phase=registration result=ok provider=line_login uid=victim" }
+
+    it "登録フォームの provider / uid をエスケープする" do
+      params = { user: { provider: forged, uid: forged, oauth_signature: "invalid", email:, name: "taro", nickname: "taro" } }
+
+      expect { post "/omniauth_registrations", params: }.to raise_error(Decidim::InvalidOauthSignature)
+      expect(logged).to include('provider=x\\n[omniauth] phase=registration', 'uid=x\\n[omniauth] phase=registration')
+      expect(logged).not_to match(/^\[omniauth\] phase=registration result=ok/)
+    end
+
+    # OmniAuth's own "Authentication failure!" line carries the same value.
+    describe "IdP からのエラー種別" do
+      let(:auth_hash) { forged.to_sym }
+
+      it "OmniAuth 自身のログでもエスケープする" do
+        get callback_path
+
+        expect(logged).to include("(line_login) Authentication failure! x\\n[omniauth]")
+        expect(logged).to include('type=x\\n[omniauth] phase=registration')
+        expect(logged).not_to match(/^\[omniauth\] phase=registration result=ok/)
+      end
+    end
+  end
+
+  describe "CfjOmniauthLogger" do
+    it "UTF-8 以外のメッセージでも例外にせず、CR と LF をエスケープする" do
+      expect { CfjOmniauthLogger.warn("エラー\r\n[omniauth] phase=registration result=ok".b) }.not_to raise_error
+
+      expect(logged).to include("\\r\\n[omniauth] phase=registration result=ok")
+      expect(logged).not_to match(/^\[omniauth\] phase=registration result=ok/)
+    end
+
+    it "Logger のその他のメソッドは Rails.logger に渡す" do
+      expect(CfjOmniauthLogger.debug?).to eq(Rails.logger.debug?)
+    end
+  end
+
   describe "CfjOmniauthFailureLogging" do
     it "長すぎる例外メッセージを切り詰める" do
       error = StandardError.new("x" * 500)
