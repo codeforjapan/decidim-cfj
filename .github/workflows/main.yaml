@@ -57,6 +57,9 @@ jobs:
 
   stg:
     if: ${{ !needs.release.outputs.created }}
+    concurrency:
+      group: deploy-staging
+      cancel-in-progress: false
     needs:
       - create-deploy-env
       - release
