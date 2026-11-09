@@ -42,4 +42,13 @@ RSpec.describe "Admin sortition lookups" do
       expect(other_sortition.reload).not_to be_cancelled
     end
   end
+
+  context "when the update form points at a sortition of another organization" do
+    let(:update_params) { { sortition: { id: other_sortition.id, title: { en: "New title" }, additional_info: { en: "New info" } } } }
+
+    it "does not update the sortition" do
+      expect { patch "#{manage_path}/sortitions/#{own_sortition.id}", params: update_params }.to raise_error(ActiveRecord::RecordNotFound)
+      expect(other_sortition.reload.title["en"]).not_to eq("New title")
+    end
+  end
 end
