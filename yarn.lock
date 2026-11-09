@@ -1636,10 +1636,10 @@
     chalk "^4.1.2"
     markdownlint-cli "^0.35.0"
 
-"@decidim/eslint-config@^0.30.9":
-  version "0.30.9"
-  resolved "https://registry.npmjs.org/@decidim/eslint-config/-/eslint-config-0.30.9.tgz"
-  integrity sha512-Cm8qrC6MmPU3gq6elSFvM0oN4odyGCUVqY3Ydj8MT5N2VA5lnm6W3YjINplbxvb+1VUNNlTCwtFL96tqlnt5xg==
+"@decidim/eslint-config@^0.32.2":
+  version "0.32.2"
+  resolved "https://registry.yarnpkg.com/@decidim/eslint-config/-/eslint-config-0.32.2.tgz#d8d992d4994eb55df7aa93d45fa4ac75904cb569"
+  integrity sha512-g7tvJNR25S6u97hVJlwFfpYCpboIM5omFwUgZyFEE6wlLnnGhSdu0IqPylixCtCZvV1w8eObzjpxIatkyCJgDQ==
 
 "@decidim/prettier-config@^0.30.9":
   version "0.30.9"
