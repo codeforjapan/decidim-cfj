@@ -96,13 +96,17 @@ module Decidim
       #   blog post whose publication date was moved to the future);
       # - it skips the resource check on transparent spaces, letting comments
       #   on a private meeting through.
+      #
+      # Comments on a private meeting are shown to its registered participants
+      # only, whether or not the meeting is transparent: the block reaches a
+      # wider audience than the meeting page does.
       def visible_root_commentable?(action_log)
         root = action_log.resource_lazy.root_commentable
         return false if root.try(:hidden?)
         return false if root.respond_to?(:published?) && !root.published?
-        return true unless root.respond_to?(:current_user_can_visit_meeting?)
+        return true unless root.try(:private_meeting?)
 
-        root.current_user_can_visit_meeting?(current_user)
+        current_user.present? && root.has_registration_for?(current_user)
       end
 
       # Resolving the commented resource constantizes a polymorphic type that

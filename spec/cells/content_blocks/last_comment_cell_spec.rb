@@ -352,6 +352,18 @@ module Decidim
             expect(my_cell.send(:valid_comments)).to contain_exactly(log)
           end
         end
+
+        # A transparent private meeting can be visited by anyone, but the block
+        # still keeps its comments to the registered participants.
+        context "when the meeting is transparent and the visitor is signed in but not registered" do
+          let(:meeting) { create(:meeting, :published, component:, private_meeting: true, transparent: true) }
+
+          before { allow(controller).to receive(:current_user).and_return(create(:user, :confirmed, organization:)) }
+
+          it "does not show the comment" do
+            expect(my_cell.send(:valid_comments)).to be_empty
+          end
+        end
       end
     end
   end
