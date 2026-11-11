@@ -11,6 +11,12 @@ end
 Rails.application.config.to_prepare do
   Decidim::Admin::ApplicationController.include(Decidim::NeedsAdminLoginCode)
   Decidim::AccountController.include(Decidim::NeedsAdminLoginCodeForEmailChange)
+
+  # Tell the old address when an email change is requested, so that a change made by someone else
+  # does not go unnoticed (see app/views/devise/mailer/email_changed.html.erb).
+  # Set on the model, not on Devise: Decidim::System::Admin has no locale, organization or
+  # unconfirmed_email, so its notification could not be rendered.
+  Decidim::User.send_email_changed_notification = true
 end
 
 # Ask for the code again on every sign in. Warden keeps the session of the user scope when the
@@ -20,7 +26,3 @@ Warden::Manager.after_authentication do |_user, auth, opts|
 
   auth.session(:user).except!(Decidim::AdminLoginCodeSession::VERIFIED_KEY, Decidim::AdminLoginCodeSession::PENDING_KEY)
 end
-
-# Tell the old address when an email change is requested, so that a change made by someone else
-# does not go unnoticed (see app/views/devise/mailer/email_changed.html.erb).
-Devise.send_email_changed_notification = true

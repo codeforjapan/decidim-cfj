@@ -2,6 +2,7 @@
 
 require "rails_helper"
 require "decidim/decidim_awesome/test/factories"
+require "decidim/system/test/factories"
 
 # Covers Decidim::NeedsAdminLoginCodeForEmailChange and the email changed notification.
 RSpec.describe "Email change and the admin login code" do
@@ -102,6 +103,17 @@ RSpec.describe "Email change and the admin login code" do
       body = mail.html_part&.body&.decoded || mail.body.decoded
       expect(body).to include(new_email)
       expect(body).to include(I18n.t("devise.mailer.email_changed.not_you"))
+    end
+  end
+
+  describe "the email change of a system admin" do
+    let(:system_admin) { create(:admin) }
+
+    before { ActionMailer::Base.deliveries.clear }
+
+    it "is not notified, as the notification cannot be rendered for a system admin" do
+      expect { perform_enqueued_jobs { system_admin.update!(email: new_email) } }.not_to raise_error
+      expect(ActionMailer::Base.deliveries).to be_empty
     end
   end
 end
