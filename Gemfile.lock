@@ -60,6 +60,7 @@ PATH
       decidim-admin
       decidim-core
       rails
+      ssrf_filter (~> 1.6)
 
 PATH
   remote: omniauth-line_login
