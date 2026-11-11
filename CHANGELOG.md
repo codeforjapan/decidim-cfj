@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.22.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.22.0...v1.22.1) (2026-11-11)
+
+
+### Bug Fixes
+
+* render the admin poll questions only for users who can update the poll ([#975](https://github.com/codeforjapan/decidim-cfj/issues/975)) ([99c4d3d](https://github.com/codeforjapan/decidim-cfj/commit/99c4d3dd737060c3509d4521fd3ecf7dde9f1666))
+
 ## [1.22.0](https://github.com/codeforjapan/decidim-cfj/compare/v1.21.5...v1.22.0) (2026-11-11)
 
 
