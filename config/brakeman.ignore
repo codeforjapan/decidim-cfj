@@ -1,29 +1,6 @@
 {
   "ignored_warnings": [
     {
-      "warning_type": "SQL Injection",
-      "warning_code": 0,
-      "fingerprint": "9db24ab02bd41881d291dcb0fbe79c6b0309c9524c323dc80d8c55d99c605c88",
-      "check_name": "SQL",
-      "message": "Possible SQL injection",
-      "file": "config/initializers/pg_search_override.rb",
-      "line": 56,
-      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "Arel.sql(\"likequery(#{normalize(connection.quote(query))})\")",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "Bigram",
-        "method": "normalized_query_for_like"
-      },
-      "user_input": "normalize(connection.quote(query))",
-      "confidence": "Medium",
-      "cwe_id": [
-        89
-      ],
-      "note": "This code is from pg_search; it's quoted so it can be ignored."
-    },
-    {
       "warning_type": "Unmaintained Dependency",
       "warning_code": 120,
       "fingerprint": "d84924377155b41e094acae7404ec2e521629d86f97b0ff628e3d1b263f8101c",

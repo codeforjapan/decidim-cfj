@@ -48,17 +48,15 @@ Rails.application.config.to_prepare do
         end
 
         def normalized_document
-          Arel::Nodes::Grouping.new(Arel.sql(normalize(document)))
+          Arel::Nodes::Grouping.new(normalize(document))
         end
 
         def normalized_query_for_like
-          sanitized_query = connection.quote(query)
-          Arel.sql("likequery(#{normalize(sanitized_query)})")
+          Arel::Nodes::NamedFunction.new("likequery", [normalized_query])
         end
 
         def normalized_query
-          sanitized_query = connection.quote(query)
-          Arel.sql(normalize(sanitized_query))
+          normalize(Arel::Nodes.build_quoted(query))
         end
       end
     end
