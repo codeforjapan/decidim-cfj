@@ -72,7 +72,7 @@ ja:
             email: メールアドレス
             new: メンバーを追加
             no_members: このグループにはまだメンバーがいません
-            not_synced_html: ユーザーの本人認証がこの本人認証グループと同期していません。%{sync}して、メンバー一覧を更新してください。
+            not_synced_html: ユーザーの本人認証がこの認証グループと同期していません。%{sync}して、メンバー一覧を更新してください。
             remove: メンバーを削除
             sync: 本人認証を同期
             title: "「%{group}」のメンバー管理"
@@ -87,20 +87,20 @@ ja:
             empty: 入力欄にも CSV ファイルにもメールアドレスが見つかりませんでした。メールアドレスを1件以上追加してください。
         awesome_authorizations:
           create:
-            error: 本人認証グループの作成でエラーが発生しました！ %{error}
-            success: 本人認証グループを作成しました
+            error: 認証グループの作成でエラーが発生しました！ %{error}
+            success: 認証グループを作成しました
           destroy:
-            success: 本人認証グループを削除しました
+            success: 認証グループを削除しました
           edit:
             save: 保存
-            title: 本人認証グループの編集
+            title: 認証グループの編集
           form:
             name_help: 本人認証ページのカードに表示される名前です。
             purpose_help: 本人認証ページのカードに表示され、この本人認証の目的や用途を説明する文章です。
           index:
-            authorization_groups: 本人認証グループ
+            authorization_groups: 認証グループ
             authorization_properties: 本人認証の表示設定
-            create_group: 本人認証グループを新規作成
+            create_group: 認証グループを新規作成
             description_html: ここでは、Decidim のコンポーネントに対してそれぞれ特定の権限を持つ人のグループを作成できます。<br>新規登録時と、この一覧を更新したときに、グループのメンバーは自動的に本人認証されます。
             edit_properties: 本人認証の表示設定を編集
             not_available: この機能を使うには、%{system}で Awesome の本人認証ワークフローを有効にする必要があります。
@@ -109,26 +109,26 @@ ja:
             title: Awesome 本人認証
           list_authorization_groups:
             actions: 操作
-            confirm_destroy: この本人認証グループを削除してもよろしいですか？このグループのすべてのユーザーが本人認証を失います。
+            confirm_destroy: この認証グループを削除してもよろしいですか？このグループのすべてのユーザーが本人認証を失います。
             destroy: グループを削除
             edit: グループを編集
             granted_count: 本人認証済み数
             group_name: グループ名
             manage: メンバーを管理
             members_count: ユーザー数
-            no_groups: 本人認証グループはまだ作成されていません
+            no_groups: 認証グループはまだ作成されていません
             out_of_sync: 未同期
             sync: 本人認証を同期
             sync_status: 同期状況
             synced: 同期済み
           new:
             create: 作成
-            title: 本人認証グループの新規作成
+            title: 認証グループの新規作成
           sync:
             success: 同期を開始しました
           update:
-            error: 本人認証グループの更新でエラーが発生しました！ %{error}
-            success: 本人認証グループを更新しました
+            error: 認証グループの更新でエラーが発生しました！ %{error}
+            success: 認証グループを更新しました
         checks:
           index:
             decidim-verifications: 本人確認モジュールから
