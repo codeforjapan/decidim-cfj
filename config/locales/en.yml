@@ -2,8 +2,22 @@
 en:
   activemodel:
     attributes:
+      attachment:
+        link: Link
+      config:
+        intergram_for_public: Enable Intergram Chat in the public pages
+      import_results:
+        file: File
+      meeting_registration_invite:
+        user_id: Participant
       organization:
         mobile_logo: "Mobile logo"
+      participatory_process_group:
+        promoted: Promoted
+      result:
+        project_ids: Projects
+      static_page:
+        topic: Topic
       user_extension:
         address: Address
         birth_year: Birth year
