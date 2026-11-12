@@ -259,19 +259,4 @@ describe "Blog post image handling in admin" do
       expect(editor_image.file).to be_attached
     end
   end
-
-  describe "content parsers override" do
-    it "demonstrates that InlineImagesParser is available" do
-      # Test that our content parser is available
-      expect(defined?(Decidim::ContentParsers::InlineImagesParser)).to be_truthy
-
-      # Test basic functionality
-      base64_image = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChAHGartKiAAAAABJRU5ErkJggg=="
-      content = "<p>Test content</p><img src=\"#{base64_image}\"><p>More content</p>"
-      context = { user: }
-
-      parser = Decidim::ContentParsers::InlineImagesParser.new(content, context)
-      expect(parser).to respond_to(:rewrite)
-    end
-  end
 end

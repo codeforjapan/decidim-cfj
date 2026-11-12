@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-# Covers config/initializers/user_moderation_type_override.rb.
+# blocked_at はあるが block_id が NULL のユーザーで落ちないことの回帰テスト（上流 0.32.2 で修正）。
 RSpec.describe "GraphQL moderatedUsers query" do
   let(:organization) { create(:organization) }
 

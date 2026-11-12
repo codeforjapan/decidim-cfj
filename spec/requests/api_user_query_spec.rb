@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-# Covers config/initializers/api_user_query_hardening.rb.
+# 引数なしの user が任意のユーザーを返さないことの回帰テスト（上流 0.32.2 で修正）。
 RSpec.describe "GraphQL user query" do
   let(:organization) { create(:organization) }
   let!(:user) { create(:user, :confirmed, organization:, nickname: "hanako", name: "山田花子") }

@@ -29,7 +29,8 @@ module Decidim
           end
 
           def user_extension
-            @authorization = Authorization.find_by(
+            # user は current_organization で絞り込み済み
+            @authorization = Authorization.find_by( # rubocop:disable Decidim/OrganizationScopedFinder
               decidim_user_id: user.id,
               name: "user_extension"
             )

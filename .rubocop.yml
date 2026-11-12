@@ -11,6 +11,11 @@ AllCops:
     - "node_modules/**/*"
     - "vendor/bundle/**/*"
 
+# 上流 decidim-dev と同じく、システム管理者の認証で守られる /system は対象外にする
+Decidim/EnforcePermissionTo:
+  Exclude:
+    - "app/controllers/decidim/system/**/*.rb"
+
 Gemspec/RequiredRubyVersion:
   Enabled: false
 

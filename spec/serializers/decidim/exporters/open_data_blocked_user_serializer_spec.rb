@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Decidim::Exporters::OpenDataBlockedUserSerializer nil blocking override" do
+RSpec.describe Decidim::Exporters::OpenDataBlockedUserSerializer do
   subject { Decidim::Exporters::OpenDataBlockedUserSerializer.new(user_moderation).serialize }
 
   let(:organization) { create(:organization) }

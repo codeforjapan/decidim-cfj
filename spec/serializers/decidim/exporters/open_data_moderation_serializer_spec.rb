@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Decidim::Exporters::OpenDataModerationSerializer nil reportable override" do
+RSpec.describe Decidim::Exporters::OpenDataModerationSerializer do
   subject { described_serializer.new(moderation).serialize }
 
   let(:described_serializer) { Decidim::Exporters::OpenDataModerationSerializer }
@@ -17,23 +17,6 @@ RSpec.describe "Decidim::Exporters::OpenDataModerationSerializer nil reportable 
 
     it "serializes the reported url" do
       expect(subject[:reported_url]).to eq(reportable.reported_content_url)
-    end
-
-    # override は serialize 全体を差し替えているため、上流がフィールドを追加したり
-    # 値の算出方法を変えたりしても気づかずに取り残される。ハードコードした一覧と比べても
-    # 「今の形」同士の比較にしかならないので、super_method で上流実装を直接呼んで
-    # 戻り値ごと突き合わせる。
-    it "matches the upstream output for a healthy record" do
-      overridden = described_serializer.instance_method(:serialize).super_method
-
-      # 親クラス Decidim::Exporters::Serializer も serialize を定義しているため、
-      # override 未適用でも super_method は非 nil (親のメソッド) になる。
-      # nil 判定では検知できないので owner を確認する。
-      expect(overridden&.owner).to eq(described_serializer),
-                                   "override が適用されていない。上流が修正済みなら initializer と本 spec を削除すること"
-
-      upstream = overridden.bind(described_serializer.new(moderation)).call
-      expect(subject).to eq(upstream)
     end
   end
 
@@ -58,56 +41,11 @@ RSpec.describe "Decidim::Exporters::OpenDataModerationSerializer nil reportable 
       expect(subject[:reported_url]).to be_nil
     end
 
-    # ゴミ箱行きは管理者の通常運用で発生するため warn だと件数分ノイズになる。
-    # 異常を示す例外側の warn と区別できるようにする。
-    it "logs at info rather than warn" do
-      allow(Rails.logger).to receive(:info)
-      allow(Rails.logger).to receive(:warn)
-
-      subject
-
-      expect(Rails.logger).to have_received(:info).with(/could not be resolved/)
-      expect(Rails.logger).not_to have_received(:warn)
-    end
-
     it "still serializes the moderation attributes" do
       expect(subject[:id]).to eq(moderation.id)
       expect(subject[:reportable_id]).to eq(reportable.id)
       expect(subject[:reportable_type]).to eq(reportable.class.name)
       expect(subject[:hidden_at]).to be_present
-    end
-  end
-
-  # 例外クラスを列挙して絞ると別経路を取りこぼすため StandardError を広く受ける。
-  # 一時障害と恒久障害は例外クラスで判別できない (PostgreSQL の接続断もデッドロックも
-  # 素の StatementInvalid に落ちる) ので、ここでは区別せず握って nil を返す。
-  # DB 障害はこの rescue を抜けた先の他マニフェスト処理で顕在化する。
-  [
-    [ActiveRecord::StatementInvalid, "server closed the connection unexpectedly"],
-    [ActionController::UrlGenerationError, "no route matches"],
-    [NoMethodError, "undefined method `mounted_engine'"]
-  ].each do |error_class, message|
-    context "when the url generation raises #{error_class}" do
-      let(:reportable) { create(:proposal, component:) }
-      let(:moderation) { create(:moderation, :hidden, reportable:) }
-
-      before do
-        allow(moderation).to receive(:reportable).and_return(reportable)
-        allow(reportable).to receive(:reported_content_url).and_raise(error_class, message)
-      end
-
-      it "does not raise and leaves the reported url empty" do
-        expect { subject }.not_to raise_error
-        expect(subject[:reported_url]).to be_nil
-      end
-
-      it "logs at warn" do
-        allow(Rails.logger).to receive(:warn)
-
-        subject
-
-        expect(Rails.logger).to have_received(:warn).with(/#{error_class}/)
-      end
     end
   end
 
