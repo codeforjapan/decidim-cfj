@@ -35,7 +35,7 @@ ja:
     authorization_handlers:
       awesome_authorization_handler:
         fields:
-          awesome_authorization_groups: '許可するグループ:'
+          awesome_authorization_groups: 許可するグループ
           groups: グループ
     components:
       proposals:
@@ -112,7 +112,7 @@ ja:
             confirm_destroy: この本人認証グループを削除してもよろしいですか？このグループのすべてのユーザーが本人認証を失います。
             destroy: グループを削除
             edit: グループを編集
-            granted_count: 本人認証済み
+            granted_count: 本人認証済み数
             group_name: グループ名
             manage: メンバーを管理
             members_count: ユーザー数
@@ -184,7 +184,7 @@ ja:
           cookie_item_presets:
             descriptions:
               consent: 機能のために使われます。有効期間は2年で、Google が Cookie の選択に関するユーザーの状態を保存するために使います。詳しくは「Google による Cookie の使用方法」をご覧ください。
-              decidim_consent: このウェブサイトでユーザーが許可した Cookie に関する情報を保存します。
+              decidim_consent: このウェブサイトでユーザーが許可するクッキーに関する情報を保存します。
               emoji_picker_recent: 最近選択した絵文字を保存します
               facebook_fr: Meta が広告の配信、効果測定、関連性の向上に使います。
               fbp: Facebook Pixel のトラッキングのためにブラウザーのセッションを識別します。
@@ -213,13 +213,13 @@ ja:
               jitsi_known_domains: 既知のドメインの一覧を保存します
               jitsi_language: 言語の設定を保存します
               jitsi_prejoin: 参加前の画面の機能に使います。
-              jitsi_recent_list: 最近の一覧の機能に使います。
+              jitsi_recent_list: 最近参加した会議の一覧の機能に使います。
               jitsi_settings: Jitsi の設定を保存するのに使います。
               jitsi_video_quality: 映像品質の設定を保持する機能に使います。
               jitsi_virtual_background: バーチャル背景の機能に使います。
               linkedin_li_gc: LinkedIn のサービスに対する同意の状態を保存します。
               linkedin_lidc: LinkedIn がルーティングと負荷分散に使います。
-              linkedin_user_match_history: LinkedIn のキャンペーンについて、広告とのやり取りのタイミングとコンバージョンの帰属を追跡します。
+              linkedin_user_match_history: LinkedIn のキャンペーンについて、広告に反応したタイミングと、コンバージョンがどの広告によるものかを追跡します。
               maps_1p_jar: Google Maps の利用状況と設定、広告のパーソナライズに使う情報を保存します。
               maps_consent: 埋め込みの地図を使うときに、Google のサービスに対するユーザーの同意の状態を保存します。
               maps_nid: Google Maps の設定と、セキュリティに関するブラウザーの情報を保存します。
@@ -317,39 +317,39 @@ ja:
                 推奨カテゴリー: 設定
             labels:
               cloudflare_turnstile:
-                other: Cloudflare Turnstile (Cookie %{count} 件)
+                other: Cloudflare Turnstile（Cookie %{count} 件）
               decidim_essential:
-                other: Decidim 必須 (Cookie %{count} 件)
+                other: Decidim 必須（Cookie %{count} 件）
               emoji_picker:
-                other: 絵文字ピッカー (Cookie %{count} 件)
+                other: 絵文字ピッカー（Cookie %{count} 件）
               facebook_pixel:
-                other: Facebook Pixel (Cookie %{count} 件)
+                other: Facebook Pixel（Cookie %{count} 件）
               google_analytics:
-                other: Google Analytics (Cookie %{count} 件)
+                other: Google Analytics（Cookie %{count} 件）
               google_maps_embeds:
-                other: Google Maps の埋め込み (Cookie %{count} 件)
+                other: Google Maps の埋め込み（Cookie %{count} 件）
               google_tag_manager:
-                other: Google Tag Manager (Cookie %{count} 件)
+                other: Google Tag Manager（Cookie %{count} 件）
               graphiql:
-                other: GraphiQL API エクスプローラー (Cookie %{count} 件)
+                other: GraphiQL API エクスプローラー（Cookie %{count} 件）
               hcaptcha:
-                other: hCaptcha (Cookie %{count} 件)
+                other: hCaptcha（Cookie %{count} 件）
               jitsi_meet:
-                other: Jitsi Meet (Cookie %{count} 件)
+                other: Jitsi Meet（Cookie %{count} 件）
               linkedin_insight:
-                other: LinkedIn Insight (Cookie %{count} 件)
+                other: LinkedIn Insight（Cookie %{count} 件）
               matomo:
-                other: Matomo (Cookie %{count} 件)
+                other: Matomo（Cookie %{count} 件）
               openstreetmap_tiles:
-                other: OpenStreetMap のタイル (Cookie %{count} 件)
+                other: OpenStreetMap のタイル（Cookie %{count} 件）
               recaptcha:
-                other: reCAPTCHA (Cookie %{count} 件)
+                other: reCAPTCHA（Cookie %{count} 件）
               vimeo_embeds:
-                other: Vimeo の埋め込み (Cookie %{count} 件)
+                other: Vimeo の埋め込み（Cookie %{count} 件）
               youtube_embeds:
-                other: YouTube の埋め込み (Cookie %{count} 件)
+                other: YouTube の埋め込み（Cookie %{count} 件）
               youtube_nocookie:
-                other: YouTube no-cookie (Cookie %{count} 件)
+                other: YouTube no-cookie（Cookie %{count} 件）
             services:
               cloudflare_turnstile: Cloudflare Turnstile
               decidim_essential: このウェブサイト
@@ -367,7 +367,7 @@ ja:
               recaptcha: Google reCAPTCHA
               vimeo_embeds: Vimeo
               youtube_embeds: YouTube
-              youtube_nocookie: YouTube (プライバシー強化モード)
+              youtube_nocookie: YouTube（プライバシー強化モード）
           create:
             error: Cookie アイテムの作成でエラーが発生しました！ %{error}
             success: Cookie アイテムを作成しました
@@ -407,7 +407,7 @@ ja:
         errors:
           user_not_in_group: メールアドレス（%{email}）が、本人認証できるグループのどれにも登録されていません。
         explanation: 組織のグループのメンバーとして本人認証を受ける
-        member_of: "%{groups} のメンバー"
+        member_of: '所属グループ: %{groups}'
         name: 組織グループによる本人認証
       content_blocks:
         awesome_process_groups:
