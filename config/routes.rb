@@ -9,7 +9,6 @@ Rails.application.routes.draw do
   # Redirect all conversation-related paths to the root with 301.
   match "(/:locale)/conversations(/*path)", to: redirect("/", status: 301), via: :all,
                                             constraints: { locale: Regexp.union(I18n.available_locales.map(&:to_s)) }
-  match "/profiles/:nickname/conversations(/*path)", to: redirect("/", status: 301), via: :all
 
   mount Decidim::Core::Engine => "/"
   # Sidekiq::Web exposes the queue to system admins only.

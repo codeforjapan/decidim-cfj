@@ -28,11 +28,6 @@ RSpec.describe "Disable DM feature" do
       expect(response).to redirect_to("/")
     end
 
-    it "redirects /profiles/:nickname/conversations to /" do
-      get "/profiles/#{user.nickname}/conversations"
-      expect(response).to redirect_to("/")
-    end
-
     it "redirects POST /conversations to /" do
       post "/conversations", params: { conversation: { body: "hi", recipient_id: other_user.id } }
       expect(response).to redirect_to("/")
