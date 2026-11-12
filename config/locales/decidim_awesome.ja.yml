@@ -178,6 +178,230 @@ ja:
           update:
             error: 'Cookie カテゴリーの更新でエラーが発生しました！ %{error}'
             success: Cookie カテゴリーを更新しました
+        cookie_items:
+          cookie_item_dropdown:
+            button: よく使われる Cookie のサービス
+          cookie_item_presets:
+            descriptions:
+              consent: 機能のために使われます。有効期間は2年で、Google が Cookie の選択に関するユーザーの状態を保存するために使います。詳しくは「Google による Cookie の使用方法」をご覧ください。
+              decidim_consent: このウェブサイトでユーザーが許可した Cookie に関する情報を保存します。
+              emoji_picker_recent: 最近選択した絵文字を保存します
+              facebook_fr: Meta が広告の配信、効果測定、関連性の向上に使います。
+              fbp: Facebook Pixel のトラッキングのためにブラウザーのセッションを識別します。
+              ga_gat: Google Analytics へ送るリクエストの頻度を抑えるために使います。
+              ga_gid: 分析のためにユーザーを区別するのに使います。24時間で期限切れになります。
+              ga_main: 一意の識別子を割り当ててユーザーを区別するのに使います。
+              ga_property: GA4 で、特定のプロパティのセッションの状態とカウンターを保持するのに使います。
+              graphiql_doc_explorer_open: GraphQL API の利用時に、ドキュメントパネルを開いているかどうかを保存します
+              graphiql_editor_flex: GraphQL API の利用時に、タブの設定を保存します
+              graphiql_history_pane_open: GraphQL API の利用時に、履歴パネルを開いているかどうかを保存します
+              graphiql_queries: GraphQL API の利用時に、クエリの履歴を保存します
+              graphiql_query: GraphQL API の利用時に、最後のクエリを保存します
+              graphiql_tab_state: GraphQL API の利用時に、タブの構成を保存します
+              gtm_dc: Google Tag Manager がタグの読み込みと診断に使います。
+              gtm_debug: Google Tag Manager のデバッグモードの状態を保存します。
+              gtm_gcl_au: Google のサービスが広告の効率を検証するために使います。
+              hcaptcha_accessibility: hCaptcha のチャレンジに関するアクセシビリティの設定を保存します。
+              hcaptcha_session: チャレンジを検証するため、hCaptcha の一時的なセッションの状態を保存します。
+              jitsi_amp: Amplitude Analytics に使います
+              jitsi_amplitude_unsent_identify: Amplitude Analytics に使います
+              jitsi_amplitude_unset: Amplitude Analytics に使います
+              jitsi_calendar_sync: カレンダー同期の機能に使います。
+              jitsi_callstats_username: Jitsi でユーザーのセッションを保存するのに使います。
+              jitsi_dropbox: Dropbox 連携の機能に使います。
+              jitsi_endpoint_id: Jitsi サーバーとの通信に使います。
+              jitsi_known_domains: 既知のドメインの一覧を保存します
+              jitsi_language: 言語の設定を保存します
+              jitsi_prejoin: 参加前の画面の機能に使います。
+              jitsi_recent_list: 最近の一覧の機能に使います。
+              jitsi_settings: Jitsi の設定を保存するのに使います。
+              jitsi_video_quality: 映像品質の設定を保持する機能に使います。
+              jitsi_virtual_background: バーチャル背景の機能に使います。
+              linkedin_li_gc: LinkedIn のサービスに対する同意の状態を保存します。
+              linkedin_lidc: LinkedIn がルーティングと負荷分散に使います。
+              linkedin_user_match_history: LinkedIn のキャンペーンについて、広告とのやり取りのタイミングとコンバージョンの帰属を追跡します。
+              maps_1p_jar: Google Maps の利用状況と設定、広告のパーソナライズに使う情報を保存します。
+              maps_consent: 埋め込みの地図を使うときに、Google のサービスに対するユーザーの同意の状態を保存します。
+              maps_nid: Google Maps の設定と、セキュリティに関するブラウザーの情報を保存します。
+              matomo_mtm_consent: Matomo のトラッキングに対するユーザーの同意の状態を保存します。
+              matomo_pk_id: 訪問者ごとに一意の ID を保存し、再訪問した訪問者を識別するのに使います。
+              matomo_pk_ref: 流入元の情報（ユーザーをこのウェブサイトに導いた参照元）を保存するのに使います。
+              matomo_pk_ses: 今回の訪問の一時的なセッションデータを保存するのに使います。
+              osm_location: OpenStreetMap を操作するときの、地図の位置とズームの既定値を保存します。
+              osm_session: OpenStreetMap でのユーザーの操作に関する一時的なセッションデータを保存します。
+              osm_totp_token: OpenStreetMap のアカウントの操作で使う、2要素認証に関する一時的なトークンを保存します。
+              pref: 機能のために使われます。YouTube はこの Cookie を使って、ページの表示の好みや、自動再生の選択、シャッフル再生、プレーヤーのサイズといった再生の設定などの情報を保存します。詳しくは「Google による Cookie の使用方法」をご覧ください。
+              recaptcha_grecaptcha: reCAPTCHA がスパム対策とリスク分析に使います。
+              recaptcha_rc_a: reCAPTCHA のリスク分析のメタデータをブラウザーのストレージに保存します。
+              recaptcha_rc_c: reCAPTCHA のチャレンジとセッションのメタデータをブラウザーのストレージに保存します。
+              remember_user_token: ログイン時に「ログイン状態を維持する」を選ぶと、ログインしたままにできるようにします。
+              session_id: ウェブページ間を移動したときにウェブサイト内のユーザーをウェブサイトが記憶できるようにします。
+              turnstile_cf_bm: Cloudflare が自動化されたトラフィックを検知して抑えるのに役立ちます。
+              turnstile_cf_clearance: 訪問者が以前のセキュリティチャレンジを通過したことの証明を保存します。
+              turnstile_cfuvid: 同じ IP アドレスを共有する個々のユーザーを Cloudflare が区別するのに役立ちます。
+              vimeo_player: 音量、画質、自動再生の動作など、Vimeo プレーヤーの設定を保存します。
+              vimeo_vuid: 分析に使う、Vimeo の訪問者ごとに一意の識別子を保存します。
+              visitor_info1_live: 機能、分析、広告、パーソナライズのために使われます。詳しくは「Google による Cookie の使用方法」をご覧ください。
+              ysc: セキュリティのために使われます。有効期間はユーザーのブラウジングセッションの間です。ブラウジングセッション内のリクエストが、他のサイトではなくユーザー自身によるものであることを確かめるのに使います。この Cookie は、悪意のあるサイトがユーザーに知られずにユーザーになりすまして操作することを防ぎます。詳しくは「Google による Cookie の使用方法」をご覧ください。
+              yt_remote_connected_devices: YouTube プレーヤーの操作に使う、接続済みのデバイスの一覧を保存します。
+              yt_remote_device_id: YouTube プレーヤーをリモート操作するためのデバイスの識別子を保存します。
+              ytidb_last_result_entry_key: YouTube プレーヤーの最新の結果のメタデータをローカルストレージに保存します。
+            explanations:
+              cloudflare_turnstile: |-
+                フォームを不正利用や自動化されたトラフィックから守るために Cloudflare Turnstile を有効にしている場合は、これらの Cookie を追加してください。ボットの検知、セッションの検証、チャレンジの継続に使われます。
+
+                推奨カテゴリー: 必須
+              decidim_essential: |-
+                Decidim のプラットフォームの基本機能に必要な、必須の Cookie を追加します。ユーザーの認証、セッションの管理、同意の状況の記録に使われます。
+
+                推奨カテゴリー: 必須
+              emoji_picker: |-
+                テキストエディターで絵文字ピッカーを有効にしている場合は、この Cookie を追加してください。最近使った絵文字を保存し、ユーザーごとに使いやすくします。
+
+                推奨カテゴリー: 設定
+              facebook_pixel: |-
+                コンバージョンの追跡や広告の効果測定に Meta (Facebook) Pixel を使っている場合は、これらの Cookie を追加してください。ブラウザーのセッションの識別やキャンペーンの成果の測定に使われます。
+
+                推奨カテゴリー: マーケティング
+              google_analytics: |-
+                アクセス数やユーザーの行動の測定に Google Analytics (GA4/gtag.js) を使っている場合は、これらの Cookie を追加してください。訪問者の識別、セッションの区別、利用統計の作成に使われます。
+
+                推奨カテゴリー: 分析と統計
+              google_maps_embeds: |-
+                ページに Google Maps を埋め込んでいる場合（地図のウィジェットや場所のブロックなど）は、これらの Cookie を追加してください。地図の設定、同意の状態、利用状況の測定に使われます。
+
+                推奨カテゴリー: 設定 または 分析と統計
+              google_tag_manager: |-
+                分析やマーケティングのタグを Google Tag Manager で配信している場合は、これらの Cookie を追加してください。GTM の構成によっては、タグが追加のトラッキング用 Cookie を設定することがあります。
+
+                推奨カテゴリー: 分析と統計 または マーケティング
+              graphiql: |-
+                開発者向けに GraphQL API のエクスプローラー（/api/graphiql）を有効にしている場合は、これらの Cookie を追加してください。エクスプローラーの画面の設定、クエリの履歴、タブの構成を保存します。
+
+                推奨カテゴリー: 設定
+              hcaptcha: |-
+                フォームで hCaptcha を有効にしている場合は、これらの Cookie とストレージの項目を追加してください。ボットの検知、アクセシビリティの設定、チャレンジとセッションの処理に使われます。
+
+                推奨カテゴリー: 必須
+              jitsi_meet: |-
+                プラットフォームに Jitsi Meet のビデオ会議を組み込んでいる場合は、これらの Cookie を追加してください。ビデオ会議サービスのユーザー設定、言語の設定、映像品質の選択、セッションデータを保存します。
+
+                推奨カテゴリー: 設定
+              linkedin_insight: |-
+                LinkedIn 広告のキャンペーンの成果や訪問者のコンバージョンを測定するために LinkedIn Insight Tag を使っている場合は、これらの Cookie を追加してください。
+
+                推奨カテゴリー: マーケティング
+              matomo: |-
+                ウェブサイトの統計の収集に Matomo を使っている場合は、これらの Cookie を追加してください。再訪問した訪問者の識別、セッションの追跡、集計レポートに使う参照元の情報の保存に使われます。
+
+                推奨カテゴリー: 分析と統計
+              openstreetmap_tiles: |-
+                地図の表示が、Cookie を設定することがある OpenStreetMap 側のリソース（埋め込みの地図や、OSM のアカウントを使う機能など）に依存している場合は、これらの Cookie を追加してください。
+
+                推奨カテゴリー: 設定
+              recaptcha: |-
+                フォームを不正利用やボットから守るために Google reCAPTCHA を使っている場合は、これらの Cookie とストレージの項目を追加してください。ユーザーの操作やセキュリティに関する情報の評価に使われます。
+
+                推奨カテゴリー: 必須
+              vimeo_embeds: |-
+                ページ、提案、コメントに Vimeo の動画を埋め込んでいる場合は、これらの Cookie を追加してください。Vimeo はプレーヤーの設定の記憶や、再生時の操作の測定に使うことがあります。
+
+                推奨カテゴリー: 設定 または 分析と統計
+              youtube_embeds: |-
+                コンテンツ（提案、コメントなど）への YouTube の動画の埋め込みを許可している場合は、これらの Cookie を追加してください。YouTube は、動画の再生やユーザーの行動に関する情報を集める分析・トラッキング用の Cookie を設定します。
+
+                推奨カテゴリー: 設定（動画がコンテンツに欠かせない場合）、分析と統計（追跡や統計に使う場合）、マーケティング（広告に使う場合）
+              youtube_nocookie: |-
+                YouTube のプライバシー強化モード（youtube-nocookie.com）を使っている場合は、これらのストレージのキーを追加してください。プレーヤーの状態や、デバイスとセッションの設定の保持に使われます。
+
+                推奨カテゴリー: 設定
+            labels:
+              cloudflare_turnstile:
+                other: Cloudflare Turnstile (Cookie %{count} 件)
+              decidim_essential:
+                other: Decidim 必須 (Cookie %{count} 件)
+              emoji_picker:
+                other: 絵文字ピッカー (Cookie %{count} 件)
+              facebook_pixel:
+                other: Facebook Pixel (Cookie %{count} 件)
+              google_analytics:
+                other: Google Analytics (Cookie %{count} 件)
+              google_maps_embeds:
+                other: Google Maps の埋め込み (Cookie %{count} 件)
+              google_tag_manager:
+                other: Google Tag Manager (Cookie %{count} 件)
+              graphiql:
+                other: GraphiQL API エクスプローラー (Cookie %{count} 件)
+              hcaptcha:
+                other: hCaptcha (Cookie %{count} 件)
+              jitsi_meet:
+                other: Jitsi Meet (Cookie %{count} 件)
+              linkedin_insight:
+                other: LinkedIn Insight (Cookie %{count} 件)
+              matomo:
+                other: Matomo (Cookie %{count} 件)
+              openstreetmap_tiles:
+                other: OpenStreetMap のタイル (Cookie %{count} 件)
+              recaptcha:
+                other: reCAPTCHA (Cookie %{count} 件)
+              vimeo_embeds:
+                other: Vimeo の埋め込み (Cookie %{count} 件)
+              youtube_embeds:
+                other: YouTube の埋め込み (Cookie %{count} 件)
+              youtube_nocookie:
+                other: YouTube no-cookie (Cookie %{count} 件)
+            services:
+              cloudflare_turnstile: Cloudflare Turnstile
+              decidim_essential: このウェブサイト
+              emoji_picker: このウェブサイト
+              facebook_pixel: Meta (Facebook)
+              google_analytics: Google Analytics
+              google_maps_embeds: Google Maps
+              google_tag_manager: Google Tag Manager
+              graphiql: このウェブサイト
+              hcaptcha: hCaptcha
+              jitsi_meet: Jitsi Meet
+              linkedin_insight: LinkedIn
+              matomo: Matomo
+              openstreetmap_tiles: OpenStreetMap
+              recaptcha: Google reCAPTCHA
+              vimeo_embeds: Vimeo
+              youtube_embeds: YouTube
+              youtube_nocookie: YouTube (プライバシー強化モード)
+          create:
+            error: Cookie アイテムの作成でエラーが発生しました！ %{error}
+            success: Cookie アイテムを作成しました
+          create_preset:
+            error: プリセットの Cookie アイテムの追加でエラーが発生しました！ %{error}
+            not_found: プリセットが見つかりません
+            success: プリセットの Cookie アイテムを追加しました
+          destroy:
+            error: Cookie アイテムの削除でエラーが発生しました！ %{error}
+            success: Cookie アイテムを削除しました
+          edit:
+            cancel: キャンセル
+            save: 保存
+            title: Cookie アイテムの編集
+          form:
+            description_item_help: この Cookie の目的と、保存する情報を示します
+            expiration_item_help: Cookie の有効期限です。表示用の情報で、実際の Cookie の有効期限には影響しません。
+            service_item_help: どこで使われるかを示す短い説明です（例:「このウェブサイト」「YouTube の埋め込み」「Jitsi Meet」など）
+            title_item_help: Cookie はブラウザーの開発者ツール（ストレージのセクション）で確認できます。スペースは含めないでください。
+          index:
+            back_to_categories: カテゴリー一覧に戻る
+            cannot_remove_default: 既定のアイテムは削除できません
+            confirm_reset: このカスタマイズを削除してもよろしいですか？
+            edit: アイテムを編集
+            new: 新規アイテム
+            reset: カスタマイズを削除
+            title: "%{category}: Cookie アイテム"
+          new:
+            cancel: キャンセル
+            save: 保存
+            title: 新規 Cookie アイテム
+          update:
+            error: Cookie アイテムの更新でエラーが発生しました！ %{error}
+            success: Cookie アイテムを更新しました
       awesome_authorization_handler:
         admin_managed_html: この本人認証は通常、自動で管理されています。本人認証されるはずだと思われる場合は、下の「送信」ボタンを押してください。<br>それでも本人認証されない場合は、プラットフォームの管理者にお問い合わせください。
         errors:
