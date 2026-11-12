@@ -2,6 +2,12 @@
 ja:
   activemodel:
     attributes:
+      awesome_authorization_group:
+        name: グループ名
+        purpose: グループの目的
+      awesome_authorization_members:
+        emails: メールアドレス
+        file: CSV ファイルをアップロード
       cookie_category:
         mandatory: 必須
         slug: ID
@@ -26,6 +32,11 @@ ja:
               cannot_change_default_item_name: 既定アイテムの名前は変更できません
               invalid_format: 名前に使用できるのは英数字・アンダースコア(_)・ハイフン(-)のみです。スペースや特殊文字は使用できません
   decidim:
+    authorization_handlers:
+      awesome_authorization_handler:
+        fields:
+          awesome_authorization_groups: '許可するグループ:'
+          groups: グループ
     components:
       proposals:
         settings:
@@ -36,6 +47,88 @@ ja:
             awesome_votes_enabled_states_help: 他のステータスはコンポーネントを保存すると選択可能になります。
     decidim_awesome:
       admin:
+        awesome_authorization_properties:
+          create:
+            error: 本人認証の表示設定の更新でエラーが発生しました！ %{error}
+            success: 本人認証の表示設定を更新しました
+          index:
+            cancel: キャンセル
+            description: 本人認証の説明
+            description_help: ユーザーがまだ本人認証を済ませていないときに、本人認証ページのカードで名前の下に表示される文章です。この本人認証が必要な理由の説明に使えます。
+            name: 本人認証の名前
+            name_help: 本人認証ページのカードに表示される名前です。
+            save: 保存
+            title: 本人認証の表示設定を編集
+        awesome_authorization_users:
+          create:
+            error: メンバー一覧の更新でエラーが発生しました！ %{error}
+            success: メンバー一覧を更新しました（%{count} 人を新たに追加）
+          destroy:
+            success: メンバーを削除しました
+          index:
+            actions: 操作
+            authorized_user: 本人認証済みのユーザー
+            confirm_remove: このメンバーを削除してもよろしいですか？
+            email: メールアドレス
+            new: メンバーを追加
+            no_members: このグループにはまだメンバーがいません
+            not_synced_html: ユーザーの本人認証がこの本人認証グループと同期していません。%{sync}して、メンバー一覧を更新してください。
+            remove: メンバーを削除
+            sync: 本人認証を同期
+            title: "「%{group}」のメンバー管理"
+            user: Decidim のユーザー
+          new:
+            create: メンバーを追加
+            emails_help: ここにメールアドレスを貼り付けてください。「@」を含む語だけがメールアドレスとして扱われます。
+            or: または
+            remove_previous_members: グループの既存のメンバーを削除する（%{count} 人）
+            title: "「%{group}」にメンバーを追加"
+          update:
+            empty: 入力欄にも CSV ファイルにもメールアドレスが見つかりませんでした。メールアドレスを1件以上追加してください。
+        awesome_authorizations:
+          create:
+            error: 本人認証グループの作成でエラーが発生しました！ %{error}
+            success: 本人認証グループを作成しました
+          destroy:
+            success: 本人認証グループを削除しました
+          edit:
+            save: 保存
+            title: 本人認証グループの編集
+          form:
+            name_help: 本人認証ページのカードに表示される名前です。
+            purpose_help: 本人認証ページのカードに表示され、この本人認証の目的や用途を説明する文章です。
+          index:
+            authorization_groups: 本人認証グループ
+            authorization_properties: 本人認証の表示設定
+            create_group: 本人認証グループを新規作成
+            description_html: ここでは、Decidim のコンポーネントに対してそれぞれ特定の権限を持つ人のグループを作成できます。<br>新規登録時と、この一覧を更新したときに、グループのメンバーは自動的に本人認証されます。
+            edit_properties: 本人認証の表示設定を編集
+            not_available: この機能を使うには、%{system}で Awesome の本人認証ワークフローを有効にする必要があります。
+            properties_description_html: コンポーネントでこの本人認証を使うと、特定のグループに属するユーザーだけにアクセスを制限できます。選択すると、許可するグループを選べます。
+            system_link: システム管理画面
+            title: Awesome 本人認証
+          list_authorization_groups:
+            actions: 操作
+            confirm_destroy: この本人認証グループを削除してもよろしいですか？このグループのすべてのユーザーが本人認証を失います。
+            destroy: グループを削除
+            edit: グループを編集
+            granted_count: 本人認証済み
+            group_name: グループ名
+            manage: メンバーを管理
+            members_count: ユーザー数
+            no_groups: 本人認証グループはまだ作成されていません
+            out_of_sync: 未同期
+            sync: 本人認証を同期
+            sync_status: 同期状況
+            synced: 同期済み
+          new:
+            create: 作成
+            title: 本人認証グループの新規作成
+          sync:
+            success: 同期を開始しました
+          update:
+            error: 本人認証グループの更新でエラーが発生しました！ %{error}
+            success: 本人認証グループを更新しました
         checks:
           index:
             decidim-verifications: 本人確認モジュールから
@@ -85,6 +178,13 @@ ja:
           update:
             error: 'Cookie カテゴリーの更新でエラーが発生しました！ %{error}'
             success: Cookie カテゴリーを更新しました
+      awesome_authorization_handler:
+        admin_managed_html: この本人認証は通常、自動で管理されています。本人認証されるはずだと思われる場合は、下の「送信」ボタンを押してください。<br>それでも本人認証されない場合は、プラットフォームの管理者にお問い合わせください。
+        errors:
+          user_not_in_group: メールアドレス（%{email}）が、本人認証できるグループのどれにも登録されていません。
+        explanation: 組織のグループのメンバーとして本人認証を受ける
+        member_of: "%{groups} のメンバー"
+        name: 組織グループによる本人認証
       content_blocks:
         awesome_process_groups:
           results_count:
