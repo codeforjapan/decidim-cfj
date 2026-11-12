@@ -7,7 +7,8 @@ Rails.application.routes.draw do
 
   # Disable DM (private messaging / conversations) feature.
   # Redirect all conversation-related paths to the root with 301.
-  match "/conversations(/*path)", to: redirect("/", status: 301), via: :all
+  match "(/:locale)/conversations(/*path)", to: redirect("/", status: 301), via: :all,
+                                            constraints: { locale: Regexp.union(I18n.available_locales.map(&:to_s)) }
   match "/profiles/:nickname/conversations(/*path)", to: redirect("/", status: 301), via: :all
 
   mount Decidim::Core::Engine => "/"

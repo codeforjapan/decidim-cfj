@@ -53,6 +53,34 @@ RSpec.describe "Disable DM feature" do
       # request never reached the Decidim controller.
       expect(response).to have_http_status(:moved_permanently)
     end
+
+    context "with a locale prefix" do
+      let(:locale) { organization.default_locale }
+
+      it "redirects /:locale/conversations to /" do
+        get "/#{locale}/conversations"
+        expect(response).to redirect_to("/")
+      end
+
+      it "redirects /:locale/conversations/new to /" do
+        get "/#{locale}/conversations/new"
+        expect(response).to redirect_to("/")
+      end
+
+      it "redirects POST /:locale/conversations to /" do
+        post "/#{locale}/conversations", params: { conversation: { body: "hi", recipient_id: other_user.id } }
+        expect(response).to redirect_to("/")
+      end
+
+      it "redirects PUT /:locale/conversations/:id to / at the routing layer" do
+        user.update!(direct_message_types: "all")
+        other_user.update!(direct_message_types: "all")
+        conversation = create(:conversation, originator: user, interlocutors: [other_user], user:, body: "hi")
+        put "/#{locale}/conversations/#{conversation.id}", params: { message: { body: "reply" } }, xhr: true
+        expect(response).to redirect_to("/")
+        expect(response).to have_http_status(:moved_permanently)
+      end
+    end
   end
 
   describe "admin officializations page" do
