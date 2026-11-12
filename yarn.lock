@@ -1807,15 +1807,15 @@
   resolved "https://registry.npmjs.org/@csstools/utilities/-/utilities-3.0.0.tgz"
   integrity sha512-etDqA/4jYvOGBM6yfKCOsEXfH96BKztZdgGmGqKi2xHnDe0ILIBraRspwgYatJH9JsCZ5HCGoCst8w18EKOAdg==
 
-"@decidim/browserslist-config@^0.32.1":
-  version "0.32.1"
-  resolved "https://registry.npmjs.org/@decidim/browserslist-config/-/browserslist-config-0.32.1.tgz"
-  integrity sha512-Upczicexs2+lmTYj3xtsyttdfWgtOnRkqcWrQvMlWE7ZmM9PgmI74rswmMyI3dtd8H7q3PQrnrSZeiJ8YPof5Q==
+"@decidim/browserslist-config@^0.32.2":
+  version "0.32.2"
+  resolved "https://registry.yarnpkg.com/@decidim/browserslist-config/-/browserslist-config-0.32.2.tgz#a905d9b26f4018d0a32160ce7e85663bcd73ad2e"
+  integrity sha512-Guif+NOC8eCWcFsf6PZkbEhHfYLk/wmZMk3MLkkp7NtRJnDmGPf3GZOt0Pr4uXeds+U8FgVgvG+dTllrf+X7eg==
 
-"@decidim/core@^0.32.1":
-  version "0.32.1"
-  resolved "https://registry.npmjs.org/@decidim/core/-/core-0.32.1.tgz"
-  integrity sha512-vgZy2Uds6PP8KclA6vR782S2W74zWbPVvyQ2E02cuWW1hK5Ma0EQ2JeCzYVqqjeslEVU1gSKXWN2clv9R8CIAg==
+"@decidim/core@^0.32.2":
+  version "0.32.2"
+  resolved "https://registry.yarnpkg.com/@decidim/core/-/core-0.32.2.tgz#81aac40bc80f4f6e8c7f91ca1db1d0948571369a"
+  integrity sha512-j+SfFifTR4EgUYHRP5qve9RAVOdExcfuItXZ9O96geNu5VZPifPZHAFmrOAtt4gwbc9ZgJ42ySWgrCSZv4e+8g==
   dependencies:
     "@emoji-mart/data" "^1.1.2"
     "@rails/activestorage" "^7.2.201"
@@ -1882,34 +1882,34 @@
     tom-select "2.2.2"
     wc-datepicker "^0.5.2"
 
-"@decidim/dev@^0.32.1":
-  version "0.32.1"
-  resolved "https://registry.npmjs.org/@decidim/dev/-/dev-0.32.1.tgz"
-  integrity sha512-XPpeJw0KLNqLtz32gNcHi/Bk+ysfCXYSiCnpkWKi2FqyiAxkrwUKU/KKtyLWzzcarIIyIfXwyHaojqMl9VMAfw==
+"@decidim/dev@^0.32.2":
+  version "0.32.2"
+  resolved "https://registry.yarnpkg.com/@decidim/dev/-/dev-0.32.2.tgz#82d3a006ded04694f96483148d955287bc3ce5c3"
+  integrity sha512-IYJFFAxhH15+KWKHAzCBZz45wlgD6qt+k0Xbu9hRBrDm5xnFdCbICiUi9xCb4bXBgbQOGyk4bx/bcQzTDWHRCw==
   dependencies:
     "@linthtml/linthtml" "^0.10.2"
     axe-core "^4.7.2"
     markdownlint-cli "^0.48.0"
 
-"@decidim/eslint-config@^0.32.1":
-  version "0.32.1"
-  resolved "https://registry.npmjs.org/@decidim/eslint-config/-/eslint-config-0.32.1.tgz"
-  integrity sha512-FuAo34wxnY8af1TDAcqFmNqhbWH6QIliEcRHiBUhoiFeM3RlQf4laIMJKj6tRV0WGLL8Zx+VFcAGIXXoZ3bCng==
+"@decidim/eslint-config@^0.32.2":
+  version "0.32.2"
+  resolved "https://registry.yarnpkg.com/@decidim/eslint-config/-/eslint-config-0.32.2.tgz#d8d992d4994eb55df7aa93d45fa4ac75904cb569"
+  integrity sha512-g7tvJNR25S6u97hVJlwFfpYCpboIM5omFwUgZyFEE6wlLnnGhSdu0IqPylixCtCZvV1w8eObzjpxIatkyCJgDQ==
 
-"@decidim/prettier-config@^0.32.1":
-  version "0.32.1"
-  resolved "https://registry.npmjs.org/@decidim/prettier-config/-/prettier-config-0.32.1.tgz"
-  integrity sha512-8Oz7y4DrMxxXs9M7pfnrwZxv0SpzaUbGpKYOJv8nsxQDUiqE5qpW2DJTqV0O2eJ+w7dIN+Pza1zZa8ZYfOKp0Q==
+"@decidim/prettier-config@^0.32.2":
+  version "0.32.2"
+  resolved "https://registry.yarnpkg.com/@decidim/prettier-config/-/prettier-config-0.32.2.tgz#e1f1bcf1b49e0e1924e6ade48e63e16876151018"
+  integrity sha512-ZGvilm9cJquMe7OnH+jDtl4E25NndohNfXwq9KwbzvGcgrqYos1/A5tIFqi6s3j6I3cil/CiSoNAi+eFdexAKw==
 
-"@decidim/stylelint-config@^0.32.1":
-  version "0.32.1"
-  resolved "https://registry.npmjs.org/@decidim/stylelint-config/-/stylelint-config-0.32.1.tgz"
-  integrity sha512-Bn2WgaieTCACgXqGBfElCblkrv2YtMzCP330HulI8fOBWI33kB7WRRoxQWpHqsninoRpS3LwTGEmhNg3oJCfQg==
+"@decidim/stylelint-config@^0.32.2":
+  version "0.32.2"
+  resolved "https://registry.yarnpkg.com/@decidim/stylelint-config/-/stylelint-config-0.32.2.tgz#2c5bcd7e32f07205c14012081306c8a7ebf3b884"
+  integrity sha512-e/kzA5enTSJL+utqJyVcJkT2X0Gi0gqCqei1LdkfldFqgJguqwTSsdtTVQdx0sdG5p4qU4fipVtN+qAbVp0BlQ==
 
-"@decidim/webpacker@^0.32.1":
-  version "0.32.1"
-  resolved "https://registry.npmjs.org/@decidim/webpacker/-/webpacker-0.32.1.tgz"
-  integrity sha512-onSxc0wzWBPaCX50/t0e90DAOi/K0JFohkUY6O/C/e94aOrCL5llfFuu+rvej15j0JAkbihtwsY39gW0Lmfl/A==
+"@decidim/webpacker@^0.32.2":
+  version "0.32.2"
+  resolved "https://registry.yarnpkg.com/@decidim/webpacker/-/webpacker-0.32.2.tgz#7fc4d0e6cb125adc59bb3006b124cc48d96b2f49"
+  integrity sha512-STyb4TCIwvn3yXIKHmw39x/Di9ERk8LRZtKgtWsKTZnJTQgYu+RHtMZwX0y3ybqfVLpx32Mi1TNRpRuzVDJVCA==
   dependencies:
     "@hotwired/stimulus" "^3.2.2"
     "@rails/ujs" "^6.1.7"

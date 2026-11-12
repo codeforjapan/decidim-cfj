@@ -4,17 +4,15 @@ source "https://rubygems.org"
 
 ruby RUBY_VERSION
 
-gem "decidim", "0.32.1"
+gem "decidim", "0.32.2"
 
-# [0.32 upgrade Phase 1] 本体のみで検証するため一時的に無効化。Phase 6 で1つずつ復帰させる。
-# 上流 decidim-ice の PR #623 (upgrade-32) は draft のまま。マージされて正式な
-# release/0.32-stable が切られたら fork を切り直す。
+# 上流 decidim-ice は 0.32 対応を main に入れたが release/0.32-stable は無いため、fork のブランチを使う。
 gem "decidim-decidim_awesome", git: "https://github.com/codeforjapan/decidim-module-decidim_awesome.git", branch: "release/0.32-stable"
 
 gem "decidim-term_customizer", git: "https://github.com/codeforjapan/decidim-module-term_customizer.git", branch: "032-ja"
 
 gem "decidim-navigation_maps", git: "https://github.com/codeforjapan/decidim-module-navigation_maps.git", branch: "upgrade-0.32-2026-09-14"
-gem "decidim-polis", git: "https://github.com/codeforjapan/decidim-polis.git", branch: "update-0-32-1"
+gem "decidim-polis", git: "https://github.com/codeforjapan/decidim-polis.git", branch: "update-0-32-2"
 
 gem "bootsnap"
 
@@ -42,7 +40,7 @@ group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
   gem "figaro"
 
-  gem "decidim-dev", "0.32.1"
+  gem "decidim-dev", "0.32.2"
   gem "dotenv-rails"
   gem "factory_bot_rails"
   gem "rspec-rails"
@@ -76,6 +74,6 @@ end
 gem "rubyzip", ">= 1.0.0"
 gem "zip-zip"
 
-gem "decidim-conferences", "~> 0.32.1"
+gem "decidim-conferences", "~> 0.32.2"
 
-gem "decidim-ai", "~> 0.32.1"
+gem "decidim-ai", "~> 0.32.2"
