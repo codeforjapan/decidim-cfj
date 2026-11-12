@@ -86,10 +86,15 @@ RSpec.describe "Disable DM feature" do
   describe "admin officializations page" do
     let(:admin_user) { create(:user, :admin, :confirmed, organization:) }
 
-    before { sign_in admin_user, scope: :user }
+    before do
+      other_user.update!(direct_message_types: "all")
+      sign_in admin_user, scope: :user
+    end
 
     it "does not render the contact (new conversation) icon link" do
-      get "/admin/users"
+      get "/#{organization.default_locale}/admin/officializations"
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include(other_user.nickname)
       expect(response.body).not_to include("current_or_new_conversation")
       expect(response.body).not_to match(/href="[^"]*conversation[^"]*"/)
     end
@@ -125,7 +130,8 @@ RSpec.describe "Disable DM feature" do
     before { sign_in user, scope: :user }
 
     it "does not render the allow_public_contact toggle" do
-      get "/notifications_settings"
+      get "/#{organization.default_locale}/notifications_settings"
+      expect(response).to have_http_status(:ok)
       expect(response.body).not_to include("allow_public_contact")
     end
   end
@@ -134,7 +140,8 @@ RSpec.describe "Disable DM feature" do
     before { sign_in user, scope: :user }
 
     it "does not include a link to /conversations" do
-      get "/"
+      get "/#{organization.default_locale}/"
+      expect(response).to have_http_status(:ok)
       expect(response.body).not_to include("/conversations")
     end
   end
