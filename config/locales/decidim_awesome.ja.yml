@@ -140,8 +140,9 @@ ja:
         menu:
           cookie_management: クッキー管理
           verifications:
-            force_authorizations: 本人確認の強制付与
-            verifications: 本人確認
+            awesome_authorizations: Awesome 本人認証
+            force_authorizations: 本人認証の強制
+            verifications: 本人認証
         cookie_categories:
           cookie_management_warning_html: 'Decidim は iframe を表示するために、ユーザーに全ての Cookie の受け入れを強制する点に注意してください。GDPR に準拠するため、iframe で使用される全ての Cookie を適切な Cookie カテゴリーに追加してください。'
           create:

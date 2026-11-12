@@ -98,13 +98,6 @@ ja:
       debates:
         versions:
           too_large_changeset: 履歴のサイズが大きすぎるため表示できません
-    decidim_awesome:
-      admin:
-        menu:
-          verifications:
-            awesome_authorizations: Awesome 本人認証
-            force_authorizations: 本人認証の強制
-            verifications: 本人認証
     devise:
       omniauth_registrations:
         new:
