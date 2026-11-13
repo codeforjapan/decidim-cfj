@@ -29,7 +29,7 @@ GIT
 
 GIT
   remote: https://github.com/codeforjapan/decidim-module-navigation_maps.git
-  revision: 222d1d92fcec480b2deb3699868b1a00aadc67cd
+  revision: 313e2fc358223ab456ca87187ee2c23ee93f8538
   branch: upgrade-0.32-2026-09-14
   specs:
     decidim-navigation_maps (1.9.0)
