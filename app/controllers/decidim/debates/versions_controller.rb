@@ -8,18 +8,37 @@ module Decidim
       include Decidim::ApplicationHelper
       include Decidim::ResourceVersionsConcern
 
+      # cfj 独自: object_changes が巨大な版は描画に耐えられないため一覧へ戻す。
       OBJECT_CHANGE_SIZE_LIMIT = 1_000_000
 
-      def versioned_resource
-        @versioned_resource ||= present(Debate.where(component: current_component).not_hidden.find(params[:debate_id]))
-      end
-
+      # cfj 独自。ResourceVersionsConcern#show を置き換えるため、上流の権限チェックと
+      # 存在しない版の 404 もここで行う。
       def show
+        enforce_permission_to(*versioned_resource_permission)
+
+        raise ActionController::RoutingError, "Not found" unless current_version
+
         description = current_version.object_changes
         if description && description.size > OBJECT_CHANGE_SIZE_LIMIT
           flash[:alert] = I18n.t("debates.versions.too_large_changeset", scope: "decidim.debates")
           redirect_to action: :index
         end
+      end
+
+      private
+
+      def versioned_resource
+        @versioned_resource ||= Debate.where(component: current_component).not_hidden.find(params[:debate_id])
+      end
+
+      def add_breadcrumb_item
+        return {} if versioned_resource.blank?
+
+        {
+          label: translated_attribute(versioned_resource.title),
+          url: Decidim::EngineRouter.main_proxy(current_component).debate_path(versioned_resource),
+          active: false
+        }
       end
     end
   end

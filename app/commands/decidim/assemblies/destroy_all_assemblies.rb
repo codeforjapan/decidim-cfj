@@ -21,7 +21,6 @@ module Decidim
           puts "destroy assembly id: #{assembly.id}"
           assembly.destroy!
         end
-        Decidim::AssembliesType.where(organization:).destroy_all
 
         broadcast(:ok)
       end

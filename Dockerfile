@@ -1,6 +1,6 @@
 FROM node:22.23.4-trixie-slim AS node
 
-FROM ruby:3.3.13-slim-trixie
+FROM ruby:3.4.12-slim-trixie
 
 # for build-dep
 RUN  apt-get update && \
@@ -11,6 +11,7 @@ RUN  apt-get update && \
         libicu-dev \
         zlib1g-dev \
         imagemagick \
+        libvips42t64 \
         git \
         curl \
         p7zip \
@@ -35,7 +36,7 @@ ARG RAILS_ENV="production"
 ENV LANG=C.UTF-8 \
     LC_ALL=C.UTF-8 \
     BUNDLER_JOBS=4 \
-    BUNDLER_VERSION=2.5.15 \
+    BUNDLER_VERSION=2.6.9 \
     APP_HOME=/app \
     RAILS_ENV=${RAILS_ENV} \
     RAILS_LOG_TO_STDOUT=true \

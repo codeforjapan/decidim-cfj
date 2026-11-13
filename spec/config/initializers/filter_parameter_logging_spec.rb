@@ -88,10 +88,9 @@ RSpec.describe "filter_parameter_logging initializer" do
     end
   end
 
-  describe "jobs receiving raw tokens" do
-    it "do not log their arguments" do
+  describe "the job delivering mails that carry raw tokens" do
+    it "does not log its arguments" do
       expect(ActionMailer::MailDeliveryJob.log_arguments?).to be(false)
-      expect(Decidim::NewslettersOptInJob.log_arguments?).to be(false)
     end
   end
 end

@@ -11,7 +11,7 @@ RSpec.describe "Linked resource announcement" do
   let(:process) { create(:participatory_process, :published, organization:) }
   let(:proposal_component) { create(:proposal_component, :published, participatory_space: process) }
   let(:proposal) { create(:proposal, :published, component: proposal_component) }
-  let(:proposal_path) { "/processes/#{process.slug}/f/#{proposal_component.id}/proposals/#{proposal.id}" }
+  let(:proposal_path) { "/#{organization.default_locale}/processes/#{process.slug}/f/#{proposal_component.id}/proposals/#{proposal.id}" }
   let(:meeting_component) { create(:meeting_component, :published, participatory_space: process) }
   let(:linked_title) { "Linked resource title" }
   let(:included_in) { linked.to_gid.to_s }

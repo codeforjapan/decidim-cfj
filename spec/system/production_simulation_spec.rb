@@ -84,7 +84,7 @@ describe "Production Environment Simulation", skip: "Temporarily skipped as not 
         <!-- External URL (should be kept as-is) -->
         <p>External image: <img src="https://example.com/external-image.jpg" alt="external"></p>
 
-        <!-- Base64 image (processed by InlineImagesParser) -->
+        <!-- Base64 image -->
         <p>Base64 image: <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="base64"></p>
 
         <!-- Relative URL (should not be changed) -->

@@ -17,8 +17,16 @@ module Decidim
       end
 
       initializer "decidim_user_extension.admin_mount_routes" do
+        # 0.32 で decidim のルートは /:locale スコープに入り、スコープ外の /admin/* は
+        # decidim-core の catch-all (get "/admin/*rest" -> locale_redirect) に捕まって
+        # /:locale/admin/... へリダイレクトされる。スコープ外のままだとその先に
+        # 対応するルートが無く 404 になるため、上流と同じスコープ内へマウントする。
         Decidim::Core::Engine.routes do
-          mount Decidim::UserExtension::AdminEngine, at: "/admin/user_extension_details", as: "decidim_admin_user_extension_details"
+          extend Decidim::Routes::LocaleRedirects
+
+          scope "/:locale", **locale_scope_options do
+            mount Decidim::UserExtension::AdminEngine, at: "/admin/user_extension_details", as: "decidim_admin_user_extension_details"
+          end
         end
       end
 

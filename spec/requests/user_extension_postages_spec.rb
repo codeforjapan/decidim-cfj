@@ -13,7 +13,12 @@ RSpec.describe "User extension postages" do
   let(:authorization) do
     create(:authorization, :pending, name: "user_extension", user: create(:user, :confirmed, organization: authorization_organization), verification_metadata:)
   end
-  let(:postage_path) { "/admin/user_extension/pending_authorizations/#{authorization.id}/postages" }
+  # 0.32 では全 URL にロケール接頭辞が付くため、パスはルートヘルパーから引く。
+  let(:postage_path) do
+    Decidim::Verifications::UserExtension::AdminEngine.routes.url_helpers.pending_authorization_postage_path(
+      pending_authorization_id: authorization.id
+    )
+  end
 
   before do
     create(:authorization, name: "user_extension", user: admin_user,
@@ -35,9 +40,12 @@ RSpec.describe "User extension postages" do
   context "when the authorization belongs to another organization" do
     let(:authorization_organization) { create(:organization, available_authorizations: ["user_extension"]) }
 
+    # Rails 7.1 以降 show_exceptions の既定が :rescuable になり、
+    # RecordNotFound は送出されず 404 として描画される。
     it "does not touch the authorization" do
-      expect { post postage_path }.to raise_error(ActiveRecord::RecordNotFound)
+      post postage_path
 
+      expect(response).to have_http_status(:not_found)
       expect(authorization.reload.verification_metadata).to eq(verification_metadata)
     end
   end

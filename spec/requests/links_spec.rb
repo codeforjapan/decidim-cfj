@@ -25,7 +25,7 @@ RSpec.describe "External link page" do
     let(:external_url) { "http://example.org:abc/" }
 
     it "redirects to the root path" do
-      expect(response).to redirect_to("/")
+      expect(response).to redirect_to("/#{organization.default_locale}")
     end
   end
 
@@ -33,7 +33,7 @@ RSpec.describe "External link page" do
     let(:external_url) { "http://%FF/" }
 
     it "redirects to the root path" do
-      expect(response).to redirect_to("/")
+      expect(response).to redirect_to("/#{organization.default_locale}")
     end
   end
 
@@ -41,7 +41,7 @@ RSpec.describe "External link page" do
     let(:external_url) { ["https://example.org/"] }
 
     it "redirects to the root path" do
-      expect(response).to redirect_to("/")
+      expect(response).to redirect_to("/#{organization.default_locale}")
     end
   end
 
@@ -62,7 +62,7 @@ RSpec.describe "External link page" do
 
       it "moves to the root path" do
         expect(response).to have_http_status(:ok)
-        expect(response.body).to include('window.location.href = "/"')
+        expect(response.body).to include("window.location.href = \"/#{organization.default_locale}\"")
         expect(flash[:alert]).to eq(I18n.t("decidim.links.invalid_url"))
       end
     end

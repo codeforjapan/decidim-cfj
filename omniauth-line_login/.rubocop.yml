@@ -4,3 +4,7 @@ AllCops:
 Naming/FileName:
   Exclude:
     - 'lib/omniauth-line_login.rb'
+
+# OmniAuth の strategy でありコントローラではない
+Decidim/EnforcePermissionTo:
+  Enabled: false

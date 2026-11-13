@@ -14,9 +14,9 @@ RSpec.describe "Surveys display order" do
   let(:admin_user) { create(:user, :admin, :confirmed, organization:) }
   let(:participatory_process) { create(:participatory_process, organization:) }
   let(:component) { create(:surveys_component, participatory_space: participatory_process) }
-  let!(:first_survey) { create(:survey, :published, :allow_answers, component:) }
-  let!(:second_survey) { create(:survey, :published, :allow_answers, component:) }
-  let!(:third_survey) { create(:survey, :published, :allow_answers, component:) }
+  let!(:first_survey) { create(:survey, :published, :allow_responses, component:) }
+  let!(:second_survey) { create(:survey, :published, :allow_responses, component:) }
+  let!(:third_survey) { create(:survey, :published, :allow_responses, component:) }
 
   let(:reorder_path) { Decidim::EngineRouter.admin_proxy(component).reorder_surveys_path }
 
@@ -68,7 +68,7 @@ RSpec.describe "Surveys display order" do
     end
 
     it "swaps surveys that do not sit next to each other" do
-      fourth_survey = create(:survey, :published, :allow_answers, component:, questionnaire: build(:questionnaire))
+      fourth_survey = create(:survey, :published, :allow_responses, component:, questionnaire: build(:questionnaire))
 
       put reorder_path, params: { order_ids: [fourth_survey.id, first_survey.id] }
 
@@ -121,7 +121,7 @@ RSpec.describe "Surveys display order" do
     context "when the surveys do not fit in a single page" do
       # 3 + 24 surveys, so that the second page of the admin index holds 2 of them.
       let!(:extra_surveys) do
-        Array.new(24) { create(:survey, :published, :allow_answers, component:, questionnaire: build(:questionnaire)) }
+        Array.new(24) { create(:survey, :published, :allow_responses, component:, questionnaire: build(:questionnaire)) }
       end
 
       it "does not change the previous page when the last one is reordered" do
@@ -164,10 +164,12 @@ RSpec.describe "Surveys display order" do
 
     it "does not reach the admin engine as a participant" do
       # The whole admin engine is behind Decidim::Admin::OrganizationDashboardConstraint,
-      # so a participant does not even get a route.
-      expect { put reorder_path, params: { order_ids: } }
-        .to raise_error(ActionController::RoutingError)
+      # so a participant does not even get a route. Since config.action_dispatch
+      # .show_exceptions is :rescuable (the Rails 7.2 default), the routing error is
+      # rendered as a 404 instead of being raised out of the request.
+      put reorder_path, params: { order_ids: }
 
+      expect(response).to have_http_status(:not_found)
       expect(weights).to be_empty
     end
 

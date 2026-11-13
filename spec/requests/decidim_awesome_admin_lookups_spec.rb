@@ -32,8 +32,9 @@ RSpec.describe "Decidim::DecidimAwesome admin lookups" do
     end
 
     it "does not show a constraint of another organization" do
-      expect { get decidim_admin_decidim_awesome.constraint_path(other_constraint) }
-        .to raise_error(ActiveRecord::RecordNotFound)
+      get decidim_admin_decidim_awesome.constraint_path(other_constraint)
+
+      expect(response).to have_http_status(:not_found)
     end
 
     it "updates a constraint of the current organization" do
@@ -44,8 +45,9 @@ RSpec.describe "Decidim::DecidimAwesome admin lookups" do
     end
 
     it "does not update a constraint of another organization" do
-      expect { patch decidim_admin_decidim_awesome.constraint_path(other_constraint), params: { constraint: changed_settings } }
-        .to raise_error(ActiveRecord::RecordNotFound)
+      patch decidim_admin_decidim_awesome.constraint_path(other_constraint), params: { constraint: changed_settings }
+
+      expect(response).to have_http_status(:not_found)
 
       expect(other_constraint.reload.settings).to eq("participatory_space_manifest" => "participatory_processes")
     end
@@ -59,8 +61,9 @@ RSpec.describe "Decidim::DecidimAwesome admin lookups" do
     end
 
     it "does not destroy a constraint of another organization" do
-      expect { delete decidim_admin_decidim_awesome.constraint_path(other_constraint) }
-        .to raise_error(ActiveRecord::RecordNotFound)
+      delete decidim_admin_decidim_awesome.constraint_path(other_constraint)
+
+      expect(response).to have_http_status(:not_found)
 
       expect(Decidim::DecidimAwesome::ConfigConstraint).to exist(other_constraint.id)
     end
@@ -133,13 +136,15 @@ RSpec.describe "Decidim::DecidimAwesome admin lookups" do
     end
 
     it "does not show a user of another organization" do
-      expect { get decidim_admin_decidim_awesome.edit_admin_authorization_path(other_user, handler: "user_extension") }
-        .to raise_error(ActiveRecord::RecordNotFound)
+      get decidim_admin_decidim_awesome.edit_admin_authorization_path(other_user, handler: "user_extension")
+
+      expect(response).to have_http_status(:not_found)
     end
 
     it "does not destroy an authorization of a user of another organization" do
-      expect { delete decidim_admin_decidim_awesome.admin_authorization_path(other_user, handler: "user_extension") }
-        .to raise_error(ActiveRecord::RecordNotFound)
+      delete decidim_admin_decidim_awesome.admin_authorization_path(other_user, handler: "user_extension")
+
+      expect(response).to have_http_status(:not_found)
 
       expect(Decidim::Authorization).to exist(other_authorization.id)
     end

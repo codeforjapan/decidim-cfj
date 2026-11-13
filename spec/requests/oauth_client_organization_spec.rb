@@ -18,7 +18,7 @@ RSpec.describe "OAuth clients of the organization" do
 
   describe "authorization request" do
     let(:authorize_params) do
-      { client_id: application.uid, redirect_uri: application.redirect_uri, response_type: "code", scope: "public" }
+      { client_id: application.uid, redirect_uri: application.redirect_uri, response_type: "code", scope: "profile" }
     end
 
     before do
@@ -40,11 +40,15 @@ RSpec.describe "OAuth clients of the organization" do
       let(:application) { other_application }
 
       it "does not ask the user to authorize the client" do
-        expect { get "/oauth/authorize", params: authorize_params }.to raise_error(ActiveRecord::RecordNotFound)
+        get "/oauth/authorize", params: authorize_params
+
+        expect(response).to have_http_status(:not_found)
       end
 
       it "does not issue a grant" do
-        expect { post "/oauth/authorize", params: authorize_params }.to raise_error(ActiveRecord::RecordNotFound)
+        post "/oauth/authorize", params: authorize_params
+
+        expect(response).to have_http_status(:not_found)
         expect(Doorkeeper::AccessGrant.where(application_id: other_application.id)).to be_empty
       end
     end
@@ -52,7 +56,7 @@ RSpec.describe "OAuth clients of the organization" do
 
   describe "authorization code flow of a client of the organization" do
     let(:authorize_params) do
-      { client_id: own_application.uid, redirect_uri: own_application.redirect_uri, response_type: "code", scope: "public" }
+      { client_id: own_application.uid, redirect_uri: own_application.redirect_uri, response_type: "code", scope: "profile" }
     end
     let(:code) { Rack::Utils.parse_query(URI.parse(response.location).query)["code"] }
     let(:token_params) do
@@ -109,7 +113,10 @@ RSpec.describe "OAuth clients of the organization" do
       let(:token) { create(:oauth_access_token, application: own_application, resource_owner_id: other_user.id) }
 
       it "does not return the user data" do
-        expect { get "/oauth/me", headers: }.to raise_error(ActiveRecord::RecordNotFound)
+        get("/oauth/me", headers:)
+
+        expect(response).to have_http_status(:not_found)
+        expect(response.body).not_to include(other_user.email)
       end
     end
   end

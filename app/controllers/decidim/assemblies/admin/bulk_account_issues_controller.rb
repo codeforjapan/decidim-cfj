@@ -43,7 +43,7 @@ module Decidim
           return if redirect_unless_available
 
           @form = form(BulkAccountIssueForm).from_params(params)
-          return render(:new, status: :unprocessable_entity) if @form.invalid?
+          return render(:new, status: :unprocessable_content) if @form.invalid?
 
           results = issuer.issue(@form.instructions)
           log_issue(results)
@@ -54,11 +54,11 @@ module Decidim
                     disposition: "attachment"
         rescue Decidim::BulkSpaceAccountIssuer::Busy
           flash.now[:alert] = t("create.errors.busy", scope: "decidim.assemblies.admin.bulk_account_issues")
-          render :new, status: :unprocessable_entity
+          render :new, status: :unprocessable_content
         rescue ArgumentError => e
           # BulkSpaceAccountIssuer#validate! の検証エラー（原則ここには来ない: Form の検証で先に弾く）
           flash.now[:alert] = e.message
-          render :new, status: :unprocessable_entity
+          render :new, status: :unprocessable_content
         end
 
         private
@@ -91,7 +91,7 @@ module Decidim
           reason =
             if !settings&.enabled? || settings.email_domain.blank?
               :not_enabled
-            elsif !current_assembly.private_space?
+            elsif current_assembly.open?
               :not_private
             end
           return false unless reason

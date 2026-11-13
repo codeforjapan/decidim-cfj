@@ -2,7 +2,10 @@
 ja:
   activemodel:
     attributes:
+      attachment:
+        link: リンク
       config:
+        intergram_for_public: 公開ページでIntergram Chatを有効にする
         validate_body_max_caps_percent: 本文内での大文字の最大許容割合
         validate_body_max_marks_together: 本文で許容される最多連続記号文字数
         validate_body_min_length: 本文に必要な最小文字数
@@ -11,13 +14,28 @@ ja:
         validate_title_max_marks_together: タイトルで許容される最多連続記号文字数
         validate_title_min_length: タイトルに必要な最小文字数
         validate_title_start_with_caps: タイトルを大文字で始めることを強制する
+      import_results:
+        file: ファイル
+      meeting_registration_invite:
+        user_id: 参加者
+      member:
+        published: 公開
+        role: 肩書き
+      newsletter:
+        send_to_members: メンバーに送信
       organization:
         mobile_logo: "モバイル版ロゴ"
+      participatory_process_group:
+        promoted: プロモート
       decidim/user:
         name: アカウントID
       question:
         origin_title: 起案者
         origin_url: 元のURL
+      result:
+        project_ids: プロジェクト
+      static_page:
+        topic: トピック
       user_extension:
         address: 住所
         birth_year: 生年(西暦)
@@ -82,6 +100,9 @@ ja:
           too_large_changeset: 履歴のサイズが大きすぎるため表示できません
     devise:
       omniauth_registrations:
+        failure_reasons:
+          access_denied: ログインがキャンセルされたか、許可されませんでした。
+          default: 時間をおいて、もう一度お試しください。
         new:
           nickname_help: アルファベット小文字、数字、'-' および '_' を使用できます。
       registrations:
@@ -222,6 +243,8 @@ ja:
         subtitle: |-
           招待を受け入れたくない場合は、このメールを無視してください。<br />
           上記のリンクにアクセスし、アカウントIDとパスワードを設定するまで、あなたのアカウントは作成されません。
+    omniauth_callbacks:
+      failure: "%{kind} から認証できませんでした。%{reason}"
     passwords:
       edit:
         password_help: "半角英数字%{minimum_characters}文字以上で入力してください。単純すぎてはいけません（例：123456）。アカウントIDやメールアドレスと異なる必要があります。"
@@ -795,8 +818,6 @@ ja:
       assemblies:
         index:
           promoted_assemblies: 注目の参加スペース
-      header:
-        hello: こんにちは、 %{name} さん
       participatory_processes:
         index:
           promoted_processes: 注目の参加型プロセス

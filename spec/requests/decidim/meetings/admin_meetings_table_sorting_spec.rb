@@ -2,12 +2,10 @@
 
 require "rails_helper"
 
-# Backport of decidim/decidim#16978 (itself a backport of #16831).
-# The meetings admin table's taxonomies column used to sort through the
-# non-existent :scope_name key, so it could not sort. It must sort through the
-# taxonomies association instead.
-# See config/initializers/admin_table_sorting_override.rb and
-# app/overrides/decidim/meetings/admin/meetings/_meetings-thead/use_taxonomies_name_sort.html.erb.deface.
+# decidim/decidim#16978 (itself a backport of #16831) で上流が修正した挙動。
+# taxonomies 列は存在しない :scope_name ではなく taxonomies 関連でソートする。
+# 0.30 では独自のバックポートで対応していたが 0.31 で上流に入ったため撤去済み。
+# 上流側の退行を検知するために spec だけ残す。
 RSpec.describe "Meetings admin table sorting" do
   include Devise::Test::IntegrationHelpers
 

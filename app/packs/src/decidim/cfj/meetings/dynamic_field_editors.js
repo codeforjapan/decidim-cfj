@@ -1,6 +1,7 @@
 /**
- * Activates the rich text editors of a field `dynamic_fields.component` has
- * just cloned, doing the two things its clone path leaves undone.
+ * Prepares a field `dynamic_fields.component` has just cloned so that the rich
+ * text editors inside it work, doing the two things its clone path leaves
+ * undone.
  *
  * 1. The upload dialog's id. It is a random "upload_<uuid>" baked into the
  *    `<script type="text/template">` block, and `.template()` only rewrites
@@ -13,12 +14,29 @@
  *    `[data-dialog]` on page load, so without this the editor's image button
  *    silently does nothing.
  *
- * Fixed upstream in 0.31 (decidim/decidim#14184 made modal_id derive from
- * the field id, so the generic placeholder substitution covers it).
- * Removal: delete this file and its use in
- * src/decidim/meetings/admin/agendas once Decidim is 0.31 or newer.
+ * Still needed on 0.31.7 (and on 0.32.1). Checked against upstream rather than assumed:
+ *   - `upload_options[:modal_id] ||= "upload_#{SecureRandom.uuid}"` is
+ *     byte for byte the same in v0.30.9, v0.31.7 and v0.32.1 (form_builder.rb),
+ *     so the id is still random and still duplicated by cloning
+ *   - `dynamic_fields.component` still rewrites only id/name/data-tabs-content/
+ *     for/tabs_id/href/value, and only where the value contains the field's own
+ *     placeholder. `data-dialog`, `data-dialog-close` and `data-options` are
+ *     not touched
+ *   - there is no Stimulus controller for dialogs, so cloned dialogs still have
+ *     to be registered by hand
+ * Removal: only once upstream makes modal_id derive from the field id, or ships
+ * a dialog controller. Re-check the three points above before deleting.
  *
- * Collaborators are passed in rather than imported so this stays free of
+ * Editor construction is *not* our job on 0.31+: the editor container carries
+ * `data-controller="editor"` and Stimulus builds it. Stimulus reacts to a
+ * MutationObserver, whose callback is queued as a microtask, while
+ * `_addField()` inserts the clone and calls `onAddField` synchronously — so
+ * everything below still runs before the editor exists, which is exactly what
+ * the rekey needs. (`window.createEditor` was dropped from
+ * entrypoints/decidim_editor.js in 0.31; upstream's own agendas.js still calls
+ * it and would raise here.)
+ *
+ * createDialog is passed in rather than imported so this stays free of
  * decidim-core imports, and so the ordering below can be tested directly.
  */
 
@@ -76,13 +94,13 @@ const rekeyUploadDialog = (container) => {
   replaceDialogId(wrapper, oldId, nextUploadDialogId(oldId));
 };
 
-export const activateEditors = (fieldElement, { createEditor, createDialog }) => {
-  const containers = fieldElement.querySelectorAll(".editor-container");
+export const prepareClonedEditors = (fieldElement, { createDialog }) => {
+  // Rekeying has to happen before Stimulus connects the editor: the image
+  // extension resolves uploadDialogSelector once, while the editor is built.
+  fieldElement.querySelectorAll(".editor-container").forEach((container) => rekeyUploadDialog(container));
 
-  // Rekeying has to come first: the editor's image extension resolves
-  // uploadDialogSelector once, while the editor is being constructed.
-  containers.forEach((container) => rekeyUploadDialog(container));
-  containers.forEach((container) => createEditor(container));
-
+  // Registration only has to precede the first open: UploadDialog looks the
+  // dialog up in window.Decidim.currentDialogs when the image button is
+  // clicked, not while the editor is being constructed.
   fieldElement.querySelectorAll("[data-dialog]").forEach((dialog) => createDialog(dialog));
 };

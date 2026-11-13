@@ -76,7 +76,9 @@ module Decidim
 
         context "when the author is a user" do
           it "includes the name of the author and a link to their profile" do
-            expect(email_body(mail)).to have_link(author.name, href: decidim.profile_url(author.nickname, host: organization.host))
+            # 0.32 で URL にロケールが入る。メールは受信者のロケールで描画されるので
+            # 期待値も user.locale で組む (spec 実行時の I18n.locale は en に戻っている)。
+            expect(email_body(mail)).to have_link(author.name, href: decidim.profile_url(author.nickname, host: organization.host, locale: user.locale))
           end
         end
 

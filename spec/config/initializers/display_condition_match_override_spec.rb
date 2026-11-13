@@ -19,51 +19,51 @@ RSpec.describe "Decidim::Forms::DisplayCondition match override" do
   let(:condition_value) { { en: "To be" } }
 
   describe "#fulfilled?" do
-    let(:answer_body) { "to BE or not to be" }
-    let(:choice_attributes) { { answer_option_id: 314_159_265_359 } }
-    let(:answer_form) do
-      Decidim::Forms::AnswerForm.from_params(
-        body: answer_body,
-        choices: [Decidim::Forms::AnswerChoiceForm.from_params(choice_attributes)]
+    let(:response_body) { "to BE or not to be" }
+    let(:choice_attributes) { { response_option_id: 314_159_265_359 } }
+    let(:response_form) do
+      Decidim::Forms::ResponseForm.from_params(
+        body: response_body,
+        choices: [Decidim::Forms::ResponseChoiceForm.from_params(choice_attributes)]
       )
     end
 
     it "matches the value case-insensitively" do
-      expect(display_condition.fulfilled?(answer_form)).to be true
+      expect(display_condition.fulfilled?(response_form)).to be true
     end
 
     it "does not use a regexp" do
       allow(Regexp).to receive(:new).and_call_original
 
-      display_condition.fulfilled?(answer_form)
+      display_condition.fulfilled?(response_form)
 
       expect(Regexp).not_to have_received(:new)
     end
 
     context "when the value contains regexp syntax" do
       let(:condition_value) { { en: "a|b" } }
-      let(:answer_body) { "a" }
+      let(:response_body) { "a" }
 
       it "treats it as plain text" do
-        expect(display_condition.fulfilled?(answer_form)).to be false
+        expect(display_condition.fulfilled?(response_form)).to be false
       end
     end
 
     context "when the value is an invalid regexp" do
       let(:condition_value) { { en: "c++ (" } }
-      let(:answer_body) { "I use C++ (and Ruby)" }
+      let(:response_body) { "I use C++ (and Ruby)" }
 
       it "matches it as plain text" do
-        expect(display_condition.fulfilled?(answer_form)).to be true
+        expect(display_condition.fulfilled?(response_form)).to be true
       end
     end
 
     context "when the value of another locale matches" do
       let(:condition_value) { { en: "yes", ja: "はい" } }
-      let(:answer_body) { "はい、そうです" }
+      let(:response_body) { "はい、そうです" }
 
       it "matches it" do
-        expect(display_condition.fulfilled?(answer_form)).to be true
+        expect(display_condition.fulfilled?(response_form)).to be true
       end
     end
 
@@ -71,52 +71,52 @@ RSpec.describe "Decidim::Forms::DisplayCondition match override" do
       let(:condition_value) { { en: "" } }
 
       it "does not match" do
-        expect(display_condition.fulfilled?(answer_form)).to be false
+        expect(display_condition.fulfilled?(response_form)).to be false
       end
     end
 
-    context "when the answer has only choices" do
-      let(:answer_body) { nil }
-      let(:choice_attributes) { { answer_option_id: 1, body: "Option", custom_body: "My To Be answer" } }
+    context "when the response has only choices" do
+      let(:response_body) { nil }
+      let(:choice_attributes) { { response_option_id: 1, body: "Option", custom_body: "My To Be response" } }
 
       it "matches the custom body" do
-        expect(display_condition.fulfilled?(answer_form)).to be true
+        expect(display_condition.fulfilled?(response_form)).to be true
       end
     end
 
     context "when the body of the choice matches but the custom body does not" do
-      let(:answer_body) { nil }
-      let(:choice_attributes) { { answer_option_id: 1, body: "To be", custom_body: "Something else" } }
+      let(:response_body) { nil }
+      let(:choice_attributes) { { response_option_id: 1, body: "To be", custom_body: "Something else" } }
 
       it "does not match, as the client side does" do
-        expect(display_condition.fulfilled?(answer_form)).to be false
+        expect(display_condition.fulfilled?(response_form)).to be false
       end
     end
 
     context "when the choice has no custom body" do
-      let(:answer_body) { nil }
-      let(:choice_attributes) { { answer_option_id: 1, body: "To be", custom_body: "" } }
+      let(:response_body) { nil }
+      let(:choice_attributes) { { response_option_id: 1, body: "To be", custom_body: "" } }
 
       it "matches the body" do
-        expect(display_condition.fulfilled?(answer_form)).to be true
+        expect(display_condition.fulfilled?(response_form)).to be true
       end
     end
 
-    context "when the answer has a letter folded differently by ECMAScript RegExp" do
+    context "when the response has a letter folded differently by ECMAScript RegExp" do
       let(:condition_value) { { en: "k" } }
-      let(:answer_body) { "K" } # KELVIN SIGN
+      let(:response_body) { "K" } # KELVIN SIGN
 
       it "does not match, as the client side does" do
-        expect(display_condition.fulfilled?(answer_form)).to be false
+        expect(display_condition.fulfilled?(response_form)).to be false
       end
     end
 
-    context "when the answer has a letter folded only by ECMAScript RegExp" do
+    context "when the response has a letter folded only by ECMAScript RegExp" do
       let(:condition_value) { { en: "ς" } }
-      let(:answer_body) { "Σ" }
+      let(:response_body) { "Σ" }
 
       it "matches, as the client side does" do
-        expect(display_condition.fulfilled?(answer_form)).to be true
+        expect(display_condition.fulfilled?(response_form)).to be true
       end
     end
   end

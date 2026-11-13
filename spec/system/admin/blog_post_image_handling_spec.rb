@@ -37,7 +37,7 @@ describe "Blog post image handling in admin" do
         editor_image.file.blob,
         only_path: true
       )
-      expect(rails_url).to match(%r{/rails/active_storage/blobs/})
+      expect(rails_url).to include("/rails/active_storage/blobs/")
 
       # Verify our converter can handle the conversion
       converted_global_id = Decidim::Cfj::UrlConverter.rails_url_to_global_id(rails_url)
@@ -107,7 +107,7 @@ describe "Blog post image handling in admin" do
           converted_url = Decidim::Cfj::UrlConverter.global_id_to_rails_url(global_id)
 
           expect(converted_url).to be_present
-          expect(converted_url).to match(%r{/rails/active_storage/blobs/})
+          expect(converted_url).to include("/rails/active_storage/blobs/")
         end
 
         on(:invalid) do |_|
@@ -196,7 +196,7 @@ describe "Blog post image handling in admin" do
       viewable_url = Decidim::Cfj::UrlConverter.global_id_to_rails_url(global_id)
 
       expect(viewable_url).to be_present
-      expect(viewable_url).to match(%r{/rails/active_storage/blobs/})
+      expect(viewable_url).to include("/rails/active_storage/blobs/")
 
       # Step 5: Verify the complete lifecycle works end-to-end via form processing
       form_params = {
@@ -257,21 +257,6 @@ describe "Blog post image handling in admin" do
       editor_image = create(:editor_image, author: user, organization:)
       expect(editor_image).to be_persisted
       expect(editor_image.file).to be_attached
-    end
-  end
-
-  describe "content parsers override" do
-    it "demonstrates that InlineImagesParser is available" do
-      # Test that our content parser is available
-      expect(defined?(Decidim::ContentParsers::InlineImagesParser)).to be_truthy
-
-      # Test basic functionality
-      base64_image = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChAHGartKiAAAAABJRU5ErkJggg=="
-      content = "<p>Test content</p><img src=\"#{base64_image}\"><p>More content</p>"
-      context = { user: }
-
-      parser = Decidim::ContentParsers::InlineImagesParser.new(content, context)
-      expect(parser).to respond_to(:rewrite)
     end
   end
 end

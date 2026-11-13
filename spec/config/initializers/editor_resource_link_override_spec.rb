@@ -111,7 +111,9 @@ describe "Editor resource link override" do
       end
 
       describe "非公開スペースの提案" do
-        let(:private_process) { create(:participatory_process, organization:, private_space: true) }
+        # 0.32 で private_space / is_transparent は access_mode enum に置き換わった。
+        # private_space カラムは残っているが visible? はもう見ない。
+        let(:private_process) { create(:participatory_process, :restricted, organization:) }
         let(:target) { create(:proposal, component: create(:proposal_component, participatory_space: private_process)) }
 
         it "解決せず gid を残す" do
@@ -225,7 +227,7 @@ describe "Editor resource link override" do
         form = form_class.new(body: { "ja" => html })
 
         expect(form.body_ja).not_to include("gid://")
-        expect(form.body_ja).to match(%r{/rails/active_storage/})
+        expect(form.body_ja).to include("/rails/active_storage/")
       end
     end
   end

@@ -3,14 +3,14 @@
 require "rails_helper"
 require "decidim/meetings/test/factories"
 
-# Covers config/initializers/meeting_read_permission_override.rb.
+# 会議の .ics・変更履歴・投票設問に read 権限が効くことの回帰テスト（上流 0.32.2 で修正）。
 RSpec.describe "Meeting read permission" do
   include Devise::Test::IntegrationHelpers
 
   let(:organization) { create(:organization) }
   let(:process) { create(:participatory_process, :published, organization:) }
   let(:component) { create(:meeting_component, :published, participatory_space: process) }
-  let(:component_path) { "/processes/#{process.slug}/f/#{component.id}" }
+  let(:component_path) { "/#{organization.default_locale}/processes/#{process.slug}/f/#{component.id}" }
   let(:meeting_title) { "Meeting title for the read check" }
   let(:public_meeting) { create(:meeting, :published, :online, component:, title: { en: meeting_title }) }
   let(:private_meeting) { create(:meeting, :published, :online, component:, private_meeting: true, transparent: false, title: { en: meeting_title }) }
