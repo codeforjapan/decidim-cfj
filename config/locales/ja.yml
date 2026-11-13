@@ -94,6 +94,9 @@ ja:
             verifications: 本人認証
     devise:
       omniauth_registrations:
+        failure_reasons:
+          access_denied: ログインがキャンセルされたか、許可されませんでした。
+          default: 時間をおいて、もう一度お試しください。
         new:
           nickname_help: アルファベット小文字、数字、'-' および '_' を使用できます。
       registrations:
