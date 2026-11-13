@@ -40,6 +40,10 @@ en:
         title: Last comments
         view_all: View all
     devise:
+      omniauth_registrations:
+        failure_reasons:
+          access_denied: The sign in was canceled or not allowed
+          default: The sign in could not be completed
       registrations:
         user_extension:
           address_help: 'e.g. "Kakogawa-cho, Kakogawa, Hyogo"'
