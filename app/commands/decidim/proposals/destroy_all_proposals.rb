@@ -28,13 +28,6 @@ module Decidim
           end
         end
 
-        Decidim::Proposals::CollaborativeDraft.find_each do |draft|
-          if draft.organization == organization
-            puts "destroy collaborative draft id: #{draft.id}, for component id: #{draft.decidim_component_id}"
-            draft.destroy!
-          end
-        end
-
         broadcast(:ok)
       end
 

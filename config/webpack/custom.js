@@ -1,5 +1,4 @@
 /* eslint-disable */
-const path = require("path");
 const { config } = require("shakapacker");
 const { InjectManifest } = require("workbox-webpack-plugin");
 const { EsbuildPlugin } = require("esbuild-loader");
@@ -11,10 +10,7 @@ module.exports = {
         test: require.resolve("jquery"),
         loader: "expose-loader",
         options: {
-          exposes: [
-            { globalName: "$", override: true },
-            { globalName: "jQuery", override: true }
-          ]
+          exposes: ["$", "jQuery"]
         }
       },
       {
@@ -37,9 +33,7 @@ module.exports = {
         test: require.resolve("@rails/ujs"),
         loader: "expose-loader",
         options: {
-          exposes: [
-            { globalName: "Rails", override: true }
-          ]
+          exposes: ["Rails"]
         }
       },
       {
@@ -50,7 +44,7 @@ module.exports = {
           filename: "media/documents/[hash][ext][query]"
         }
       },
-      // Overwrite webpacker files rule to amend the filename output
+      // Overwrite shakapacker files rule to amend the filename output
       // and include the name of the file, otherwise some SVGs
       // are not generated because the hash is the same between them
       {
@@ -79,11 +73,6 @@ module.exports = {
     ]
   },
   resolve: {
-    alias: {
-      // Redirect all "leaflet" imports to our global wrapper
-      // This ensures all bundles share the same Leaflet instance with plugins attached
-      leaflet$: path.resolve(__dirname, "../../app/packs/src/decidim/leaflet_global.js")
-    },
     extensions: [".js", ".jsx", ".gql", ".graphql"],
     fallback: {
       crypto: false

@@ -50,6 +50,12 @@ en:
               gender: Gender
               occupation: Occupation
               real_name: Real name
+    verifications:
+      user_extension:
+        authorizations:
+          new:
+            title: Account verification
+            under_construction: Not available yet. Please check back later.
   enums:
     user_extension:
       gender:

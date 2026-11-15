@@ -8,30 +8,17 @@ module Decidim
     module CreateCommandsOverrides
       extend ActiveSupport::Concern
 
-      # Executes the command. Broadcasts these events:
-      #
-      # - :ok when everything is valid.
-      # - :invalid if the form wasn't valid and we couldn't proceed.
-      #
-      # Returns nothing.
-      def call
-        if form.invalid?
-          user = User.has_pending_invitations?(form.current_organization.id, form.email)
-          user.invite!(user.invited_by) if user
-          return broadcast(:invalid)
-        end
+      private
 
+      # 本体の create_user に続けて user_extension(authorization)を作成する。
+      # call を再現しないことで CreateRegistration の 0.31 挙動を維持しつつ、
+      # ユーザーと user_extension の作成を同一トランザクションで原子的に行う。
+      def create_user
         transaction do
-          create_user
+          super
           create_user_extension
         end
-
-        broadcast(:ok, @user)
-      rescue ActiveRecord::RecordInvalid
-        broadcast(:invalid)
       end
-
-      private
 
       def create_user_extension
         # ignore if user_extension is disable

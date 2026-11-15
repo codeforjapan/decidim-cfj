@@ -3,59 +3,23 @@
 module Decidim
   module Verifications
     module UserExtension
+      # The user_extension authorization is created and updated from the
+      # registration and account forms, and stays pending. This controller only
+      # serves the information page that the authorizations list, the
+      # authorization modal and the onboarding page link to.
       class AuthorizationsController < ApplicationController
         include Decidim::Verifications::Renewable
-
-        helper_method :authorization
 
         before_action :load_authorization
 
         def new
           enforce_permission_to :create, :authorization, authorization: @authorization
-
-          @form = AddressForm.new
-        end
-
-        def create
-          enforce_permission_to :create, :authorization, authorization: @authorization
-
-          @form = AddressForm.from_params(params.merge(user: current_user))
-
-          PerformAuthorizationStep.call(@authorization, @form) do
-            on(:ok) do
-              flash[:notice] = t("authorizations.create.success", scope: "decidim.verifications.user_extension")
-              redirect_to decidim_verifications.authorizations_path
-            end
-
-            on(:invalid) do
-              flash.now[:alert] = t("authorizations.create.error", scope: "decidim.verifications.user_extension")
-              render :new
-            end
-          end
         end
 
         def edit
           enforce_permission_to :update, :authorization, authorization: @authorization
 
-          @form = ConfirmationForm.from_params(params)
-        end
-
-        def update
-          enforce_permission_to :update, :authorization, authorization: @authorization
-
-          @form = ConfirmationForm.from_params(params)
-
-          ConfirmUserAuthorization.call(@authorization, @form, session) do
-            on(:ok) do
-              flash[:notice] = t("authorizations.update.success", scope: "decidim.verifications.user_extension")
-              redirect_to decidim_verifications.authorizations_path
-            end
-
-            on(:invalid) do
-              flash.now[:alert] = t("authorizations.update.error", scope: "decidim.verifications.user_extension")
-              render :edit
-            end
-          end
+          render :new
         end
 
         private
@@ -63,7 +27,6 @@ module Decidim
         def authorization
           @authorization_presenter ||= AuthorizationPresenter.new(@authorization)
         end
-        # rubocop:enable Naming/MemoizedInstanceVariableName
 
         def load_authorization
           @authorization = Decidim::Authorization.find_or_initialize_by(

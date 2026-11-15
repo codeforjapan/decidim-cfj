@@ -4,8 +4,8 @@
 # of the current organization, and answers /oauth/me only for tokens issued to
 # an application of the current organization.
 Rails.application.config.to_prepare do
-  Decidim::Doorkeeper::AuthorizationsController # rubocop:disable Lint/Void
-  Decidim::Doorkeeper::CredentialsController # rubocop:disable Lint/Void
+  Decidim::Doorkeeper::AuthorizationsController
+  Decidim::Doorkeeper::CredentialsController
 
   module DecidimDoorkeeperAuthorizationsOrganizationPatch
     def self.prepended(base)

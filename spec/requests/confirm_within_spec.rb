@@ -8,8 +8,8 @@ RSpec.describe "Confirmation link expiry" do
 
   let(:organization) { create(:organization) }
   let(:token) { "confirmation-token" }
-  let(:confirm) { get "/users/confirmation", params: { confirmation_token: token } }
-  let(:resend) { post "/users/confirmation", params: { user: { email: resend_to } } }
+  let(:confirm) { get "/#{organization.default_locale}/users/confirmation", params: { confirmation_token: token } }
+  let(:resend) { post "/#{organization.default_locale}/users/confirmation", params: { user: { email: resend_to } } }
 
   before { host! organization.host }
 
@@ -123,7 +123,7 @@ RSpec.describe "Confirmation link expiry" do
       context "when a new link is requested from the account page" do
         let(:resend_from_account) do
           perform_enqueued_jobs(only: Decidim::ResendConfirmationInstructionsJob) do
-            post "/account/resend_confirmation_instructions", xhr: true
+            post "/#{organization.default_locale}/account/resend_confirmation_instructions", xhr: true
           end
         end
 

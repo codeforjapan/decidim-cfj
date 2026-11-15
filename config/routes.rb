@@ -2,13 +2,15 @@
 
 require "sidekiq/web"
 Rails.application.routes.draw do
+  extend Decidim::Routes::LocaleRedirects
+
   # Redirect to Metadecidim Japan
   get "/", to: redirect("https://meta.diycities.jp/"), constraints: { host: "www.diycities.jp" }
 
   # Disable DM (private messaging / conversations) feature.
   # Redirect all conversation-related paths to the root with 301.
-  match "/conversations(/*path)", to: redirect("/", status: 301), via: :all
-  match "/profiles/:nickname/conversations(/*path)", to: redirect("/", status: 301), via: :all
+  match "(/:locale)/conversations(/*path)", to: redirect("/", status: 301), via: :all,
+                                            constraints: locale_scope_options[:constraints]
 
   mount Decidim::Core::Engine => "/"
   # Sidekiq::Web exposes the queue to system admins only.

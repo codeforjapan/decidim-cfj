@@ -3,7 +3,7 @@ import AutoLabelByPositionComponent from "src/decidim/admin/auto_label_by_positi
 import createSortList from "src/decidim/admin/sort_list.component"
 import createDynamicFields from "src/decidim/admin/dynamic_fields.component"
 import { createDialog } from "src/decidim/a11y"
-import { activateEditors } from "src/decidim/cfj/meetings/dynamic_field_editors"
+import { prepareClonedEditors } from "src/decidim/cfj/meetings/dynamic_field_editors"
 
 const wrapperSelector = ".meeting-agenda-items";
 const fieldSelector = ".meeting-agenda-item";
@@ -70,7 +70,7 @@ const createDynamicFieldsForAgendaItemChilds = (fieldId) => {
     onAddField: ($field) => {
       createSortableListChild();
 
-      activateEditors($field[0], { createEditor: window.createEditor, createDialog });
+      prepareClonedEditors($field[0], { createDialog });
 
       autoLabelByPositionChild.run();
       autoButtonsByPositionChild.run();
@@ -122,7 +122,7 @@ createDynamicFields({
     setupInitialAgendaItemChildAttributes($field);
     createSortableList();
 
-    activateEditors($field[0], { createEditor: window.createEditor, createDialog });
+    prepareClonedEditors($field[0], { createDialog });
 
     autoLabelByPosition.run();
     autoButtonsByPosition.run();

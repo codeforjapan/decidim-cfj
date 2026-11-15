@@ -9,7 +9,7 @@ RSpec.describe "Meeting redirect notice" do
   let(:process) { create(:participatory_process, :published, organization:) }
   let(:component) { create(:meeting_component, :published, participatory_space: process) }
   let(:meeting) { create(:meeting, :published, :online, component:) }
-  let(:meeting_path) { "/processes/#{process.slug}/f/#{component.id}/meetings/#{meeting.id}" }
+  let(:meeting_path) { "/#{organization.default_locale}/processes/#{process.slug}/f/#{component.id}/meetings/#{meeting.id}" }
   let(:space_title) { "Previous space title" }
   let(:previous_space_param) { "#{previous_space.class.name}##{previous_space.id}" }
 

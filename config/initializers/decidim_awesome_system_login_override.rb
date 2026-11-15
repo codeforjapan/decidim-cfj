@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.config.to_prepare do
-  Decidim::DecidimAwesome::Admin::ChecksController # rubocop:disable Lint/Void
+  Decidim::DecidimAwesome::Admin::ChecksController
 
   # Makes ChecksController#system_login follow link_admin_to_system_admins.
   module DecidimAwesomeSystemLoginSettingPatch

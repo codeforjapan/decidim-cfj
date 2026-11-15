@@ -10,6 +10,8 @@ RSpec.describe "Session bound to the organization" do
   let(:user) { create(:user, :confirmed, organization:, password:) }
   let(:remember_me) { "0" }
   let(:locked) { false }
+  # 0.32 で全 URL がロケール接頭辞つきになったため、パスはルートヘルパーから引く。
+  let(:decidim_routes) { Decidim::Core::Engine.routes.url_helpers }
   let(:session_key) { Rails.application.config.session_options[:key] }
   let(:replayed_cookies) { [session_key] }
   let(:cookie_header) { replayed_cookies.map { |name| "#{name}=#{CGI.escape(cookies[name])}" }.join("; ") }
@@ -18,7 +20,7 @@ RSpec.describe "Session bound to the organization" do
 
   before do
     host! organization.host
-    post "/users/sign_in", params: { user: { email: user.email, password:, remember_me: } }
+    post decidim_routes.new_user_session_path, params: { user: { email: user.email, password:, remember_me: } }
     user.lock_access! if locked
     host! target_host
     post "/api", params: session_query, headers: { "Cookie" => cookie_header }
@@ -42,9 +44,9 @@ RSpec.describe "Session bound to the organization" do
     end
 
     it "treats the user as signed out on the front end" do
-      get "/account", headers: { "Cookie" => cookie_header }
+      get decidim_routes.account_path, headers: { "Cookie" => cookie_header }
 
-      expect(response).to redirect_to("/users/sign_in")
+      expect(response).to redirect_to(decidim_routes.new_user_session_path)
     end
 
     it "leaves the shared session untouched" do
@@ -62,7 +64,7 @@ RSpec.describe "Session bound to the organization" do
     it "signs out without invalidating the user's other sessions" do
       session_token = user.reload.session_token
 
-      delete "/users/sign_out", headers: { "Cookie" => cookie_header }
+      delete decidim_routes.destroy_user_session_path, headers: { "Cookie" => cookie_header }
 
       expect(response).to have_http_status(:found)
       expect(user.reload.session_token).to eq(session_token)
@@ -80,9 +82,9 @@ RSpec.describe "Session bound to the organization" do
     end
 
     it "treats the user as signed out on the front end without touching the session" do
-      get "/account", headers: { "Cookie" => cookie_header }
+      get decidim_routes.account_path, headers: { "Cookie" => cookie_header }
 
-      expect(response).to redirect_to("/users/sign_in")
+      expect(response).to redirect_to(decidim_routes.new_user_session_path)
       expect(request.session["warden.user.user.key"]).to be_present
     end
   end
@@ -109,9 +111,9 @@ RSpec.describe "Session bound to the organization" do
     end
 
     it "treats the user as signed out on the front end" do
-      get "/account", headers: { "Cookie" => cookie_header }
+      get decidim_routes.account_path, headers: { "Cookie" => cookie_header }
 
-      expect(response).to redirect_to("/users/sign_in")
+      expect(response).to redirect_to(decidim_routes.new_user_session_path)
     end
 
     it "does not forget the user on the user's organization" do
@@ -139,9 +141,9 @@ RSpec.describe "Session bound to the organization" do
     end
 
     it "treats the user as signed out on the front end without touching the session" do
-      get "/account", headers: { "Cookie" => cookie_header }
+      get decidim_routes.account_path, headers: { "Cookie" => cookie_header }
 
-      expect(response).to redirect_to("/users/sign_in")
+      expect(response).to redirect_to(decidim_routes.new_user_session_path)
       expect(request.session["warden.user.user.key"]).to be_present
       expect(request.session_options[:renew]).to be_falsey
     end

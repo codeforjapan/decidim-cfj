@@ -5,11 +5,11 @@
 #
 # Without a limit, a pending email change can be confirmed months later, for example after
 # the account has been given admin rights.
-confirm_within_days = Rails.application.secrets.dig(:decidim, :confirm_within_days).to_i
+confirm_within_days = Integer(Decidim::Env.new("DECIDIM_CONFIRM_WITHIN_DAYS", "1").value, 10, exception: false) || 1
 Devise.confirm_within = confirm_within_days.positive? ? confirm_within_days.days : nil
 
 Rails.application.config.to_prepare do
-  Decidim::User # rubocop:disable Lint/Void
+  Decidim::User
 
   # The resend form at /users/confirmation/new does not require signing in, and Devise
   # issues a fresh link there once the old one has expired. For a pending email change

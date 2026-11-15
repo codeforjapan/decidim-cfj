@@ -2,6 +2,10 @@
 
 require "rails_helper"
 
+# [0.32 upgrade Phase 1] decidim-decidim_awesome を一時無効化中はロードできないためスキップする。
+# gem 復帰時にこの2行を削除する。
+return unless defined?(Decidim::DecidimAwesome)
+
 module Decidim::DecidimAwesome
   describe ContentBlocks::MapCell, type: :cell do
     subject { cell(content_block.cell, content_block).call }

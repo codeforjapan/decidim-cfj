@@ -33,6 +33,9 @@ RSpec.describe "Decidim::DecidimAwesome maintenance tools" do
   end
 
   describe "GET checks" do
+    # 0.32 版の互換性レポートは GitHub のリリース一覧を取りにいく
+    before { stub_request(:get, %r{\Ahttps://api\.github\.com/repos/}).to_return(status: 200, body: "[]") }
+
     it "still renders the compatibility report" do
       get decidim_admin_decidim_awesome.checks_path
 
@@ -43,21 +46,19 @@ RSpec.describe "Decidim::DecidimAwesome maintenance tools" do
   describe "POST checks (system login)" do
     let!(:system_admin) { create(:admin, email: admin_user.email) }
 
-    it "is not routable" do
-      expect { post decidim_admin_decidim_awesome.checks_path }
-        .to raise_error(ActionController::RoutingError)
+    it "is not found" do
+      post decidim_admin_decidim_awesome.checks_path
+
+      expect(response).to have_http_status(:not_found)
     end
 
     it "does not sign the system admin in" do
-      begin
-        post decidim_admin_decidim_awesome.checks_path
-      rescue ActionController::RoutingError
-        nil
-      end
+      post decidim_admin_decidim_awesome.checks_path
 
-      get decidim_system.root_path
+      # 直前のリクエストの script_name ("/:locale/admin/...") を打ち消す
+      get decidim_system.root_path(script_name: "")
 
-      expect(response).to redirect_to(decidim_system.new_admin_session_path)
+      expect(response).to redirect_to(decidim_system.new_admin_session_path(script_name: ""))
     end
   end
 end

@@ -17,7 +17,10 @@ module Decidim
           it_behaves_like "a proposal form with meeting as author", skip_etiquette_validation: true, i18n: true, admin: true
         end
 
-        describe "minimum title length" do
+        # [0.32 upgrade Phase 1] タイトル最小文字数(8) は decidim-decidim_awesome の
+        # validate_title_min_length 由来。gem 無効化中は上流既定の 15 文字になるためスキップする。
+        # gem 復帰時にこの skip 条件を外す。
+        describe "minimum title length", skip: (defined?(Decidim::DecidimAwesome) ? false : "decidim_awesome disabled") do
           subject { form }
 
           let(:organization) { create(:organization) }

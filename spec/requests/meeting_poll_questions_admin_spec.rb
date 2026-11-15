@@ -14,7 +14,7 @@ RSpec.describe "Admin variant of meeting poll questions" do
   let(:poll) { create(:poll, meeting:) }
   let(:questionnaire) { create(:meetings_poll_questionnaire, questionnaire_for: poll) }
   let(:unpublished_question_body) { "Question not sent yet" }
-  let(:questions_path) { "/processes/#{process.slug}/f/#{component.id}/meetings/#{meeting.id}/polls/questions" }
+  let(:questions_path) { "/#{organization.default_locale}/processes/#{process.slug}/f/#{component.id}/meetings/#{meeting.id}/polls/questions" }
 
   before do
     create(:meetings_poll_question, :unpublished, questionnaire:, body: { en: unpublished_question_body })

@@ -2,8 +2,22 @@
 en:
   activemodel:
     attributes:
+      attachment:
+        link: Link
+      config:
+        intergram_for_public: Enable Intergram Chat in the public pages
+      import_results:
+        file: File
+      meeting_registration_invite:
+        user_id: Participant
       organization:
         mobile_logo: "Mobile logo"
+      participatory_process_group:
+        promoted: Promoted
+      result:
+        project_ids: Projects
+      static_page:
+        topic: Topic
       user_extension:
         address: Address
         birth_year: Birth year
@@ -26,10 +40,10 @@ en:
         title: Last comments
         view_all: View all
     devise:
-      registrations:
-        new:
-          username_placeholder: Ayumu Kyoso
-    devise:
+      omniauth_registrations:
+        failure_reasons:
+          access_denied: The sign in was canceled or not allowed
+          default: The sign in could not be completed
       registrations:
         user_extension:
           address_help: 'e.g. "Kakogawa-cho, Kakogawa, Hyogo"'
@@ -55,7 +69,3 @@ en:
         male: Male
         not_applicable: Not Applicable
         not_known: Not Known
-  layouts:
-    decidim:
-      header:
-        hello: Hello, %{name}!

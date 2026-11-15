@@ -35,7 +35,7 @@ module Decidim
         # Check that the URL is a Rails blob URL, not a signed S3 URL
         url = json_response["url"]
         expect(url).to start_with("/rails/active_storage/blobs/")
-        expect(url).not_to match(/amazonaws\.com/)
+        expect(url).not_to include("amazonaws.com")
         expect(url).not_to match(/\?.*signature=/)
       end
 

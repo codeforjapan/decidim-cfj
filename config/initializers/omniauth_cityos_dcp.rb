@@ -20,10 +20,10 @@ def setup_cityos_dcp_provider_proc(_provider, config_mapping = {})
   end
 end
 
+# 既定値は config/initializers/decidim.rb の Decidim.config.omniauth_providers にある。
+# 資格情報は組織ごとの設定から読む（CityosOmniauthConfiguration#provider_config）。
 Rails.application.config.middleware.use OmniAuth::Builder do
-  omniauth_config = Rails.application.secrets[:omniauth]
-
-  if omniauth_config && omniauth_config[:cityos_dcp_login].present?
+  if Decidim.omniauth_providers.has_key?(Decidim::Cfj::CityosOmniauthConfiguration::PROVIDER)
     require "omniauth-cityos-dcp"
 
     provider(

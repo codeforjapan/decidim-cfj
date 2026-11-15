@@ -9,12 +9,15 @@ require "sidekiq"
 # logs. The exception message itself is still logged, as before.
 module SidekiqErrorContextFilter
   def self.install(config)
-    config.error_handlers.delete(Sidekiq.method(:default_error_handler))
+    config.error_handlers.delete(Sidekiq::Config::ERROR_HANDLER)
     config.error_handlers << self unless config.error_handlers.include?(self)
   end
 
-  def self.call(exception, context)
-    Sidekiq.default_error_handler(exception, filter(context))
+  # Sidekiq reads the arity from the parameters of this method and passes the
+  # config as a third argument, so it has to take three. Two would still be
+  # called, through a deprecated path that is dropped in Sidekiq 8.
+  def self.call(exception, context, config = Sidekiq.default_configuration)
+    Sidekiq::Config::ERROR_HANDLER.call(exception, filter(context), config)
   end
 
   def self.filter(context)

@@ -66,7 +66,7 @@ ja:
               error: エラーマーキング文字を送信しました
               success: 送信済みとして記録しました。
         authorizations:
-          edit:
+          new:
             title: アカウントの検証
             under_construction: 現在準備中です。しばらくお待ち下さい。
   enums:

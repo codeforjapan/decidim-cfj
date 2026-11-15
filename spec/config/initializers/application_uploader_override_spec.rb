@@ -11,7 +11,7 @@ RSpec.describe "Decidim::ApplicationUploader#remote_url= override" do
   let(:url) { "https://cdn.example.com/file.png" }
   let(:host) { "cdn.example.com" }
   let(:public_ip) { "93.184.216.34" }
-  let(:body) { "FILEDATA" }
+  let(:body) { File.binread(Decidim::Dev.asset("icon.png")) }
   let(:original_filename) { model.file.filename.to_s }
 
   before do

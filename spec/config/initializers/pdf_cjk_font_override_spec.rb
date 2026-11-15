@@ -118,7 +118,7 @@ RSpec.describe "Decidim::Exporters::PDF CJK font override" do
 
   # ここまでは override 単体の検証。以下は実際に本番で使われる経路
   # (SurveyConfirmationMailer が添付する PDF) を実データで通す。
-  # engine.rb:64 が QuestionnaireUserAnswers.for(...) の戻り値をそのまま
+  # engine.rb:49 が QuestionnaireUserResponses.for(...) の戻り値をそのまま
   # FormPDF に渡すため、同じ形の collection を組み立てている。
   describe "Decidim::Exporters::FormPDF with real records" do
     let(:organization) { create(:organization) }
@@ -130,12 +130,12 @@ RSpec.describe "Decidim::Exporters::PDF CJK font override" do
     let(:question) do
       create(:questionnaire_question, questionnaire:, body: { ja: "好きな季節は？", en: "Season?" })
     end
-    let(:collection) { Decidim::Forms::QuestionnaireUserAnswers.for(questionnaire) }
+    let(:collection) { Decidim::Forms::QuestionnaireUserResponses.for(questionnaire) }
 
-    before { create(:answer, questionnaire:, question:, user:, body:) }
+    before { create(:response, questionnaire:, question:, user:, body:) }
 
     def export
-      Decidim::Exporters::FormPDF.new(collection, Decidim::Forms::UserAnswersSerializer).export.read
+      Decidim::Exporters::FormPDF.new(collection, Decidim::Forms::UserResponsesSerializer).export.read
     end
 
     context "when the answer is written in japanese" do
