@@ -52,5 +52,11 @@ RSpec.describe "Comment whose author no longer exists" do
       expect(response.body).to include("Comment by a removed author")
       expect(response.body).not_to include("editCommentModal#{comment.id}")
     end
+
+    it "reports the comment" do
+      expect do
+        post "/report", params: { sgid: comment.to_sgid.to_s, report: { reason: "spam" } }
+      end.to change(Decidim::Report, :count).by(1)
+    end
   end
 end

@@ -53,9 +53,27 @@ RSpec.describe "Meta image of a blog post" do
     end
   end
 
-  context "when the last segment of the image URL is a blob ID" do
+  context "when the last segment of an external image URL is the ID of another blob" do
     let(:image_blob) { create_file_blob(filename: "city.jpeg") }
-    let(:image_src) { "/images/#{image_blob.id}" }
+    let(:image_src) { "https://images.example.org/photos/#{image_blob.id}" }
+
+    it "does not pick the other blob" do
+      expect(resolved_blob).not_to eq(image_blob)
+    end
+  end
+
+  context "when the image is the GlobalID of a blob" do
+    let(:image_blob) { create_file_blob(filename: "city.jpeg") }
+    let(:image_src) { image_blob.to_global_id.to_s }
+
+    it "picks the blob" do
+      expect(resolved_blob).to eq(image_blob)
+    end
+  end
+
+  context "when the image is the GlobalID of a blob with a variation key" do
+    let(:image_blob) { create_file_blob(filename: "city.jpeg") }
+    let(:image_src) { "#{image_blob.to_global_id}/#{Base64.strict_encode64({ resize_to_limit: [100, 100] }.to_json)}" }
 
     it "picks the blob" do
       expect(resolved_blob).to eq(image_blob)
