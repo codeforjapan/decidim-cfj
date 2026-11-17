@@ -43,8 +43,12 @@ RSpec.describe "Meta image of a blog post" do
     end
   end
 
-  context "when the image URL ends with the ID of a blob that cannot be resized" do
-    let(:image_src) { "https://images.example.org/photos/#{pdf_blob.id}" }
+  context "when the image is the GlobalID of a blob that cannot be resized" do
+    let(:image_src) { pdf_blob.to_global_id.to_s }
+
+    it "does not resolve a meta image" do
+      expect(Decidim::MetaImageUrlResolver.new(post_record, organization).resolve).to be_nil
+    end
 
     it "renders the post" do
       get post_path
