@@ -102,9 +102,9 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 
   https://github.com/codeforjapan/decidim-cfj/pull/728 で追加したもの。モバイル用のロゴ画像をfaviconとは別に登録できるようにするためのアップローダー。
 
-* `app/views/layouts/decidim/footer/_main_links.html.erb`
+* `app/overrides/layouts/decidim/_user_menu/remove_conversations_link.html.erb.deface`, `app/overrides/layouts/decidim/header/_main_links_dropdown/remove_conversations_link.html.erb.deface`, `app/overrides/layouts/decidim/footer/_main_links/remove_conversations_link.html.erb.deface`
 
-  https://github.com/ayuki-joto/decidim-cfj/pull/57 で追加したもの。footerのうち「リソース」欄を表示させないようにする。
+  DM（会話）機能を止めているため、ユーザーメニュー・ヘッダー・フッターから会話へのリンクを消すもの。`decidim.conversations_path` を含む `li` を消しているので、本体のテンプレートが変わったら効いているか確認してください。
 
 * `app/views/decidim/application/_document.html.erb`
 
