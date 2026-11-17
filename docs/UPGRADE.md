@@ -78,6 +78,10 @@ Decidim本体のバージョンを更新する際、特に注意が必要な内�
 
   https://github.com/ayuki-joto/decidim-cfj/pull/30 https://github.com/codeforjapan/decidim-cfj/pull/596 で追加されたファイル。TipTap Editor用のCSSファイル。
 
+* `app/packs/stylesheets/decidim/cfj/footer.scss`
+
+  フッターの見出しの色を周りの文字色に合わせ、リンクの無い列（トピックの無いヘルプ列）を隠すもの。本体の `_footer.scss` のセレクタに合わせて書いているので、本体の更新時に確認してください。
+
 * `app/controllers/decidim/debates/versions_controller.rb`
 
   https://github.com/codeforjapan/decidim-cfj/pull/359 で追加したファイル。履歴の差分が巨大になるとサーバ負荷が大きいため、renderを実行させないよう表示前にredirectさせるものです。

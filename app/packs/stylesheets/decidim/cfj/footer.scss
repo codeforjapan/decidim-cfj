@@ -1,0 +1,18 @@
+// Adjust the default footer (decidim-core _footer.scss)
+footer {
+  .main-footer {
+    &__top {
+      .footer__nav {
+        // Hide a column without links (e.g. the help column without topics)
+        &:not(:has(li)) {
+          display: none;
+        }
+
+        // Follow the footer text color instead of the fixed white
+        > [data-controls] {
+          color: inherit;
+        }
+      }
+    }
+  }
+}
