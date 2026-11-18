@@ -1,5 +1,13 @@
 # Change Log
 
+## [1.22.2](https://github.com/codeforjapan/decidim-cfj/compare/v1.22.1...v1.22.2) (2026-11-18)
+
+
+### Bug Fixes
+
+* avoid 500 errors on comments without an author and on meta images ([#981](https://github.com/codeforjapan/decidim-cfj/issues/981)) ([99301e2](https://github.com/codeforjapan/decidim-cfj/commit/99301e210ce43beee548f50f739a2dded2079560))
+* render the error pages as HTML whatever format was requested ([#982](https://github.com/codeforjapan/decidim-cfj/issues/982)) ([149b65d](https://github.com/codeforjapan/decidim-cfj/commit/149b65d9ed3ea6ddd155e5c9b66e3a69c6917e88))
+
 ## [1.22.1](https://github.com/codeforjapan/decidim-cfj/compare/v1.22.0...v1.22.1) (2026-11-15)
 
 
