@@ -1,5 +1,13 @@
 # Change Log
 
+## [1.22.3](https://github.com/codeforjapan/decidim-cfj/compare/v1.22.2...v1.22.3) (2026-11-19)
+
+
+### Bug Fixes
+
+* look up comments, amendments and coauthors within the current organization ([#986](https://github.com/codeforjapan/decidim-cfj/issues/986)) ([4bbd756](https://github.com/codeforjapan/decidim-cfj/commit/4bbd756ea1ae6a49b9ca1eaca3b8d93bfb694298))
+* 存在しないクラス名の記録があると管理ログが500になる問題を修正 ([#989](https://github.com/codeforjapan/decidim-cfj/issues/989)) ([a3a87b2](https://github.com/codeforjapan/decidim-cfj/commit/a3a87b26ce332e0b6532eeda3717add5f6a5b2f1))
+
 ## [1.22.2](https://github.com/codeforjapan/decidim-cfj/compare/v1.22.1...v1.22.2) (2026-11-18)
 
 
