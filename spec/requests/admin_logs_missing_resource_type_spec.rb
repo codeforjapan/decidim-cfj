@@ -86,7 +86,7 @@ RSpec.describe "Admin logs with a resource type that no longer exists" do
     end
 
     before do
-      version.update_column(:item_type, "Decidim::ParticipatorySpacePrivateUser") # rubocop:disable Rails/SkipsModelValidations
+      version.update_column(:item_type, "Decidim::Sortitions::Sortition") # rubocop:disable Rails/SkipsModelValidations
       create(:action_log, organization:, user: admin, participatory_space: process, component: nil, resource: process, action: "update", version:)
     end
 

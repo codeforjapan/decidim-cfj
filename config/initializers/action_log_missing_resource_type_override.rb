@@ -7,13 +7,13 @@ Rails.application.config.to_prepare do
   module DecidimMissingPolymorphicClassPatch
     # 関連の読み込み（includes を含む）で使われる。nil を返すと関連先は nil になる。
     def polymorphic_class_for(name)
-      return if name.safe_constantize.nil?
-
-      super
+      name.safe_constantize
     end
   end
 
   module DecidimActionLogMissingResourceTypePatch
+    include DecidimMissingPolymorphicClassPatch
+
     def lazy_relation(id_method, klass_name, cache)
       return if klass_name.safe_constantize.nil?
 
@@ -21,7 +21,6 @@ Rails.application.config.to_prepare do
     end
   end
 
-  Decidim::ActionLog.singleton_class.prepend(DecidimMissingPolymorphicClassPatch)
   Decidim::ActionLog.singleton_class.prepend(DecidimActionLogMissingResourceTypePatch)
   # 差分表示（version.changeset）が version.item を読む。
   PaperTrail::Version.singleton_class.prepend(DecidimMissingPolymorphicClassPatch)
