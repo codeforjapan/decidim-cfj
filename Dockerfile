@@ -1,6 +1,6 @@
 FROM node:22.23.4-trixie-slim AS node
 
-FROM ruby:3.4.12-slim-trixie
+FROM ruby:3.4.13-slim-trixie
 
 # for build-dep
 RUN  apt-get update && \
