@@ -55,7 +55,9 @@ Rails.application.configure do
     url: ENV.fetch("REDIS_CACHE_URL", nil),
     expires_in: ENV.fetch("REDIS_CACHE_EXPIRES_IN", 60.minutes).to_i
   }
-  config.session_store(:cache_store, key: "decidim_session", expire_after: Decidim.config.expire_session_after)
+  # CacheStore does not apply config.action_dispatch.cookies_same_site_protection
+  # to the session cookie, so set SameSite here.
+  config.session_store(:cache_store, key: "decidim_session", expire_after: Decidim.config.expire_session_after, same_site: :lax)
   config.active_storage.resolve_model_to_route = :rails_storage_proxy
 
   # Use a real queuing backend for Active Job (and separate queues per environment)
