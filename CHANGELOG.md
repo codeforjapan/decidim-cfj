@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.22.4](https://github.com/codeforjapan/decidim-cfj/compare/v1.22.3...v1.22.4) (2026-11-20)
+
+
+### Bug Fixes
+
+* ログイン系の画面にも Content-Security-Policy ヘッダーを付ける ([#991](https://github.com/codeforjapan/decidim-cfj/issues/991)) ([e57f790](https://github.com/codeforjapan/decidim-cfj/commit/e57f790c0e64ab0b9215d7ef9f474375925743cb))
+
 ## [1.22.3](https://github.com/codeforjapan/decidim-cfj/compare/v1.22.2...v1.22.3) (2026-11-19)
 
 
