@@ -2,7 +2,6 @@
 
 require "rails_helper"
 
-# Covers config/initializers/organization_scoped_lookups_override.rb.
 RSpec.describe "Records looked up within the current organization" do
   include Devise::Test::IntegrationHelpers
 

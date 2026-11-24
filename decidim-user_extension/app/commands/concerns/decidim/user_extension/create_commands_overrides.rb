@@ -39,7 +39,7 @@ module Decidim
       end
 
       def authorization
-        @authorization ||= Decidim::Authorization.find_or_initialize_by(
+        @authorization ||= Decidim::Authorization.find_or_initialize_by( # rubocop:disable Decidim/OrganizationScopedFinder -- 対象の利用者の記録だけを探す
           user: @user,
           name: "user_extension"
         )

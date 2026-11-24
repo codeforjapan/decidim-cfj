@@ -4,7 +4,7 @@ source "https://rubygems.org"
 
 ruby RUBY_VERSION
 
-gem "decidim", "0.32.2"
+gem "decidim", "0.32.3"
 
 # 上流 decidim-ice は 0.32 対応を main に入れたが release/0.32-stable は無いため、fork のブランチを使う。
 gem "decidim-decidim_awesome", git: "https://github.com/codeforjapan/decidim-module-decidim_awesome.git", branch: "release/0.32-stable"
@@ -40,7 +40,7 @@ group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
   gem "figaro"
 
-  gem "decidim-dev", "0.32.2"
+  gem "decidim-dev", "0.32.3"
   gem "dotenv-rails"
   gem "factory_bot_rails"
   gem "rspec-rails"
@@ -74,6 +74,6 @@ end
 gem "rubyzip", ">= 1.0.0"
 gem "zip-zip"
 
-gem "decidim-conferences", "~> 0.32.2"
+gem "decidim-conferences", "~> 0.32.3"
 
-gem "decidim-ai", "~> 0.32.2"
+gem "decidim-ai", "~> 0.32.3"

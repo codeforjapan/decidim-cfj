@@ -16,6 +16,10 @@ Decidim/EnforcePermissionTo:
   Exclude:
     - "app/controllers/decidim/system/**/*.rb"
 
+Decidim/OrganizationScopedFinder:
+  Exclude:
+    - "app/controllers/decidim/system/**/*.rb"
+
 Gemspec/RequiredRubyVersion:
   Enabled: false
 

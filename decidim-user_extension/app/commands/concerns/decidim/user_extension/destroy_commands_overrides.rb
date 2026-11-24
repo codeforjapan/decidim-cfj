@@ -20,7 +20,7 @@ module Decidim
       end
 
       def destroy_user_extension
-        authorization = Decidim::Authorization.find_by(
+        authorization = Decidim::Authorization.find_by( # rubocop:disable Decidim/OrganizationScopedFinder -- ログイン中の利用者の記録だけを探す
           user: current_user,
           name: "user_extension"
         )
