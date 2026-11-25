@@ -29,10 +29,10 @@ module Decidim
           end
 
           deletable_ids.reverse.each_slice(30) do |ids|
-            Decidim::Comments::Comment.where(id: ids).order(id: :desc).each do |comment|
+            Decidim::Comments::Comment.where(id: ids).order(id: :desc).each do |comment| # rubocop:disable Decidim/OrganizationScopedFinder -- 指定した組織のコメントと、組織が分からないコメントの ID
               puts "destroy comment id: #{comment.id}, for #{comment.decidim_root_commentable_type}:#{comment.decidim_root_commentable_id}"
               # force to delete (ignore validation)
-              Decidim::Comments::CommentVote.where(comment:).delete_all
+              Decidim::Comments::CommentVote.where(comment:).delete_all # rubocop:disable Decidim/OrganizationScopedFinder -- 指定した組織のコメントか、組織が分からないコメント
               comment.delete
             end
           end

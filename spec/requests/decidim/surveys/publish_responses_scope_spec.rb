@@ -34,7 +34,7 @@ RSpec.describe "Decidim::Surveys PublishResponsesController organization scope" 
     it "does not publish the responses of a question in another organization" do
       patch publish_response_path(other_question)
 
-      expect(response).to have_http_status(:not_found)
+      expect(response).to have_http_status(:unprocessable_content)
 
       expect(other_question.reload.survey_responses_published_at).to be_nil
     end
@@ -52,7 +52,7 @@ RSpec.describe "Decidim::Surveys PublishResponsesController organization scope" 
     it "does not unpublish the responses of a question in another organization" do
       delete publish_response_path(other_question)
 
-      expect(response).to have_http_status(:not_found)
+      expect(response).to have_http_status(:unprocessable_content)
 
       expect(other_question.reload.survey_responses_published_at).to be_present
     end

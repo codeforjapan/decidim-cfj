@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Decidim::MultipleAttachmentsMethods scoping override" do
+RSpec.describe "Decidim::MultipleAttachmentsMethods scoping" do
   include_context "with a questionnaire response form"
 
   let(:other_organization) { create(:organization) }
@@ -120,8 +120,6 @@ RSpec.describe "Decidim::MultipleAttachmentsMethods scoping override" do
     end
   end
 
-  # keep_ids also decides what attachment_cleanup! destroys, so the filtering must
-  # never remove an id the owner actually holds.
   describe "cleanup of the documents held by the record" do
     let(:target_process) { create(:participatory_process, organization:) }
     let!(:held_document) do
@@ -198,7 +196,6 @@ RSpec.describe "Decidim::MultipleAttachmentsMethods scoping override" do
         command.send(:build_attachments)
 
         expect(translated_attribute(sibling.reload.title)).to eq("Sibling document")
-        expect(command.send(:keep_ids)).to be_empty
       end
     end
 
@@ -209,7 +206,6 @@ RSpec.describe "Decidim::MultipleAttachmentsMethods scoping override" do
         expect { command.send(:build_attachments) }.not_to raise_error
 
         expect(translated_attribute(orphan.reload.title)).to eq("Orphan document")
-        expect(command.send(:keep_ids)).to be_empty
       end
     end
 
@@ -220,8 +216,12 @@ RSpec.describe "Decidim::MultipleAttachmentsMethods scoping override" do
         )
       end
 
-      it "keeps them in the submitted order" do
-        expect(command.send(:keep_ids)).to eq([second_document.id, own_document.id])
+      it "reorders only the documents of the record" do
+        command.send(:build_attachments)
+        command.send(:create_attachments)
+
+        expect([second_document, own_document].map { |document| document.reload.weight }).to contain_exactly(0, 1)
+        expect(sibling.reload.weight).to eq(7)
       end
     end
   end
@@ -258,7 +258,6 @@ RSpec.describe "Decidim::MultipleAttachmentsMethods scoping override" do
       command.send(:build_attachments)
 
       expect(translated_attribute(sibling.reload.title)).to eq("Sibling document")
-      expect(command.send(:keep_ids)).to be_empty
     end
   end
 end

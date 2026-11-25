@@ -19,7 +19,7 @@ module Decidim
       # Returns nothing.
       def call
         if user.organization == organization
-          Decidim::Gamification::BadgeScore.where(user:).find_each do |badge_score|
+          Decidim::Gamification::BadgeScore.where(user:).find_each do |badge_score| # rubocop:disable Decidim/OrganizationScopedFinder -- 利用者が組織に属することを上で確かめている
             puts "destroy badge_score id: #{badge_score.id}, badge_name: #{badge_score.badge_name}"
             badge_score.destroy!
           end

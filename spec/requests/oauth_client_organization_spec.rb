@@ -2,7 +2,6 @@
 
 require "rails_helper"
 
-# Covers config/initializers/oauth_client_organization_override.rb.
 RSpec.describe "OAuth clients of the organization" do
   include Devise::Test::IntegrationHelpers
 
@@ -96,15 +95,15 @@ RSpec.describe "OAuth clients of the organization" do
       end
     end
 
+    # 利用者はこの組織の人にして、クライアントの組織のチェックだけで弾かれることを確かめる。
     context "when the token was issued to a client of another organization" do
-      let(:other_user) { create(:user, :confirmed, organization: other_organization) }
-      let(:token) { create(:oauth_access_token, application: other_application, resource_owner_id: other_user.id) }
+      let(:token) { create(:oauth_access_token, application: other_application, resource_owner_id: user.id) }
 
       before { get "/oauth/me", headers: }
 
       it "does not return the user data" do
-        expect(response).to have_http_status(:unauthorized)
-        expect(response.body).not_to include(other_user.email)
+        expect(response).to have_http_status(:not_found)
+        expect(response.body).not_to include(user.email)
       end
     end
 

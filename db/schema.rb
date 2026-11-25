@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_19_120000) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_24_081956) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "ltree"
   enable_extension "pg_bigm"
@@ -129,8 +129,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_19_120000) do
     t.bigint "resource_id", null: false
     t.string "resource_type", null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.bigint "user_id", null: false
-    t.string "user_type", default: "Decidim::User", null: false
+    t.bigint "user_id"
+    t.string "user_type", default: "Decidim::User"
     t.integer "version_id"
     t.string "visibility", default: "admin-only"
     t.index ["created_at"], name: "index_decidim_action_logs_on_created_at"
