@@ -13,4 +13,16 @@ Rails.application.config.to_prepare do
   end
 
   Decidim::Proposals::ProposalPresenter.prepend(ProposalPresenterAlwaysEscapeTitle)
+
+  # The presenter above already escapes the title, so don't escape it twice
+  module MentionResourceRendererEscapeTitleOnce
+    def mention_title(resource)
+      "<span class='editor-mention'>
+          #{mention_avatar(resource)}
+          <span>#{presenter_for(resource).title}</span>
+        </span>".html_safe
+    end
+  end
+
+  Decidim::ContentRenderers::MentionResourceRenderer.prepend(MentionResourceRendererEscapeTitleOnce)
 end
